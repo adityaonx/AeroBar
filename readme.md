@@ -12,7 +12,7 @@ If you liked this app, please consider <img width="20" height="20" alt="star-img
 ## Installation
 
 
-Open the `.dmg`, drag **AeroBar.app** to your `/Applications` folder.
+### 1.Download Aerobar.dmg & Open the `.dmg`, drag **AeroBar.app** to your `/Applications` folder.
 
 ### 2. Bypass Gatekeeper (first launch only)
 AeroBar is self-signed. macOS will block the first launch.
@@ -85,7 +85,7 @@ Every open, non-minimized window across every running app appears as a tab in th
 - **Minimizes** it if it is already the front window
 - **Unminimizes** it if it was minimized
 
-This gives you the exact same one-click window switching behaviour Windows users are used to — no Exposé, no Command-Tab cycling required.
+This gives you the exact same one-click window switching behaviour Windows users are used to no Exposé, no Command-Tab cycling required.
 
 ### 📌 Pinned App Launcher
 A drag-and-drop tray of your favourite apps lives between the Orb and the window tabs. Pinned apps behave the way Windows taskbar icons do:
