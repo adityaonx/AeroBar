@@ -5,6 +5,9 @@
 > Missed the Windows taskbar after switching to Mac? AeroBar puts it back Aero glass look, Start Menu, live window tabs, pinned app launcher, and all sitting at the bottom of your screen exactly where you expect it.
 
 [![Download](https://img.shields.io/badge/⬇️%20Download-AeroBar%20Latest-blue?style=for-the-badge)](https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg)
+
+If you liked this theme, please consider <img width="20" height="20" alt="star-img" src="https://github.com/user-attachments/assets/14fa5920-374f-4985-acd6-d04bff1d4580" /> this project. Thanks.
+
 <hr>
 1. Quick Switch between App Windows
 <img width="960" height="624" alt="Gitmain-1" src="https://github.com/user-attachments/assets/33fced61-d520-46bf-8478-e262af05c88b" />
