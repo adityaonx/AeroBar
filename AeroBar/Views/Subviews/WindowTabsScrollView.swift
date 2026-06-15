@@ -27,13 +27,13 @@ struct WindowTabsScrollView: View {
                         Button {
                             onPinToStartMenu(tab)
                         } label: {
-                            Label("📌 Pin to Start", systemImage: "square.grid.3x3.square")
+                            Label("Pin to Start", systemImage: "square.grid.3x3.square")
                         }
                         
                         Button {
                             onPinToAeroBar(tab)
                         } label: {
-                            Label("📌 Pin to Taskbar", systemImage: "dock.arrow.up.bars")
+                            Label("Pin to Taskbar", systemImage: "dock.arrow.up.bars")
                         }
                         
                         // =======================================================

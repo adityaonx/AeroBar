@@ -479,13 +479,13 @@ struct StartSidebarRow: View {
                 if !settings.pinnedStartApps.contains(where: { $0.bundleIdentifier == app.bundleID }) {
                     settings.pinnedStartApps.append(PinnedApp(bundleIdentifier: app.bundleID, appName: app.name))
                 }
-            } label: { Label("📌 Pin to Start", systemImage: "square.grid.3x3.square") }
+            } label: { Label("Pin to Start", systemImage: "square.grid.3x3.square") }
             
             Button {
                 if !settings.pinnedBarApps.contains(where: { $0.bundleIdentifier == app.bundleID }) {
                     settings.pinnedBarApps.append(PinnedApp(bundleIdentifier: app.bundleID, appName: app.name))
                 }
-            } label: { Label("📌 Pin to Taskbar", systemImage: "dock.arrow.up.bars") }
+            } label: { Label("Pin to Taskbar", systemImage: "dock.arrow.up.bars") }
         }
     }
 }
