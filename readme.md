@@ -12,22 +12,28 @@ If you liked this app, please consider <img width="20" height="20" alt="star-img
 ## Installation
 
 
-### 1.Download Aerobar.dmg & Open the `.dmg`, drag **AeroBar.app** to your `/Applications` folder.
+### 1.Download Aerobar.dmg 
+
+Open the `.dmg`, drag **AeroBar.app** to your `/Applications` folder.
 
 ### 2. Bypass Gatekeeper (first launch only)
+
 AeroBar is self-signed. macOS will block the first launch.
 
 **Option A — System Settings:**
+
 1. Try to open AeroBar. macOS will show a security warning.
 2. Go to **System Settings → Privacy & Security**.
 3. Scroll down to the Security section and click **Open Anyway**.
 
 **Option B — Terminal (if you see a "damaged app" error):**
+
 ```bash
 xattr -rd com.apple.quarantine /Applications/AeroBar.app
 ```
 
 ### 3. Grant Accessibility Permission
+
 AeroBar needs Accessibility access to track and control your windows.
 
 1. On first launch, an onboarding screen will guide you.
@@ -73,10 +79,10 @@ It is not a theme. It is not a wrapper. It talks directly to macOS accessibility
 
 ## Features
 
-### 🪟 Liquid Glass Taskbar Rail
+### 🪟 Liquid Glass Taskbar
 The taskbar itself is a persistent, borderless panel that sits at the very bottom of your screen at all times across Spaces, full-screen transitions, and display changes. It uses Apple's native vibrancy / blur materials to sample your wallpaper and produce a genuine translucent glass surface. Five distinct glass blend styles let you dial it from deep frosted to nearly transparent.
 
-### 🔵 Aero Vista Start Orb
+### 🔵 Mac Aero Start Orb
 The circular Start Orb in the bottom-left corner is your system hub. Click it and the Start Menu opens above it, anchored to whichever display you clicked on. Light and dark hover states are supported, and the orb itself is customizable in the Appearance Lab.
 
 ### 🗂️ Live Window Tab Strip
