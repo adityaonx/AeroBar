@@ -1,8 +1,8 @@
 # AeroBar
 
-### A Windows-style taskbar for macOS — built for people who know where everything should be.
+### A Windows-style taskbar for macOS 
 
-> Missed the Windows taskbar after switching to Mac? AeroBar puts it back — Aero glass look, Start Menu, live window tabs, pinned app launcher, and all — sitting at the bottom of your screen exactly where you expect it.
+> Missed the Windows taskbar after switching to Mac? AeroBar puts it back Aero glass look, Start Menu, live window tabs, pinned app launcher, and all sitting at the bottom of your screen exactly where you expect it.
 
 <hr>
 1. Quick Switch between App Windows
@@ -30,9 +30,9 @@
 
 ## What is AeroBar?
 
-macOS is a great operating system — but if you spent years on Windows, the workflow transition is genuinely rough. The Dock hides, the menu bar is at the top, open windows have no persistent visual reference, and there's no Start Menu to search and launch from. You end up hunting.
+macOS is a great operating system but if you spent years on Windows, the workflow transition is genuinely rough. The Dock hides, the menu bar is at the top, open windows have no persistent visual reference, and there's no Start Menu to search and launch from. You end up hunting.
 
-**AeroBar fixes that.** It's a persistent taskbar that lives at the bottom of every display, built to feel like the Windows Vista / Windows 7 Aero taskbar — translucent glass surface, a Start Orb, a live window tab strip, a pinned app launcher, and a Spotlight search field — all rendered natively on macOS using real system materials, not a skin on top.
+**AeroBar fixes that.** It's a persistent taskbar that lives at the bottom of every display, built to feel like the Windows Vista / Windows 7 Aero taskbar translucent glass surface, a Start Orb, a live window tab strip, a pinned app launcher, and a Spotlight search field — all rendered natively on macOS using real system materials, not a skin on top.
 
 It is not a theme. It is not a wrapper. It talks directly to macOS accessibility APIs to track, focus, minimize, and raise your windows in real time.
 
@@ -41,7 +41,7 @@ It is not a theme. It is not a wrapper. It talks directly to macOS accessibility
 ## Features
 
 ### 🪟 Liquid Glass Taskbar Rail
-The taskbar itself is a persistent, borderless panel that sits at the very bottom of your screen at all times — across Spaces, full-screen transitions, and display changes. It uses Apple's native vibrancy / blur materials to sample your wallpaper and produce a genuine translucent glass surface. Five distinct glass blend styles let you dial it from deep frosted to nearly transparent.
+The taskbar itself is a persistent, borderless panel that sits at the very bottom of your screen at all times across Spaces, full-screen transitions, and display changes. It uses Apple's native vibrancy / blur materials to sample your wallpaper and produce a genuine translucent glass surface. Five distinct glass blend styles let you dial it from deep frosted to nearly transparent.
 
 ### 🔵 Aero Vista Start Orb
 The circular Start Orb in the bottom-left corner is your system hub. Click it and the Start Menu opens above it, anchored to whichever display you clicked on. Light and dark hover states are supported, and the orb itself is customizable in the Appearance Lab.
@@ -64,7 +64,7 @@ A drag-and-drop tray of your favourite apps lives between the Orb and the window
 Pinned order persists across reboots.
 
 ### 🔍 Spotlight Quick Search
-A search field sits inline in the taskbar (toggleable). It fires macOS Spotlight directly — type an app name, file, or calculation and press Return, exactly like the Windows search box in the taskbar.
+A search field sits inline in the taskbar (toggleable). It fires macOS Spotlight directly type an app name, file, or calculation and press Return, exactly like the Windows search box in the taskbar.
 
 ### 🚀 Start Menu
 The full Start Menu panel opens from the Orb and contains:
