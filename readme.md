@@ -4,11 +4,22 @@
 
 > Missed the Windows taskbar after switching to Mac? AeroBar puts it back — Aero glass look, Start Menu, live window tabs, pinned app launcher, and all — sitting at the bottom of your screen exactly where you expect it.
 
-<br>
-
-![AeroBar Banner](https://github.com/user-attachments/assets/e63a010e-8217-4c1b-a8b5-5b2893c3ada3)
-
-<br>
+<hr>
+1. Quick Switch between App Windows
+<img width="960" height="624" alt="Gitmain-1" src="https://github.com/user-attachments/assets/33fced61-d520-46bf-8478-e262af05c88b" />
+<hr>
+2. Start Menu
+<img width="960" height="624" alt="Gitmain-2" src="https://github.com/user-attachments/assets/0c251738-e864-4302-8de3-c56c01c92adb" />
+<hr>
+3. Quick Launch Pinned Apps
+<img width="960" height="624" alt="Gitmain-3" src="https://github.com/user-attachments/assets/02f417a4-a3e1-42ed-a69d-fc981313a0eb" />
+<hr>
+4. Tab's Context menu
+<img width="960" height="624" alt="Gitmain-4" src="https://github.com/user-attachments/assets/4f390c64-a2ed-4103-8956-cc26318a09ad" />
+<hr>
+5. Customization & Advance Settings
+<img width="960" height="652" alt="gitmain-5" src="https://github.com/user-attachments/assets/ace2dd16-2770-42ac-8e5e-48a6d25abb85" />
+<hr>
 
 [![Download](https://img.shields.io/badge/⬇️%20Download-AeroBar%20Latest-blue?style=for-the-badge)](https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg)
 ![Platform](https://img.shields.io/badge/macOS-Sequoia%20%2F%20Tahoe-black?style=for-the-badge&logo=apple)
