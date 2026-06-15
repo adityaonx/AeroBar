@@ -8,6 +8,35 @@
 
 If you liked this app, please consider <img width="20" height="20" alt="star-img" src="https://github.com/user-attachments/assets/14fa5920-374f-4985-acd6-d04bff1d4580" /> this project. Thanks.
 
+
+## Installation
+
+
+Open the `.dmg`, drag **AeroBar.app** to your `/Applications` folder.
+
+### 2. Bypass Gatekeeper (first launch only)
+AeroBar is self-signed. macOS will block the first launch.
+
+**Option A — System Settings:**
+1. Try to open AeroBar. macOS will show a security warning.
+2. Go to **System Settings → Privacy & Security**.
+3. Scroll down to the Security section and click **Open Anyway**.
+
+**Option B — Terminal (if you see a "damaged app" error):**
+```bash
+xattr -rd com.apple.quarantine /Applications/AeroBar.app
+```
+
+### 3. Grant Accessibility Permission
+AeroBar needs Accessibility access to track and control your windows.
+
+1. On first launch, an onboarding screen will guide you.
+2. Click **Open Accessibility Settings** — this takes you directly to the right panel.
+3. Toggle **AeroBar** on in the list.
+4. Click **Start AeroBar** in the onboarding panel.
+
+That's it. The taskbar appears at the bottom of your screen immediately.
+
 <hr>
 1. Quick Switch between App Windows
 <img width="960" height="624" alt="Gitmain-1" src="https://github.com/user-attachments/assets/33fced61-d520-46bf-8478-e262af05c88b" />
@@ -114,41 +143,7 @@ All settings persist across reboots.
 
 ---
 
-## Installation
 
-### 1. Download
-Click the Download button at the top of this page, or grab the `.dmg` directly:
-
-```
-https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg
-```
-
-Open the `.dmg`, drag **AeroBar.app** to your `/Applications` folder.
-
-### 2. Bypass Gatekeeper (first launch only)
-AeroBar is self-signed. macOS will block the first launch.
-
-**Option A — System Settings:**
-1. Try to open AeroBar. macOS will show a security warning.
-2. Go to **System Settings → Privacy & Security**.
-3. Scroll down to the Security section and click **Open Anyway**.
-
-**Option B — Terminal (if you see a "damaged app" error):**
-```bash
-xattr -rd com.apple.quarantine /Applications/AeroBar.app
-```
-
-### 3. Grant Accessibility Permission
-AeroBar needs Accessibility access to track and control your windows.
-
-1. On first launch, an onboarding screen will guide you.
-2. Click **Open Accessibility Settings** — this takes you directly to the right panel.
-3. Toggle **AeroBar** on in the list.
-4. Click **Start AeroBar** in the onboarding panel.
-
-That's it. The taskbar appears at the bottom of your screen immediately.
-
----
 
 ## How to Use
 
