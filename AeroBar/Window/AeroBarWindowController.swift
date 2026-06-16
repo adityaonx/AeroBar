@@ -8,18 +8,27 @@ import ServiceManagement
 // 🖥️ DECOUPLED PANEL ARCHITECTURE
 // =======================================================
 
-// 1. The Main Background Taskbar Rail Panel Container
 final class AeroBarPanel: NSPanel {
     override var canBecomeKey: Bool { false }
     override var canBecomeMain: Bool { false }
+    
+    // 🎯 THE DEFINITIVE CAPSLOCK GHOST-CLICK FIX:
+    // By overriding the native AppKit event router, we intercept standalone modifier
+    // key presses (like CapsLock) at the root window level and destroy them.
+    // SwiftUI never even knows the key was pressed.
+    // (Note: This does not break Cmd+Click, because mouse clicks carry their own modifier payloads!)
+    override func sendEvent(_ event: NSEvent) {
+        if event.type == .flagsChanged {
+            return // Silently drop the event
+        }
+        super.sendEvent(event)
+    }
 }
-
-// 2. 🎯 Dedicated Start Menu Panel Container
-// Inherits standard key status capability so child text views are interactive!
 final class AeroStartMenuPanel: NSPanel {
     override var canBecomeKey: Bool { true }
     override var canBecomeMain: Bool { false }
 }
+
 final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
     private var systemAXObserver: AXObserver?
     private var secondaryAeroPanels: [AeroBarPanel] = []
@@ -30,14 +39,7 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
     private var spaceChangeObserver: NSObjectProtocol?
     private var appActivateObserver: NSObjectProtocol?
     private var previousWindowFrames: [CGWindowID: CGRect] = [:]
-    // 🛡️ CROSS-DISPLAY DRAG COOLDOWN: tracks how many consecutive still cycles
-    // have elapsed since a window last moved. We require at least 3 stable cycles
-    // (~0.45s) before we apply any resize — this prevents the "snap-resize on drop"
-    // that happens when a window is dragged from display 1 → display 2 and the
-    // daemon fires on the very first stationary frame, and also prevents the
-    // "sticky barrier" when dragging from display 2 → display 1 (the resize was
-    // fighting the drag because the window settled into the forbidden zone for just
-    // one tick before crossing the boundary).
+    
     private var windowStillCycleCount: [CGWindowID: Int] = [:]
     private let requiredStillCyclesBeforeResize = 3
     private var localClickMonitor: Any?
@@ -70,7 +72,6 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
         panel.titlebarAppearsTransparent = true
         panel.titleVisibility = NSWindow.TitleVisibility.hidden
         
-        // ⚙️ PERMANENT LAYERING PARAMS:
         panel.level = NSWindow.Level.statusBar
         panel.collectionBehavior = [
             NSWindow.CollectionBehavior.canJoinAllSpaces,
@@ -107,15 +108,8 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
                 if notificationType == kAXFocusedWindowChangedNotification {
                     AeroBarSettings.shared.currentSystemFocusedElement = element
                 } else if notificationType == kAXTitleChangedNotification {
-                    // 🎯 THE LIVE TRACKING FIX:
-                    // Instead of just cycling the focused tracking token element,
-                    // we pull the current window controller reference pointer from the context block
-                    // and force an immediate layout update across our active taskbar tab arrays!
                     if let controllerPointer = refCon {
                         let myController = Unmanaged<AeroBarWindowController>.fromOpaque(controllerPointer).takeUnretainedValue()
-                        
-                        // We give the system a tiny 0.05s buffer to finish writing its layout string,
-                        // then explicitly execute the tab array parsing engine instantly.
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                             myController.startWindowArrangementDaemon(barHeightThreshold: AeroBarSettings.shared.barHeight)
                         }
@@ -127,10 +121,6 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
         guard createStatus == .success, let observer = observerRef else { return }
         
         let appRef = AXUIElementCreateApplication(pid)
-        
-        // 🎯 THE MEMORY CONTEXT FIX:
-        // We pass an unretained self pointer context reference into the AXObserver notification engine.
-        // This allows our static observer callback block above to securely invoke our instance functions.
         let selfContextPointer = Unmanaged.passUnretained(self).toOpaque()
         
         _ = AXObserverAddNotification(observer, appRef, kAXFocusedWindowChangedNotification as CFString, selfContextPointer)
@@ -146,6 +136,7 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
         
         CFRunLoopAddSource(CFRunLoopGetCurrent(), AXObserverGetRunLoopSource(observer), .commonModes)
     }
+    
     private func configureStartOnBootDaemon() {
         if #available(macOS 13.0, *) {
             let mainService = SMAppService.mainApp
@@ -258,7 +249,6 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
         panel.isOpaque = false
         panel.backgroundColor = .clear
         panel.hidesOnDeactivate = false
-        
         panel.level = .statusBar
         
         panel.collectionBehavior = [
@@ -279,7 +269,6 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
     }
     
     private func recalibrateWindowGeometry() {
-        // 1. Clear out all existing secondary taskbar panels to prevent frame layout leakage
         secondaryAeroPanels.forEach { $0.orderOut(nil); $0.contentView?.subviews.forEach { $0.removeFromSuperview() } }
         secondaryAeroPanels.removeAll()
         
@@ -290,7 +279,6 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
         let currentMode = AeroBarSettings.shared.displayTargetMode
         
         DispatchQueue.main.async {
-            // 2. CALIBRATE PRIMARY BUILT-IN DISPLAY
             let primaryScreen = screens[0]
             let primaryExpectedFrame = NSRect(x: primaryScreen.frame.minX, y: primaryScreen.frame.minY, width: primaryScreen.frame.width, height: 56)
             
@@ -300,11 +288,9 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
                 }
                 primaryPanel.orderFront(nil)
             } else {
-                // If External Only is active, dismiss the main panel window frame node completely
                 primaryPanel.orderOut(nil)
             }
             
-            // 3. CALIBRATE SECONDARY EXTERNAL WORKSPACES
             if (currentMode == .all || currentMode == .secondaryOnly) && screens.count > 1 {
                 for index in 1..<screens.count {
                     let externalScreen = screens[index]
@@ -346,34 +332,18 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
     }
     
     private func setupNotificationObservers() {
-        
-        displayObserver = NotificationCenter.default.addObserver(
-            forName: NSApplication.didChangeScreenParametersNotification,
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
+        displayObserver = NotificationCenter.default.addObserver(forName: NSApplication.didChangeScreenParametersNotification, object: nil, queue: .main) { [weak self] _ in
             self?.recalibrateWindowGeometry()
         }
-        
-        spaceChangeObserver = NSWorkspace.shared.notificationCenter.addObserver(
-            forName: NSWorkspace.activeSpaceDidChangeNotification,
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
+        spaceChangeObserver = NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.activeSpaceDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
             self?.evaluateFullScreenVisibilityState()
         }
-        
-        appActivateObserver = NSWorkspace.shared.notificationCenter.addObserver(
-            forName: NSWorkspace.didActivateApplicationNotification,
-            object: nil,
-            queue: .main
-        ) { [weak self] notification in
+        appActivateObserver = NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didActivateApplicationNotification, object: nil, queue: .main) { [weak self] notification in
             if let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
                 self?.registerActiveApplicationAXObserver(for: app.processIdentifier)
             }
             self?.evaluateFullScreenVisibilityState()
         }
-        
         _ = NotificationCenter.default.addObserver(forName: NSWindow.didEnterFullScreenNotification, object: nil, queue: .main) { [weak self] _ in
             self?.evaluateFullScreenVisibilityState()
         }
@@ -381,127 +351,120 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
             self?.evaluateFullScreenVisibilityState()
         }
         
-        _ = NotificationCenter.default.addObserver(
-                    forName: Notification.Name("triggerAeroStartMenu"),
-                    object: nil,
-                    queue: .main
-                ) { [weak self] notification in
-                    self?.toggleModernStartMenuPopover(notification)
-                }
-        _ = NotificationCenter.default.addObserver(
-            forName: Notification.Name("dismissStartMenuWindow"),
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
+        _ = NotificationCenter.default.addObserver(forName: Notification.Name("triggerAeroStartMenu"), object: nil, queue: .main) { [weak self] notification in
+            self?.toggleModernStartMenuPopover(notification)
+        }
+        _ = NotificationCenter.default.addObserver(forName: Notification.Name("dismissStartMenuWindow"), object: nil, queue: .main) { [weak self] _ in
             self?.forceCloseStartMenuPopover()
         }
-        
-        _ = NotificationCenter.default.addObserver(
-            forName: Notification.Name("triggerAeroAppearanceLab"),
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
-            self?.presentOrbCustomizerPopover()
-        }
-        // 🎯 THE LIVE MULTI-MONITOR WORKSPACE OBSERVER:
-        // Listens to our custom notification pass and recalibrates multi-screen panels instantly!
-        _ = NotificationCenter.default.addObserver(
-            forName: Notification.Name("AeroBarMultiDisplayChanged"),
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
+        _ = NotificationCenter.default.addObserver(forName: Notification.Name("AeroBarMultiDisplayChanged"), object: nil, queue: .main) { [weak self] _ in
             self?.recalibrateWindowGeometry()
         }
     }
     
+    // 🎯 THE FIX: Issue 1, 4, and 5 - Target Topologies and Smart Child Monitor Gateways
     @objc private func toggleModernStartMenuPopover(_ notification: Notification) {
-            if let existingWindow = modernStartWindow, existingWindow.isVisible {
-                forceCloseStartMenuPopover()
-                return
-            }
+        if let existingWindow = modernStartWindow, existingWindow.isVisible {
+            forceCloseStartMenuPopover()
+            return
+        }
+        
+        if NSDate().timeIntervalSince1970 - lastDismissalTime < 0.25 { return }
+        
+        guard let baseWindow = window as? AeroBarPanel else { return }
+        
+        let targetScreen = notification.userInfo?["targetScreen"] as? NSScreen ?? NSScreen.main ?? NSScreen.screens[0]
+        let isRecsEnabled = AeroBarSettings.shared.showRecommendations
+        let menuWidth: CGFloat = isRecsEnabled ? 980 : 740
+        let menuHeight: CGFloat = 520
+        
+        let screenFrame = targetScreen.frame
+        let startMenuRect = NSRect(
+            x: screenFrame.origin.x + 16,
+            y: screenFrame.origin.y + 62,
+            width: menuWidth,
+            height: menuHeight
+        )
+        
+        let overlayPanel = AeroStartMenuPanel(
+            contentRect: startMenuRect,
+            styleMask: [.borderless, .nonactivatingPanel],
+            backing: .buffered,
+            defer: false
+        )
+        
+        overlayPanel.isOpaque = false
+        overlayPanel.backgroundColor = NSColor.clear
+        overlayPanel.hasShadow = true
+        overlayPanel.ignoresMouseEvents = false
+        
+        overlayPanel.setFrame(startMenuRect, display: true, animate: false)
+        overlayPanel.level = NSWindow.Level(Int(CGWindowLevelForKey(.dockWindow)) + 3)
+        
+        // 🎯 BUG 4 FIX: Dropped .canJoinAllSpaces so macOS respects explicit target space routing
+        overlayPanel.collectionBehavior = [
+            NSWindow.CollectionBehavior.ignoresCycle,
+            NSWindow.CollectionBehavior.stationary,
+            NSWindow.CollectionBehavior.fullScreenAuxiliary
+        ]
+        
+        let hostingView = NSHostingView(rootView: AeroStartMenuView())
+        hostingView.frame = NSRect(x: 0, y: 0, width: menuWidth, height: menuHeight)
+        hostingView.autoresizingMask = [.width, .height]
+        overlayPanel.contentView?.addSubview(hostingView)
+        
+        overlayPanel.contentView?.wantsLayer = true
+        overlayPanel.contentView?.layer?.cornerRadius = 18
+        overlayPanel.contentView?.layer?.masksToBounds = true
+        
+        self.modernStartWindow = overlayPanel
+        
+        // 🎯 BUG 4 FIX: Inheriting target workspaces correctly via AppKit layout hierarchy instead of active OS space overrides
+        if targetScreen != NSScreen.screens.first,
+           let matchingSecondary = secondaryAeroPanels.first(where: { $0.frame.origin.x == targetScreen.frame.origin.x }) {
+            matchingSecondary.addChildWindow(overlayPanel, ordered: .above)
+            overlayPanel.makeKeyAndOrderFront(nil)
+        } else {
+            overlayPanel.makeKeyAndOrderFront(nil)
+        }
+        
+        // 🎯 BUG 1 & 5 FIX: Whitelisting nested Settings Popovers inherently built off the primary layout
+        self.localClickMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] event in
+            guard let self = self, let activeMenuWindow = self.modernStartWindow else { return event }
             
-            if NSDate().timeIntervalSince1970 - lastDismissalTime < 0.25 { return }
-            
-            guard let baseWindow = window as? AeroBarPanel else { return }
-            
-            // 🎯 FIX: Safely unpack target display notification parameters
-            let targetScreen = notification.userInfo?["targetScreen"] as? NSScreen ?? NSScreen.main ?? NSScreen.screens[0]
-            let isRecsEnabled = AeroBarSettings.shared.showRecommendations
-            let menuWidth: CGFloat = isRecsEnabled ? 980 : 740
-            let menuHeight: CGFloat = 520
-            
-            let screenFrame = targetScreen.frame
-            let startMenuRect = NSRect(
-                x: screenFrame.origin.x + 16,
-                y: screenFrame.origin.y + 62,
-                width: menuWidth,
-                height: menuHeight
-            )
-            
-            let overlayPanel = AeroStartMenuPanel(
-                contentRect: startMenuRect,
-                styleMask: [.borderless, .nonactivatingPanel],
-                backing: .buffered,
-                defer: false
-            )
-            
-            overlayPanel.isOpaque = false
-            // 🎯 FIX: Use explicit NSColor type matching
-            overlayPanel.backgroundColor = NSColor.clear
-            overlayPanel.hasShadow = true
-            overlayPanel.ignoresMouseEvents = false
-            
-            // Assign explicit display space frames
-            overlayPanel.setFrame(startMenuRect, display: true, animate: false)
-            overlayPanel.level = NSWindow.Level(Int(CGWindowLevelForKey(.dockWindow)) + 3)
-            
-            // 🎯 FIX: Provide full explicit option set types
-            overlayPanel.collectionBehavior = [
-                NSWindow.CollectionBehavior.canJoinAllSpaces,
-                NSWindow.CollectionBehavior.ignoresCycle,
-                NSWindow.CollectionBehavior.stationary,
-                NSWindow.CollectionBehavior.fullScreenAuxiliary
-            ]
-            
-            let hostingView = NSHostingView(rootView: AeroStartMenuView())
-            hostingView.frame = NSRect(x: 0, y: 0, width: menuWidth, height: menuHeight)
-            hostingView.autoresizingMask = [.width, .height]
-            overlayPanel.contentView?.addSubview(hostingView)
-            
-            overlayPanel.contentView?.wantsLayer = true
-            overlayPanel.contentView?.layer?.cornerRadius = 18
-            overlayPanel.contentView?.layer?.masksToBounds = true
-            
-            self.modernStartWindow = overlayPanel
-            
-            // 🎯 FIX: Use self as typed sender instead of uncontextual nil
-            overlayPanel.orderFront(self)
-            
-            NSApp.activate(ignoringOtherApps: true)
-            
-            self.localClickMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] event in
-                guard let self = self, let activeMenuWindow = self.modernStartWindow else { return event }
-                if event.windowNumber == activeMenuWindow.windowNumber || event.windowNumber == baseWindow.windowNumber {
-                    return event
-                }
-                DispatchQueue.main.async { self.forceCloseStartMenuPopover() }
+            let isInsideMenu = event.windowNumber == activeMenuWindow.windowNumber
+            let isInsideBase = event.windowNumber == baseWindow.windowNumber
+            let isChildOfMenu = activeMenuWindow.childWindows?.contains(where: { $0.windowNumber == event.windowNumber }) ?? false
+            let isSecondaryPanel = self.secondaryAeroPanels.contains(where: { $0.windowNumber == event.windowNumber })
+
+            if isInsideMenu || isInsideBase || isChildOfMenu || isSecondaryPanel {
                 return event
             }
             
-            self.globalClickMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] event in
-                guard let self = self, let activeMenuWindow = self.modernStartWindow else { return }
-                if event.windowNumber != activeMenuWindow.windowNumber && event.windowNumber != baseWindow.windowNumber {
-                    DispatchQueue.main.async { self.forceCloseStartMenuPopover() }
-                }
+            DispatchQueue.main.async { self.forceCloseStartMenuPopover() }
+            return event
+        }
+        
+        self.globalClickMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] event in
+            guard let self = self, let activeMenuWindow = self.modernStartWindow else { return }
+            
+            let isInsideMenu = event.windowNumber == activeMenuWindow.windowNumber
+            let isInsideBase = event.windowNumber == baseWindow.windowNumber
+            let isChildOfMenu = activeMenuWindow.childWindows?.contains(where: { $0.windowNumber == event.windowNumber }) ?? false
+            let isSecondaryPanel = self.secondaryAeroPanels.contains(where: { $0.windowNumber == event.windowNumber })
+
+            if !isInsideMenu && !isInsideBase && !isChildOfMenu && !isSecondaryPanel {
+                DispatchQueue.main.async { self.forceCloseStartMenuPopover() }
             }
         }
+    }
+    
     @objc private func forceCloseStartMenuPopover() {
         lastDismissalTime = NSDate().timeIntervalSince1970
         if let monitor = localClickMonitor { NSEvent.removeMonitor(monitor); self.localClickMonitor = nil }
         if let monitor = globalClickMonitor { NSEvent.removeMonitor(monitor); self.globalClickMonitor = nil }
         
         if let activeWindow = modernStartWindow {
-            // 🎯 THE FIX: Resign key status cleanly before walking away
             activeWindow.resignKey()
             activeWindow.orderOut(nil)
             self.modernStartWindow = nil
@@ -538,10 +501,7 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
                 var focusedWindowRef: CFTypeRef?
                 if AXUIElementCopyAttributeValue(appRef, kAXFocusedWindowAttribute as CFString, &focusedWindowRef) == .success {
                     activeWindowElement = (focusedWindowRef as! AXUIElement)
-                    
-                    DispatchQueue.main.async {
-                        AeroBarSettings.shared.currentSystemFocusedElement = activeWindowElement
-                    }
+                    DispatchQueue.main.async { AeroBarSettings.shared.currentSystemFocusedElement = activeWindowElement }
                 }
             }
             
@@ -549,13 +509,9 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
                 var isFullScreenRef: CFTypeRef?
                 if AXUIElementCopyAttributeValue(targetElement, "AXFullScreen" as CFString, &isFullScreenRef) == .success,
                    let isFullScreenValue = isFullScreenRef as? Bool {
-                    if isFullScreenValue {
-                        shouldHideForFullScreen = true
-                    }
+                    if isFullScreenValue { shouldHideForFullScreen = true }
                 }
                 
-                // 🎯 FIXED BOUNDING BOX CHECK: Exclude common browser bundles along with Finder
-                // to prevent expanded solo browser windows from mimicking full-screen modes.
                 let isBrowserOrShell = bundleID.contains("com.apple.finder") ||
                 bundleID.contains("google.chrome") ||
                 bundleID.contains("safari") ||
@@ -597,14 +553,6 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
         }
     }
     
-    @objc private func presentOrbCustomizerPopover() {
-        guard let panel = window as? AeroBarPanel, let viewModel = panel.contentView else { return }
-        if appearancePopover.isShown { appearancePopover.performClose(nil); return }
-        appearancePopover.contentViewController = NSHostingController(rootView: AeroBarAppearanceCustomizerView())
-        appearancePopover.behavior = .transient
-        appearancePopover.show(relativeTo: NSRect(x: 12, y: 0, width: 54, height: 54), of: viewModel, preferredEdge: .maxY)
-    }
-    
     private func startWindowArrangementDaemon(barHeightThreshold: CGFloat) {
         arrangementTimer?.invalidate()
         arrangementTimer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: true) { [weak self] _ in
@@ -612,19 +560,6 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
             var discoveredTabs: [WindowTab] = []
             let currentSettings = AeroBarSettings.shared
 
-            // ═══════════════════════════════════════════════════════════
-            // 🖱️ GLOBAL MOUSE-BUTTON GATE
-            // ═══════════════════════════════════════════════════════════
-            // If ANY mouse button is currently held down the user is
-            // dragging or resizing a window right now. We must not touch
-            // ANY window geometry during this time — doing so causes:
-            //   • Drag resistance / sticky barrier between displays
-            //   • Instant resize the moment a window crosses a display edge
-            //   • Window-server jitter / cursor desync
-            //
-            // This single check is the most reliable drag-detection
-            // available without AXUIElement polling per-window, and it
-            // is evaluated once per timer tick for zero per-window cost.
             let isMouseButtonHeld = NSEvent.pressedMouseButtons != 0
             
             for app in NSWorkspace.shared.runningApplications where app.activationPolicy == .regular && app.bundleIdentifier != Bundle.main.bundleIdentifier {
@@ -662,56 +597,42 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
                     let displayTitle = (titleRef as? String)?.isEmpty == false ? (titleRef as? String)! : (app.localizedName ?? "Window")
                     
                     let newTab = WindowTab(
-                        windowID: resolvedWindowID,
-                        processID: app.processIdentifier,
-                        appName: app.localizedName ?? "App",
-                        windowTitle: displayTitle,
-                        axElement: window,
-                        appIcon: app.icon ?? NSWorkspace.shared.icon(for: UTType.application)
-                    )
-                    
-                    if !discoveredTabs.contains(where: { $0.id == newTab.id }) { discoveredTabs.append(newTab) }
-                    if (minimizedRef as? Bool ?? false) || size.width <= 0 || size.height <= 0 { continue }
+                                            windowID: resolvedWindowID,
+                                            processID: app.processIdentifier,
+                                            appName: app.localizedName ?? "App",
+                                            windowTitle: displayTitle,
+                                            axElement: window,
+                                            appIcon: app.icon ?? NSWorkspace.shared.icon(for: UTType.application)
+                                        )
+                                        
+                                        let isMinimized = minimizedRef as? Bool ?? false
+                                        
+                                        // 🎯 THE CAPSLOCK GHOST-TAB FIX:
+                                        // macOS Sonoma injects the inline CapsLock indicator as a tiny physical window into Chromium apps.
+                                        // We MUST filter out these micro-windows (less than 80x80) BEFORE they get appended to the active tabs list.
+                                        if !isMinimized && (size.width < 80 || size.height < 80) { continue }
+                                        
+                                        if !discoveredTabs.contains(where: { $0.id == newTab.id }) { discoveredTabs.append(newTab) }
+                                        if isMinimized { continue }
 
-                    // ── COORDINATE SYSTEM NOTE ─────────────────────────────────
-                    // AX position (point.x / point.y): FLIPPED global space.
-                    //   Origin = top-left of primary screen. Y grows DOWN.
-                    // NSScreen.frame: COCOA global space.
-                    //   Origin = bottom-left of primary screen. Y grows UP.
-                    //
-                    // We convert AX → Cocoa once, then use Cocoa everywhere.
                     let primaryH = NSScreen.screens[0].frame.height
-                    // Cocoa Y of the window's TOP edge (higher value = higher on screen)
                     let cocoaTop    = primaryH - point.y
-                    // Cocoa Y of the window's BOTTOM edge
                     let cocoaBottom = cocoaTop - size.height
-                    // Full window rect in Cocoa space (matches NSScreen.frame space)
                     let cocoaRect = CGRect(x: point.x, y: cocoaBottom, width: size.width, height: size.height)
 
-                    // ── MOTION / DRAG DETECTION ────────────────────────────────
-                    // Track AX frame changes for the cooldown counter.
-                    // But the PRIMARY drag gate is the mouse-button check above —
-                    // frame-delta alone can miss micro-pauses mid-drag.
                     let axFrame = CGRect(x: point.x, y: point.y, width: size.width, height: size.height)
                     let lastAXFrame = self.previousWindowFrames[resolvedWindowID]
                     self.previousWindowFrames[resolvedWindowID] = axFrame
 
                     if isMouseButtonHeld || lastAXFrame != axFrame {
-                        // User is actively dragging — reset cooldown, never resize
                         self.windowStillCycleCount[resolvedWindowID] = 0
                         continue
                     }
 
-                    // ── POST-DROP SETTLING COOLDOWN ────────────────────────────
-                    // After the mouse is released the window needs a few ticks to
-                    // finish animating to its resting position before we measure it.
-                    // This prevents a false resize on the very first stationary frame.
                     let stillCount = (self.windowStillCycleCount[resolvedWindowID] ?? 0) + 1
                     self.windowStillCycleCount[resolvedWindowID] = stillCount
                     guard stillCount >= self.requiredStillCyclesBeforeResize else { continue }
 
-                    // ── WHICH SCREEN OWNS THIS WINDOW? ─────────────────────────
-                    // Largest-area intersection, all in Cocoa space.
                     let windowHostingScreen = NSScreen.screens.max(by: { a, b in
                         let aA = a.frame.intersection(cocoaRect).width * a.frame.intersection(cocoaRect).height
                         let aB = b.frame.intersection(cocoaRect).width * b.frame.intersection(cocoaRect).height
@@ -731,7 +652,6 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
 
                     let screenFrame = windowHostingScreen.frame
 
-                    // ── MAXIMIZATION / FULLSCREEN GUARD ───────────────────────
                     var subroleCheckRef: CFTypeRef?
                     if AXUIElementCopyAttributeValue(window, kAXSubroleAttribute as CFString, &subroleCheckRef) == .success,
                        (subroleCheckRef as? String) == "AXUnknown" { continue }
@@ -746,58 +666,31 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
 
                     guard !(isWidthMaximized && isHeightMaximized) && !isNativelyFullScreen else { continue }
 
-                    // ── BOTTOM FORBIDDEN ZONE ──────────────────────────────────
-                    // The AeroBar taskbar occupies the bottom `barHeightThreshold`
-                    // points of the hosting screen (in Cocoa space):
-                    //   forbidden zone: screenFrame.minY  →  screenFrame.minY + barHeightThreshold
-                    //
-                    // If the window's bottom edge dips below that line, trim it.
                     let bottomForbiddenY = screenFrame.minY + barHeightThreshold
-                    let bottomOverflow   = bottomForbiddenY - cocoaBottom   // > 0 means infringement
+                    let bottomOverflow   = bottomForbiddenY - cocoaBottom
 
-                    // ── TOP EDGE GUARD (NEW — fixes "title bar hidden behind display 1 taskbar") ──
-                    // When a window is dragged from display 1 DOWN to display 2, its
-                    // top edge can end up above screenFrame.maxY — i.e. still sitting
-                    // inside display 1's taskbar area. The user can't grab the title
-                    // bar to reposition it.
-                    //
-                    // The top of the hosting screen in Cocoa space is screenFrame.maxY.
-                    // If the window's top edge exceeds that, we must push the window
-                    // downward so its top lands just inside the screen.
-                    // (We leave a 1-pt margin so the title bar is always grabbable.)
-                    let topForbiddenY  = screenFrame.maxY          // Cocoa top of this screen
-                    let topOverflow    = cocoaTop - topForbiddenY  // > 0 means title bar is above the screen
+                    let topForbiddenY  = screenFrame.maxY
+                    let topOverflow    = cocoaTop - topForbiddenY
 
                     let needsBottomFix = bottomOverflow > 0
                     let needsTopFix    = topOverflow > 0
 
                     guard needsBottomFix || needsTopFix else { continue }
 
-                    // Start from current values and apply whichever corrections are needed.
                     var newHeight  = size.height
-                    var newAXOriginY = point.y   // AX Y of top-left (flipped, grows down)
+                    var newAXOriginY = point.y
 
                     if needsTopFix {
-                        // Push the window DOWN in AX space (increase point.y) so its
-                        // top edge lands exactly at the screen's top boundary.
-                        // In AX space: higher point.y = lower on screen.
-                        // cocoaTop - topForbiddenY = topOverflow → add that to point.y.
                         newAXOriginY = point.y + topOverflow
-
-                        // The window moved down, so its effective cocoaBottom also moved
-                        // down by the same amount. Recompute for the bottom check below.
                         let newCocoaBottom = cocoaBottom - topOverflow
                         let newBottomOverflow = bottomForbiddenY - newCocoaBottom
                         if newBottomOverflow > 0 {
-                            // After the position shift the window is still too tall — trim height too.
                             newHeight = size.height - newBottomOverflow
                         }
                     } else if needsBottomFix {
-                        // Only the bottom needs trimming — don't move the window, just shrink it.
                         newHeight = size.height - bottomOverflow
                     }
 
-                    // Write position first (if changed), then size.
                     if newAXOriginY != point.y {
                         var newOrigin = CGPoint(x: point.x, y: newAXOriginY)
                         if let posValue = AXValueCreate(.cgPoint, &newOrigin) {

@@ -5,40 +5,34 @@ struct WindowTabsScrollView: View {
     @ObservedObject var settings = AeroBarSettings.shared
     let onTabInteraction: (WindowTab) -> Void
     
-    // Dual-closure system for multi-target pinning destinations
     let onPinToStartMenu: (WindowTab) -> Void
     let onPinToAeroBar: (WindowTab) -> Void
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 4) {
-                                ForEach(settings.activeTabs, id: \.windowID) { tab in
-                                    // 🎯 THE FIX: Drop the standalone 'let' variable assignment here!
-                                    // Pass the boolean verification logic straight into your Button view.
-                                    Button(action: { onTabInteraction(tab) }) {
-                                        AppKitTabButtonView(
-                                            tab: tab,
-                                            isActive: settings.currentSystemFocusedElement != nil && CFEqual(tab.axElement, settings.currentSystemFocusedElement!)
-                                        )
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                    // Context Menu for Active Running Window Tiles
-                                    .contextMenu {
+                ForEach(settings.activeTabs, id: \.windowID) { tab in
+                    Button(action: { onTabInteraction(tab) }) {
+                        AppKitTabButtonView(
+                            tab: tab,
+                            isActive: settings.currentSystemFocusedElement != nil && CFEqual(tab.axElement, settings.currentSystemFocusedElement!)
+                        )
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .contextMenu {
+                        // 🎯 BUG 3 FIX: Removed the buggy emojis, using native SF Symbols
                         Button {
                             onPinToStartMenu(tab)
                         } label: {
-                            Label("📌 Pin to Start", systemImage: "square.grid.3x3.square")
+                            Label("Pin to Start", systemImage: "square.grid.3x3.square")
                         }
                         
                         Button {
                             onPinToAeroBar(tab)
                         } label: {
-                            Label("📌 Pin to Taskbar", systemImage: "dock.arrow.up.bars")
+                            Label("Pin to Taskbar", systemImage: "dock.arrow.up.bars")
                         }
                         
-                        // =======================================================
-                        // 👁️ TARGETED WINDOW VISIBILITY CONTROL (PINPOINT ONLY):
-                        // =======================================================
                         let isThisWindowLabelHidden = settings.manuallyHiddenWindowIDs.contains(tab.windowID)
                         
                         Button {
@@ -56,17 +50,12 @@ struct WindowTabsScrollView: View {
                             )
                         }
                         
-                        // =======================================================
-                        // 📥 INDIVIDUAL WINDOW CLOSE OPTION SHIFTED TO BOTTOM:
-                        // =======================================================
                         Divider()
                         
-                        // 🛑 CLOSE WINDOW ACTION: Calls underlying AX Framework vectors to click window close buttons
                         Button(role: .destructive) {
                             _ = AXUIElementCreateApplication(tab.processID)
                             var closeButtonRef: CFTypeRef?
                             
-                            // Query the specific layout handle for this targeted sub-window frame sheet
                             AXUIElementCopyAttributeValue(tab.axElement, kAXCloseButtonAttribute as CFString, &closeButtonRef)
                             
                             if let closeButton = closeButtonRef {
@@ -80,6 +69,21 @@ struct WindowTabsScrollView: View {
             }
             .padding(.horizontal, 4)
             .frame(height: 56)
+        }
+        // 🎯 BUG 2 FIX: Background layer intercepts modifier keystrokes (CapsLock) natively
+        .background(ModifierKeyFilterView())
+    }
+}
+
+// AppKit bridge layer to swallow CapsLock hardware flag changes natively
+struct ModifierKeyFilterView: NSViewRepresentable {
+    func makeNSView(context: Context) -> FilterView { return FilterView() }
+    func updateNSView(_ nsView: FilterView, context: Context) {}
+    
+    class FilterView: NSView {
+        override var acceptsFirstResponder: Bool { true }
+        override func flagsChanged(with event: NSEvent) {
+            // Silently swallow modifier flag events so they do not propagate
         }
     }
 }
