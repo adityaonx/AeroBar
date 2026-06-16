@@ -191,9 +191,12 @@ All settings persist across reboots.
 
 > **⚠️ Experimental Alpha** — AeroBar is a personal project in active development. It interacts with macOS system-level UI via Accessibility APIs. Use it knowing that and keep backups of anything important. No warranties, no guarantees of stability.
 
-Bug reports and feedback welcome via [GitHub Issues](https://github.com/adityaonx/AeroBar/issues).
+## 💬 Community & Feedback
 
----
+Have a feature request, a bug report, or just want to share your AeroBar setup? We use **GitHub Discussions** to keep the roadmap transparent and community-driven.
+
+*   **[Start a Discussion](https://github.com/adityaonx/AeroBar/discussions/new/choose)** — Use this for general questions, feedback, or sharing your ideas.
+*   **[Report a Bug](https://github.com/adityaonx/AeroBar/issues/new)** — Use the issue tracker for technical bugs (please include your macOS version and logs if possible).
 
 ## Built With
 

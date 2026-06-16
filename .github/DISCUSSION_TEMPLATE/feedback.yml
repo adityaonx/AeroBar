@@ -1,0 +1,13 @@
+name: 💡 Feature Request or Feedback
+description: Suggest an idea or give feedback on AeroBar
+title: "[Feedback]: "
+labels: ["ideas"]
+body:
+  - type: textarea
+    id: feedback
+    attributes:
+      label: What is your feedback or feature idea?
+      description: Be as detailed as possible.
+      placeholder: I would love to see...
+    validations:
+      required: true
