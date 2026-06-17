@@ -177,6 +177,13 @@ class AeroBarSettings: ObservableObject {
         ensureFinderDefaultPin()
         setupHighPerformanceSpotlightQuery()
         startPermissionHeartbeat()
+        // ── 🎯 THE LAUNCH TRIGGER FIX ────────────────────────────────
+                // Safely check configuration preference and wait out the login race condition
+                if UserDefaults.standard.bool(forKey: "checkUpdatesOnLaunch") || self.checkUpdatesOnLaunch {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                        AeroBarUpdateEngine.shared.checkForUpdatesSilently(showAlertIfAvailable: false)
+                    }
+                }
     }
     
     private func ensureFinderDefaultPin() {

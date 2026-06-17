@@ -149,46 +149,57 @@ final class AeroBarUpdateEngine: ObservableObject {
     private let githubLatestReleaseURL = URL(string: "https://api.github.com/repos/adityaonx/AeroBar/releases/latest")
     private var directDmgDownloadURL: URL?
 
-    // ── Called on launch and by "Check for Updates Now" button ─────
-    func checkForUpdatesSilently(showAlertIfAvailable: Bool = false) {
-        guard let url = githubLatestReleaseURL else { return }
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            guard let data = data else { return }
-            Task { @MainActor in
-                do {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let release = try decoder.decode(GitHubRelease.self, from: data)
-                    guard let rawTagName = release.tagName, let assetsList = release.assets else { return }
+    // ── Replace this method inside AeroBarUpdateEngine ─────
+        func checkForUpdatesSilently(showAlertIfAvailable: Bool = false) {
+            guard let url = githubLatestReleaseURL else { return }
+            
+            // 🎯 THE FIX: Construct a formal URLRequest to inject the required header fields
+            var request = URLRequest(url: url)
+            request.setValue("AeroBarApp-Updater", forHTTPHeaderField: "User-Agent")
+            request.cachePolicy = .reloadIgnoringLocalCacheData
+            
+            URLSession.shared.dataTask(with: request) { data, _, error in
+                if let error = error {
+                    print("[AeroBarUpdateEngine] Network error: \(error.localizedDescription)")
+                    return
+                }
+                guard let data = data else { return }
+                Task { @MainActor in
+                    do {
+                        let decoder = JSONDecoder()
+                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+                        let release = try decoder.decode(GitHubRelease.self, from: data)
+                        guard let rawTagName = release.tagName, let assetsList = release.assets else { return }
 
-                    let settings = AeroBarSettings.shared
-                    settings.latestChangelog = release.body ?? ""
+                        let settings = AeroBarSettings.shared
+                        settings.latestChangelog = release.body ?? ""
 
-                    if let dmgAsset = assetsList.first(where: { $0.name.lowercased().contains(".dmg") }) {
-                        self.directDmgDownloadURL = URL(string: dmgAsset.browserDownloadUrl)
-                    }
-
-                    let localVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0.0"
-                    let isNewer = rawTagName
-                        .replacingOccurrences(of: "v", with: "")
-                        .compare(localVersion, options: .numeric) == .orderedDescending
-
-                    if isNewer {
-                        settings.isUpdateAvailable = true
-                        settings.latestRemoteVersionString = rawTagName
-
-                        if settings.enableSilentUpdates {
-                            // User opted in to fully automatic silent updates — just do it
-                            self.downloadAndInstallUpdateSilently()
-                        } else {
-                            // Show the update popup with changelog
-                            self.presentUpdatePopup(version: rawTagName, changelog: settings.latestChangelog)
+                        if let dmgAsset = assetsList.first(where: { $0.name.lowercased().contains(".dmg") }) {
+                            self.directDmgDownloadURL = URL(string: dmgAsset.browserDownloadUrl)
                         }
-                    }
-                } catch { print("[AeroBarUpdateEngine] Decode error: \(error)") }
-            }
-        }.resume()
-    }
+
+                        let localVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0.0"
+                        let isNewer = rawTagName
+                            .replacingOccurrences(of: "v", with: "")
+                            .compare(localVersion, options: .numeric) == .orderedDescending
+
+                        if isNewer {
+                            settings.isUpdateAvailable = true
+                            settings.latestRemoteVersionString = rawTagName
+
+                            if settings.enableSilentUpdates {
+                                self.downloadAndInstallUpdateSilently()
+                            } else {
+                                self.presentUpdatePopup(version: rawTagName, changelog: settings.latestChangelog)
+                            }
+                        } else if !showAlertIfAvailable {
+                            // Keep track that we checked on launch successfully
+                            print("[AeroBarUpdateEngine] Already on the latest version: \(localVersion)")
+                        }
+                    } catch { print("[AeroBarUpdateEngine] Decode error: \(error)") }
+                }
+            }.resume()
+        }
 
     // ── Present the floating update alert panel ────────────────────
     @MainActor
