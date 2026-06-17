@@ -46,7 +46,7 @@ class AeroBarSettings: ObservableObject {
     
     private var metadataQuery: NSMetadataQuery?
     private var permissionHeartbeatTimer: Timer?
-    // Inside class AeroBarSettings: ObservableObject
+    
     @AppStorage("enableSilentUpdates") var enableSilentUpdates: Bool = false
     @AppStorage("showRecommendations") var showRecommendations: Bool = true
     @Published var latestChangelog: String = ""
@@ -58,13 +58,11 @@ class AeroBarSettings: ObservableObject {
     @Published var barHeight: CGFloat = 40
     @Published var displayTargetMode: DisplayTargetMode = .all {
         didSet {
-            // Broadcast structural topology shifts instantly to the layout controllers
             NotificationCenter.default.post(name: Notification.Name("AeroBarMultiDisplayChanged"), object: nil)
         }
     }
     @Published var showOnExternalDisplays: Bool = true {
         didSet {
-            // Broadcast globally so the window controller can update geometry instantly
             NotificationCenter.default.post(name: Notification.Name("AeroBarMultiDisplayChanged"), object: nil)
         }
     }
@@ -73,6 +71,32 @@ class AeroBarSettings: ObservableObject {
     @Published var hideWindowLabelsTemporarily: Bool = false
     @Published var edgePadding: CGFloat = 0
     @Published var activeTabs: [WindowTab] = []
+    
+    // ==========================================
+    // 🔮 ISOLATED START ORB THEME FIELDS
+    // ==========================================
+    @AppStorage("selectedOrbColorHex") var selectedOrbColorHex: String = "#FF453A"
+    @AppStorage("selectedOrbLogoColorHex") var selectedOrbLogoColorHex: String = "#FFFFFF" // 🎯 NEW: Persistent Logo Tint state token
+    @AppStorage("savedOrbPresets") var savedOrbPresetsString: String = "#00F3FF,#BF5AF2,#30D158,#FF453A"
+    
+    var parsedOrbPresets: [String] {
+        return savedOrbPresetsString.components(separatedBy: ",").filter { !$0.isEmpty }
+    }
+    
+    func appendOrbPreset(hex: String) {
+        var current = parsedOrbPresets
+        let cleanedHex = hex.uppercased().trimmingCharacters(in: .whitespacesAndNewlines)
+        if !current.contains(cleanedHex) {
+            current.append(cleanedHex)
+            savedOrbPresetsString = current.joined(separator: ",")
+        }
+    }
+    
+    func removeOrbPreset(hex: String) {
+        var current = parsedOrbPresets
+        current.removeAll(where: { $0.lowercased() == hex.lowercased() })
+        savedOrbPresetsString = current.joined(separator: ",")
+    }
     
     // ==========================================
     // 🚀 NATIVE REGISTERED LOGIN STATE ENGINE
@@ -105,7 +129,7 @@ class AeroBarSettings: ObservableObject {
     }
     
     @Published var checkUpdatesOnLaunch: Bool = true
-    @Published var updateFrequency: Int = 0 // 0 = Daily, 1 = Weekly
+    @Published var updateFrequency: Int = 0
     
     @Published var pinnedStartApps: [PinnedApp] = [] {
         didSet { savePinnedStartState() }
@@ -150,7 +174,7 @@ class AeroBarSettings: ObservableObject {
         self.showSetupWizard = !self.isAccessibilityEnabled
         
         loadPinnedStates()
-        ensureFinderDefaultPin() // FIXED: Injects standard system Finder defaults instantly
+        ensureFinderDefaultPin()
         setupHighPerformanceSpotlightQuery()
         startPermissionHeartbeat()
     }

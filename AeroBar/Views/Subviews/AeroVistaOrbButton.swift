@@ -2,25 +2,91 @@ import SwiftUI
 import AppKit
 
 struct AeroVistaOrbButton: View {
-    @StateObject private var settings = AeroBarSettings.shared
+    // 🎯 Changed to ObservedObject to listen live to external property data mutations
+    @ObservedObject private var settings = AeroBarSettings.shared
     @State private var isMouseHovering: Bool = false
     
     var body: some View {
         Button(action: {
-            // Broadcasts the modern Start Menu flyout signal instantly on interaction
             NotificationCenter.default.post(name: .triggerAeroStartMenu, object: nil)
         }) {
             ZStack {
-                // Instantiates your adaptive asset slices directly based on hover bounds tracking
-                Image(isMouseHovering ? "orb-hover" : "orb")
+                let baseColor = Color(settings.selectedOrbColorHex)
+                
+                // 1. Core Dynamic Glass Sphere Backing Matrix
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [Color.black.opacity(0.85), Color.black.opacity(0.4)],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+                    .shadow(color: Color.black.opacity(0.6), radius: isMouseHovering ? 4 : 2, x: 0, y: 1)
+                
+                // 2. High-Saturation Core Glow Engine (Bottom Infused Glow)
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [baseColor.opacity(0.95), baseColor.opacity(0.4), baseColor.opacity(0.0)],
+                            center: .init(x: 0.5, y: 0.85),
+                            startRadius: 0,
+                            endRadius: 15
+                        )
+                    )
+                    .blendMode(.screen)
+                
+                // 3. Ambient Internal Volumetric Fill Glow
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [baseColor.opacity(0.35), Color.clear],
+                            center: .center,
+                            startRadius: 0,
+                            endRadius: 16
+                        )
+                    )
+                
+                // 4. Structural Volumetric Edge Contrast Lip
+                Circle()
+                    .strokeBorder(
+                        LinearGradient(
+                            colors: [Color.black.opacity(0.4), Color.black.opacity(0.85)],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        ),
+                        lineWidth: 1.5
+                    )
+                
+                // 5. High-Contrast Templates Asset Layer Mask (Centers your exact Apple logo SVG)
+                Image("apple-logo")
+                    .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 32, height: 32) // Keeps the glossy sphere layout uniform and crisp
-                    .scaleEffect(isMouseHovering ? 1.05 : 1.0) // Subtle physics scaling on micro-interactions
-                    .animation(.spring(response: 0.22, dampingFraction: 0.65), value: isMouseHovering)
+                    .foregroundColor(Color(settings.selectedOrbLogoColorHex)) // 🎯 Dynamic Logo Tint Injection
+                    .frame(width: 13, height: 13)
+                    .offset(y: -0.5)
+                    .shadow(color: Color.black.opacity(0.35), radius: 1, x: 0, y: 1)
+                
+                // 6. Upper Crescent Reflection Gloss Bevel Specular Overlay
+                GeometryReader { geo in
+                    Ellipse()
+                        .fill(
+                            LinearGradient(
+                                colors: [Color.white.opacity(0.55), Color.white.opacity(0.05)],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                        .frame(width: geo.size.width * 0.76, height: geo.size.height * 0.36)
+                        .offset(x: geo.size.width * 0.12, y: geo.size.height * 0.04)
+                }
             }
-            .frame(width: 54, height: 54) // Keeps the hit target aligned with the bar layout bounds
-            .contentShape(Circle()) // Forces the mouse tracker boundary layout to remain perfectly circular
+            .frame(width: 31, height: 31)
+            .scaleEffect(isMouseHovering ? 1.05 : 1.0)
+            .animation(.spring(response: 0.22, dampingFraction: 0.65), value: isMouseHovering)
+            .frame(width: 54, height: 54)
+            .contentShape(Circle())
         }
         .buttonStyle(PlainButtonStyle())
         .onHover { hovering in

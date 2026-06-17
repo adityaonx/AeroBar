@@ -330,10 +330,10 @@ struct AeroStartMenuView: View {
         .background(
             ZStack {
                 VisualEffectBlurView(material: settings.selectedMaterial, blendingMode: .withinWindow, state: .active)
-                Color(hex: settings.tintColorHex)
+                Color(settings.tintColorHex)
                     .opacity(settings.backdropOpacity * 0.4)
                     .blendMode(.multiply)
-                Color(hex: settings.tintColorHex)
+                Color(settings.tintColorHex)
                     .opacity(settings.backdropOpacity * 0.3)
                     .blendMode(.overlay)
             }

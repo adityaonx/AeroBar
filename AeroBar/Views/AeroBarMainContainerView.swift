@@ -20,7 +20,7 @@ struct AeroBarMainContainerView: View {
                 )
                 .id(settings.blurMaterialRaw)
                 
-                Color(hex: settings.tintColorHex)
+                Color(settings.tintColorHex)
                     .opacity(settings.backdropOpacity)
                     .blendMode(.overlay)
                 
