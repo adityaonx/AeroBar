@@ -61,7 +61,25 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
     private var modernStartWindow: NSPanel?
     
     init() {
-        AeroBarUpdateEngine.shared.checkForUpdatesSilently()
+        // ── THROTTLED LAUNCH UPDATE CHECK ──────────────────────────────────────
+        // Respects the user's "Check for updates on launch" toggle and the
+        // Daily / Weekly frequency picker. We store the last-checked timestamp
+        // in UserDefaults and only fire the network call when the interval has elapsed.
+        let settings = AeroBarSettings.shared
+        if settings.checkUpdatesOnLaunch {
+            let lastCheckKey = "com.aerobar.lastUpdateCheckTimestamp"
+            let now = Date().timeIntervalSince1970
+            let lastCheck = UserDefaults.standard.double(forKey: lastCheckKey)
+            // updateFrequency: 0 = Daily (86400s), 1 = Weekly (604800s)
+            let interval: TimeInterval = settings.updateFrequency == 1 ? 604_800 : 86_400
+            if now - lastCheck >= interval {
+                UserDefaults.standard.set(now, forKey: lastCheckKey)
+                // Small delay so the taskbar panel is on screen when the popup appears
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    AeroBarUpdateEngine.shared.checkForUpdatesSilently()
+                }
+            }
+        }
         let screen = NSScreen.main ?? NSScreen.screens[0]
         let panel = AeroBarPanel(
             contentRect: NSRect(x: screen.frame.minX, y: screen.frame.minY, width: screen.frame.width, height: 56),

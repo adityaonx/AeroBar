@@ -47,7 +47,9 @@ class AeroBarSettings: ObservableObject {
     private var metadataQuery: NSMetadataQuery?
     private var permissionHeartbeatTimer: Timer?
     // Inside class AeroBarSettings: ObservableObject
+    @AppStorage("enableSilentUpdates") var enableSilentUpdates: Bool = false
     @AppStorage("showRecommendations") var showRecommendations: Bool = true
+    @Published var latestChangelog: String = ""
     @Published var cachedUserAvatar: CGImage? = nil
     @Published var isUpdateAvailable: Bool = false
     @Published var latestRemoteVersionString: String = ""
