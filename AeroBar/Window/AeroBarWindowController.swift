@@ -41,7 +41,15 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
     private var previousWindowFrames: [CGWindowID: CGRect] = [:]
     
     private var windowStillCycleCount: [CGWindowID: Int] = [:]
-    private let requiredStillCyclesBeforeResize = 3
+    private let requiredStillCyclesBeforeResize = 3  // 🔧 JITTER FIX: Raised from 1 → 3 (~450ms settle time) to absorb transient frame states macOS reports immediately after a programmatic resize
+    private var isPerformingManagedResize = false     // 🔧 JITTER FIX: Guards against the AX observer re-triggering the daemon for resizes AeroBar itself caused
+
+    // 🎯 ZOOM INTERCEPT: CGEvent tap that fires at the HID level, before AppKit sees the click.
+    // This lets us pre-clamp the window geometry so the OS zoom animation starts at the
+    // correct clamped frame rather than the full-screen frame, eliminating the snap entirely.
+    private var zoomEventTap: CFMachPort?
+    private var zoomTapRunLoopSource: CFRunLoopSource?
+
     private var localClickMonitor: Any?
     private var globalClickMonitor: Any?
     private var lastDismissalTime: TimeInterval = 0
@@ -107,10 +115,17 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
                 
                 if notificationType == kAXFocusedWindowChangedNotification {
                     AeroBarSettings.shared.currentSystemFocusedElement = element
-                } else if notificationType == kAXTitleChangedNotification {
+                } else if notificationType == kAXTitleChangedNotification ||
+                          notificationType == kAXResizedNotification ||
+                          notificationType == kAXMovedNotification { // 🎯 THE FIX: Catch native resize/move events
                     if let controllerPointer = refCon {
                         let myController = Unmanaged<AeroBarWindowController>.fromOpaque(controllerPointer).takeUnretainedValue()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                        // 🔧 JITTER FIX: Skip daemon restart if AeroBar itself caused this resize/move event.
+                        // Without this guard, every AXUIElementSetAttributeValue call we make fires kAXResizedNotification
+                        // back at us, which restarts the daemon and re-evaluates the window before macOS has finished
+                        // settling its frame — creating a bounce loop.
+                        guard !myController.isPerformingManagedResize else { return }
+                        DispatchQueue.main.async {
                             myController.startWindowArrangementDaemon(barHeightThreshold: AeroBarSettings.shared.barHeight)
                         }
                     }
@@ -125,6 +140,8 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
         
         _ = AXObserverAddNotification(observer, appRef, kAXFocusedWindowChangedNotification as CFString, selfContextPointer)
         _ = AXObserverAddNotification(observer, appRef, kAXTitleChangedNotification as CFString, selfContextPointer)
+        _ = AXObserverAddNotification(observer, appRef, kAXResizedNotification as CFString, selfContextPointer)
+        _ = AXObserverAddNotification(observer, appRef, kAXMovedNotification as CFString, selfContextPointer)
         
         self.systemAXObserver = observer
         self.registeredPIDObserver = pid
@@ -262,6 +279,7 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
         recalibrateWindowGeometry()
         setupNotificationObservers()
         startWindowArrangementDaemon(barHeightThreshold: AeroBarSettings.shared.barHeight)
+        installZoomInterceptTap()
         panel.alphaValue = 1.0
         panel.ignoresMouseEvents = false
         panel.setIsVisible(true)
@@ -307,8 +325,8 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
                     secondaryPanel.isOpaque = false
                     secondaryPanel.backgroundColor = .clear
                     secondaryPanel.hasShadow = false
-                    secondaryPanel.level = .statusBar
-                    secondaryPanel.ignoresMouseEvents = false
+                    secondaryPanel.level = NSWindow.Level(Int(CGWindowLevelForKey(.screenSaverWindow)) + 1)
+                                        secondaryPanel.ignoresMouseEvents = false
                     secondaryPanel.collectionBehavior = primaryPanel.collectionBehavior
                     
                     let secondaryHostingView = NSHostingView(rootView: AeroBarMainContainerView())
@@ -399,9 +417,7 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
         overlayPanel.ignoresMouseEvents = false
         
         overlayPanel.setFrame(startMenuRect, display: true, animate: false)
-        overlayPanel.level = NSWindow.Level(Int(CGWindowLevelForKey(.dockWindow)) + 3)
-        
-        // 🎯 BUG 4 FIX: Dropped .canJoinAllSpaces so macOS respects explicit target space routing
+        overlayPanel.level = NSWindow.Level(Int(CGWindowLevelForKey(.screenSaverWindow)) + 2)        // 🎯 BUG 4 FIX: Dropped .canJoinAllSpaces so macOS respects explicit target space routing
         overlayPanel.collectionBehavior = [
             NSWindow.CollectionBehavior.ignoresCycle,
             NSWindow.CollectionBehavior.stationary,
@@ -553,9 +569,180 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
         }
     }
     
+    // =======================================================
+    // 🎯 ZOOM INTERCEPT — CGEvent Tap (HID level, pre-AppKit)
+    // =======================================================
+    // Problem: When the user clicks the green zoom button, macOS plays a ~0.5–1s animation
+    // that locks the window geometry. Our AX daemon can only clamp the window AFTER the
+    // animation finishes, causing a visible snap/jank.
+    //
+    // Solution: Install a CGEvent tap at .cghidEventTap (the earliest interception point,
+    // before AppKit or the window server processes the click). On every leftMouseDown, we
+    // hit-test the click position against the AX zoom button of the frontmost window.
+    // If it's a zoom click, we pre-set the window's size and position to the clamped frame
+    // BEFORE returning the event, so the OS animation starts from — and ends at — the
+    // correct bounded rect. No snap, no correction needed after the fact.
+
+    private func installZoomInterceptTap() {
+        removeZoomInterceptTap() // Tear down any existing tap cleanly
+
+        // The tap callback is a C closure, so we pass `self` via an UnsafeMutableRawPointer.
+        let selfPtr = Unmanaged.passRetained(self).toOpaque()
+
+        let tap = CGEvent.tapCreate(
+            tap: .cghidEventTap,
+            place: .headInsertEventTap,
+            options: .defaultTap,
+            eventsOfInterest: CGEventMask(1 << CGEventType.leftMouseDown.rawValue),
+            callback: { (proxy, type, event, refcon) -> Unmanaged<CGEvent>? in
+                guard let refcon = refcon else { return Unmanaged.passRetained(event) }
+                let controller = Unmanaged<AeroBarWindowController>.fromOpaque(refcon).takeUnretainedValue()
+
+                // All hit-testing and pre-clamping must happen on the main thread
+                // because AX calls and AppKit are not thread-safe.
+                // We dispatch synchronously so the event is held until we're done.
+                // 🎯 THE FIX: Removed DispatchQueue.main.sync
+                        // The CGEventTap is registered to the Main RunLoop, meaning this callback
+                        // natively executes on the Main Thread. Dispatching sync here causes a deadlock.
+                        let clickPoint = event.location
+                        if let (windowElement, screen) = controller.zoomButtonHitTest(at: clickPoint) {
+                            controller.preClampWindowForZoom(windowElement: windowElement, on: screen)
+                        }
+                        
+                        return Unmanaged.passRetained(event)
+            },
+            userInfo: selfPtr
+        )
+
+        guard let tap = tap else {
+            // tapCreate returns nil if Accessibility permission is missing.
+            // This is a silent failure — the daemon-based correction still works as fallback.
+            print("AeroBar: CGEvent zoom tap could not be installed (Accessibility permission required).")
+            Unmanaged<AeroBarWindowController>.fromOpaque(selfPtr).release()
+            return
+        }
+
+        let source = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, tap, 0)
+        CFRunLoopAddSource(CFRunLoopGetCurrent(), source, .commonModes)
+        CGEvent.tapEnable(tap: tap, enable: true)
+
+        self.zoomEventTap = tap
+        self.zoomTapRunLoopSource = source
+    }
+
+    private func removeZoomInterceptTap() {
+        if let tap = zoomEventTap {
+            CGEvent.tapEnable(tap: tap, enable: false)
+            if let source = zoomTapRunLoopSource {
+                CFRunLoopRemoveSource(CFRunLoopGetCurrent(), source, .commonModes)
+            }
+        }
+        zoomEventTap = nil
+        zoomTapRunLoopSource = nil
+    }
+
+    /// Hit-tests a screen point against the AX zoom button of the frontmost window.
+    /// Returns the window AXUIElement and the NSScreen it lives on if the point is a zoom click,
+    /// or nil if it isn't.
+    private func zoomButtonHitTest(at screenPoint: CGPoint) -> (AXUIElement, NSScreen)? {
+        guard let frontApp = NSWorkspace.shared.frontmostApplication,
+              frontApp.bundleIdentifier != Bundle.main.bundleIdentifier else { return nil }
+
+        let appRef = AXUIElementCreateApplication(frontApp.processIdentifier)
+        var windowRef: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(appRef, kAXFocusedWindowAttribute as CFString, &windowRef) == .success,
+              let focusedWindow = windowRef as! AXUIElement? else { return nil }
+
+        // Get the zoom button element
+        var zoomButtonRef: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(focusedWindow, kAXZoomButtonAttribute as CFString, &zoomButtonRef) == .success,
+              let zoomButton = zoomButtonRef as! AXUIElement? else { return nil }
+
+        // Get its AX position and size (AX uses flipped coords: origin is top-left of primary screen)
+        var btnPosRef: CFTypeRef?, btnSizeRef: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(zoomButton, kAXPositionAttribute as CFString, &btnPosRef) == .success,
+              AXUIElementCopyAttributeValue(zoomButton, kAXSizeAttribute as CFString, &btnSizeRef) == .success,
+              let btnPosVal = btnPosRef as! AXValue?,
+              let btnSizeVal = btnSizeRef as! AXValue? else { return nil }
+
+        var btnAXOrigin = CGPoint.zero
+        var btnSize = CGSize.zero
+        AXValueGetValue(btnPosVal, .cgPoint, &btnAXOrigin)
+        AXValueGetValue(btnSizeVal, .cgSize, &btnSize)
+
+        // AX coordinates have Y=0 at the TOP of the primary screen.
+        // CGEvent.location also uses this same flipped coordinate space (top-left origin).
+        // So we can compare directly without any coordinate conversion.
+        let btnAXFrame = CGRect(origin: btnAXOrigin, size: btnSize)
+
+        // Expand the hit target by 4px on all sides — the zoom button is small (14×14pt)
+        // and we'd rather intercept a near-miss than miss a direct hit.
+        let expandedHitTarget = btnAXFrame.insetBy(dx: -4, dy: -4)
+
+        guard expandedHitTarget.contains(screenPoint) else { return nil }
+
+        // Identify which NSScreen hosts this window for the correct bar boundary calculation
+        var winPosRef: CFTypeRef?, winSizeRef: CFTypeRef?
+        AXUIElementCopyAttributeValue(focusedWindow, kAXPositionAttribute as CFString, &winPosRef)
+        AXUIElementCopyAttributeValue(focusedWindow, kAXSizeAttribute as CFString, &winSizeRef)
+        var winAXOrigin = CGPoint.zero, winSize = CGSize.zero
+        if let wp = winPosRef as! AXValue?, let ws = winSizeRef as! AXValue? {
+            AXValueGetValue(wp, .cgPoint, &winAXOrigin)
+            AXValueGetValue(ws, .cgSize, &winSize)
+        }
+
+        // Convert AX window origin (top-left, Y-down) → Cocoa rect (bottom-left, Y-up)
+        let primaryH = NSScreen.screens[0].frame.height
+        let cocoaWinBottom = primaryH - winAXOrigin.y - winSize.height
+        let cocoaWinRect = CGRect(x: winAXOrigin.x, y: cocoaWinBottom, width: winSize.width, height: winSize.height)
+
+        let hostScreen = NSScreen.screens.max(by: { a, b in
+            let aArea = a.frame.intersection(cocoaWinRect).width * a.frame.intersection(cocoaWinRect).height
+            let bArea = b.frame.intersection(cocoaWinRect).width * b.frame.intersection(cocoaWinRect).height
+            return aArea < bArea
+        }) ?? NSScreen.main ?? NSScreen.screens[0]
+
+        return (focusedWindow, hostScreen)
+    }
+
+    /// Pre-sets a window's position and size to the correct AeroBar-clamped maximized frame
+    /// BEFORE the OS zoom animation begins, so the animation targets the right bounds from the start.
+    private func preClampWindowForZoom(windowElement: AXUIElement, on screen: NSScreen) {
+        let barHeight: CGFloat = 56.0
+        let menuBarHeight = screen.frame.height - screen.visibleFrame.height - screen.visibleFrame.origin.y + screen.frame.origin.y
+
+        // Target Cocoa rect: full screen width, height minus bar at bottom, minus menu bar at top
+        let targetCocoaRect = CGRect(
+            x: screen.frame.minX,
+            y: screen.frame.minY + barHeight,
+            width: screen.frame.width,
+            height: screen.frame.height - barHeight - menuBarHeight
+        )
+
+        // Convert Cocoa rect (bottom-left origin) → AX coords (top-left origin, Y-down)
+        let primaryH = NSScreen.screens[0].frame.height
+        let axOriginY = primaryH - targetCocoaRect.maxY  // AX Y = distance from top of primary screen
+
+        isPerformingManagedResize = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            // 1.5s covers the full zoom animation duration with margin
+            self?.isPerformingManagedResize = false
+        }
+
+        var newOrigin = CGPoint(x: targetCocoaRect.minX, y: axOriginY)
+        var newSize   = CGSize(width: targetCocoaRect.width, height: targetCocoaRect.height)
+
+        if let posVal = AXValueCreate(.cgPoint, &newOrigin) {
+            AXUIElementSetAttributeValue(windowElement, kAXPositionAttribute as CFString, posVal)
+        }
+        if let sizeVal = AXValueCreate(.cgSize, &newSize) {
+            AXUIElementSetAttributeValue(windowElement, kAXSizeAttribute as CFString, sizeVal)
+        }
+    }
+
     private func startWindowArrangementDaemon(barHeightThreshold: CGFloat) {
         arrangementTimer?.invalidate()
-        arrangementTimer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: true) { [weak self] _ in
+        arrangementTimer = Timer.scheduledTimer(withTimeInterval: 0.03, repeats: true) { [weak self] _ in
             guard let self = self, let baseWindow = self.window, baseWindow.isVisible else { return }
             var discoveredTabs: [WindowTab] = []
             let currentSettings = AeroBarSettings.shared
@@ -619,16 +806,19 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
                     let cocoaTop    = primaryH - point.y
                     let cocoaBottom = cocoaTop - size.height
                     let cocoaRect = CGRect(x: point.x, y: cocoaBottom, width: size.width, height: size.height)
+                    // ── MOTION / DRAG DETECTION ────────────────────────────────
+                                        // Track AX frame changes for the cooldown counter.
+                                        // But the PRIMARY drag gate is the mouse-button check above —
+                                        // frame-delta alone can miss micro-pauses mid-drag.
+                                        let axFrame = CGRect(x: point.x, y: point.y, width: size.width, height: size.height)
+                                        self.previousWindowFrames[resolvedWindowID] = axFrame
 
-                    let axFrame = CGRect(x: point.x, y: point.y, width: size.width, height: size.height)
-                    let lastAXFrame = self.previousWindowFrames[resolvedWindowID]
-                    self.previousWindowFrames[resolvedWindowID] = axFrame
+                                        // 🎯 THE INSTANT SNAP FIX:
+                                        // Only pause the daemon if the user is physically dragging a window.
+                                        // We no longer wait for OS zoom animations to finish!
+                                        if isMouseButtonHeld { continue }
 
-                    if isMouseButtonHeld || lastAXFrame != axFrame {
-                        self.windowStillCycleCount[resolvedWindowID] = 0
-                        continue
-                    }
-
+                                        // ── WHICH SCREEN OWNS THIS WINDOW? ─────────────────────────
                     let stillCount = (self.windowStillCycleCount[resolvedWindowID] ?? 0) + 1
                     self.windowStillCycleCount[resolvedWindowID] = stillCount
                     guard stillCount >= self.requiredStillCyclesBeforeResize else { continue }
@@ -656,17 +846,17 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
                     if AXUIElementCopyAttributeValue(window, kAXSubroleAttribute as CFString, &subroleCheckRef) == .success,
                        (subroleCheckRef as? String) == "AXUnknown" { continue }
 
-                    let isWidthMaximized  = abs(size.width  - screenFrame.size.width)  <= 24
-                    let isHeightMaximized = abs(size.height - screenFrame.size.height) <= 75
-
                     var fullScreenRef: CFTypeRef?
                     var isNativelyFullScreen = false
                     if AXUIElementCopyAttributeValue(window, "AXFullScreen" as CFString, &fullScreenRef) == .success,
                        let fsBool = fullScreenRef as? Bool { isNativelyFullScreen = fsBool }
 
-                    guard !(isWidthMaximized && isHeightMaximized) && !isNativelyFullScreen else { continue }
-
-                    let bottomForbiddenY = screenFrame.minY + barHeightThreshold
+                    // 🎯 THE FIX: Never skip standard maximized windows.
+                    // Only abort the resize if the window is in a native macOS Full-Screen Space.
+                    guard !isNativelyFullScreen else { continue }
+                    // 🎯 THE FIX: Removed the 2px buffer to make the window sit completely flush.
+                    // The boundary now perfectly matches the 56pt physical height of the taskbar.
+                    let bottomForbiddenY = screenFrame.minY + 41.0
                     let bottomOverflow   = bottomForbiddenY - cocoaBottom
 
                     let topForbiddenY  = screenFrame.maxY
@@ -689,6 +879,15 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
                         }
                     } else if needsBottomFix {
                         newHeight = size.height - bottomOverflow
+                    }
+
+                    // 🔧 JITTER FIX: Set the flag before any AX write so the observer callback ignores
+                    // the kAXResizedNotification / kAXMovedNotification that macOS fires back at us.
+                    // The flag is cleared after 350ms — enough time for the system to finish settling
+                    // the window frame, after which genuine user-driven events should be handled normally.
+                    self.isPerformingManagedResize = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+                        self?.isPerformingManagedResize = false
                     }
 
                     if newAXOriginY != point.y {

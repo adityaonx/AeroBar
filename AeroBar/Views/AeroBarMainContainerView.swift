@@ -8,6 +8,8 @@ struct AeroBarMainContainerView: View {
     
     @State private var draggedPinnedItem: PinnedApp? = nil
     
+    // Note: Local search workspace parameters removed as requested
+    
     var body: some View {
         ZStack(alignment: .leading) {
             ZStack {
@@ -50,13 +52,20 @@ struct AeroBarMainContainerView: View {
             .offset(y: 8)
             
             HStack(spacing: 0) {
+                /// =======================================================
+                // 🎯 FIX: AIRTIGHT MULTI-DISPLAY ORB HOVER ENGINE
+                // =======================================================
                 GeometryReader { geo in
                     Button(action: {
+                        // 1. Snag the absolute, real-time mouse position on your display topology matrix
                         let mouseCoordinates = NSEvent.mouseLocation
+                        
+                        // 2. Scan every connected screen surface to find which one bounds the click origin
                         let activeTargetScreen = NSScreen.screens.first { screen in
                             screen.frame.contains(mouseCoordinates)
                         } ?? NSScreen.main ?? NSScreen.screens[0]
                         
+                        // 3. Dispatch the definitive screen object directly to your window controller pipeline
                         NotificationCenter.default.post(
                             name: Notification.Name("triggerAeroStartMenu"),
                             object: nil,
@@ -69,12 +78,15 @@ struct AeroBarMainContainerView: View {
                 }
                 .frame(width: 54, height: 54)
                 
+                // Conditionals hide/show the search glass dynamically based on stored settings
                 if settings.showSearchIcon {
                     SpotlightSearchField()
                         .padding(.leading, 10)
                         .padding(.trailing, 12)
+                        // Smoothly slides and fades out when toggled from the Customizer panel
                         .transition(.move(edge: .leading).combined(with: .opacity))
                 } else {
+                    // Maintain a tiny layout spacer cushion when the field collapses
                     Spacer()
                         .frame(width: 12)
                 }
@@ -128,23 +140,11 @@ struct AeroBarMainContainerView: View {
         AXUIElementCopyAttributeValue(tab.axElement, kAXMinimizedAttribute as CFString, &minimizedRef)
         let isMinimized = (minimizedRef as? Bool) ?? false
         
-        let runningApp = NSRunningApplication(processIdentifier: tab.processID)
-        
-        // 🎯 THE FIX: kAXRaiseAction and activateIgnoringOtherApps are now systematically injected
-        // into every single conditional execution path to guarantee single-tap visual raising.
         if isMinimized {
             AXUIElementSetAttributeValue(tab.axElement, kAXMinimizedAttribute as CFString, false as CFTypeRef)
             AXUIElementSetAttributeValue(tab.axElement, kAXMainAttribute as CFString, true as CFTypeRef)
             AXUIElementSetAttributeValue(appRef, kAXFrontmostAttribute as CFString, true as CFTypeRef)
-            AXUIElementPerformAction(tab.axElement, kAXRaiseAction as CFString)
-            if let app = runningApp {
-    if #available(macOS 14.0, *) {
-        NSApp.yieldActivation(to: app)
-        app.activate()
-    } else {
-        app.activate(options: .activateIgnoringOtherApps)
-    }
-}
+            if let runningApp = NSRunningApplication(processIdentifier: tab.processID) { runningApp.activate() }
         } else {
             if let frontmostApp = NSWorkspace.shared.frontmostApplication, frontmostApp.processIdentifier == tab.processID {
                 var focusedWindowRef: CFTypeRef?
@@ -155,15 +155,6 @@ struct AeroBarMainContainerView: View {
                         AXUIElementSetAttributeValue(tab.axElement, kAXMinimizedAttribute as CFString, true as CFTypeRef)
                     } else {
                         AXUIElementSetAttributeValue(tab.axElement, kAXMainAttribute as CFString, true as CFTypeRef)
-                        AXUIElementPerformAction(tab.axElement, kAXRaiseAction as CFString)
-                        if let app = runningApp {
-    if #available(macOS 14.0, *) {
-        NSApp.yieldActivation(to: app)
-        app.activate()
-    } else {
-        app.activate(options: .activateIgnoringOtherApps)
-    }
-}
                     }
                 } else {
                     var mainRef: CFTypeRef?
@@ -172,29 +163,12 @@ struct AeroBarMainContainerView: View {
                         AXUIElementSetAttributeValue(tab.axElement, kAXMinimizedAttribute as CFString, true as CFTypeRef)
                     } else {
                         AXUIElementSetAttributeValue(tab.axElement, kAXMainAttribute as CFString, true as CFTypeRef)
-                        AXUIElementPerformAction(tab.axElement, kAXRaiseAction as CFString)
-                        if let app = runningApp {
-    if #available(macOS 14.0, *) {
-        NSApp.yieldActivation(to: app)
-        app.activate()
-    } else {
-        app.activate(options: .activateIgnoringOtherApps)
-    }
-}
                     }
                 }
             } else {
                 AXUIElementSetAttributeValue(tab.axElement, kAXMainAttribute as CFString, true as CFTypeRef)
                 AXUIElementSetAttributeValue(appRef, kAXFrontmostAttribute as CFString, true as CFTypeRef)
-                AXUIElementPerformAction(tab.axElement, kAXRaiseAction as CFString)
-                if let app = runningApp {
-    if #available(macOS 14.0, *) {
-        NSApp.yieldActivation(to: app)
-        app.activate()
-    } else {
-        app.activate(options: .activateIgnoringOtherApps)
-    }
-}
+                if let runningApp = NSRunningApplication(processIdentifier: tab.processID) { runningApp.activate() }
             }
         }
     }
@@ -209,9 +183,13 @@ struct AeroBarMainContainerView: View {
     }
     
     private func launchOrActivatePinnedApp(bundleID: String) {
+        // 1. Resolve the physical application URL on the local disk file system
         guard let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) else { return }
+        
+        // 2. Resolve target screen parameters using current taskbar instance frame context location
         _ = NSApp.keyWindow?.screen ?? NSScreen.main ?? NSScreen.screens[0]
         
+        // 3. Check if the target application is already executing in the active process tree
         if let runningApp = NSWorkspace.shared.runningApplications.first(where: { $0.bundleIdentifier == bundleID }) {
             let appRef = AXUIElementCreateApplication(runningApp.processIdentifier)
             var windowListRef: CFTypeRef?
@@ -235,6 +213,7 @@ struct AeroBarMainContainerView: View {
                 validWindowsToProcess = windows
             }
             
+            // FALLBACK: If there are absolutely zero open windows, launch a fresh workspace instance
             if validWindowsToProcess.isEmpty {
                 let config = NSWorkspace.OpenConfiguration()
                 config.createsNewApplicationInstance = false
@@ -251,6 +230,7 @@ struct AeroBarMainContainerView: View {
                 return
             }
             
+            // Determine application focus status profile layers
             let isAppCurrentlyFrontmost = NSWorkspace.shared.frontmostApplication?.processIdentifier == runningApp.processIdentifier
             
             if isAppCurrentlyFrontmost {
@@ -266,12 +246,8 @@ struct AeroBarMainContainerView: View {
                 }
             }
             
-            if #available(macOS 14.0, *) {
-                NSApp.yieldActivation(to: runningApp)
-                runningApp.activate()
-            } else {
-                runningApp.activate(options: .activateIgnoringOtherApps)
-            }
+            // Surface all windows backwards onto foreground stack layers
+            runningApp.activate()
             
             for window in validWindowsToProcess.reversed() {
                 AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, false as CFTypeRef)
@@ -280,6 +256,7 @@ struct AeroBarMainContainerView: View {
             return
         }
         
+        // 4. BASE INITIALIZATION: Process is dead. Configure pristine workspace display parameters.
         let baseConfig = NSWorkspace.OpenConfiguration()
         baseConfig.createsNewApplicationInstance = false
         

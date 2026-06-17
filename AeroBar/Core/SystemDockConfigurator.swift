@@ -3,29 +3,31 @@ import AppKit
 
 struct SystemDockConfigurator {
     static func enforceAeroDockDefaults() {
-        DispatchQueue.global(qos: .userInitiated).async {
-            print("Executing complete layout suite updates...")
-            
-            // 1. Core Layout Configuration Pass
-            runDirectCommand(launchPath: "/usr/bin/defaults", arguments: ["write", "com.apple.dock", "orientation", "-string", "bottom"])
-            runDirectCommand(launchPath: "/usr/bin/defaults", arguments: ["write", "com.apple.dock", "tilesize", "-int", "16"])
-            runDirectCommand(launchPath: "/usr/bin/defaults", arguments: ["write", "com.apple.dock", "autohide", "-bool", "false"])
-            runDirectCommand(launchPath: "/usr/bin/defaults", arguments: ["write", "com.apple.dock", "magnification", "-bool", "false"])
-            runDirectCommand(launchPath: "/usr/bin/defaults", arguments: ["write", "com.apple.dock", "mineffect", "-string", "scale"])
-            
-            // 2. FIXED: Use Native AppKit API instead of AppleScript/killall
-            // This safely cycles the Dock process without triggering legacy framework errors.
-            let dockApps = NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.dock")
-            if let dockTarget = dockApps.first {
-                // Command the Dock process to terminate cleanly via the workspace manager
-                dockTarget.terminate()
-                print("Native workspace signal sent to Dock process tree.")
-            } else {
-                // Failsafe fallback only if the workspace manager can't locate the bundle ID handle
-                runDirectCommand(launchPath: "/usr/bin/killall", arguments: ["Dock"])
+            DispatchQueue.global(qos: .userInitiated).async {
+                print("Executing complete layout suite updates...")
+                
+                // 1. Core Layout Configuration Pass
+                runDirectCommand(launchPath: "/usr/bin/defaults", arguments: ["write", "com.apple.dock", "orientation", "-string", "bottom"])
+                
+                // 🎯 THE NUCLEAR FIX: Banish the Dock off-screen permanently
+                // We turn autohide ON, but set the hover trigger delay to 1000 seconds.
+                // The Dock will sink below the screen and refuse to ever pop back up.
+                runDirectCommand(launchPath: "/usr/bin/defaults", arguments: ["write", "com.apple.dock", "autohide", "-bool", "true"])
+                runDirectCommand(launchPath: "/usr/bin/defaults", arguments: ["write", "com.apple.dock", "autohide-delay", "-float", "1000"])
+                
+                // Clean up any old magnification hacks to keep the defaults clean
+                runDirectCommand(launchPath: "/usr/bin/defaults", arguments: ["delete", "com.apple.dock", "magnification"])
+                runDirectCommand(launchPath: "/usr/bin/defaults", arguments: ["delete", "com.apple.dock", "largesize"])
+                
+                // 2. Safely cycle the Dock process
+                let dockApps = NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.dock")
+                if let dockTarget = dockApps.first {
+                    dockTarget.terminate()
+                } else {
+                    runDirectCommand(launchPath: "/usr/bin/killall", arguments: ["Dock"])
+                }
             }
         }
-    }
     
     private static func runDirectCommand(launchPath: String, arguments: [String]) {
         let task = Process()
