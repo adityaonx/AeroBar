@@ -43,6 +43,7 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
     private var windowStillCycleCount: [CGWindowID: Int] = [:]
     private let requiredStillCyclesBeforeResize = 3  // 🔧 JITTER FIX: Raised from 1 → 3 (~450ms settle time) to absorb transient frame states macOS reports immediately after a programmatic resize
     private var isPerformingManagedResize = false     // 🔧 JITTER FIX: Guards against the AX observer re-triggering the daemon for resizes AeroBar itself caused
+    var isSuppressingFocusUpdates = false              // 🎯 FLICKER FIX: Suppresses AX focus callbacks during window restore animation
 
     // 🎯 ZOOM INTERCEPT: CGEvent tap that fires at the HID level, before AppKit sees the click.
     // This lets us pre-clamp the window geometry so the OS zoom animation starts at the
@@ -132,6 +133,10 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
                 let notificationType = notification as String
                 
                 if notificationType == kAXFocusedWindowChangedNotification {
+                    if let refConPtr = refCon {
+                        let ctrl = Unmanaged<AeroBarWindowController>.fromOpaque(refConPtr).takeUnretainedValue()
+                        guard !ctrl.isSuppressingFocusUpdates else { return }
+                    }
                     AeroBarSettings.shared.currentSystemFocusedElement = element
                 } else if notificationType == kAXTitleChangedNotification ||
                           notificationType == kAXResizedNotification ||
@@ -387,6 +392,12 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
             self?.evaluateFullScreenVisibilityState()
         }
         
+        _ = NotificationCenter.default.addObserver(forName: Notification.Name("suppressFocusUpdates"), object: nil, queue: .main) { [weak self] _ in
+            self?.isSuppressingFocusUpdates = true
+        }
+        _ = NotificationCenter.default.addObserver(forName: Notification.Name("resumeFocusUpdates"), object: nil, queue: .main) { [weak self] _ in
+            self?.isSuppressingFocusUpdates = false
+        }
         _ = NotificationCenter.default.addObserver(forName: Notification.Name("triggerAeroStartMenu"), object: nil, queue: .main) { [weak self] notification in
             self?.toggleModernStartMenuPopover(notification)
         }
@@ -453,14 +464,11 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
         
         self.modernStartWindow = overlayPanel
         
-        // 🎯 BUG 4 FIX: Inheriting target workspaces correctly via AppKit layout hierarchy instead of active OS space overrides
-        if targetScreen != NSScreen.screens.first,
-           let matchingSecondary = secondaryAeroPanels.first(where: { $0.frame.origin.x == targetScreen.frame.origin.x }) {
-            matchingSecondary.addChildWindow(overlayPanel, ordered: .above)
-            overlayPanel.makeKeyAndOrderFront(nil)
-        } else {
-            overlayPanel.makeKeyAndOrderFront(nil)
-        }
+        // 🎯 BUG 2 FIX: Do NOT use child-window parenting for display targeting — macOS ignores it cross-display.
+        // Instead: explicitly set frame on the target screen, then orderFront. The frame origin alone
+        // is sufficient for macOS to route the window to the correct display.
+        overlayPanel.setFrame(startMenuRect, display: false, animate: false)
+        overlayPanel.makeKeyAndOrderFront(nil)
         
         // 🎯 BUG 1 & 5 FIX: Whitelisting nested Settings Popovers inherently built off the primary layout
         self.localClickMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] event in

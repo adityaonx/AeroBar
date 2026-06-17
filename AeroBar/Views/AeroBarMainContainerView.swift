@@ -141,10 +141,25 @@ struct AeroBarMainContainerView: View {
         let isMinimized = (minimizedRef as? Bool) ?? false
         
         if isMinimized {
+            // Pre-lock the focused element and suppress AX observer callbacks for the duration
+            // of the unminimize animation. Finder (and some other apps) fire
+            // kAXFocusedWindowChangedNotification with a transient Desktop/nil element during
+            // restore, which clears the active-tab highlight and causes flicker.
+            AeroBarSettings.shared.currentSystemFocusedElement = tab.axElement
+            NotificationCenter.default.post(name: Notification.Name("suppressFocusUpdates"), object: nil)
             AXUIElementSetAttributeValue(tab.axElement, kAXMinimizedAttribute as CFString, false as CFTypeRef)
-            AXUIElementSetAttributeValue(tab.axElement, kAXMainAttribute as CFString, true as CFTypeRef)
-            AXUIElementSetAttributeValue(appRef, kAXFrontmostAttribute as CFString, true as CFTypeRef)
-            if let runningApp = NSRunningApplication(processIdentifier: tab.processID) { runningApp.activate() }
+            let axElem = tab.axElement
+            let pid = tab.processID
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.22) {
+                let delayedAppRef = AXUIElementCreateApplication(pid)
+                AXUIElementSetAttributeValue(delayedAppRef, kAXFrontmostAttribute as CFString, true as CFTypeRef)
+                AXUIElementSetAttributeValue(axElem, kAXMainAttribute as CFString, true as CFTypeRef)
+                NSRunningApplication(processIdentifier: pid)?.activate()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                    AeroBarSettings.shared.currentSystemFocusedElement = axElem
+                    NotificationCenter.default.post(name: Notification.Name("resumeFocusUpdates"), object: nil)
+                }
+            }
         } else {
             if let frontmostApp = NSWorkspace.shared.frontmostApplication, frontmostApp.processIdentifier == tab.processID {
                 var focusedWindowRef: CFTypeRef?
@@ -186,8 +201,9 @@ struct AeroBarMainContainerView: View {
         // 1. Resolve the physical application URL on the local disk file system
         guard let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) else { return }
         
-        // 2. Resolve target screen parameters using current taskbar instance frame context location
-        _ = NSApp.keyWindow?.screen ?? NSScreen.main ?? NSScreen.screens[0]
+        // 2. Resolve target screen: use current mouse position to determine which aerobar was clicked
+        let mouseLocation = NSEvent.mouseLocation
+        let targetScreen = NSScreen.screens.first { $0.frame.contains(mouseLocation) } ?? NSScreen.main ?? NSScreen.screens[0]
         
         // 3. Check if the target application is already executing in the active process tree
         if let runningApp = NSWorkspace.shared.runningApplications.first(where: { $0.bundleIdentifier == bundleID }) {
@@ -218,14 +234,22 @@ struct AeroBarMainContainerView: View {
                 let config = NSWorkspace.OpenConfiguration()
                 config.createsNewApplicationInstance = false
                 if bundleID == "com.apple.finder" {
-                    NSWorkspace.shared.open(URL(fileURLWithPath: NSHomeDirectory()), configuration: config, completionHandler: nil)
+                    NSWorkspace.shared.open(URL(fileURLWithPath: NSHomeDirectory()), configuration: config) { app, _ in
+                        if targetScreen != NSScreen.screens.first {
+                            self.moveNewWindowToScreen(targetScreen, app: app, bundleID: bundleID)
+                        }
+                    }
                 } else {
                     if bundleID == "com.google.Chrome" || bundleID == "com.microsoft.edgemac" || bundleID == "com.microsoft.VSCode" {
                         config.arguments = ["--new-window"]
                     } else if bundleID == "org.mozilla.firefox" {
                         config.arguments = ["-new-window"]
                     }
-                    NSWorkspace.shared.openApplication(at: appURL, configuration: config, completionHandler: nil)
+                    NSWorkspace.shared.openApplication(at: appURL, configuration: config) { app, _ in
+                        if targetScreen != NSScreen.screens.first {
+                            self.moveNewWindowToScreen(targetScreen, app: app, bundleID: bundleID)
+                        }
+                    }
                 }
                 return
             }
@@ -261,9 +285,51 @@ struct AeroBarMainContainerView: View {
         baseConfig.createsNewApplicationInstance = false
         
         if bundleID == "com.apple.finder" {
-            NSWorkspace.shared.open(URL(fileURLWithPath: NSHomeDirectory()), configuration: baseConfig, completionHandler: nil)
+            NSWorkspace.shared.open(URL(fileURLWithPath: NSHomeDirectory()), configuration: baseConfig) { app, _ in
+                if targetScreen != NSScreen.screens.first {
+                    self.moveNewWindowToScreen(targetScreen, app: app, bundleID: bundleID)
+                }
+            }
         } else {
-            NSWorkspace.shared.openApplication(at: appURL, configuration: baseConfig, completionHandler: nil)
+            NSWorkspace.shared.openApplication(at: appURL, configuration: baseConfig) { app, _ in
+                if targetScreen != NSScreen.screens.first {
+                    self.moveNewWindowToScreen(targetScreen, app: app, bundleID: bundleID)
+                }
+            }
         }
+    }
+    
+    /// Moves the newest window of an app to the target screen, just above the aerobar.
+    private func moveNewWindowToScreen(_ screen: NSScreen, app: NSRunningApplication?, bundleID: String) {
+        guard let app = app else { return }
+        let primaryH = NSScreen.screens[0].frame.height
+        var attempts = 0
+        func attempt() {
+            let appRef = AXUIElementCreateApplication(app.processIdentifier)
+            var windowListRef: CFTypeRef?
+            guard AXUIElementCopyAttributeValue(appRef, kAXWindowsAttribute as CFString, &windowListRef) == .success,
+                  let windows = windowListRef as? [AXUIElement], let window = windows.first else {
+                if attempts < 15 {
+                    attempts += 1
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { attempt() }
+                }
+                return
+            }
+            var sizeRef: CFTypeRef?
+            var winSize = CGSize(width: 800, height: 600)
+            if AXUIElementCopyAttributeValue(window, kAXSizeAttribute as CFString, &sizeRef) == .success,
+               let sizeVal = sizeRef as! AXValue? {
+                AXValueGetValue(sizeVal, .cgSize, &winSize)
+            }
+            // Center on target screen above aerobar (Cocoa: Y-up; AX: Y-down from top of primary)
+            let cocoaX = screen.frame.minX + (screen.frame.width - winSize.width) / 2
+            let cocoaY = screen.frame.minY + 56 + 24
+            let axY = primaryH - cocoaY - winSize.height
+            var newOrigin = CGPoint(x: cocoaX, y: max(0, axY))
+            if let posVal = AXValueCreate(.cgPoint, &newOrigin) {
+                AXUIElementSetAttributeValue(window, kAXPositionAttribute as CFString, posVal)
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { attempt() }
     }
 }
