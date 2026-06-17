@@ -36,4 +36,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             }
     }
+    // 🎯 THE FIX: macOS fires this function natively right before the app process dies
+        func applicationWillTerminate(_ notification: Notification) {
+            print("[AeroBar Core] Application terminating. Restoring system state...")
+            
+            // Return the Dock to its normal, usable state
+            SystemDockConfigurator.restoreSystemDockDefaults()
+        }
 }

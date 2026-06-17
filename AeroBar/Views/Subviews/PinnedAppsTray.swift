@@ -11,14 +11,13 @@ struct PinnedAppsTray: View {
         HStack(spacing: 8) {
             ForEach(settings.pinnedBarApps) { app in
                 Button(action: {
-                    // Left-click activates smart switching or initial instantiation
                     onLaunch(app.bundleIdentifier)
                 }) {
                     Image(nsImage: app.appIcon)
                         .resizable()
                         .frame(width: 24, height: 24)
                         .contextMenu {
-                            // 🛠️ Action 1: Force New Window (With a safe structural exception for Finder)
+                            // 🛠️ Action 1: Force New Window
                             Button {
                                 if app.bundleIdentifier == "com.apple.finder" {
                                     NSWorkspace.shared.open(URL(fileURLWithPath: NSHomeDirectory()), configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -37,7 +36,7 @@ struct PinnedAppsTray: View {
                                 Label("Open New Window", systemImage: "macwindow.badge.plus")
                             }
                             
-                            // 🕶️ Action 2: Incognito / Private Session Matrix (Hidden for Finder)
+                            // 🕶️ Action 2: Incognito / Private Session
                             if app.bundleIdentifier != "com.apple.finder" && (app.bundleIdentifier == "com.google.Chrome" || app.bundleIdentifier == "com.apple.Safari" || app.bundleIdentifier == "com.microsoft.edgemac") {
                                 Button {
                                     if let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: app.bundleIdentifier) {
@@ -56,12 +55,9 @@ struct PinnedAppsTray: View {
                                 }
                             }
                             
-                            // =======================================================
-                            // 📥 DESTRUCTIVE / CLOSING ACTIONS (ORDER REARRANGED)
-                            // =======================================================
+                            // 📌 Unpin and Close Actions
                             Divider()
                             
-                            // 📌 Second to Last: Unpin Action (Hidden for Finder)
                             if app.bundleIdentifier != "com.apple.finder" {
                                 Button(role: .destructive) {
                                     onUnpin(app.bundleIdentifier)
@@ -70,7 +66,6 @@ struct PinnedAppsTray: View {
                                 }
                             }
                             
-                            // 🛑 Very Bottom: Close App Utility (Hidden for Finder)
                             if let runningInstance = NSWorkspace.shared.runningApplications.first(where: { $0.bundleIdentifier == app.bundleIdentifier }),
                                app.bundleIdentifier != "com.apple.finder" {
                                 Button {

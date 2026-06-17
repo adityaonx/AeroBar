@@ -28,7 +28,20 @@ struct SystemDockConfigurator {
                 }
             }
         }
-    
+    static func restoreSystemDockDefaults() {
+            print("Restoring native macOS Dock defaults...")
+            
+            // 🎯 THE FIX: Delete the artificial delay key so the Dock returns to its normal speed
+            runDirectCommand(launchPath: "/usr/bin/defaults", arguments: ["delete", "com.apple.dock", "autohide-delay"])
+            
+            // Restart the Dock one last time to apply the restoration
+            let dockApps = NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.dock")
+            if let dockTarget = dockApps.first {
+                dockTarget.terminate()
+            } else {
+                runDirectCommand(launchPath: "/usr/bin/killall", arguments: ["Dock"])
+            }
+        }
     private static func runDirectCommand(launchPath: String, arguments: [String]) {
         let task = Process()
         task.launchPath = launchPath

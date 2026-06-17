@@ -146,7 +146,7 @@ final class AeroBarUpdateEngine: ObservableObject {
             let fileManager = FileManager.default
             let currentRunningAppURL = Bundle.main.bundleURL // e.g., /Applications/AeroBar.app
             let targetApplicationsFolderURL = currentRunningAppURL.deletingLastPathComponent() // /Applications
-            
+            let backupAppURL = targetApplicationsFolderURL.appendingPathComponent("AeroBar_Old_Backup.app")
             // System level sub-shell mount script executions
             let mountPointName = "AeroBar_Update_Mount_\(UUID().uuidString.prefix(6))"
             let mountTargetLocation = "/Volumes/\(mountPointName)"
@@ -164,7 +164,6 @@ final class AeroBarUpdateEngine: ObservableObject {
                 
                 // Generate secure isolated unique transaction backup filename
                 let backupAppURL = targetApplicationsFolderURL.appendingPathComponent("AeroBar_Old_Backup.app")
-                try? fileManager.removeItem(at: backupAppURL)
                 
                 do {
                     // 1. Move currently running bundle to local temp backup location
@@ -173,8 +172,7 @@ final class AeroBarUpdateEngine: ObservableObject {
                     // 2. Copy the fresh update bundle file straight into place
                     try fileManager.copyItem(at: URL(fileURLWithPath: sourceAppPath), to: currentRunningAppURL)
                     
-                    // 3. Purge historical transaction backup file securely
-                    try? fileManager.removeItem(at: backupAppURL)
+                    // 3. (Removed internal deletion because macOS locks the running executable)
                     
                     DispatchQueue.main.async { self.installationStatusMessage = "Finalizing update installation..." }
                 } catch {
@@ -196,13 +194,21 @@ final class AeroBarUpdateEngine: ObservableObject {
             // Clean local storage cache temp path boundaries
             try? fileManager.removeItem(at: dmgLocation)
             
-            // 🎯 STEP 4: HOT RELAUNCH REBOOT TRANSITION
+            // 🎯 STEP 4: HOT RELAUNCH REBOOT TRANSITION & CLEANUP
             DispatchQueue.main.async {
                 self.installationStatusMessage = "Relaunching system environment..."
                 
+                // We use a detached shell script to wait for the current app to completely die,
+                // then forcefully delete the locked backup folder, and finally open the new app.
+                let cleanupAndRelaunchScript = """
+                sleep 1.5
+                rm -rf "\(backupAppURL.path)"
+                open "\(currentRunningAppURL.path)"
+                """
+                
                 let relaunchProcess = Process()
-                relaunchProcess.launchPath = "/usr/bin/open"
-                relaunchProcess.arguments = [currentRunningAppURL.path]
+                relaunchProcess.launchPath = "/bin/sh"
+                relaunchProcess.arguments = ["-c", cleanupAndRelaunchScript]
                 relaunchProcess.launch()
                 
                 // Kill current outdated executing thread environment safely
