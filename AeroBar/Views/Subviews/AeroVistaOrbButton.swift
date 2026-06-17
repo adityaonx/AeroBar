@@ -8,7 +8,22 @@ struct AeroVistaOrbButton: View {
     
     var body: some View {
         Button(action: {
-            NotificationCenter.default.post(name: .triggerAeroStartMenu, object: nil)
+            // Compute the target display from the mouse position AT CLICK TIME — this is
+            // always accurate because the user physically clicked the orb on a specific
+            // display's aerobar. (This logic used to live in a second, OUTER Button wrapped
+            // around this one in AeroBarMainContainerView.swift — but nesting a Button inside
+            // another Button's label means SwiftUI only ever fires the INNERMOST button's
+            // action, so that outer logic silently never ran. Every click fell through to
+            // toggleModernStartMenuPopover's NSScreen.main fallback — "the screen with the
+            // currently focused/key window" — which is why the start menu only ever opened on
+            // display 2 once mac's actual focus had already moved there.)
+            let mouse = NSEvent.mouseLocation
+            let targetScreen = NSScreen.screens.first { $0.frame.contains(mouse) } ?? NSScreen.main ?? NSScreen.screens[0]
+            NotificationCenter.default.post(
+                name: .triggerAeroStartMenu,
+                object: nil,
+                userInfo: ["targetScreen": targetScreen]
+            )
         }) {
             ZStack {
                 let baseColor = Color(settings.selectedOrbColorHex)

@@ -464,11 +464,12 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
         
         self.modernStartWindow = overlayPanel
         
-        // 🎯 BUG 2 FIX: Do NOT use child-window parenting for display targeting — macOS ignores it cross-display.
-        // Instead: explicitly set frame on the target screen, then orderFront. The frame origin alone
-        // is sufficient for macOS to route the window to the correct display.
-        overlayPanel.setFrame(startMenuRect, display: false, animate: false)
-        overlayPanel.makeKeyAndOrderFront(nil)
+        // 🎯 DISPLAY FIX: orderFront first (macOS places by frame origin = correct display),
+        // then makeKey separately. Calling makeKeyAndOrderFront in one shot lets macOS
+        // pull the panel to the active space (the display where the focused app lives)
+        // rather than respecting the frame's display origin.
+        overlayPanel.orderFront(nil)
+        overlayPanel.makeKey()
         
         // 🎯 BUG 1 & 5 FIX: Whitelisting nested Settings Popovers inherently built off the primary layout
         self.localClickMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] event in
@@ -832,19 +833,25 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
                     let cocoaTop    = primaryH - point.y
                     let cocoaBottom = cocoaTop - size.height
                     let cocoaRect = CGRect(x: point.x, y: cocoaBottom, width: size.width, height: size.height)
-                    // ── MOTION / DRAG DETECTION ────────────────────────────────
-                                        // Track AX frame changes for the cooldown counter.
-                                        // But the PRIMARY drag gate is the mouse-button check above —
-                                        // frame-delta alone can miss micro-pauses mid-drag.
-                                        let axFrame = CGRect(x: point.x, y: point.y, width: size.width, height: size.height)
-                                        self.previousWindowFrames[resolvedWindowID] = axFrame
+                    // ── MOTION / DRAG / ANIMATION DETECTION ─────────────────────
+                    // 🎯 THE BOUNCE FIX: previousWindowFrames was being written every tick but
+                    // never actually compared — stillCount just counted ticks unconditionally,
+                    // so once warmed up (~90ms after launch) it clamped on EVERY tick regardless
+                    // of whether the window was moving. During the native double-click-titlebar
+                    // zoom animation (which reports a new frame every tick for ~0.3–0.5s), that
+                    // meant we fought the OS frame-by-frame: it animates outward, we clamp it
+                    // back, it animates again — the visible "bounce". stillCount must only
+                    // advance when this tick's frame is identical to last tick's.
+                    let axFrame = CGRect(x: point.x, y: point.y, width: size.width, height: size.height)
+                    let wasStillLastTick = self.previousWindowFrames[resolvedWindowID] == axFrame
+                    self.previousWindowFrames[resolvedWindowID] = axFrame
 
-                                        // 🎯 THE INSTANT SNAP FIX:
-                                        // Only pause the daemon if the user is physically dragging a window.
-                                        // We no longer wait for OS zoom animations to finish!
-                                        if isMouseButtonHeld { continue }
+                    if isMouseButtonHeld || !wasStillLastTick {
+                        self.windowStillCycleCount[resolvedWindowID] = 0
+                        continue
+                    }
 
-                                        // ── WHICH SCREEN OWNS THIS WINDOW? ─────────────────────────
+                    // ── WHICH SCREEN OWNS THIS WINDOW? ─────────────────────────
                     let stillCount = (self.windowStillCycleCount[resolvedWindowID] ?? 0) + 1
                     self.windowStillCycleCount[resolvedWindowID] = stillCount
                     guard stillCount >= self.requiredStillCyclesBeforeResize else { continue }
@@ -906,6 +913,20 @@ final class AeroBarWindowController: NSWindowController, NSPopoverDelegate {
                     } else if needsBottomFix {
                         newHeight = size.height - bottomOverflow
                     }
+
+                    // 🎯 STRICT SAME-DISPLAY GUARD: this correction must only ever change Y/height
+                    // (vertical clamp against the bar), never X — so a window can never end up
+                    // hosted on a different screen than the one it was already on. Belt-and-
+                    // suspenders check: if the corrected rect's majority-overlap screen would
+                    // somehow differ from windowHostingScreen, abort the write rather than risk
+                    // moving the window onto another display.
+                    let correctedCocoaRect = CGRect(x: point.x, y: needsTopFix ? cocoaBottom - topOverflow : cocoaBottom, width: size.width, height: newHeight)
+                    let correctedHostScreen = NSScreen.screens.max(by: { a, b in
+                        let aA = a.frame.intersection(correctedCocoaRect).width * a.frame.intersection(correctedCocoaRect).height
+                        let bA = b.frame.intersection(correctedCocoaRect).width * b.frame.intersection(correctedCocoaRect).height
+                        return aA < bA
+                    })
+                    guard correctedHostScreen == windowHostingScreen else { continue }
 
                     // 🔧 JITTER FIX: Set the flag before any AX write so the observer callback ignores
                     // the kAXResizedNotification / kAXMovedNotification that macOS fires back at us.

@@ -57,15 +57,19 @@ struct AeroBarMainContainerView: View {
                 // =======================================================
                 GeometryReader { geo in
                     Button(action: {
-                        // 1. Snag the absolute, real-time mouse position on your display topology matrix
-                        let mouseCoordinates = NSEvent.mouseLocation
-                        
-                        // 2. Scan every connected screen surface to find which one bounds the click origin
+                        // Use the mouse position AT click time — this is always accurate because
+                        // the user physically clicked the orb on a specific display's aerobar.
+                        // The previous focused-window-on-main-display issue was a red herring:
+                        // NSEvent.mouseLocation IS on the correct display when the orb is clicked.
+                        // The real fix is ensuring the start menu window frame is set BEFORE
+                        // makeKeyAndOrderFront so macOS routes it to the right display.
+                        let mouse = NSEvent.mouseLocation
+                        // Find the aerobar panel that contains this mouse click —
+                        // walk NSApp windows to find whose frame's minY matches an aerobar position
                         let activeTargetScreen = NSScreen.screens.first { screen in
-                            screen.frame.contains(mouseCoordinates)
+                            screen.frame.contains(mouse)
                         } ?? NSScreen.main ?? NSScreen.screens[0]
                         
-                        // 3. Dispatch the definitive screen object directly to your window controller pipeline
                         NotificationCenter.default.post(
                             name: Notification.Name("triggerAeroStartMenu"),
                             object: nil,
@@ -198,138 +202,128 @@ struct AeroBarMainContainerView: View {
     }
     
     private func launchOrActivatePinnedApp(bundleID: String) {
-        // 1. Resolve the physical application URL on the local disk file system
         guard let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) else { return }
         
-        // 2. Resolve target screen: use current mouse position to determine which aerobar was clicked
+        // Determine which display's aerobar was clicked
         let mouseLocation = NSEvent.mouseLocation
         let targetScreen = NSScreen.screens.first { $0.frame.contains(mouseLocation) } ?? NSScreen.main ?? NSScreen.screens[0]
         
-        // 3. Check if the target application is already executing in the active process tree
+        // Helper: open a new window and move it to targetScreen
+        func openNewWindow() {
+            // Snapshot existing window AXUIElements (not just a count) so the new window can be
+            // identified by diffing — same robust approach as PinnedAppsTray's fixed path.
+            var preLaunchWindows: [AXUIElement] = []
+            if let running = NSWorkspace.shared.runningApplications.first(where: { $0.bundleIdentifier == bundleID }) {
+                let ref = AXUIElementCreateApplication(running.processIdentifier)
+                var wRef: CFTypeRef?
+                if AXUIElementCopyAttributeValue(ref, kAXWindowsAttribute as CFString, &wRef) == .success,
+                   let wins = wRef as? [AXUIElement] { preLaunchWindows = wins }
+            }
+            let config = NSWorkspace.OpenConfiguration()
+            config.createsNewApplicationInstance = false
+            if bundleID == "com.apple.finder" {
+                NSWorkspace.shared.open(URL(fileURLWithPath: NSHomeDirectory()), configuration: config) { _, _ in
+                    PinnedAppsTray.moveAndResizeNewWindow(to: targetScreen, bundleIdentifier: bundleID, existingWindows: preLaunchWindows)
+                }
+            } else {
+                if bundleID == "com.google.Chrome" || bundleID == "com.microsoft.edgemac" || bundleID == "com.microsoft.VSCode" {
+                    config.arguments = ["--new-window"]
+                } else if bundleID == "org.mozilla.firefox" {
+                    config.arguments = ["-new-window"]
+                }
+                NSWorkspace.shared.openApplication(at: appURL, configuration: config) { _, _ in
+                    PinnedAppsTray.moveAndResizeNewWindow(to: targetScreen, bundleIdentifier: bundleID, existingWindows: preLaunchWindows)
+                }
+            }
+        }
+        
         if let runningApp = NSWorkspace.shared.runningApplications.first(where: { $0.bundleIdentifier == bundleID }) {
             let appRef = AXUIElementCreateApplication(runningApp.processIdentifier)
             var windowListRef: CFTypeRef?
-            
             AXUIElementCopyAttributeValue(appRef, kAXWindowsAttribute as CFString, &windowListRef)
             let windows = windowListRef as? [AXUIElement] ?? []
             
-            var validWindowsToProcess: [AXUIElement] = []
-            
+            var validWindows: [AXUIElement] = []
             if bundleID == "com.apple.finder" {
                 for window in windows {
                     var titleRef: CFTypeRef?
                     AXUIElementCopyAttributeValue(window, kAXTitleAttribute as CFString, &titleRef)
-                    let windowTitle = titleRef as? String ?? ""
-                    
-                    if !windowTitle.isEmpty && windowTitle != "Desktop" {
-                        validWindowsToProcess.append(window)
-                    }
+                    let t = titleRef as? String ?? ""
+                    if !t.isEmpty && t != "Desktop" { validWindows.append(window) }
                 }
             } else {
-                validWindowsToProcess = windows
+                validWindows = windows
             }
             
-            // FALLBACK: If there are absolutely zero open windows, launch a fresh workspace instance
-            if validWindowsToProcess.isEmpty {
-                let config = NSWorkspace.OpenConfiguration()
-                config.createsNewApplicationInstance = false
-                if bundleID == "com.apple.finder" {
-                    NSWorkspace.shared.open(URL(fileURLWithPath: NSHomeDirectory()), configuration: config) { app, _ in
-                        if targetScreen != NSScreen.screens.first {
-                            self.moveNewWindowToScreen(targetScreen, app: app, bundleID: bundleID)
-                        }
-                    }
-                } else {
-                    if bundleID == "com.google.Chrome" || bundleID == "com.microsoft.edgemac" || bundleID == "com.microsoft.VSCode" {
-                        config.arguments = ["--new-window"]
-                    } else if bundleID == "org.mozilla.firefox" {
-                        config.arguments = ["-new-window"]
-                    }
-                    NSWorkspace.shared.openApplication(at: appURL, configuration: config) { app, _ in
-                        if targetScreen != NSScreen.screens.first {
-                            self.moveNewWindowToScreen(targetScreen, app: app, bundleID: bundleID)
-                        }
-                    }
-                }
+            // No windows at all — open one
+            if validWindows.isEmpty {
+                openNewWindow()
                 return
             }
             
-            // Determine application focus status profile layers
-            let isAppCurrentlyFrontmost = NSWorkspace.shared.frontmostApplication?.processIdentifier == runningApp.processIdentifier
-            
-            if isAppCurrentlyFrontmost {
-                var isAlreadyMinimizedRef: CFTypeRef?
-                AXUIElementCopyAttributeValue(validWindowsToProcess[0], kAXMinimizedAttribute as CFString, &isAlreadyMinimizedRef)
-                let isFirstWindowMinimized = isAlreadyMinimizedRef as? Bool ?? false
-                
-                if !isFirstWindowMinimized {
-                    for window in validWindowsToProcess {
-                        AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, true as CFTypeRef)
-                    }
-                    return
-                }
+            // Check if any existing window lives on targetScreen
+            let primaryH = NSScreen.screens[0].frame.height
+            let windowOnTargetScreen = validWindows.first { win in
+                var posRef: CFTypeRef?, sizeRef: CFTypeRef?
+                AXUIElementCopyAttributeValue(win, kAXPositionAttribute as CFString, &posRef)
+                AXUIElementCopyAttributeValue(win, kAXSizeAttribute as CFString, &sizeRef)
+                var pt = CGPoint.zero; var sz = CGSize.zero
+                if let pv = posRef as! AXValue? { AXValueGetValue(pv, .cgPoint, &pt) }
+                if let sv = sizeRef as! AXValue? { AXValueGetValue(sv, .cgSize, &sz) }
+                // Convert AX (Y-down) to Cocoa (Y-up)
+                let cocoaRect = CGRect(x: pt.x, y: primaryH - pt.y - sz.height, width: sz.width, height: sz.height)
+                return targetScreen.frame.intersects(cocoaRect)
             }
             
-            // Surface all windows backwards onto foreground stack layers
-            runningApp.activate()
-            
-            for window in validWindowsToProcess.reversed() {
-                AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, false as CFTypeRef)
-                AXUIElementPerformAction(window, "AXRaise" as CFString)
+            if let existingWindow = windowOnTargetScreen {
+                // Window already on targetScreen — toggle minimize or focus
+                let isAppFrontmost = NSWorkspace.shared.frontmostApplication?.processIdentifier == runningApp.processIdentifier
+                var minRef: CFTypeRef?
+                AXUIElementCopyAttributeValue(existingWindow, kAXMinimizedAttribute as CFString, &minRef)
+                let isMin = minRef as? Bool ?? false
+                
+                if isAppFrontmost && !isMin {
+                    // App is active on this screen — minimize
+                    AXUIElementSetAttributeValue(existingWindow, kAXMinimizedAttribute as CFString, true as CFTypeRef)
+                } else {
+                    // Restore/focus it
+                    if isMin {
+                        AeroBarSettings.shared.currentSystemFocusedElement = existingWindow
+                        NotificationCenter.default.post(name: Notification.Name("suppressFocusUpdates"), object: nil)
+                        AXUIElementSetAttributeValue(existingWindow, kAXMinimizedAttribute as CFString, false as CFTypeRef)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.22) {
+                            AXUIElementSetAttributeValue(existingWindow, kAXMainAttribute as CFString, true as CFTypeRef)
+                            AXUIElementSetAttributeValue(appRef, kAXFrontmostAttribute as CFString, true as CFTypeRef)
+                            runningApp.activate()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                                AeroBarSettings.shared.currentSystemFocusedElement = existingWindow
+                                NotificationCenter.default.post(name: Notification.Name("resumeFocusUpdates"), object: nil)
+                            }
+                        }
+                    } else {
+                        AXUIElementSetAttributeValue(existingWindow, kAXMainAttribute as CFString, true as CFTypeRef)
+                        AXUIElementPerformAction(existingWindow, "AXRaise" as CFString)
+                        runningApp.activate()
+                    }
+                }
+            } else {
+                // No window on targetScreen — open a new one there
+                openNewWindow()
             }
             return
         }
         
-        // 4. BASE INITIALIZATION: Process is dead. Configure pristine workspace display parameters.
+        // 4. BASE INITIALIZATION: Process is dead — launch fresh and move to targetScreen.
         let baseConfig = NSWorkspace.OpenConfiguration()
         baseConfig.createsNewApplicationInstance = false
-        
         if bundleID == "com.apple.finder" {
-            NSWorkspace.shared.open(URL(fileURLWithPath: NSHomeDirectory()), configuration: baseConfig) { app, _ in
-                if targetScreen != NSScreen.screens.first {
-                    self.moveNewWindowToScreen(targetScreen, app: app, bundleID: bundleID)
-                }
+            NSWorkspace.shared.open(URL(fileURLWithPath: NSHomeDirectory()), configuration: baseConfig) { _, _ in
+                PinnedAppsTray.moveAndResizeNewWindow(to: targetScreen, bundleIdentifier: bundleID, existingWindows: [])
             }
         } else {
-            NSWorkspace.shared.openApplication(at: appURL, configuration: baseConfig) { app, _ in
-                if targetScreen != NSScreen.screens.first {
-                    self.moveNewWindowToScreen(targetScreen, app: app, bundleID: bundleID)
-                }
+            NSWorkspace.shared.openApplication(at: appURL, configuration: baseConfig) { _, _ in
+                PinnedAppsTray.moveAndResizeNewWindow(to: targetScreen, bundleIdentifier: bundleID, existingWindows: [])
             }
         }
-    }
-    
-    /// Moves the newest window of an app to the target screen, just above the aerobar.
-    private func moveNewWindowToScreen(_ screen: NSScreen, app: NSRunningApplication?, bundleID: String) {
-        guard let app = app else { return }
-        let primaryH = NSScreen.screens[0].frame.height
-        var attempts = 0
-        func attempt() {
-            let appRef = AXUIElementCreateApplication(app.processIdentifier)
-            var windowListRef: CFTypeRef?
-            guard AXUIElementCopyAttributeValue(appRef, kAXWindowsAttribute as CFString, &windowListRef) == .success,
-                  let windows = windowListRef as? [AXUIElement], let window = windows.first else {
-                if attempts < 15 {
-                    attempts += 1
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { attempt() }
-                }
-                return
-            }
-            var sizeRef: CFTypeRef?
-            var winSize = CGSize(width: 800, height: 600)
-            if AXUIElementCopyAttributeValue(window, kAXSizeAttribute as CFString, &sizeRef) == .success,
-               let sizeVal = sizeRef as! AXValue? {
-                AXValueGetValue(sizeVal, .cgSize, &winSize)
-            }
-            // Center on target screen above aerobar (Cocoa: Y-up; AX: Y-down from top of primary)
-            let cocoaX = screen.frame.minX + (screen.frame.width - winSize.width) / 2
-            let cocoaY = screen.frame.minY + 56 + 24
-            let axY = primaryH - cocoaY - winSize.height
-            var newOrigin = CGPoint(x: cocoaX, y: max(0, axY))
-            if let posVal = AXValueCreate(.cgPoint, &newOrigin) {
-                AXUIElementSetAttributeValue(window, kAXPositionAttribute as CFString, posVal)
-            }
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { attempt() }
     }
 }
