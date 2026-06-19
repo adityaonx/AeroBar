@@ -1,12 +1,5 @@
 // AeroBarAppearanceCustomizerView.swift — Appearance popover root.
 // Owner: Views/Customizer
-// Depends on: Core/Services/AeroBarSettings, Core/Utilities/ColorExtensions
-//
-// ADDING A NEW APPEARANCE TOGGLE:
-//   1. Add its @AppStorage key to AeroBarSettings.
-//   2. Create a small View in this file (or a new file in Views/Customizer).
-//   3. Drop it into the body below — no other file needs changing.
-
 import SwiftUI
 
 struct AeroBarAppearanceCustomizerView: View {
@@ -15,8 +8,10 @@ struct AeroBarAppearanceCustomizerView: View {
 
     @State private var showOrbSpectrum = false
     @State private var showBarSpectrum = false
+    enum ExpandedCard: CaseIterable { case material, orb, taskbar, previews }
 
-    // Preset tint swatches aligned to macOS Tahoe palette
+    // Single-expand: only one section open at a time. nil = none.
+    @State private var expandedCard: ExpandedCard? = .material
     private let tintPalette: [(hex: String, name: String)] = [
         ("#FFFFFF", "Frosted Ice"),     ("#1E1E1E", "Obsidian Dark"),
         ("#0A84FF", "Tahoe Sky"),       ("#30D158", "Vibrant Mint"),
@@ -24,21 +19,32 @@ struct AeroBarAppearanceCustomizerView: View {
         ("#FF9F0A", "Industrial Amber")
     ]
 
+    // Whether a given card should be shown as expanded
+    private func isExpanded(_ card: ExpandedCard) -> Bool {
+        expandedCard == card
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            customizerHeader
-            orbSection
-            Divider()
-            materialAndTintSection
-            Divider()
-            togglesSection
+        VStack(spacing: 0) {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 14) {
+                    customizerHeader
+                    materialAndTintSection  // 1st: AeroBar Theming
+                    Divider()
+                    orbSection              // 2nd: Aero Orb Theming
+                    Divider()
+                    togglesSection
+                    Divider()
+                    previewStudioSection
+                }
+                .padding(14)
+            }
+
         }
-        .padding(14)
-        .frame(width: 290)
+        .frame(width: 360, height: 520)
     }
 
     // MARK: - Header
-
     private var customizerHeader: some View {
         HStack(spacing: 6) {
             Image(systemName: "paintpalette.fill").font(.system(size: 13, weight: .bold)).foregroundColor(.accentColor)
@@ -57,41 +63,147 @@ struct AeroBarAppearanceCustomizerView: View {
         }
     }
 
-    // MARK: - Orb section
 
-    private var orbSection: some View {
-        VStack(alignment: .leading, spacing: 6) {
+    // MARK: - Shared accordion header
+    private func accordionHeader(icon: String, title: String, card: ExpandedCard) -> some View {
+        let expanded = isExpanded(card)
+        return Button(action: {
+            withAnimation(.spring(response: 0.28, dampingFraction: 0.8)) {
+                expandedCard = (expandedCard == card) ? nil : card
+            }
+        }) {
             HStack {
-                subLabel("Aero Start Orb Profile")
+                Image(systemName: icon).font(.system(size: 12, weight: .bold)).foregroundColor(.accentColor)
+                Text(title).font(.system(size: 11, weight: .bold, design: .rounded))
+                    .foregroundColor(colorScheme == .dark ? .white : .black)
                 Spacer()
-                Button(action: { settings.appendOrbPreset(hex: settings.selectedOrbColorHex) }) {
-                    HStack(spacing: 2) {
-                        Image(systemName: "plus.circle.fill").font(.system(size: 9))
-                        Text("Save Preset").font(.system(size: 9, weight: .semibold))
+                Image(systemName: "chevron.down")
+                    .font(.system(size: 9, weight: .bold))
+                    .rotationEffect(.degrees(expanded ? 0 : -90))
+            }
+            .padding(8)
+            .background(Color.primary.opacity(0.04))
+            .cornerRadius(6)
+        }
+        .buttonStyle(.plain)
+    }
+
+    // MARK: - AeroBar Theming (material & tint) — 1st section
+    private var materialAndTintSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            accordionHeader(icon: "drop.fill", title: "AeroBar Theming", card: .material)
+
+            if isExpanded(.material) {
+                VStack(alignment: .leading, spacing: 12) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Picker("", selection: $settings.blurMaterialRaw) {
+                            Text("Liquid Wallpaper Look (HUD)").tag(8)
+                            Text("Deep Core Content Layer").tag(11)
+                            Text("Translucent System Sidebar").tag(4)
+                            Text("High Contrast Selection Tint").tag(1)
+                            Text("Standard Translucent Overlay").tag(7)
+                        }
+                        .pickerStyle(PopUpButtonPickerStyle()).labelsHidden()
                     }
-                    .foregroundColor(.accentColor)
-                }
-                .buttonStyle(.plain)
-            }
 
-            HStack(spacing: 8) {
-                spectrumToggleButton(isOpen: showOrbSpectrum) {
-                    withAnimation(.spring(response: 0.25, dampingFraction: 0.75)) { showOrbSpectrum.toggle() }
-                }
-                thinDivider
-                presetScrollRow(
-                    presets: settings.parsedOrbPresets,
-                    selected: settings.selectedOrbColorHex,
-                    onSelect: { settings.selectedOrbColorHex = $0 },
-                    onDelete: { settings.removeOrbPreset(hex: $0) }
-                )
-            }
-            .pillBackground
+                    VStack(alignment: .leading, spacing: 6) {
+                        subLabel("Liquid Tint Hue")
+                        HStack(spacing: 8) {
+                            spectrumToggleButton(isOpen: showBarSpectrum) {
+                                withAnimation(.spring(response: 0.25, dampingFraction: 0.75)) { showBarSpectrum.toggle() }
+                            }
+                            thinDivider
+                            ForEach(tintPalette, id: \.hex) { swatch in
+                                Circle().fill(Color(swatch.hex)).frame(width: 20, height: 20)
+                                    .overlay(Circle().stroke(Color.accentColor, lineWidth: settings.tintColorHex == swatch.hex ? 2 : 0).padding(-2))
+                                    .help(swatch.name)
+                                    .onTapGesture { settings.tintColorHex = swatch.hex }
+                            }
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(Color.white.opacity(0.04))
+                        .cornerRadius(6)
 
-            if showOrbSpectrum {
-                orbSpectrumStudio
-                    .pillBackground
-                    .transition(.asymmetric(insertion: .opacity.combined(with: .move(edge: .top)), removal: .opacity))
+                        if showBarSpectrum {
+                            hueRow(label: "Custom Tint Color Selector", hex: settings.tintColorHex) {
+                                updateColorFromHue($0, saturation: 0.75, brightness: 0.35, target: \.tintColorHex)
+                            }
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .background(Color.white.opacity(0.04))
+                            .cornerRadius(6)
+                            .transition(.asymmetric(insertion: .opacity.combined(with: .move(edge: .top)), removal: .opacity))
+                        }
+                    }
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack {
+                            subLabel("Surface Tint Density")
+                            Spacer()
+                            Text("\(Int(settings.backdropOpacity * 100))%").font(.system(size: 10, weight: .bold))
+                        }
+                        Slider(value: $settings.backdropOpacity, in: 0...1, step: 0.01).accentColor(.accentColor)
+                    }
+
+                    Divider().opacity(0.1)
+
+                    Toggle(isOn: $settings.showTopBorder) {
+                        labelWithSubtext("Render Upper Specular Bevel Line", sub: "Adds a 0.5pt edge highlight")
+                    }
+                    .toggleStyle(CheckboxToggleStyle())
+                }
+                .transition(.asymmetric(insertion: .opacity.combined(with: .move(edge: .top)), removal: .opacity))
+            }
+        }
+    }
+
+    // MARK: - Aero Orb Theming — 2nd section
+    private var orbSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            accordionHeader(icon: "circle.hexagongrid.fill", title: "Aero Orb Theming", card: .orb)
+
+            if isExpanded(.orb) {
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack {
+                        Spacer()
+                        Button(action: { settings.appendOrbPreset(hex: settings.selectedOrbColorHex) }) {
+                            HStack(spacing: 2) {
+                                Image(systemName: "plus.circle.fill").font(.system(size: 9))
+                                Text("Save Preset").font(.system(size: 9, weight: .semibold))
+                            }
+                            .foregroundColor(.accentColor)
+                        }
+                        .buttonStyle(.plain)
+                    }
+
+                    HStack(spacing: 8) {
+                        spectrumToggleButton(isOpen: showOrbSpectrum) {
+                            withAnimation(.spring(response: 0.25, dampingFraction: 0.75)) { showOrbSpectrum.toggle() }
+                        }
+                        thinDivider
+                        presetScrollRow(
+                            presets: settings.parsedOrbPresets,
+                            selected: settings.selectedOrbColorHex,
+                            onSelect: { settings.selectedOrbColorHex = $0 },
+                            onDelete: { settings.removeOrbPreset(hex: $0) }
+                        )
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(Color.white.opacity(0.04))
+                    .cornerRadius(6)
+
+                    if showOrbSpectrum {
+                        orbSpectrumStudio
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .background(Color.white.opacity(0.04))
+                            .cornerRadius(6)
+                            .transition(.asymmetric(insertion: .opacity.combined(with: .move(edge: .top)), removal: .opacity))
+                    }
+                }
+                .transition(.asymmetric(insertion: .opacity.combined(with: .move(edge: .top)), removal: .opacity))
             }
         }
     }
@@ -112,107 +224,135 @@ struct AeroBarAppearanceCustomizerView: View {
             hueHexLabel("Logo Foreground Tint", hex: settings.selectedOrbLogoColorHex)
             HStack(spacing: 6) {
                 ForEach(["#FFFFFF", "#1E1E1E"], id: \.self) { hex in
-                    Circle().fill(Color(hex)).frame(width: 14, height: 14)
-                        .overlay(Circle().stroke(Color.accentColor, lineWidth: settings.selectedOrbLogoColorHex.lowercased() == hex.lowercased() ? 1.5 : 0).padding(-1))
+                    Circle()
+                        .fill(Color(hex))
+                        .frame(width: 14, height: 14)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.accentColor, lineWidth: settings.selectedOrbLogoColorHex.lowercased() == hex.lowercased() ? 1.5 : 0)
+                                .padding(-1)
+                        )
                         .onTapGesture { settings.selectedOrbLogoColorHex = hex }
                 }
+
                 Slider(
-                    value: Binding(get: { hueFromHex(settings.selectedOrbLogoColorHex) },
-                                   set: { updateColorFromHue($0, saturation: 0.85, brightness: 0.95, target: \.selectedOrbLogoColorHex) }),
+                    value: Binding(
+                        get: { hueFromHex(settings.selectedOrbLogoColorHex) },
+                        set: { updateColorFromHue($0, saturation: 0.85, brightness: 0.95, target: \.selectedOrbLogoColorHex) }
+                    ),
                     in: 0...360, step: 1
                 )
-                .rainbowBackground
+                .background(
+                    LinearGradient(
+                        colors: [.red, .orange, .yellow, .green, .blue, .purple],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                    .frame(height: 3)
+                    .cornerRadius(1.5)
+                    .opacity(0.4),
+                    alignment: .bottom
+                )
             }
         }
     }
 
-    // MARK: - Material & tint
-
-    private var materialAndTintSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            VStack(alignment: .leading, spacing: 4) {
-                subLabel("Wallpaper Glass Blend Style")
-                Picker("", selection: $settings.blurMaterialRaw) {
-                    Text("Liquid Wallpaper Look (HUD)").tag(8)
-                    Text("Deep Core Content Layer").tag(11)
-                    Text("Translucent System Sidebar").tag(4)
-                    Text("High Contrast Selection Tint").tag(1)
-                    Text("Standard Translucent Overlay").tag(7)
-                }
-                .pickerStyle(PopUpButtonPickerStyle()).labelsHidden()
-            }
-
-            VStack(alignment: .leading, spacing: 6) {
-                subLabel("Liquid Tint Hue")
-                HStack(spacing: 8) {
-                    spectrumToggleButton(isOpen: showBarSpectrum) {
-                        withAnimation(.spring(response: 0.25, dampingFraction: 0.75)) { showBarSpectrum.toggle() }
-                    }
-                    thinDivider
-                    ForEach(tintPalette, id: \.hex) { swatch in
-                        Circle().fill(Color(swatch.hex)).frame(width: 20, height: 20)
-                            .overlay(Circle().stroke(Color.accentColor, lineWidth: settings.tintColorHex == swatch.hex ? 2 : 0).padding(-2))
-                            .help(swatch.name)
-                            .onTapGesture { settings.tintColorHex = swatch.hex }
-                    }
-                }
-                .pillBackground
-
-                if showBarSpectrum {
-                    hueRow(label: "Custom Tint Color Selector", hex: settings.tintColorHex) {
-                        updateColorFromHue($0, saturation: 0.75, brightness: 0.35, target: \.tintColorHex)
-                    }
-                    .pillBackground
-                    .transition(.asymmetric(insertion: .opacity.combined(with: .move(edge: .top)), removal: .opacity))
-                }
-            }
-
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    subLabel("Surface Tint Density")
-                    Spacer()
-                    Text("\(Int(settings.backdropOpacity * 100))%").font(.system(size: 10, weight: .bold))
-                }
-                Slider(value: $settings.backdropOpacity, in: 0...1, step: 0.01).accentColor(.accentColor)
-            }
-        }
-    }
-
-    // MARK: - Toggles
-
+    // MARK: - Taskbar Options
     private var togglesSection: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Toggle(isOn: $settings.showTopBorder) {
-                labelWithSubtext("Render Upper Specular Bevel Line", sub: "Adds a 0.5pt edge highlight")
-            }
-            .toggleStyle(CheckboxToggleStyle())
+        VStack(alignment: .leading, spacing: 8) {
+            accordionHeader(icon: "dock.rectangle", title: "Taskbar Options", card: .taskbar)
 
-            Toggle(isOn: $settings.showSearchIcon) {
-                labelWithSubtext("Show Search Icon", sub: "Toggle Spotlight quick access in taskbar")
-            }
-            .toggleStyle(CheckboxToggleStyle())
+            if isExpanded(.taskbar) {
+                VStack(alignment: .leading, spacing: 10) {
+                    Toggle(isOn: $settings.showSearchIcon) {
+                        labelWithSubtext("Show Search Icon", sub: "Toggle Spotlight quick access in taskbar")
+                    }
+                    .toggleStyle(CheckboxToggleStyle())
 
-            Toggle(isOn: $settings.hideWindowLabelsTemporarily.animation(.easeInOut(duration: 0.2))) {
-                labelWithSubtext("Collapse Taskbar Labels", sub: "Force icon-only mode for all window tabs")
-            }
-            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-            .padding(.top, 4)
+                    Toggle(isOn: $settings.hideWindowLabelsTemporarily.animation(.easeInOut(duration: 0.2))) {
+                        labelWithSubtext("Collapse Taskbar Labels", sub: "Force icon-only mode for all window tabs")
+                    }
+                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                    .padding(.top, 4)
 
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Show Taskbar On").font(.system(size: 11, weight: .bold)).foregroundColor(.secondary)
-                Picker("", selection: $settings.displayTargetMode) {
-                    ForEach(DisplayTargetMode.allCases) { mode in
-                        Text(mode.rawValue).font(.system(size: 11)).tag(mode)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Show Taskbar On").font(.system(size: 11, weight: .bold)).foregroundColor(.secondary)
+                        Picker("", selection: $settings.displayTargetMode) {
+                            ForEach(DisplayTargetMode.allCases) { mode in
+                                Text(mode.rawValue).font(.system(size: 11)).tag(mode)
+                            }
+                        }
+                        .pickerStyle(PopUpButtonPickerStyle()).frame(maxWidth: .infinity)
+                    }
+                    .padding(.top, 2)
+                }
+                .transition(.asymmetric(insertion: .opacity.combined(with: .move(edge: .top)), removal: .opacity))
+            }
+        }
+    }
+
+    // MARK: - Window Previews
+    private var previewStudioSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            accordionHeader(icon: "macwindow.on.rectangle", title: "Window Previews", card: .previews)
+
+            if isExpanded(.previews) {
+                VStack(alignment: .leading, spacing: 12) {
+                    Toggle(isOn: $settings.enablePreviews) {
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text("Enable Live Window Previews").font(.system(size: 11, weight: .medium))
+                            Text("Render real-time thumbnails on hover").font(.system(size: 9)).foregroundColor(.secondary)
+                        }
+                    }
+                    .toggleStyle(CheckboxToggleStyle())
+
+                    if settings.enablePreviews {
+                        Divider().opacity(0.1)
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack {
+                                subLabel("Hover Activation Delay")
+                                Spacer()
+                                Text(String(format: "%.1fs", settings.previewDelayValue))
+                                    .font(.system(size: 10, weight: .bold, design: .monospaced))
+                            }
+                            Slider(value: $settings.previewDelayValue, in: 0.1...3.0, step: 0.1)
+                                .accentColor(.accentColor)
+                        }
+
+                        Divider().opacity(0.1)
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack {
+                                subLabel("Preview Width")
+                                Spacer()
+                                Text("\(Int(settings.previewSizeWidth)) px").font(.system(size: 10, weight: .bold, design: .monospaced))
+                            }
+                            Slider(value: $settings.previewSizeWidth, in: 140...260, step: 10)
+                                .accentColor(.accentColor)
+                        }
+
+                        Divider().opacity(0.1)
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            subLabel("Multi-Window Stacking Direction")
+                            Picker("", selection: $settings.previewStackVertical) {
+                                Text("Stacked Vertically").tag(true)
+                                Text("Stacked Horizontally").tag(false)
+                            }
+                            .pickerStyle(.segmented)
+                        }
                     }
                 }
-                .pickerStyle(PopUpButtonPickerStyle()).frame(maxWidth: .infinity)
+                .padding(8)
+                .background(Color.primary.opacity(0.02))
+                .cornerRadius(6)
+                .transition(.opacity.combined(with: .move(edge: .top)))
             }
-            .padding(.top, 2)
         }
     }
 
     // MARK: - Reusable small components
-
     private func spectrumToggleButton(isOpen: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Circle()
@@ -225,7 +365,7 @@ struct AeroBarAppearanceCustomizerView: View {
     }
 
     private var thinDivider: some View {
-        Rectangle().fill(Color.white.opacity(0.15)).frame(width: 1, height: 14).padding(.horizontal, 2)
+        Rectangle().fill(Color.white.opacity(0.15)).frame(width: 1, height: 14)
     }
 
     private func presetScrollRow(
@@ -253,7 +393,12 @@ struct AeroBarAppearanceCustomizerView: View {
             hueHexLabel(label, hex: hex)
             Slider(value: Binding(get: { hueFromHex(hex) }, set: onChange), in: 0...360, step: 1)
                 .accentColor(Color(hex))
-                .rainbowBackground
+                .background(
+                    LinearGradient(colors: [.red, .orange, .yellow, .green, .blue, .purple],
+                                   startPoint: .leading, endPoint: .trailing)
+                    .frame(height: 3).cornerRadius(1.5).opacity(0.4),
+                    alignment: .bottom
+                )
         }
     }
 
@@ -277,8 +422,6 @@ struct AeroBarAppearanceCustomizerView: View {
         }
     }
 
-    // MARK: - Colour math
-
     private func updateColorFromHue(_ hue: Double, saturation: CGFloat, brightness: CGFloat, target: ReferenceWritableKeyPath<AeroBarSettings, String>) {
         let ns = NSColor(hue: CGFloat(hue / 360), saturation: saturation, brightness: brightness, alpha: 1)
         guard let rgb = ns.usingColorSpace(.sRGB) else { return }
@@ -292,26 +435,15 @@ struct AeroBarAppearanceCustomizerView: View {
             settings.backdropOpacity = 0.50
             settings.tintColorHex = "#1E1E1E"
             settings.showTopBorder = true
+            settings.showSearchIcon = true
             settings.hideWindowLabelsTemporarily = false
             settings.displayTargetMode = .all
             settings.selectedOrbColorHex = "#FF453A"
             settings.selectedOrbLogoColorHex = "#FFFFFF"
+            settings.enablePreviews = true
+            settings.previewDelayValue = 0.5
+            settings.previewSizeWidth = 180.0
+            settings.previewStackVertical = true
         }
-    }
-}
-
-// MARK: - View modifiers used internally
-
-private extension View {
-    var pillBackground: some View {
-        self.padding(6).background(Color.white.opacity(0.04)).cornerRadius(6)
-    }
-    var rainbowBackground: some View {
-        self.background(
-            LinearGradient(colors: [.red,.orange,.yellow,.green,.blue,.purple,.pink,.red],
-                           startPoint: .leading, endPoint: .trailing)
-                .frame(height: 3).cornerRadius(1.5).opacity(0.4),
-            alignment: .center
-        )
     }
 }

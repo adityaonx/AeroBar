@@ -11,6 +11,12 @@
 //   isPerformingManagedResize — set before any AX write, cleared after 350ms.
 //   windowStillCycleCount     — window must be still for 3 consecutive ticks (~90ms)
 //                               before a resize is attempted.
+//
+// TAB STABILITY FIX:
+//   activeTabs is updated via stable-merge: existing tabs keep their position,
+//   new tabs are appended, gone tabs are removed. This prevents the constant
+//   reordering that occurred because NSWorkspace.runningApplications returns apps
+//   in arbitrary order on each 30ms poll tick.
 
 import AppKit
 import UniformTypeIdentifiers
@@ -19,14 +25,13 @@ final class WindowArrangementDaemon {
     static let shared = WindowArrangementDaemon()
     private init() {}
 
-    // Exposed so ZoomInterceptService and AeroBarWindowController can flip these flags.
     var isPerformingManagedResize = false
     var isSuppressingFocusUpdates = false
 
     private var timer: Timer?
     private var previousFrames: [CGWindowID: CGRect] = [:]
     private var stillCounts:    [CGWindowID: Int]    = [:]
-    private let requiredStillCycles = 3   // ~90ms settle time before applying a correction
+    private let requiredStillCycles = 3
 
     // MARK: - Lifecycle
 
@@ -42,16 +47,12 @@ final class WindowArrangementDaemon {
         timer = nil
     }
 
-    // Called by AccessibilityService when kAXResizedNotification / kAXMovedNotification fires.
-    // Restarts the timer so the daemon re-evaluates sooner than the next scheduled tick.
     func nudge() {
         start(barHeight: AeroBarSettings.shared.barHeight)
     }
 
     // MARK: - Pure clamping (no side-effects — safe to unit test)
 
-    /// Returns corrected AX-space origin and size for a window that overlaps the bar,
-    /// or nil if no correction is needed. All coordinates are in AX space (top-left origin).
     static func clampedFrame(
         axOrigin: CGPoint,
         axSize: CGSize,
@@ -63,7 +64,7 @@ final class WindowArrangementDaemon {
         let cocoaTop    = primaryH - axOrigin.y
         let cocoaBottom = cocoaTop - axSize.height
 
-        let bottomBoundary = screen.frame.minY + barHeight - 0  // 41pt at default 56pt bar
+        let bottomBoundary = screen.frame.minY + barHeight - 0
         let bottomOverflow = bottomBoundary - cocoaBottom
         let topOverflow    = cocoaTop - screen.frame.maxY
 
@@ -139,9 +140,10 @@ final class WindowArrangementDaemon {
                     appIcon: app.icon ?? NSWorkspace.shared.icon(for: UTType.application)
                 )
 
-                // Filter macOS Sonoma CapsLock indicator micro-windows (< 80×80)
                 if !isMinimized && (axSize.width < 80 || axSize.height < 80) { continue }
-                if !discoveredTabs.contains(where: { $0.id == tab.id }) { discoveredTabs.append(tab) }
+                if !discoveredTabs.contains(where: { $0.windowID == tab.windowID }) {
+                    discoveredTabs.append(tab)
+                }
                 if isMinimized { continue }
 
                 applyClampIfNeeded(
@@ -152,8 +154,7 @@ final class WindowArrangementDaemon {
             }
         }
 
-        // Fallback focus sync — keeps the active-tab highlight correct even if the
-        // AXObserver misses a notification (e.g. just after permission is granted).
+        // Fallback focus sync
         if let frontApp = NSWorkspace.shared.frontmostApplication {
             let appRef = AXUIElementCreateApplication(frontApp.processIdentifier)
             var focusedRef: CFTypeRef?
@@ -168,8 +169,38 @@ final class WindowArrangementDaemon {
             }
         }
 
+        // STABLE MERGE — preserve existing tab order instead of replacing the whole array.
+        // Without this, tabs shuffle every 30ms because NSWorkspace.runningApplications
+        // returns apps in arbitrary order on each poll tick.
         DispatchQueue.main.async {
-            if settings.activeTabs != discoveredTabs { settings.activeTabs = discoveredTabs }
+            let existing = settings.activeTabs
+            let discoveredIDs = Set(discoveredTabs.map { $0.windowID })
+            let existingIDs   = Set(existing.map { $0.windowID })
+
+            // Short-circuit: if sets are identical and content unchanged, skip the write.
+            let contentChanged = existing.count != discoveredTabs.count
+                || existing.contains(where: { old in
+                    guard let new = discoveredTabs.first(where: { $0.windowID == old.windowID })
+                    else { return true }
+                    return new != old  // WindowTab.== checks windowID + processID + windowTitle
+                })
+
+            guard contentChanged else { return }
+
+            // Build merged list: keep existing order, update changed entries, append new ones.
+            var merged: [WindowTab] = existing.compactMap { old in
+                guard let updated = discoveredTabs.first(where: { $0.windowID == old.windowID })
+                else { return nil }           // tab gone — drop it
+                return updated                // tab still exists — update title/icon in-place
+            }
+            // Append brand-new tabs (not seen before) in the order the daemon found them.
+            for tab in discoveredTabs where !existingIDs.contains(tab.windowID) {
+                merged.append(tab)
+            }
+            // Remove tabs that disappeared.
+            merged.removeAll { !discoveredIDs.contains($0.windowID) }
+
+            settings.activeTabs = merged
         }
     }
 
@@ -211,14 +242,11 @@ final class WindowArrangementDaemon {
             screen: screen, barHeight: settings.barHeight
         ) else { return }
 
-        // Same-display guard — the corrected rect must stay on the same screen.
         let correctedCocoa = CGRect(x: newOrigin.x,
                                     y: primaryH - newOrigin.y - newSize.height,
                                     width: newSize.width, height: newSize.height)
         guard hostScreen(for: correctedCocoa) == screen else { return }
 
-        // Set the flag BEFORE the AX write so the observer callback ignores the
-        // kAXResizedNotification macOS fires back at us — avoids bounce loops.
         isPerformingManagedResize = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
             self?.isPerformingManagedResize = false
@@ -244,7 +272,11 @@ final class WindowArrangementDaemon {
         var ref: CFTypeRef?
         if AXUIElementCopyAttributeValue(window, "kAXWindowIDAttribute" as CFString, &ref) == .success,
            let num = ref as? NSNumber { return CGWindowID(num.uint32Value) }
-        return CGWindowID(app.processIdentifier + Int32(idx))
+        // Fallback: CFHash on an AXUIElement is stable for the lifetime of the CF object —
+        // it does NOT change with Z-order. idx is Z-order-dependent and causes tab shuffling
+        // whenever a Chrome window is focused (kAXWindowsAttribute returns in Z-order).
+        let stableHash = CFHash(window) ^ UInt(app.processIdentifier)
+        return CGWindowID(truncatingIfNeeded: stableHash)
     }
 
     private func hostScreen(for cocoaRect: CGRect) -> NSScreen? {

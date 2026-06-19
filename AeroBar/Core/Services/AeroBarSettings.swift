@@ -1,13 +1,5 @@
 // AeroBarSettings.swift — Central published-state coordinator. No side-effect logic.
 // Owner: Core/Services
-// Depends on: SwiftUI, AppKit, ServiceManagement
-//
-// RULE: This class owns @Published state only.
-// Business logic (login item, Spotlight, update checks) lives in separate Services.
-// To add a new setting:
-//   1. Add an @AppStorage or @Published property here.
-//   2. Consume it in the relevant View or Service — no other file needs changing.
-
 import SwiftUI
 import AppKit
 import Combine
@@ -22,6 +14,7 @@ class AeroBarSettings: ObservableObject {
     @Published var currentSystemFocusedElement: AXUIElement? = nil
     @Published var manuallyHiddenWindowIDs: Set<CGWindowID> = []
     @Published var transitionalWindowLockID: CGWindowID? = nil
+    @Published var isStartMenuOpen: Bool = false
 
     // MARK: - Bar geometry
     @Published var barHeight: CGFloat = 40
@@ -31,7 +24,6 @@ class AeroBarSettings: ObservableObject {
     @Published var displayTargetMode: DisplayTargetMode = .all {
         didSet { NotificationCenter.default.post(name: .aeroBarMultiDisplayChanged, object: nil) }
     }
-    // Legacy bool kept for backward compatibility — displayTargetMode is authoritative.
     @Published var showOnExternalDisplays: Bool = true {
         didSet { NotificationCenter.default.post(name: .aeroBarMultiDisplayChanged, object: nil) }
     }
@@ -73,6 +65,12 @@ class AeroBarSettings: ObservableObject {
     @AppStorage("showRecommendations") var showRecommendations: Bool = true
     @AppStorage("enableSilentUpdates") var enableSilentUpdates: Bool = false
 
+    // MARK: - Window Previews Customization State
+    @AppStorage("com.aerobar.enablePreviews")     var enablePreviews: Bool = true
+    @AppStorage("com.aerobar.previewDelayValue")  var previewDelayValue: Double = 0.5
+    @AppStorage("com.aerobar.previewSizeWidth")   var previewSizeWidth: Double = 180.0
+    @AppStorage("com.aerobar.previewStackVert")   var previewStackVertical: Bool = true
+
     // MARK: - Orb customisation
     @AppStorage("selectedOrbColorHex")     var selectedOrbColorHex: String = "#FF453A"
     @AppStorage("selectedOrbLogoColorHex") var selectedOrbLogoColorHex: String = "#FFFFFF"
@@ -80,7 +78,7 @@ class AeroBarSettings: ObservableObject {
 
     // MARK: - Update preferences
     @AppStorage("com.aerobar.checkUpdatesOnLaunch") var checkUpdatesOnLaunch: Bool = true
-    @AppStorage("com.aerobar.updateFrequency")      var updateFrequency: Int = 0    // 0 = Daily, 1 = Weekly
+    @AppStorage("com.aerobar.updateFrequency")      var updateFrequency: Int = 0
 
     // MARK: - Launch at login (write-through to SMAppService)
     @Published var launchAtLogin: Bool = {
@@ -109,7 +107,6 @@ class AeroBarSettings: ObservableObject {
             .joined(separator: ",")
     }
 
-    // Maps the raw integer stored in AppStorage to an NSVisualEffectView.Material.
     var selectedMaterial: NSVisualEffectView.Material {
         let map: [Int: NSVisualEffectView.Material] = [
             0: .titlebar, 1: .selection, 2: .menu, 3: .popover, 4: .sidebar,
@@ -121,14 +118,17 @@ class AeroBarSettings: ObservableObject {
     }
 
     // MARK: - Init
-
     private init() {
+        setupRegistry() // 🎯 FIXED: Replaced invalid 'init()' function identifier wrapper context cleanly
+    }
+
+    private func setupRegistry() {
         isAccessibilityEnabled = AXIsProcessTrusted()
         showSetupWizard = !isAccessibilityEnabled
 
-        let loaded = PinnedAppsService.shared.load()
+        var loaded = PinnedAppsService.shared.load()
         pinnedStartApps = loaded.start
         pinnedBarApps   = loaded.bar
-        PinnedAppsService.shared.ensureFinderPinned(start: &pinnedStartApps, bar: &pinnedBarApps)
+        PinnedAppsService.shared.ensureFinderPinned(start: &loaded.start, bar: &loaded.bar)
     }
 }

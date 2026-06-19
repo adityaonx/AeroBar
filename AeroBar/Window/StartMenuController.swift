@@ -64,6 +64,7 @@ final class StartMenuController {
         panel.contentView?.layer?.masksToBounds = true
 
         menuPanel = panel
+        AeroBarSettings.shared.isStartMenuOpen = true
 
         // Listen for dismiss requests fired from inside the SwiftUI view
         // (e.g. when a pinned app is launched from inside the menu).
@@ -91,6 +92,7 @@ final class StartMenuController {
         menuPanel?.resignKey()
         menuPanel?.orderOut(nil)
         menuPanel = nil
+        AeroBarSettings.shared.isStartMenuOpen = false
     }
 
     // MARK: - Resize panel when recommendations toggle changes
