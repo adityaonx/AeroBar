@@ -79,8 +79,8 @@ class AeroBarSettings: ObservableObject {
     @AppStorage("savedOrbPresets")         var savedOrbPresetsString: String = "#00F3FF,#BF5AF2,#30D158,#FF453A"
 
     // MARK: - Update preferences
-    @Published var checkUpdatesOnLaunch: Bool = true
-    @Published var updateFrequency: Int = 0    // 0 = Daily, 1 = Weekly
+    @AppStorage("com.aerobar.checkUpdatesOnLaunch") var checkUpdatesOnLaunch: Bool = true
+    @AppStorage("com.aerobar.updateFrequency")      var updateFrequency: Int = 0    // 0 = Daily, 1 = Weekly
 
     // MARK: - Launch at login (write-through to SMAppService)
     @Published var launchAtLogin: Bool = {

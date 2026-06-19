@@ -31,7 +31,7 @@ final class AeroBarUpdateAlertPanel: NSPanel {
         panel.titlebarAppearsTransparent = true
         panel.title = ""
         panel.isMovableByWindowBackground = true
-        panel.level = .floating
+        panel.level = .statusBar + 1
         panel.isReleasedWhenClosed = false
         panel.center()
 
@@ -47,7 +47,11 @@ final class AeroBarUpdateAlertPanel: NSPanel {
             }
         )
         panel.contentView = NSHostingView(rootView: rootView)
-        panel.makeKeyAndOrderFront(nil)
+        // AeroBar runs as .accessory (no Dock icon), so makeKeyAndOrderFront silently
+        // fails when no window has focus yet (e.g. on auto-launch check).
+        // Briefly activate the app so the panel actually surfaces to the user.
+        NSApp.activate(ignoringOtherApps: true)
+        panel.orderFrontRegardless()
     }
 }
 
@@ -150,8 +154,8 @@ final class AeroBarUpdateEngine: ObservableObject {
     private var directDmgDownloadURL: URL?
 
     // ── Replace this method inside AeroBarUpdateEngine ─────
-        func checkForUpdatesSilently(showAlertIfAvailable: Bool = false) {
-            guard let url = githubLatestReleaseURL else { return }
+        func checkForUpdatesSilently(showAlertIfAvailable: Bool = false, onComplete: (() -> Void)? = nil) {
+            guard let url = githubLatestReleaseURL else { onComplete?(); return }
             
             // 🎯 THE FIX: Construct a formal URLRequest to inject the required header fields
             var request = URLRequest(url: url)
@@ -161,10 +165,12 @@ final class AeroBarUpdateEngine: ObservableObject {
             URLSession.shared.dataTask(with: request) { data, _, error in
                 if let error = error {
                     print("[AeroBarUpdateEngine] Network error: \(error.localizedDescription)")
+                    DispatchQueue.main.async { onComplete?() }
                     return
                 }
-                guard let data = data else { return }
+                guard let data = data else { DispatchQueue.main.async { onComplete?() }; return }
                 Task { @MainActor in
+                    defer { onComplete?() }
                     do {
                         let decoder = JSONDecoder()
                         decoder.keyDecodingStrategy = .convertFromSnakeCase

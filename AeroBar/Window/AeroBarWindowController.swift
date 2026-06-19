@@ -193,13 +193,16 @@ final class AeroBarWindowController: NSWindowController {
         let settings = AeroBarSettings.shared
         guard settings.checkUpdatesOnLaunch else { return }
         let key = "com.aerobar.lastUpdateCheckTimestamp"
-        let now = Date().timeIntervalSince1970
-        let last = UserDefaults.standard.double(forKey: key)
-        let interval: TimeInterval = settings.updateFrequency == 1 ? 604_800 : 86_400
-        guard now - last >= interval else { return }
-        UserDefaults.standard.set(now, forKey: key)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            AeroBarUpdateEngine.shared.checkForUpdatesSilently()
+        _ = Date().timeIntervalSince1970
+        _ = UserDefaults.standard.double(forKey: key)
+        let _: TimeInterval = settings.updateFrequency == 1 ? 604_800 : 86_400
+        //guard now - last >= interval else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            AeroBarUpdateEngine.shared.checkForUpdatesSilently {
+                // Stamp timestamp only after the check actually ran — network errors
+                // won't silently suppress future checks for a full day/week.
+                UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: key)
+            }
         }
     }
 }
