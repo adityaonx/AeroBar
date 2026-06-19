@@ -6,11 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		B4822DE32FE557CA009EF15E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4C52AC72FD297F00066EFE9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C4C52ACE2FD297F00066EFE9;
+			remoteInfo = AeroBar;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		B4822DDF2FE557CA009EF15E /* AeroBarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AeroBarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4C52ACF2FD297F00066EFE9 /* AeroBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AeroBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		B4822DE02FE557CA009EF15E /* AeroBarTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = AeroBarTests;
+			sourceTree = "<group>";
+		};
 		C4C52AD12FD297F00066EFE9 /* AeroBar */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = AeroBar;
@@ -19,6 +35,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B4822DDC2FE557CA009EF15E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C4C52ACC2FD297F00066EFE9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				C4C52AD12FD297F00066EFE9 /* AeroBar */,
+				B4822DE02FE557CA009EF15E /* AeroBarTests */,
 				C4C52AD02FD297F00066EFE9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				C4C52ACF2FD297F00066EFE9 /* AeroBar.app */,
+				B4822DDF2FE557CA009EF15E /* AeroBarTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +73,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B4822DDE2FE557CA009EF15E /* AeroBarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B4822DE72FE557CA009EF15E /* Build configuration list for PBXNativeTarget "AeroBarTests" */;
+			buildPhases = (
+				B4822DDB2FE557CA009EF15E /* Sources */,
+				B4822DDC2FE557CA009EF15E /* Frameworks */,
+				B4822DDD2FE557CA009EF15E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B4822DE42FE557CA009EF15E /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				B4822DE02FE557CA009EF15E /* AeroBarTests */,
+			);
+			name = AeroBarTests;
+			packageProductDependencies = (
+			);
+			productName = AeroBarTests;
+			productReference = B4822DDF2FE557CA009EF15E /* AeroBarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C4C52ACE2FD297F00066EFE9 /* AeroBar */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C4C52ADD2FD297F10066EFE9 /* Build configuration list for PBXNativeTarget "AeroBar" */;
@@ -80,6 +128,10 @@
 				LastSwiftUpdateCheck = 2650;
 				LastUpgradeCheck = 2650;
 				TargetAttributes = {
+					B4822DDE2FE557CA009EF15E = {
+						CreatedOnToolsVersion = 26.5;
+						TestTargetID = C4C52ACE2FD297F00066EFE9;
+					};
 					C4C52ACE2FD297F00066EFE9 = {
 						CreatedOnToolsVersion = 26.5;
 					};
@@ -100,11 +152,19 @@
 			projectRoot = "";
 			targets = (
 				C4C52ACE2FD297F00066EFE9 /* AeroBar */,
+				B4822DDE2FE557CA009EF15E /* AeroBarTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B4822DDD2FE557CA009EF15E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C4C52ACD2FD297F00066EFE9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +175,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B4822DDB2FE557CA009EF15E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C4C52ACB2FD297F00066EFE9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +191,55 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		B4822DE42FE557CA009EF15E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C4C52ACE2FD297F00066EFE9 /* AeroBar */;
+			targetProxy = B4822DE32FE557CA009EF15E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		B4822DE52FE557CA009EF15E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8P8U4V5D97;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = adityaonx.AeroBarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AeroBar.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AeroBar";
+			};
+			name = Debug;
+		};
+		B4822DE62FE557CA009EF15E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8P8U4V5D97;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = adityaonx.AeroBarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AeroBar.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AeroBar";
+			};
+			name = Release;
+		};
 		C4C52ADB2FD297F10066EFE9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -322,6 +437,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B4822DE72FE557CA009EF15E /* Build configuration list for PBXNativeTarget "AeroBarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B4822DE52FE557CA009EF15E /* Debug */,
+				B4822DE62FE557CA009EF15E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C4C52ACA2FD297F00066EFE9 /* Build configuration list for PBXProject "AeroBar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

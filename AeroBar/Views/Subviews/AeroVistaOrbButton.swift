@@ -109,8 +109,3 @@ struct AeroVistaOrbButton: View {
         }
     }
 }
-
-// MARK: - Core Start Menu Communication Token
-extension Notification.Name {
-    static let triggerAeroStartMenu = Notification.Name("triggerAeroStartMenu")
-}
