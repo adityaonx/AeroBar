@@ -105,6 +105,12 @@ struct AeroBarMainContainerView: View {
     // MARK: - Window interaction
 
     private func handleWindowInteraction(for tab: WindowTab) {
+        // Clicking any tab — minimize, restore, or focus — should dismiss the Start Menu
+        // if it's open. The click-monitor in StartMenuController whitelists the whole
+        // AeroBar window (so dragging/clicking the bar itself doesn't self-dismiss), so
+        // we have to explicitly request dismissal here instead.
+        NotificationCenter.default.post(name: .dismissStartMenuWindow, object: nil)
+
         let appRef = AXUIElementCreateApplication(tab.processID)
         var minimizedRef: CFTypeRef?
         AXUIElementCopyAttributeValue(tab.axElement, kAXMinimizedAttribute as CFString, &minimizedRef)
@@ -172,6 +178,10 @@ struct AeroBarMainContainerView: View {
     }
 
     private func launchOrActivatePinnedApp(bundleID: String) {
+        // Same reasoning as handleWindowInteraction: launching from the bar's pinned
+        // tray must explicitly request the Start Menu dismiss itself.
+        NotificationCenter.default.post(name: .dismissStartMenuWindow, object: nil)
+
         guard let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) else { return }
         let config = NSWorkspace.OpenConfiguration()
         config.createsNewApplicationInstance = false

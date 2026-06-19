@@ -1,6 +1,10 @@
 // AeroStartMenuView.swift — Start Menu root layout.
 // Owner: Views/StartMenu
 // Depends on: Core/Services/AeroBarSettings, Core/Models/*, Core/Utilities/Notifications
+//
+// LAYOUT NOTE: The panel frame width is driven by AeroBarSettings.showRecommendations.
+// When this toggles, the panel is resized by StartMenuController.resizeIfVisible() so
+// the SwiftUI layout always has the correct bounding box — no shift on toggle.
 
 import SwiftUI
 import AppKit
@@ -15,8 +19,8 @@ struct AeroStartMenuView: View {
     @State private var showSettings   = false
     @State private var showCustomizer = false
     @State private var userName       = ""
-    @State private var localApps: [LocalSystemApp]       = []
-    @State private var recentItems: [RecentFinderItem]   = []
+    @State private var localApps: [LocalSystemApp]     = []
+    @State private var recentItems: [RecentFinderItem] = []
     @State private var spotlightQuery: NSMetadataQuery?
 
     // MARK: - Filtered computed properties
@@ -54,7 +58,11 @@ struct AeroStartMenuView: View {
             }
             Spacer().frame(width: 24)
         }
-        .frame(width: settings.showRecommendations ? 1010 : 760, height: 530)
+        // Width is fixed at panel creation time by StartMenuController.
+        // The animation here only applies to in-place toggles (e.g. if resizeIfVisible
+        // is called while the menu is open). Using GeometryReader instead of a fixed
+        // frame means the layout fills whatever width the panel provides.
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(menuBackground)
         .cornerRadius(18)
         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
@@ -64,6 +72,11 @@ struct AeroStartMenuView: View {
             buildAppsRegistry()
             startRecentFilesQuery()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { searchFocused = true }
+        }
+        // When recommendations toggle changes while the menu is open, ask the controller
+        // to resize the panel so the layout gets the right bounding box.
+        .onChange(of: settings.showRecommendations) {
+            NotificationCenter.default.post(name: .startMenuResizeNeeded, object: nil)
         }
     }
 
@@ -114,8 +127,12 @@ struct AeroStartMenuView: View {
             appsPanel
             menuDivider
             pinnedPanel
-            if settings.showRecommendations { menuDivider; recentPanel }
+            if settings.showRecommendations {
+                menuDivider
+                recentPanel
+            }
         }
+        .frame(maxWidth: .infinity)
         .frame(height: 392)
     }
 
@@ -161,7 +178,9 @@ struct AeroStartMenuView: View {
                 }
             }
         }
-        .frame(width: 420).padding(.top, 16).padding(.bottom, 12).padding(.horizontal, 14)
+        // Pinned panel expands to fill remaining space when recommendations are off
+        .frame(maxWidth: settings.showRecommendations ? 420 : .infinity)
+        .padding(.top, 16).padding(.bottom, 12).padding(.horizontal, 14)
     }
 
     private var recentPanel: some View {
@@ -312,7 +331,7 @@ struct AeroStartMenuView: View {
     }
 }
 
-// MARK: - Start Menu subviews (kept in this file — each is < 40 lines)
+// MARK: - Start Menu subviews
 
 struct StartSidebarRow: View {
     let app: LocalSystemApp

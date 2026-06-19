@@ -11,9 +11,8 @@ final class StartMenuController {
     private var localClickMonitor: Any?
     private var globalClickMonitor: Any?
     private var lastDismissalTime: TimeInterval = 0
+    private var dismissObserver: Any?
 
-    // The primary bar panel is needed to whitelist its click events so the menu
-    // doesn't dismiss when the user clicks the bar itself.
     weak var primaryPanel: NSPanel?
     var secondaryPanels: [AeroBarPanel] = []
 
@@ -24,7 +23,6 @@ final class StartMenuController {
             close()
             return
         }
-        // Debounce: ignore a toggle fired within 250ms of the last close.
         guard Date().timeIntervalSince1970 - lastDismissalTime >= 0.25 else { return }
         open(notification)
     }
@@ -67,9 +65,14 @@ final class StartMenuController {
 
         menuPanel = panel
 
+        // Listen for dismiss requests fired from inside the SwiftUI view
+        // (e.g. when a pinned app is launched from inside the menu).
+        dismissObserver = NotificationCenter.default.addObserver(
+            forName: .dismissStartMenuWindow, object: nil, queue: .main
+        ) { [weak self] _ in self?.close() }
+
         // DISPLAY FIX: orderFront first (respects frame origin = correct display),
-        // then makeKey separately. makeKeyAndOrderFront in one shot pulls the panel to
-        // the active space rather than the display defined by the frame origin.
+        // then makeKey separately.
         panel.orderFront(nil)
         panel.makeKey()
 
@@ -81,9 +84,38 @@ final class StartMenuController {
     func close() {
         lastDismissalTime = Date().timeIntervalSince1970
         removeClickMonitors()
+        if let obs = dismissObserver {
+            NotificationCenter.default.removeObserver(obs)
+            dismissObserver = nil
+        }
         menuPanel?.resignKey()
         menuPanel?.orderOut(nil)
         menuPanel = nil
+    }
+
+    // MARK: - Resize panel when recommendations toggle changes
+
+    // Called from AeroBarWindowController when showRecommendations changes.
+    func resizeIfVisible() {
+        guard let panel = menuPanel, panel.isVisible else { return }
+        // Defer to the next runloop turn: this is invoked from inside the SwiftUI
+        // view's own .onChange, so mutating the hosting view synchronously here
+        // would replace a view that's still mid-update. Letting the current update
+        // cycle finish first avoids dropped/stale layout state.
+        DispatchQueue.main.async { [weak self] in
+            guard let self, let panel = self.menuPanel, panel.isVisible else { return }
+            let settings = AeroBarSettings.shared
+            let newWidth: CGFloat = settings.showRecommendations ? 980 : 740
+            var frame = panel.frame
+            frame.size.width = newWidth
+            panel.setFrame(frame, display: true, animate: true)
+            // No need to rebuild the NSHostingView — AeroStartMenuView already lays
+            // itself out with .frame(maxWidth: .infinity), so it reflows automatically
+            // as the panel (and therefore the host's superview bounds) changes size.
+            if let host = panel.contentView?.subviews.first {
+                host.frame = NSRect(origin: .zero, size: frame.size)
+            }
+        }
     }
 
     // MARK: - Click monitors

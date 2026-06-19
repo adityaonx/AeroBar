@@ -130,6 +130,7 @@ final class AeroBarWindowController: NSWindowController {
         nc.addObserver(forName: .resumeFocusUpdates,   object: nil, queue: .main) { [weak self] _ in self?.isSuppressingFocusUpdates = false }
         nc.addObserver(forName: .triggerAeroStartMenu, object: nil, queue: .main) { [weak self] note in self?.startMenuCtrl.toggle(note) }
         nc.addObserver(forName: .dismissStartMenuWindow, object: nil, queue: .main) { [weak self] _ in self?.startMenuCtrl.close() }
+        nc.addObserver(forName: .startMenuResizeNeeded, object: nil, queue: .main) { [weak self] _ in self?.startMenuCtrl.resizeIfVisible() }
         nc.addObserver(forName: .aeroBarMultiDisplayChanged, object: nil, queue: .main) { [weak self] _ in
             guard let self, let panel = self.window as? AeroBarPanel else { return }
             self.displayManager.recalibrate(primaryPanel: panel)

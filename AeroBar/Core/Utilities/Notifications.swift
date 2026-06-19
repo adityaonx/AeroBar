@@ -4,15 +4,16 @@
 //
 // ADDING A NEW NOTIFICATION:
 //   1. Add a static let here.
-//   2. Post it with NotificationCenter.default.post(name: .aeroBarXxx, object: nil)
-//   3. Observe it the same way — no stringly-typed strings anywhere else.
+//   2. Post: NotificationCenter.default.post(name: .yourName, object: nil)
+//   3. Observe the same way — no stringly-typed strings anywhere else.
 
 import Foundation
 
 extension Notification.Name {
     // Start menu
-    static let triggerAeroStartMenu    = Notification.Name("triggerAeroStartMenu")
-    static let dismissStartMenuWindow  = Notification.Name("dismissStartMenuWindow")
+    static let triggerAeroStartMenu   = Notification.Name("triggerAeroStartMenu")
+    static let dismissStartMenuWindow = Notification.Name("dismissStartMenuWindow")
+    static let startMenuResizeNeeded  = Notification.Name("startMenuResizeNeeded")
 
     // Display topology
     static let aeroBarMultiDisplayChanged = Notification.Name("AeroBarMultiDisplayChanged")
