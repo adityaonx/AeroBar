@@ -57,7 +57,6 @@ Supported: macOS Sequoia/Tahoe
 - [Status](#status)
 - [Community & Feedback](#community--feedback)
 - [Architecture](#architecture)
-- [Built With](#built-with)
 
 ---
 
@@ -278,27 +277,6 @@ Have a feature request, a bug report, or just want to share your AeroBar setup? 
 
 - **[Start a Discussion](https://github.com/adityaonx/AeroBar/discussions/new/choose)** — Use this for general questions, feedback, or sharing your ideas.
 - **[Report a Bug](https://github.com/adityaonx/AeroBar/issues/new)** — Use the issue tracker for technical bugs (please include your macOS version and logs if possible).
-
-[⬆ Back to top](#aerobar)
-
----
-
-## Architecture
-
-If you're contributing or just curious how it fits together, [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) has the class diagram, data-flow diagram, and launch/window-switch sequence diagrams.
-
-[⬆ Back to top](#aerobar)
-
----
-
-## Built With
-
-- **Swift / SwiftUI** — UI layer
-- **AppKit / NSPanel** — window management and panel architecture
-- **Accessibility API (AXUIElement)** — live window tracking, focus, minimize, raise
-- **NSMetadataQuery / Spotlight** — recent file recommendations
-- **ServiceManagement** — launch-at-login
-- **Core Animation** — glass surface and visual effects
 
 [⬆ Back to top](#aerobar)
 
