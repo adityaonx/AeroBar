@@ -1,3 +1,12 @@
+// AeroBarOnboardingPopoverView.swift — Status-bar popover shown before Accessibility is granted.
+// Owner: Views/Subviews
+// Depends on: Core/Services/AeroBarSettings
+//
+// Hosted by Window/OnboardingController as the content of an NSPopover anchored
+// to the temporary status-bar icon. Swaps between a "needs permission" and a
+// "ready" layout depending on AeroBarSettings.isAccessibilityEnabled, which is
+// polled by the controller every 0.5s.
+
 import SwiftUI
 
 struct AeroBarOnboardingPopoverView: View {
@@ -94,26 +103,3 @@ struct AeroBarOnboardingPopoverView: View {
     }
 }
 
-private struct OnboardingStepRow: View {
-    let number: String
-    let text: String
-    
-    var body: some View {
-        HStack(alignment: .top, spacing: 8) {
-            // Number indicator with a small fixed circular background
-            Text(number)
-                .font(.system(size: 9, weight: .bold, design: .monospaced))
-                .foregroundColor(.secondary)
-                .frame(width: 16, height: 16) // Correct small size
-                .background(Circle().fill(Color.primary.opacity(0.06)))
-            
-            // Step instruction text
-            Text(text)
-                .font(.system(size: 11))
-                .foregroundColor(.secondary)
-                .fixedSize(horizontal: false, vertical: true) // Ensure text wraps correctly
-            
-            Spacer()
-        }
-    }
-}

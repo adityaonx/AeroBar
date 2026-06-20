@@ -14,14 +14,18 @@ struct WindowTabsScrollView: View {
                     let isActive = settings.currentSystemFocusedElement != nil
                         && CFEqual(tab.axElement, settings.currentSystemFocusedElement!)
 
-                    // The Button handles normal taps (no popover open).
-                    // AppKitTabButtonView.onTap handles taps when the popover IS open
-                    // and the Button can't fire (bar is non-key window).
+                    // Button now fires reliably on every click — AppKitTabButtonView's
+                    // preview is hosted in a non-activating panel (AeroPreviewPanel)
+                    // that never takes key/activation status, so there is no longer a
+                    // key-window handoff for a click to race against. onTap is passed
+                    // through so AppKitTabButtonView can close its own preview state
+                    // (cancel pending tasks, remove its outside-click monitor) in the
+                    // same action as the interaction itself.
                     Button(action: { onTabInteraction(tab) }) {
                         AppKitTabButtonView(
                             tab: tab,
                             isActive: isActive,
-                            onTap: { onTabInteraction(tab) }  // passed for popover-intercept path
+                            onTap: { onTabInteraction(tab) }
                         )
                     }
                     .buttonStyle(PlainButtonStyle())

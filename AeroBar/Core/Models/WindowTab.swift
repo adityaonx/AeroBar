@@ -16,9 +16,10 @@ struct WindowTab: Identifiable, Equatable {
     let appIcon: NSImage
 
     static func == (lhs: WindowTab, rhs: WindowTab) -> Bool {
-        // BUG 3 FIX: Include windowTitle so that in-process title changes (e.g. Chrome
-        // switching inner tabs from "YouTube" to "Google Search") are detected by the
-        // daemon's `activeTabs != discoveredTabs` guard and pushed to the UI immediately.
+        // windowTitle is part of equality so that in-process title changes
+        // (e.g. Chrome switching inner tabs from "YouTube" to "Google Search")
+        // are detected by the daemon's `activeTabs != discoveredTabs` guard
+        // and pushed to the UI immediately, instead of being silently ignored.
         lhs.windowID == rhs.windowID
             && lhs.processID == rhs.processID
             && lhs.windowTitle == rhs.windowTitle

@@ -324,11 +324,11 @@ struct AeroBarAppearanceCustomizerView: View {
 
                         VStack(alignment: .leading, spacing: 4) {
                             HStack {
-                                subLabel("Preview Width")
+                                subLabel("Scaling")
                                 Spacer()
-                                Text("\(Int(settings.previewSizeWidth)) px").font(.system(size: 10, weight: .bold, design: .monospaced))
+                                Text("\(Int(settings.previewScale * 100))%").font(.system(size: 10, weight: .bold, design: .monospaced))
                             }
-                            Slider(value: $settings.previewSizeWidth, in: 140...260, step: 10)
+                            Slider(value: $settings.previewScale, in: 0.05...0.35, step: 0.05)
                                 .accentColor(.accentColor)
                         }
 
@@ -442,7 +442,7 @@ struct AeroBarAppearanceCustomizerView: View {
             settings.selectedOrbLogoColorHex = "#FFFFFF"
             settings.enablePreviews = true
             settings.previewDelayValue = 0.5
-            settings.previewSizeWidth = 180.0
+            settings.previewScale = 0.25
             settings.previewStackVertical = true
         }
     }

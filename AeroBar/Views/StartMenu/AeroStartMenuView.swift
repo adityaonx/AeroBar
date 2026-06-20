@@ -22,6 +22,7 @@ struct AeroStartMenuView: View {
     @State private var localApps: [LocalSystemApp]     = []
     @State private var recentItems: [RecentFinderItem] = []
     @State private var spotlightQuery: NSMetadataQuery?
+    @State private var draggedStartItem: PinnedApp? = nil
 
     // MARK: - Filtered computed properties
 
@@ -240,48 +241,28 @@ struct AeroStartMenuView: View {
         Rectangle().fill(bevelColor.opacity(0.2)).frame(width: 1).frame(maxHeight: .infinity).padding(.leading, 12)
     }
 
-    // 🎯 NEW: Inline Delegate to handle drag reordering within the Start Menu grid
-        struct StartMenuPinnedDropDelegate: DropDelegate {
-            let item: PinnedApp
-            let settings: AeroBarSettings
-            @Binding var dragged: PinnedApp?
-            
-            func performDrop(info: DropInfo) -> Bool { self.dragged = nil; return true }
-            func dropEntered(info: DropInfo) {
-                guard let draggedItem = dragged, draggedItem != item,
-                      let from = settings.pinnedStartApps.firstIndex(of: draggedItem),
-                      let to = settings.pinnedStartApps.firstIndex(of: item) else { return }
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                    settings.pinnedStartApps.move(fromOffsets: IndexSet(integer: from), toOffset: to > from ? to + 1 : to)
-                }
+    private func pinnedCell(_ app: PinnedApp) -> some View {
+        Button(action: {
+            NotificationCenter.default.post(name: .dismissStartMenuWindow, object: nil)
+            if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: app.bundleIdentifier) {
+                NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration())
             }
+        }) {
+            VStack(spacing: 6) {
+                Image(nsImage: app.appIcon).resizable().frame(width: 32, height: 32)
+                    .shadow(color: .black.opacity(backdropIsBright ? 0.12 : 0.35), radius: 2, y: 1)
+                Text(app.appName).font(.system(size: 11, weight: .semibold)).foregroundColor(textColor.opacity(0.90))
+                    .lineLimit(1).frame(width: 64, alignment: .center)
+            }
+            .frame(width: 64, height: 72)
         }
-    
-        @State private var draggedStartItem: PinnedApp? = nil
-
-        private func pinnedCell(_ app: PinnedApp) -> some View {
-            Button(action: {
-                NotificationCenter.default.post(name: .dismissStartMenuWindow, object: nil)
-                if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: app.bundleIdentifier) {
-                    NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration())
-                }
-            }) {
-                VStack(spacing: 6) {
-                    Image(nsImage: app.appIcon).resizable().frame(width: 32, height: 32)
-                        .shadow(color: .black.opacity(backdropIsBright ? 0.12 : 0.35), radius: 2, y: 1)
-                    Text(app.appName).font(.system(size: 11, weight: .semibold)).foregroundColor(textColor.opacity(0.90))
-                        .lineLimit(1).frame(width: 64, alignment: .center)
-                }
-                .frame(width: 64, height: 72)
-            }
-            .buttonStyle(.plain)
-            // 🎯 THE FIX: Direct drag-and-drop modifier pipeline attached to Start Menu cells
-            .onDrag {
-                self.draggedStartItem = app
-                return NSItemProvider(object: app.bundleIdentifier as NSString)
-            }
-            .onDrop(of: [.text], delegate: StartMenuPinnedDropDelegate(item: app, settings: settings, dragged: $draggedStartItem))
-            .contextMenu {
+        .buttonStyle(.plain)
+        .onDrag {
+            self.draggedStartItem = app
+            return NSItemProvider(object: app.bundleIdentifier as NSString)
+        }
+        .onDrop(of: [.text], delegate: StartMenuPinnedDropDelegate(item: app, settings: settings, dragged: $draggedStartItem))
+        .contextMenu {
             if app.bundleIdentifier == "com.apple.finder" {
                 Text("System Core: Unpin Locked").font(.system(size: 11)).foregroundColor(subtextColor)
             } else {

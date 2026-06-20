@@ -1,3 +1,7 @@
+// PinnedAppsTray.swift — Drag-to-reorder tray of pinned apps shown in the bar.
+// Owner: Views/Subviews
+// Depends on: Core/Services/AeroBarSettings, Views/Subviews/PinnedAppDropDelegate
+//
 import SwiftUI
 import AppKit
 import UniformTypeIdentifiers
@@ -13,7 +17,7 @@ struct PinnedAppsTray: View {
     @State private var hoveredWindowID: CGWindowID? = nil
     @State private var showTask: Task<Void, Never>? = nil
     @State private var dismissTask: Task<Void, Never>? = nil
-    @State private var outsideClickMonitor: Any? = nil
+    @State private var outsideClickMonitor: (Any?, Any?)? = nil
 
     var body: some View {
         HStack(spacing: 8) {
@@ -62,7 +66,13 @@ struct PinnedAppsTray: View {
                         startDismissalGracePeriod()
                     }
                 }
-                .popover(isPresented: popoverBinding(for: app.bundleIdentifier), arrowEdge: .top) {
+                // Non-activating replacement for `.popover` — see AeroPreviewPanel.swift.
+                // A real `.popover` here takes key/activation status; AeroBar's
+                // accessory-app / non-key-panel architecture has nothing key-capable
+                // to hand status back to when it closes, so the user's next click
+                // anywhere in AeroBar would get consumed re-establishing input focus
+                // instead of reaching any control — the "needs two clicks" bug.
+                .nonActivatingPreview(isPresented: popoverBinding(for: app.bundleIdentifier)) {
                     previewContent(for: associatedTabs, appID: app.bundleIdentifier)
                 }
                 .contextMenu {
@@ -122,14 +132,30 @@ struct PinnedAppsTray: View {
                 // specific window and dismisses the panel.
                 .onTapGesture {
                     activeHoveredAppID = nil
-                    hoveredWindowID = nil
+                    hoveredWindowID    = nil
                     removeOutsideClickMonitor()
+                    // No key-status handoff to wait out anymore (AeroPreviewPanel
+                    // never takes key status), so focus can run immediately instead
+                    // of after an arbitrary animation-completion delay.
                     PreviewWindowManager.focusTargetWindowContext(for: tab)
                 }
             }
         }
         .padding(6)
         .background(Color.clear)
+        // Cover the popover background: if mouse parks between chips or in padding,
+        // neither chip fires onHoverAction — so we'd never start dismissal.
+        // This container hover tracks the whole popover area:
+        //   entering → cancel any pending dismissal (mouse is still in-panel)
+        //   leaving  → start dismissal (mouse has left the popover entirely)
+        .onHover { inPanel in
+            if inPanel {
+                dismissTask?.cancel()
+                activeHoveredAppID = appID
+            } else {
+                startDismissalGracePeriod()
+            }
+        }
     }
 
     @ViewBuilder
@@ -184,7 +210,9 @@ struct PinnedAppsTray: View {
     private func startDismissalGracePeriod() {
         dismissTask?.cancel()
         dismissTask = Task {
-            try? await Task.sleep(for: .seconds(0.3))
+            // 0.6s grace: enough time to move from pinned icon through popover gap into chip.
+            // Chip onHoverAction cancels this before it fires when mouse enters chip.
+            try? await Task.sleep(for: .seconds(0.6))
             guard !Task.isCancelled else { return }
             await MainActor.run {
                 activeHoveredAppID = nil
@@ -194,24 +222,37 @@ struct PinnedAppsTray: View {
         }
     }
 
-    // Issue 3 fix: NSEvent.addGlobalMonitorForEvents only fires for events in OTHER
-    // applications — clicks inside our own popover are local events and are NOT
-    // captured by the global monitor, so they reach the chip's onTapGesture safely.
+    // AeroPreviewPanel never takes key status, so unlike a real `.popover` it does
+    // NOT auto-dismiss on outside clicks — we restore that here deliberately, as a
+    // pure dismiss signal that never intercepts/reroutes the click itself.
+    //
+    // Two monitors, not one: addGlobalMonitorForEvents only fires for clicks in
+    // OTHER apps/processes (never a click on AeroBar's own pinned icon row);
+    // addLocalMonitorForEvents only fires for clicks inside AeroBar's own windows
+    // (never a click in some other app). Together they cover "clicked anywhere."
     private func installOutsideClickMonitor() {
         guard outsideClickMonitor == nil else { return }
-        outsideClickMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { _ in
+        let global = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { _ in
             Task { @MainActor in
                 activeHoveredAppID = nil
                 hoveredWindowID = nil
                 removeOutsideClickMonitor()
             }
         }
+        let local = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { event in
+            activeHoveredAppID = nil
+            hoveredWindowID = nil
+            removeOutsideClickMonitor()
+            return event  // never consumed — just observed, then passed straight through
+        }
+        outsideClickMonitor = (global, local)
     }
 
     private func removeOutsideClickMonitor() {
-        if let monitor = outsideClickMonitor {
-            NSEvent.removeMonitor(monitor)
-            outsideClickMonitor = nil
+        if let (global, local) = outsideClickMonitor {
+            if let g = global { NSEvent.removeMonitor(g) }
+            if let l = local  { NSEvent.removeMonitor(l) }
         }
+        outsideClickMonitor = nil
     }
 }

@@ -1,4 +1,4 @@
-// WindowArrangementDaemon.swift — 30ms polling loop that clamps windows above the bar.
+// WindowArrangementDaemon.swift — 100ms polling loop that clamps windows above the bar.
 // Owner: Core/Services
 // Depends on: AppKit, AccessibilityService
 //
@@ -9,17 +9,39 @@
 //
 // JITTER GUARDS:
 //   isPerformingManagedResize — set before any AX write, cleared after 350ms.
-//   windowStillCycleCount     — window must be still for 3 consecutive ticks (~90ms)
+//   windowStillCycleCount     — window must be still for 3 consecutive ticks (~300ms)
 //                               before a resize is attempted.
 //
 // TAB STABILITY FIX:
 //   activeTabs is updated via stable-merge: existing tabs keep their position,
 //   new tabs are appended, gone tabs are removed. This prevents the constant
 //   reordering that occurred because NSWorkspace.runningApplications returns apps
-//   in arbitrary order on each 30ms poll tick.
+//   in arbitrary order on each poll tick.
+//
+// POLL INTERVAL: was 30ms (33Hz). Every tick fans out into an AX/XPC call per
+// app, plus 6+ AX/XPC calls per window (role, subrole, title, minimized,
+// position, size, plus the private window-ID resolver) — at 33Hz that's
+// hundreds of Accessibility-daemon round-trips per second with even a modest
+// number of windows open, which is what was flooding the system log enough to
+// trip Xcode's "quarantined due to high logging volume" console guard.
+// requiredStillCycles already gates actual AX *writes* behind 3 consecutive
+// still ticks, so the per-tick interval was never load-bearing for snappiness —
+// only for how fast a new/closed window appears in the tab bar and how fast a
+// dragged-under-the-bar window gets clamped back. 100ms keeps both well within
+// "feels instant" territory while cutting AX call volume to roughly a third.
 
 import AppKit
 import UniformTypeIdentifiers
+
+// _AXUIElementGetWindow is a private, unheadered ApplicationServices function that maps an
+// AXUIElement window to its real CGWindowID. There is no public AX API for this — it is not
+// "kAXWindowIDAttribute" (that string is not a real attribute and AXUIElementCopyAttributeValue
+// will never return .success for it). This symbol ships in every macOS version's
+// ApplicationServices/HIServices and is the same private call used by Rectangle, AltTab,
+// Amethyst, and similar window-management tools to resolve window IDs from AX elements.
+@_silgen_name("_AXUIElementGetWindow")
+@discardableResult
+func _AXUIElementGetWindow(_ element: AXUIElement, _ outWindow: inout CGWindowID) -> AXError
 
 final class WindowArrangementDaemon {
     static let shared = WindowArrangementDaemon()
@@ -37,7 +59,7 @@ final class WindowArrangementDaemon {
 
     func start(barHeight: CGFloat) {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.03, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
             self?.tick(barHeight: barHeight)
         }
     }
@@ -154,6 +176,15 @@ final class WindowArrangementDaemon {
             }
         }
 
+        // Prune state for windows that no longer exist. Without this,
+        // previousFrames/stillCounts retain a CGRect + Int for every window ID
+        // ever seen — including from apps that quit long ago — for as long as
+        // AeroBar keeps running. At 10 ticks/sec that's a slow but real
+        // unbounded leak over a multi-day uptime session.
+        let discoveredIDs = Set(discoveredTabs.map { $0.windowID })
+        previousFrames = previousFrames.filter { discoveredIDs.contains($0.key) }
+        stillCounts    = stillCounts.filter    { discoveredIDs.contains($0.key) }
+
         // Fallback focus sync
         if let frontApp = NSWorkspace.shared.frontmostApplication {
             let appRef = AXUIElementCreateApplication(frontApp.processIdentifier)
@@ -170,7 +201,7 @@ final class WindowArrangementDaemon {
         }
 
         // STABLE MERGE — preserve existing tab order instead of replacing the whole array.
-        // Without this, tabs shuffle every 30ms because NSWorkspace.runningApplications
+        // Without this, tabs shuffle every tick because NSWorkspace.runningApplications
         // returns apps in arbitrary order on each poll tick.
         DispatchQueue.main.async {
             let existing = settings.activeTabs
@@ -269,11 +300,21 @@ final class WindowArrangementDaemon {
     // MARK: - Helpers
 
     private func resolvedWindowID(window: AXUIElement, app: NSRunningApplication, idx: Int) -> CGWindowID {
-        var ref: CFTypeRef?
-        if AXUIElementCopyAttributeValue(window, "kAXWindowIDAttribute" as CFString, &ref) == .success,
-           let num = ref as? NSNumber { return CGWindowID(num.uint32Value) }
-        // Fallback: CFHash on an AXUIElement is stable for the lifetime of the CF object —
-        // it does NOT change with Z-order. idx is Z-order-dependent and causes tab shuffling
+        // "kAXWindowIDAttribute" was never a real AXUIElement attribute string — Apple
+        // does not expose window IDs through AXUIElementCopyAttributeValue at all, public
+        // or private. That call always failed .success, so every tab silently fell back to
+        // a fabricated CFHash-based ID below — not a real CGWindowID. Real window IDs come
+        // from the window-server attached, private function _AXUIElementGetWindow, declared
+        // by AppKit/SkyLight and used ubiquitously by window-management tools (Rectangle,
+        // AltTab, etc.) for exactly this purpose.
+        var wid: CGWindowID = 0
+        if _AXUIElementGetWindow(window, &wid) == .success, wid != 0 {
+            return wid
+        }
+        // Fallback only if the private call is ever unavailable/fails (e.g. some
+        // sandboxed system windows that don't have a window-server backing window).
+        // CFHash on an AXUIElement is stable for the lifetime of the CF object — it does
+        // NOT change with Z-order. idx is Z-order-dependent and causes tab shuffling
         // whenever a Chrome window is focused (kAXWindowsAttribute returns in Z-order).
         let stableHash = CFHash(window) ^ UInt(app.processIdentifier)
         return CGWindowID(truncatingIfNeeded: stableHash)

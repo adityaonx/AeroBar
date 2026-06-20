@@ -1,46 +1,56 @@
+// AppDelegate.swift — App lifecycle entry point.
+// Owner: Core
+// Depends on: Window/AeroBarWindowController, Core/Utilities/SystemDockConfigurator
+//
+// Kept intentionally thin: startup just configures the Dock and hands off to
+// AeroBarWindowController, which owns the actual launch/onboarding sequence.
+
 import AppKit
 import Collaboration
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
     var windowController: AeroBarWindowController?
-    
+
     @MainActor func applicationDidFinishLaunching(_ notification: Notification) {
-        // 🎯 THE DOCK FIX: Programmatically enforce background activation status
-        // This hides the icon from your system Dock instantly on startup
+        // AeroBar is a background utility, not a regular app — hide it from the
+        // Dock and Cmd+Tab switcher immediately on launch.
         NSApp.setActivationPolicy(.accessory)
-        
-        // ⚙️ LINKED CONFIGURATOR PASS:
-        // Invokes your custom layout parameters (Bottom position, small tiles, magnification)
-        // and safely cycles the Dock server process tree using the native AppKit API.
+
+        // Reconfigure the system Dock (bottom position, autohide) so it stays
+        // out of AeroBar's way. Restored on quit in applicationWillTerminate.
         SystemDockConfigurator.enforceAeroDockDefaults()
-        
-        // 🎯 FIXED ROUTING CONTEXT: Hand control back over to your custom controller!
-        // This lets AeroBarWindowController drive its custom launch lifecycle evaluation,
-        // firing up your welcome onboarding popup view seamlessly before painting the panel.
+
+        // AeroBarWindowController owns everything from here: it checks the
+        // Accessibility permission, runs onboarding if needed, and only then
+        // builds and shows the actual taskbar panel.
         windowController = AeroBarWindowController()
-        DispatchQueue.global(qos: .utility).async {
-                print("[AeroBar Core] Prefetching system user record identity asset context...")
-                
-                if let targetIdentity = CBIdentity(name: NSUserName(), authority: CBIdentityAuthority.local()),
-                   let accountNSImage = targetIdentity.image {
-                    
-                    var proposalRect = CGRect(x: 0, y: 0, width: accountNSImage.size.width, height: accountNSImage.size.height)
-                    if let cgImageHandle = accountNSImage.cgImage(forProposedRect: &proposalRect, context: nil, hints: nil) {
-                        
-                        DispatchQueue.main.async {
-                            // Cache the asset securely in our permanent state store
-                            AeroBarSettings.shared.cachedUserAvatar = cgImageHandle
-                            print("[AeroBar Core] User identity picture cached cleanly in system memory.")
-                        }
-                    }
-                }
-            }
+
+        prefetchUserAvatar()
     }
-    // 🎯 THE FIX: macOS fires this function natively right before the app process dies
-        func applicationWillTerminate(_ notification: Notification) {
-            print("[AeroBar Core] Application terminating. Restoring system state...")
-            
-            // Return the Dock to its normal, usable state
-            SystemDockConfigurator.restoreSystemDockDefaults()
+
+    func applicationWillTerminate(_ notification: Notification) {
+        SystemDockConfigurator.restoreSystemDockDefaults()
+    }
+
+    // MARK: - User avatar prefetch
+
+    // The Start Menu shows the macOS account avatar in its header. Resolving it
+    // via the Collaboration framework involves a directory lookup, so we kick
+    // it off once at launch (off the main thread) and cache the result, rather
+    // than paying that cost the first time the user opens the Start Menu.
+    private func prefetchUserAvatar() {
+        DispatchQueue.global(qos: .utility).async {
+            guard let identity = CBIdentity(name: NSUserName(), authority: .local()),
+                  let avatarImage = identity.image
+            else { return }
+
+            var proposedRect = CGRect(origin: .zero, size: avatarImage.size)
+            guard let cgImage = avatarImage.cgImage(forProposedRect: &proposedRect, context: nil, hints: nil)
+            else { return }
+
+            DispatchQueue.main.async {
+                AeroBarSettings.shared.cachedUserAvatar = cgImage
+            }
         }
+    }
 }

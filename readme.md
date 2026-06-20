@@ -79,13 +79,13 @@ It is not a theme. It is not a wrapper. It talks directly to macOS accessibility
 
 ## Features
 
-### 🪟 Liquid Glass Taskbar
+### Liquid Glass Taskbar
 The taskbar itself is a persistent, borderless panel that sits at the very bottom of your screen at all times across Spaces, full-screen transitions, and display changes. It uses Apple's native vibrancy / blur materials to sample your wallpaper and produce a genuine translucent glass surface. Five distinct glass blend styles let you dial it from deep frosted to nearly transparent.
 
-### 🔵 Mac Aero Start Orb
+### Mac Aero Start Orb
 The circular Start Orb in the bottom-left corner is your system hub. Click it and the Start Menu opens above it, anchored to whichever display you clicked on. Light and dark hover states are supported, and the orb itself is customizable in the Appearance Lab.
 
-### 🗂️ Live Window Tab Strip
+### Live Window Tab Strip
 Every open, non-minimized window across every running app appears as a tab in the taskbar in real time. Tabs show the app icon and window title. Clicking a tab:
 - **Focuses** the window if it isn't active
 - **Minimizes** it if it is already the front window
@@ -93,7 +93,7 @@ Every open, non-minimized window across every running app appears as a tab in th
 
 This gives you the exact same one-click window switching behaviour Windows users are used to no Exposé, no Command-Tab cycling required.
 
-### 📌 Pinned App Launcher
+### Pinned App Launcher
 A drag-and-drop tray of your favourite apps lives between the Orb and the window tabs. Pinned apps behave the way Windows taskbar icons do:
 - Click to **launch** the app if it isn't running
 - Click to **show / raise** all its windows if it is running
@@ -102,10 +102,10 @@ A drag-and-drop tray of your favourite apps lives between the Orb and the window
 
 Pinned order persists across reboots.
 
-### 🔍 Spotlight Quick Search
+### Spotlight Quick Search
 A search field sits inline in the taskbar (toggleable). It fires macOS Spotlight directly type an app name, file, or calculation and press Return, exactly like the Windows search box in the taskbar.
 
-### 🚀 Start Menu
+### Start Menu
 The full Start Menu panel opens from the Orb and contains:
 
 | Section | What it does |
@@ -116,10 +116,10 @@ The full Start Menu panel opens from the Orb and contains:
 | **All Apps browser** | Full alphabetically grouped list of every app installed on your Mac |
 | **Recommendations** | Recent files surfaced via Spotlight metadata — the things you were just working on (toggleable panel) |
 
-### 🗑️ Recycle Bin Button
+### Recycle Bin Button
 A Trash shortcut lives on the right end of the taskbar — the same position Windows users expect. Click it to open the Trash in Finder.
 
-### 🖥️ Multi-Display Support
+### Multi-Display Support
 AeroBar can show its taskbar rail on:
 - **All Displays** — every connected monitor gets its own taskbar
 - **Main Screen Only** — primary display only
@@ -127,7 +127,7 @@ AeroBar can show its taskbar rail on:
 
 Each display's taskbar is independent. The Start Menu opens anchored to the display you clicked on.
 
-### 🎨 Appearance Lab
+### Appearance Lab
 Every visual aspect of the bar is tunable from the Appearance Lab popover:
 
 | Control | Options |
@@ -142,7 +142,7 @@ Every visual aspect of the bar is tunable from the Appearance Lab popover:
 
 All settings persist across reboots.
 
-### ⚙️ System Settings
+### System Settings
 - **Launch at Login** — AeroBar starts automatically when you log in
 - **Recommendations** — toggle the recent files panel in the Start Menu
 - **Auto-update check** — checks for new builds on launch, configurable to Daily or Weekly
@@ -191,12 +191,16 @@ All settings persist across reboots.
 
 > **⚠️ Experimental Alpha** — AeroBar is a personal project in active development. It interacts with macOS system-level UI via Accessibility APIs. Use it knowing that and keep backups of anything important. No warranties, no guarantees of stability.
 
-## 💬 Community & Feedback
+## Community & Feedback
 
 Have a feature request, a bug report, or just want to share your AeroBar setup? We use **GitHub Discussions** to keep the roadmap transparent and community-driven.
 
 *   **[Start a Discussion](https://github.com/adityaonx/AeroBar/discussions/new/choose)** — Use this for general questions, feedback, or sharing your ideas.
 *   **[Report a Bug](https://github.com/adityaonx/AeroBar/issues/new)** — Use the issue tracker for technical bugs (please include your macOS version and logs if possible).
+
+## Architecture
+
+If you're contributing or just curious how it fits together, [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) has the class diagram, data-flow diagram, and launch/window-switch sequence diagrams.
 
 ## Built With
 

@@ -1,3 +1,7 @@
+// RecycleBinButton.swift — Trash shortcut at the right end of the bar.
+// Owner: Views/Subviews
+// Depends on: AppKit
+
 import SwiftUI
 import AppKit
 
@@ -16,18 +20,18 @@ struct RecycleBinButton: View {
         }
         .buttonStyle(PlainButtonStyle())
         .help("Recycle Bin")
-        // 🎯 FIXED: Right-click menu triggers automated background Empty Trash cycle
         .contextMenu {
             Button(role: .destructive) {
-                executeNativeEmptyTrashWorkflow()
+                emptyTrash()
             } label: {
                 Label("Empty Trash Bin", systemImage: "trash.slash")
             }
         }
     }
     
-    // MARK: - 🗑️ Empty Trash Operation Automation
-    private func executeNativeEmptyTrashWorkflow() {
+    // Empties the Trash via Finder's AppleScript dictionary — the same operation
+    // as choosing Finder > Empty Trash, just triggered from the bar.
+    private func emptyTrash() {
         DispatchQueue.global(qos: .userInitiated).async {
             let scriptSource = """
             tell application "Finder"
@@ -38,7 +42,7 @@ struct RecycleBinButton: View {
                 var errorDict: NSDictionary?
                 appleScript.executeAndReturnError(&errorDict)
                 if let err = errorDict {
-                    print("AeroBar Empty Trash Script Error: \(err)")
+                    print("AeroBar RecycleBinButton: Empty Trash failed — \(err)")
                 }
             }
         }

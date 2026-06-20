@@ -15,6 +15,10 @@ class AeroBarSettings: ObservableObject {
     @Published var manuallyHiddenWindowIDs: Set<CGWindowID> = []
     @Published var transitionalWindowLockID: CGWindowID? = nil
     @Published var isStartMenuOpen: Bool = false
+    // Shared preview slot: whichever tab windowID currently owns the hover preview.
+    // AppKitTabButtonView watches this so entering tab B instantly closes tab A's popover
+    // without waiting for A's 0.3s grace period (fixes auto-expand-adjacent-tab bug).
+    @Published var activePreviewTabID: CGWindowID? = nil
 
     // MARK: - Bar geometry
     @Published var barHeight: CGFloat = 40
@@ -68,7 +72,14 @@ class AeroBarSettings: ObservableObject {
     // MARK: - Window Previews Customization State
     @AppStorage("com.aerobar.enablePreviews")     var enablePreviews: Bool = true
     @AppStorage("com.aerobar.previewDelayValue")  var previewDelayValue: Double = 0.5
-    @AppStorage("com.aerobar.previewSizeWidth")   var previewSizeWidth: Double = 180.0
+    // previewScale replaces the old fixed-pixel-width / fixed-aspect-ratio box
+    // (previewSizeWidth). It's a fraction of the real captured window's own
+    // point size, so the preview box always keeps the real window's aspect
+    // ratio — no more letterboxing a tall window into a hardcoded landscape
+    // shape. New key (not reusing previewSizeWidth's storage) so existing
+    // installs cleanly pick up the new default instead of inheriting a stale
+    // pixel-width value under the new semantics.
+    @AppStorage("com.aerobar.previewScale")       var previewScale: Double = 0.25
     @AppStorage("com.aerobar.previewStackVert")   var previewStackVertical: Bool = true
 
     // MARK: - Orb customisation
@@ -119,7 +130,7 @@ class AeroBarSettings: ObservableObject {
 
     // MARK: - Init
     private init() {
-        setupRegistry() // 🎯 FIXED: Replaced invalid 'init()' function identifier wrapper context cleanly
+        setupRegistry()
     }
 
     private func setupRegistry() {

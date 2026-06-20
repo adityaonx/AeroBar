@@ -1,3 +1,11 @@
+// SpotlightSearchField.swift — Search icon in the bar that opens native Spotlight.
+// Owner: Views/Subviews
+// Depends on: AppKit (Accessibility, CGEvent)
+//
+// There's no public API to simply "open Spotlight" — we locate and click its
+// menu-bar status item via the Accessibility API, falling back to simulating
+// the Cmd+Space keyboard shortcut if that item can't be found.
+
 import SwiftUI
 import AppKit
 
@@ -46,28 +54,25 @@ struct SpotlightSearchField: View {
         .help("Search with Spotlight")
     }
     
-    // MARK: - 🚀 System Menu Bar Core-Click Integration
     private func triggerNativeMacSpotlight() {
-        // 1. Clear out our custom flyout panel
         NotificationCenter.default.post(name: Notification.Name("dismissStartMenuWindow"), object: nil)
         
-        // 2. Query the Window Server for the native system Menu Bar (Process ID 0 or SystemUI)
+        // Locate the Spotlight status item inside SystemUIServer's menu bar and
+        // press it directly via the Accessibility API.
         _ = AXUIElementCreateSystemWide()
         var menuBarRef: CFTypeRef?
         
-        // Locate the structural menu bar element array layer
         let systemUIApps = NSWorkspace.shared.runningApplications.filter { $0.bundleIdentifier == "com.apple.systemuiserver" }
         let targetPID = systemUIApps.first?.processIdentifier ?? 0
         
         let appRef = AXUIElementCreateApplication(targetPID)
         guard AXUIElementCopyAttributeValue(appRef, kAXMenuBarAttribute as CFString, &menuBarRef) == .success,
               let menuBar = menuBarRef else {
-            // Fallback: If SystemUI reference is locked down, simulate the direct keyboard layout register
+            // SystemUIServer's menu bar wasn't reachable — fall back to the keyboard shortcut.
             simulateSpotlightHardwareShortcut()
             return
         }
         
-        // 3. Scan the status item list handles for the native Spotlight MenuExtra icon
         var childrenRef: CFTypeRef?
         if AXUIElementCopyAttributeValue(menuBar as! AXUIElement, kAXChildrenAttribute as CFString, &childrenRef) == .success,
            let children = childrenRef as? [AXUIElement] {
@@ -77,20 +82,20 @@ struct SpotlightSearchField: View {
                 AXUIElementCopyAttributeValue(child, kAXDescriptionAttribute as CFString, &descriptionRef)
                 
                 if let description = descriptionRef as? String, description.localizedCaseInsensitiveContains("spotlight") {
-                    // 🎯 FOUND IT: Perform a native accessibility click on the macOS menu bar asset item
                     AXUIElementPerformAction(child, kAXPressAction as CFString)
                     return
                 }
             }
         }
         
-        // 4. Ultimate Fallback
+        // Spotlight's status item isn't present in the menu bar (e.g. user removed
+        // it) — fall back to the keyboard shortcut as a last resort.
         simulateSpotlightHardwareShortcut()
     }
     
     private func simulateSpotlightHardwareShortcut() {
         let src = CGEventSource(stateID: .combinedSessionState)
-        // Global virtual hardware key events for Cmd + Space (Keycode 49)
+        // Cmd+Space (virtual keycode 49), posted as raw hardware events.
         let cmdDown = CGEvent(keyboardEventSource: src, virtualKey: 49, keyDown: true)
         let cmdUp = CGEvent(keyboardEventSource: src, virtualKey: 49, keyDown: false)
         

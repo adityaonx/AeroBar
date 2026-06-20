@@ -24,12 +24,12 @@ final class ColorExtensionsTests: XCTestCase {
 
     func test_dataFromHexString_roundtrip() {
         let hex = "48656C6C6F"  // "Hello"
-        let data = Data(fromTelemetryHexString: hex)
+        let data = Data(hexEncoded: hex)
         XCTAssertNotNil(data)
         XCTAssertEqual(String(data: data!, encoding: .utf8), "Hello")
     }
 
     func test_dataFromHexString_invalidReturnsNil() {
-        XCTAssertNil(Data(fromTelemetryHexString: "ZZZZ"))
+        XCTAssertNil(Data(hexEncoded: "ZZZZ"))
     }
 }

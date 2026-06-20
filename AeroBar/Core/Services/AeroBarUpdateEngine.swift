@@ -1,149 +1,16 @@
+// AeroBarUpdateEngine.swift — Checks GitHub Releases for new builds and handles
+// the in-place update (download DMG, swap the app bundle, relaunch).
+// Owner: Core/Services
+// Depends on: Core/Models/GitHubRelease, Window/AeroBarUpdateAlertPanel
+//
+// Single shared instance. checkForUpdatesSilently() is the entry point, called
+// from AeroBarWindowController on launch and from a periodic timer. Everything
+// below it is plumbing for the actual download/install/relaunch sequence.
+
 import Foundation
 import AppKit
-import SwiftUI
 import Combine
 
-struct GitHubAsset: Codable {
-    let name: String
-    let browserDownloadUrl: String
-}
-
-struct GitHubRelease: Codable {
-    let tagName: String?
-    let body: String?
-    let assets: [GitHubAsset]?
-}
-
-// ==========================================
-// 🔔 UPDATE ALERT PANEL
-// A floating NSPanel that shows changelog + Update Now / Later buttons.
-// Presented as a proper popup above all AeroBar panels.
-// ==========================================
-final class AeroBarUpdateAlertPanel: NSPanel {
-
-    static func show(version: String, changelog: String, onUpdateNow: @escaping () -> Void) {
-        let panel = AeroBarUpdateAlertPanel(
-            contentRect: NSRect(x: 0, y: 0, width: 460, height: 480),
-            styleMask: [.titled, .closable, .fullSizeContentView, .nonactivatingPanel],
-            backing: .buffered,
-            defer: false
-        )
-        panel.titlebarAppearsTransparent = true
-        panel.title = ""
-        panel.isMovableByWindowBackground = true
-        panel.level = .statusBar + 1
-        panel.isReleasedWhenClosed = false
-        panel.center()
-
-        let rootView = AeroBarUpdateAlertView(
-            version: version,
-            changelog: changelog,
-            onUpdateNow: {
-                panel.close()
-                onUpdateNow()
-            },
-            onLater: {
-                panel.close()
-            }
-        )
-        panel.contentView = NSHostingView(rootView: rootView)
-        // AeroBar runs as .accessory (no Dock icon), so makeKeyAndOrderFront silently
-        // fails when no window has focus yet (e.g. on auto-launch check).
-        // Briefly activate the app so the panel actually surfaces to the user.
-        NSApp.activate(ignoringOtherApps: true)
-        panel.orderFrontRegardless()
-    }
-}
-
-// ==========================================
-// 🎨 UPDATE ALERT SWIFTUI VIEW
-// Shows version badge, full scrollable changelog, and two action buttons.
-// ==========================================
-struct AeroBarUpdateAlertView: View {
-    let version: String
-    let changelog: String
-    let onUpdateNow: () -> Void
-    let onLater: () -> Void
-
-    var body: some View {
-        ZStack {
-            VisualEffectBlurView(material: .hudWindow, blendingMode: .withinWindow, state: .active)
-
-            VStack(spacing: 0) {
-                // ── HEADER ──────────────────────────────────────────
-                VStack(spacing: 8) {
-                    Image(systemName: "arrow.down.circle.fill")
-                        .font(.system(size: 36, weight: .light))
-                        .foregroundColor(.accentColor)
-
-                    Text("AeroBar \(version) Available")
-                        .font(.system(size: 17, weight: .bold, design: .rounded))
-                        .foregroundColor(.white)
-
-                    Text("A new version is ready to install.")
-                        .font(.system(size: 12))
-                        .foregroundColor(.white.opacity(0.5))
-                }
-                .padding(.top, 28)
-                .padding(.bottom, 16)
-
-                Divider().background(Color.white.opacity(0.1))
-
-                // ── CHANGELOG ───────────────────────────────────────
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("What's New")
-                        .font(.system(size: 11, weight: .bold, design: .rounded))
-                        .foregroundColor(.white.opacity(0.4))
-                        .padding(.horizontal, 16)
-                        .padding(.top, 12)
-
-                    ScrollView(.vertical, showsIndicators: true) {
-                        Text(changelog.isEmpty ? "No release notes provided." : changelog)
-                            .font(.system(size: 12))
-                            .foregroundColor(.white.opacity(0.85))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 16)
-                            .padding(.bottom, 12)
-                            .textSelection(.enabled)
-                    }
-                    .frame(maxHeight: 260)
-                }
-
-                Divider().background(Color.white.opacity(0.1))
-
-                // ── ACTION BUTTONS ───────────────────────────────────
-                HStack(spacing: 10) {
-                    Button(action: onLater) {
-                        Text("Later")
-                            .font(.system(size: 12, weight: .semibold))
-                            .foregroundColor(.white.opacity(0.7))
-                            .frame(maxWidth: .infinity, minHeight: 30)
-                            .background(Color.white.opacity(0.08))
-                            .cornerRadius(7)
-                    }
-                    .buttonStyle(.plain)
-
-                    Button(action: onUpdateNow) {
-                        Text("Update Now")
-                            .font(.system(size: 12, weight: .bold))
-                            .foregroundColor(.black)
-                            .frame(maxWidth: .infinity, minHeight: 30)
-                            .background(Color.accentColor)
-                            .cornerRadius(7)
-                    }
-                    .buttonStyle(.plain)
-                }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 14)
-            }
-        }
-        .frame(width: 460, height: 480)
-    }
-}
-
-// ==========================================
-// 🔄 UPDATE ENGINE
-// ==========================================
 final class AeroBarUpdateEngine: ObservableObject {
     static let shared = AeroBarUpdateEngine()
 
@@ -153,61 +20,67 @@ final class AeroBarUpdateEngine: ObservableObject {
     private let githubLatestReleaseURL = URL(string: "https://api.github.com/repos/adityaonx/AeroBar/releases/latest")
     private var directDmgDownloadURL: URL?
 
-    // ── Replace this method inside AeroBarUpdateEngine ─────
-        func checkForUpdatesSilently(showAlertIfAvailable: Bool = false, onComplete: (() -> Void)? = nil) {
-            guard let url = githubLatestReleaseURL else { onComplete?(); return }
-            
-            // 🎯 THE FIX: Construct a formal URLRequest to inject the required header fields
-            var request = URLRequest(url: url)
-            request.setValue("AeroBarApp-Updater", forHTTPHeaderField: "User-Agent")
-            request.cachePolicy = .reloadIgnoringLocalCacheData
-            
-            URLSession.shared.dataTask(with: request) { data, _, error in
-                if let error = error {
-                    print("[AeroBarUpdateEngine] Network error: \(error.localizedDescription)")
-                    DispatchQueue.main.async { onComplete?() }
-                    return
-                }
-                guard let data = data else { DispatchQueue.main.async { onComplete?() }; return }
-                Task { @MainActor in
-                    defer { onComplete?() }
-                    do {
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        let release = try decoder.decode(GitHubRelease.self, from: data)
-                        guard let rawTagName = release.tagName, let assetsList = release.assets else { return }
+    // MARK: - Check
 
-                        let settings = AeroBarSettings.shared
-                        settings.latestChangelog = release.body ?? ""
+    /// Fetches the latest GitHub release and, if it's newer than the running
+    /// build, either shows the update prompt or installs silently depending on
+    /// `enableSilentUpdates`. `onComplete` always fires exactly once, success or not.
+    func checkForUpdatesSilently(showAlertIfAvailable: Bool = false, onComplete: (() -> Void)? = nil) {
+        guard let url = githubLatestReleaseURL else { onComplete?(); return }
 
-                        if let dmgAsset = assetsList.first(where: { $0.name.lowercased().contains(".dmg") }) {
-                            self.directDmgDownloadURL = URL(string: dmgAsset.browserDownloadUrl)
+        // GitHub's API requires a User-Agent header or it returns 403.
+        var request = URLRequest(url: url)
+        request.setValue("AeroBarApp-Updater", forHTTPHeaderField: "User-Agent")
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            if let error = error {
+                print("[AeroBarUpdateEngine] Network error: \(error.localizedDescription)")
+                DispatchQueue.main.async { onComplete?() }
+                return
+            }
+            guard let data = data else { DispatchQueue.main.async { onComplete?() }; return }
+            Task { @MainActor in
+                defer { onComplete?() }
+                do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let release = try decoder.decode(GitHubRelease.self, from: data)
+                    guard let rawTagName = release.tagName, let assetsList = release.assets else { return }
+
+                    let settings = AeroBarSettings.shared
+                    settings.latestChangelog = release.body ?? ""
+
+                    if let dmgAsset = assetsList.first(where: { $0.name.lowercased().contains(".dmg") }) {
+                        self.directDmgDownloadURL = URL(string: dmgAsset.browserDownloadUrl)
+                    }
+
+                    let localVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0.0"
+                    let isNewer = rawTagName
+                        .replacingOccurrences(of: "v", with: "")
+                        .compare(localVersion, options: .numeric) == .orderedDescending
+
+                    if isNewer {
+                        settings.isUpdateAvailable = true
+                        settings.latestRemoteVersionString = rawTagName
+
+                        if settings.enableSilentUpdates {
+                            self.downloadAndInstallUpdateSilently()
+                        } else {
+                            self.presentUpdatePopup(version: rawTagName, changelog: settings.latestChangelog)
                         }
-
-                        let localVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0.0"
-                        let isNewer = rawTagName
-                            .replacingOccurrences(of: "v", with: "")
-                            .compare(localVersion, options: .numeric) == .orderedDescending
-
-                        if isNewer {
-                            settings.isUpdateAvailable = true
-                            settings.latestRemoteVersionString = rawTagName
-
-                            if settings.enableSilentUpdates {
-                                self.downloadAndInstallUpdateSilently()
-                            } else {
-                                self.presentUpdatePopup(version: rawTagName, changelog: settings.latestChangelog)
-                            }
-                        } else if !showAlertIfAvailable {
-                            // Keep track that we checked on launch successfully
-                            print("[AeroBarUpdateEngine] Already on the latest version: \(localVersion)")
-                        }
-                    } catch { print("[AeroBarUpdateEngine] Decode error: \(error)") }
+                    } else if !showAlertIfAvailable {
+                        print("[AeroBarUpdateEngine] Already on the latest version: \(localVersion)")
+                    }
+                } catch {
+                    print("[AeroBarUpdateEngine] Decode error: \(error)")
                 }
-            }.resume()
-        }
+            }
+        }.resume()
+    }
 
-    // ── Present the floating update alert panel ────────────────────
+    // MARK: - Present
+
     @MainActor
     func presentUpdatePopup(version: String, changelog: String) {
         AeroBarUpdateAlertPanel.show(version: version, changelog: changelog) {
@@ -215,7 +88,10 @@ final class AeroBarUpdateEngine: ObservableObject {
         }
     }
 
-    // ── Called by "Update Now" button or silent-update path ────────
+    // MARK: - Download & install
+
+    /// Downloads the release DMG and hands off to the bundle-swap workflow.
+    /// Used both by the "Update Now" button and the silent-update path.
     func downloadAndInstallUpdateSilently() {
         guard let downloadURL = directDmgDownloadURL else { return }
         DispatchQueue.main.async {
@@ -234,43 +110,49 @@ final class AeroBarUpdateEngine: ObservableObject {
             }
             DispatchQueue.main.async { self.installationStatusMessage = "Installing..." }
             try? data.write(to: dest)
-            self.executeInAppBinaryReplacementWorkflow(dmgLocation: dest)
+            self.replaceRunningAppBundle(withDmgAt: dest)
         }.resume()
     }
 
-    private func executeInAppBinaryReplacementWorkflow(dmgLocation: URL) {
+    /// Mounts the downloaded DMG, swaps the running .app bundle for the one
+    /// inside it (keeping a backup until relaunch succeeds), then relaunches.
+    private func replaceRunningAppBundle(withDmgAt dmgLocation: URL) {
         DispatchQueue.global(qos: .userInteractive).async {
             let fm = FileManager.default
-            let cur = Bundle.main.bundleURL
-            let appDir = cur.deletingLastPathComponent()
-            let backup = appDir.appendingPathComponent("AeroBar_Old_Backup.app")
+            let currentAppURL = Bundle.main.bundleURL
+            let appDir = currentAppURL.deletingLastPathComponent()
+            let backupURL = appDir.appendingPathComponent("AeroBar_Old_Backup.app")
 
-            let mount = "/Volumes/AeroBar_Update_\(UUID().uuidString.prefix(6))"
+            let mountPoint = "/Volumes/AeroBar_Update_\(UUID().uuidString.prefix(6))"
             let mountTask = Process()
             mountTask.launchPath = "/usr/bin/hdiutil"
-            mountTask.arguments = ["attach", dmgLocation.path, "-mountpoint", mount, "-nobrowse", "-quiet"]
+            mountTask.arguments = ["attach", dmgLocation.path, "-mountpoint", mountPoint, "-nobrowse", "-quiet"]
             mountTask.launch(); mountTask.waitUntilExit()
 
-            if fm.fileExists(atPath: "\(mount)/AeroBar.app") {
-                try? fm.moveItem(at: cur, to: backup)
-                try? fm.copyItem(at: URL(fileURLWithPath: "\(mount)/AeroBar.app"), to: cur)
+            if fm.fileExists(atPath: "\(mountPoint)/AeroBar.app") {
+                try? fm.moveItem(at: currentAppURL, to: backupURL)
+                try? fm.copyItem(at: URL(fileURLWithPath: "\(mountPoint)/AeroBar.app"), to: currentAppURL)
             }
 
-            let unmount = Process()
-            unmount.launchPath = "/usr/bin/hdiutil"
-            unmount.arguments = ["detach", mount, "-force", "-quiet"]
-            unmount.launch(); unmount.waitUntilExit()
+            let unmountTask = Process()
+            unmountTask.launchPath = "/usr/bin/hdiutil"
+            unmountTask.arguments = ["detach", mountPoint, "-force", "-quiet"]
+            unmountTask.launch(); unmountTask.waitUntilExit()
             try? fm.removeItem(at: dmgLocation)
 
             DispatchQueue.main.async {
+                // Relaunch from a detached shell so the new bundle can start after
+                // this process (which is still running out of the old bundle) exits,
+                // then clean up the backup once the new copy is confirmed in place.
                 let script = """
                 sleep 1.5
-                rm -rf "\(backup.path)"
-                open "\(cur.path)"
+                rm -rf "\(backupURL.path)"
+                open "\(currentAppURL.path)"
                 """
-                let proc = Process()
-                proc.launchPath = "/bin/sh"; proc.arguments = ["-c", script]
-                proc.launch()
+                let relaunchTask = Process()
+                relaunchTask.launchPath = "/bin/sh"
+                relaunchTask.arguments = ["-c", script]
+                relaunchTask.launch()
                 NSApp.terminate(nil)
             }
         }

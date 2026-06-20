@@ -37,8 +37,9 @@ func hueFromHex(_ hex: String) -> Double {
 }
 
 extension Data {
-    // Decodes a telemetry hex string (e.g. from a server response) into raw bytes.
-    init?(fromTelemetryHexString hexString: String) {
+    // Decodes a hex-encoded string (e.g. "48656C6C6F") into raw bytes.
+    // Returns nil if the string has an odd length or contains non-hex characters.
+    init?(hexEncoded hexString: String) {
         let len = hexString.count / 2
         var buffer = Data(capacity: len)
         var index = hexString.startIndex

@@ -1,21 +1,32 @@
+// AppKitTabButtonView.swift — A single window-tab chip in the taskbar strip.
+// Owner: Views/Subviews
+// Depends on: Core/Models/WindowTab, Views/Subviews/UniversalWindowPreviewChip
+//
 import SwiftUI
 import AppKit
 
 struct AppKitTabButtonView: View {
     let tab: WindowTab
     let isActive: Bool
-    // Called by WindowTabsScrollView's Button — minimize/restore/focus logic lives there.
-    // We also call it directly from our local monitor when the popover intercepts a tap.
+    // No longer called internally — kept for call-site compatibility with
+    // WindowTabsScrollView. Previously this was invoked from a click monitor that
+    // worked around the bar's Button failing to fire while a popover held key
+    // status; that problem no longer exists (see AeroPreviewPanel.swift), so the
+    // parent's own Button(action:) now handles every tap directly.
     var onTap: (() -> Void)? = nil
 
     @ObservedObject private var settings = AeroBarSettings.shared
     @Environment(\.colorScheme) var colorScheme
 
-    @State private var isTabPopoverPresented = false
     @State private var showTask: Task<Void, Never>? = nil
     @State private var dismissTask: Task<Void, Never>? = nil
-    @State private var localClickMonitor: Any? = nil
-    @State private var globalClickMonitor: Any? = nil
+    @State private var outsideClickMonitor: (Any?, Any?)? = nil
+
+    // SINGLE SOURCE OF TRUTH: preview is open iff activePreviewTabID == this tab's ID.
+    // Using a local @State bool caused a race: SwiftUI's popover close animation (~200ms)
+    // overlapped with the next tab's popover opening, causing SwiftUI to re-route
+    // the popover to the adjacent tab (the "adjacent tab auto-expands" bug).
+    private var isPreviewOpen: Bool { settings.activePreviewTabID == tab.windowID }
 
     var body: some View {
         let shouldShowThisLabel = !settings.hideWindowLabelsTemporarily
@@ -25,8 +36,7 @@ struct AppKitTabButtonView: View {
             VStack(spacing: 0) {
                 Spacer(minLength: 0)
                 Image(nsImage: tab.appIcon)
-                    .resizable()
-                    .scaledToFit()
+                    .resizable().scaledToFit()
                     .frame(width: 30, height: 30)
                     .shadow(color: Color.black.opacity(colorScheme == .dark ? 0.2 : 0.05),
                             radius: 1, x: 0, y: 1)
@@ -61,57 +71,86 @@ struct AppKitTabButtonView: View {
                     lineWidth: 1
                 )
         )
-        // NO .onTapGesture — the Button wrapper in WindowTabsScrollView owns tap handling.
-        // We use a local monitor (installed only while the popover is open) to intercept
-        // bar-panel clicks that the Button can't receive because the popover is key window.
+        // Tap handling lives in the parent's Button(action:) (WindowTabsScrollView).
+        // That now fires reliably on the FIRST click, every time, because
+        // AeroPreviewPanel (used below) never takes key/activation status — there is
+        // no longer a key-window handoff for any click to race against, so the old
+        // "Button can't fire while popover is key" problem this view used to work
+        // around with a click monitor no longer exists.
         .onHover { entering in
             guard settings.enablePreviews, !settings.isStartMenuOpen else { return }
             if entering {
                 dismissTask?.cancel()
                 showTask?.cancel()
+                // Claim the slot immediately — any other tab whose preview is open will
+                // see this via .onChange(of: activePreviewTabID) and close instantly.
+                settings.activePreviewTabID = tab.windowID
                 showTask = Task {
                     try? await Task.sleep(for: .seconds(settings.previewDelayValue))
                     guard !Task.isCancelled, settings.enablePreviews,
-                          !settings.isStartMenuOpen else { return }
-                    await MainActor.run {
-                        isTabPopoverPresented = true
-                        installLocalClickMonitor()
-                    }
+                          !settings.isStartMenuOpen,
+                          settings.activePreviewTabID == tab.windowID else { return }
+                    await MainActor.run { installOutsideClickMonitor() }
                 }
             } else {
                 showTask?.cancel()
+                // Do NOT clear activePreviewTabID here — that closes the preview
+                // instantly, with zero travel time for the cursor to glide from the
+                // tab into the preview panel. The grace-period task below is what
+                // actually owns the close; the panel's own hover handler cancels it
+                // if the cursor lands inside in time.
                 startDismissalGracePeriod()
             }
         }
         .onChange(of: settings.isStartMenuOpen) { _, open in
-            if open { closePopover() }
+            if open { closePreview() }
         }
-        .onChange(of: isTabPopoverPresented) { _, presented in
-            if !presented { removeLocalClickMonitor() }
+        .onChange(of: isPreviewOpen) { _, open in
+            if !open { removeOutsideClickMonitor() }
         }
-        .popover(isPresented: $isTabPopoverPresented, arrowEdge: .top) {
+        // Non-activating replacement for `.popover` — see AeroPreviewPanel.swift for
+        // why a real `.popover` here caused every popover-adjacent click to need two
+        // taps (it takes key status; AeroBar's accessory/non-key panel architecture
+        // has nothing key-capable to hand status back to when it closes).
+        .nonActivatingPreview(isPresented: Binding(
+            get: { isPreviewOpen },
+            set: { if !$0 { closePreview() } }
+        )) {
             UniversalWindowPreviewChip(tab: tab, isSelected: isActive) { chipHovering in
                 if chipHovering {
+                    // Mouse entered the chip — cancel any pending dismissal
+                    dismissTask?.cancel()
+                } else {
+                    // Mouse left chip — start grace period (chip→gap→nothing)
+                    startDismissalGracePeriod()
+                }
+            }
+            .onTapGesture {
+                // Chip tap: always bring-to-front / restore. Never minimize.
+                // We do NOT call onTap()/handleWindowInteraction here because that
+                // function has a "already focused → minimize" branch. The chip is
+                // explicitly a "focus this window" action.
+                //
+                // No key-status handoff to wait out anymore (see AeroPreviewPanel),
+                // so this can run focus immediately instead of after an arbitrary
+                // animation-completion delay — that delay was partly why focus felt
+                // like it needed a second click.
+                closePreview()
+                PreviewWindowManager.focusTargetWindowContext(for: tab)
+            }
+            .padding(4)
+            // Cover the padding gap around the chip: if the cursor lands here instead
+            // of squarely on the chip while gliding in from the tab, this still
+            // cancels the dismissal countdown instead of letting it expire.
+            .onHover { inPanel in
+                if inPanel {
                     dismissTask?.cancel()
                 } else {
                     startDismissalGracePeriod()
                 }
             }
-            // Tapping the chip always focuses/restores that window — never minimizes.
-            // We use PreviewWindowManager directly (not onTap/handleWindowInteraction)
-            // because handleWindowInteraction has a "already focused → minimize" branch
-            // that would minimize the window on first chip tap.
-            .onTapGesture {
-                closePopover()
-                // Small delay so popover fully closes and bar regains key status
-                // before AX window-raise calls execute.
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                    PreviewWindowManager.focusTargetWindowContext(for: tab)
-                }
-            }
-            .padding(4)
         }
-        .onDisappear { closePopover() }
+        .onDisappear { closePreview() }
     }
 
     // MARK: - Background
@@ -143,82 +182,65 @@ struct AppKitTabButtonView: View {
         }
     }
 
-    // MARK: - Popover lifecycle
+    // MARK: - Preview lifecycle
 
-    private func closePopover() {
+    private func closePreview() {
         showTask?.cancel()
         dismissTask?.cancel()
-        isTabPopoverPresented = false
-        removeLocalClickMonitor()
+        if settings.activePreviewTabID == tab.windowID {
+            settings.activePreviewTabID = nil
+        }
+        removeOutsideClickMonitor()
     }
 
     private func startDismissalGracePeriod() {
         dismissTask?.cancel()
         dismissTask = Task {
-            try? await Task.sleep(for: .seconds(0.3))
+            // 0.6s: enough time to move from tab edge through panel gap into chip.
+            // The chip's onHoverAction cancels this task when mouse enters the chip.
+            try? await Task.sleep(for: .seconds(0.6))
             guard !Task.isCancelled else { return }
-            await MainActor.run { closePopover() }
+            await MainActor.run { closePreview() }
         }
     }
 
-    // MARK: - Local click monitor
+    // MARK: - Outside click dismissal
     //
-    // Problem: When the popover is shown it becomes the NSApp keyWindow.
-    // Clicks on the AeroBar panel (non-key window) are delivered as NSEvents
-    // but SwiftUI's Button wrapper never fires its action because the event
-    // goes to the panel window which isn't key — SwiftUI's gesture recogniser
-    // doesn't pick it up from a non-key window click.
+    // AeroPreviewPanel never takes key status, so unlike a real `.popover` it does
+    // NOT auto-dismiss on outside clicks — that auto-dismissal in `.popover` was a
+    // direct consequence of the key-window resignation we deliberately removed.
+    // We restore "click elsewhere closes it" deliberately here, but ONLY as a
+    // dismiss signal — neither monitor below ever intercepts/consumes/reroutes the
+    // click (the local monitor always `return event`s, the global monitor doesn't
+    // return anything to redirect), so nothing here can race or interfere with
+    // where the click is actually delivered. That distinction is what makes this
+    // safe where the old local-monitor click-REROUTING was not.
     //
-    // Solution: install a LOCAL event monitor (fires for events in OUR process).
-    // When we detect a left-click NOT inside the popover window:
-    //   1. Close the popover.
-    //   2. Call onTap() directly — this is the same action the Button would have called.
-    //   3. Return the event (nil would swallow it; we don't want to swallow it but
-    //      since onTap already handled the action, returning nil is safe here to
-    //      avoid double-firing if the Button somehow also receives it).
-    //
-    // The monitor is only installed while the popover is open, so normal (no-popover)
-    // clicks still go through the Button as usual.
+    // Two monitors are needed, not one:
+    //   - addGlobalMonitorForEvents only fires for clicks in OTHER apps/processes —
+    //     it never sees a click on AeroBar's own bar tab.
+    //   - addLocalMonitorForEvents only fires for clicks inside AeroBar's own
+    //     windows — it never sees a click in some other app.
+    // Together they cover "clicked literally anywhere" without either one trying
+    // to do both jobs (which is what produced the races before).
+    private func installOutsideClickMonitor() {
+        guard outsideClickMonitor == nil else { return }
 
-    private func installLocalClickMonitor() {
-        guard localClickMonitor == nil else { return }
-
-        // GLOBAL monitor — fires for clicks in OTHER processes (dismiss when user clicks a focused window)
-        if globalClickMonitor == nil {
-            globalClickMonitor = NSEvent.addGlobalMonitorForEvents(
-                matching: [.leftMouseDown, .rightMouseDown]
-            ) { [self] _ in
-                guard isTabPopoverPresented else { return }
-                DispatchQueue.main.async { closePopover() }
-            }
+        let global = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { _ in
+            Task { @MainActor in closePreview() }
         }
-
-        localClickMonitor = NSEvent.addLocalMonitorForEvents(
-            matching: [.leftMouseDown]
-        ) { [self] event in
-            guard isTabPopoverPresented else { return event }
-
-            let clickWindow = event.window
-            let popoverWindow = NSApp.keyWindow
-            let clickIsInsidePopover = (clickWindow != nil && clickWindow == popoverWindow)
-
-            if !clickIsInsidePopover {
-                let isBarPanelClick = clickWindow?.isKind(of: AeroBarPanel.self) ?? false
-                closePopover()
-                if isBarPanelClick {
-                    // Dispatch on next runloop tick — bar must regain key status first
-                    // so AX window-focus changes in handleWindowInteraction succeed.
-                    DispatchQueue.main.async { self.onTap?() }
-                    return nil  // consume — handled via onTap
-                }
-                return event
-            }
-            return event
+        let local = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { event in
+            closePreview()
+            return event  // never consumed — just observed, then passed straight through
         }
+        outsideClickMonitor = (global, local)
     }
 
-    private func removeLocalClickMonitor() {
-        if let m = localClickMonitor  { NSEvent.removeMonitor(m); localClickMonitor  = nil }
-        if let m = globalClickMonitor { NSEvent.removeMonitor(m); globalClickMonitor = nil }
+    private func removeOutsideClickMonitor() {
+        if let (global, local) = outsideClickMonitor {
+            if let g = global { NSEvent.removeMonitor(g) }
+            if let l = local  { NSEvent.removeMonitor(l) }
+        }
+        outsideClickMonitor = nil
     }
 }
