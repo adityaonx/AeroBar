@@ -1,18 +1,53 @@
+<div align="center">
+
 # AeroBar
 
-### A Windows-style taskbar for macOS 
+### A Windows-style taskbar for macOS
 
-> Missed the Windows taskbar after switching to Mac? AeroBar puts it back Aero glass look, Start Menu, live window tabs, pinned app launcher, and all sitting at the bottom of your screen exactly where you expect it.
+> Missed the Windows taskbar after switching to Mac? AeroBar puts it back — Aero glass look, Start Menu, live window tabs, pinned app launcher, all sitting at the bottom of your screen exactly where you expect it.
 
 [![Download](https://img.shields.io/badge/⬇️%20Download-AeroBar%20Latest-blue?style=for-the-badge)](https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg)
+[![Releases](https://img.shields.io/badge/View-All%20Releases-black?style=for-the-badge&logo=github)](https://github.com/adityaonx/AeroBar/releases)
 
-If you liked this app, please consider <img width="20" height="20" alt="star-img" src="https://github.com/user-attachments/assets/14fa5920-374f-4985-acd6-d04bff1d4580" /> this project. Thanks.
+![Platform](https://img.shields.io/badge/macOS-Sequoia%20%2F%20Tahoe-black?style=for-the-badge&logo=apple)
+![Status](https://img.shields.io/badge/Status-Experimental%20Alpha-orange?style=for-the-badge)
+![Language](https://img.shields.io/badge/Swift-5.9-FA7343?style=for-the-badge&logo=swift)
 
+If you liked this app, please consider giving it a <img width="18" height="18" alt="star-img" src="https://github.com/user-attachments/assets/14fa5920-374f-4985-acd6-d04bff1d4580" /> star. Thanks.
+
+</div>
+
+---
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Screenshots](#screenshots)
+- [What is AeroBar?](#what-is-aerobar)
+- [Features](#features)
+  - [Liquid Glass Taskbar](#liquid-glass-taskbar)
+  - [Mac Aero Start Orb](#mac-aero-start-orb)
+  - [Live Window Tab Strip](#live-window-tab-strip)
+  - [Pinned App Launcher](#pinned-app-launcher)
+  - [Spotlight Quick Search](#spotlight-quick-search)
+  - [Start Menu](#start-menu)
+  - [Recycle Bin Button](#recycle-bin-button)
+  - [Multi-Display Support](#multi-display-support)
+  - [Appearance Lab](#appearance-lab)
+  - [System Settings](#system-settings)
+- [How to Use](#how-to-use)
+- [System Requirements](#system-requirements)
+- [Known Limitations](#known-limitations)
+- [Status](#status)
+- [Community & Feedback](#community--feedback)
+- [Architecture](#architecture)
+- [Built With](#built-with)
+
+---
 
 ## Installation
 
-
-### 1.Download Aerobar.dmg 
+### 1. Download AeroBar.dmg
 
 Open the `.dmg`, drag **AeroBar.app** to your `/Applications` folder.
 
@@ -43,27 +78,47 @@ AeroBar needs Accessibility access to track and control your windows.
 
 That's it. The taskbar appears at the bottom of your screen immediately.
 
-<hr>
-1. Quick Switch between App Windows
-<img width="960" height="624" alt="Gitmain-1" src="https://github.com/user-attachments/assets/33fced61-d520-46bf-8478-e262af05c88b" />
-<hr>
-2. Start Menu
-<img width="960" height="624" alt="Gitmain-2" src="https://github.com/user-attachments/assets/0c251738-e864-4302-8de3-c56c01c92adb" />
-<hr>
-3. Quick Launch Pinned Apps
-<img width="960" height="624" alt="Gitmain-3" src="https://github.com/user-attachments/assets/02f417a4-a3e1-42ed-a69d-fc981313a0eb" />
-<hr>
-4. Tab's Context menu
-<img width="960" height="624" alt="Gitmain-4" src="https://github.com/user-attachments/assets/4f390c64-a2ed-4103-8956-cc26318a09ad" />
-<hr>
-5. Customization & Advance Settings
-<img width="960" height="652" alt="gitmain-5" src="https://github.com/user-attachments/assets/ace2dd16-2770-42ac-8e5e-48a6d25abb85" />
-<hr>
+[⬆ Back to top](#aerobar)
 
+---
 
-![Platform](https://img.shields.io/badge/macOS-Sequoia%20%2F%20Tahoe-black?style=for-the-badge&logo=apple)
-![Status](https://img.shields.io/badge/Status-Experimental%20Alpha-orange?style=for-the-badge)
-![Language](https://img.shields.io/badge/Swift-5.9-FA7343?style=for-the-badge&logo=swift)
+## Screenshots
+
+<div align="center">
+
+**1. Quick Switch between App Windows**
+
+<img width="800" alt="Quick switch between app windows" src="https://github.com/user-attachments/assets/33fced61-d520-46bf-8478-e262af05c88b" />
+
+<br><br>
+
+**2. Start Menu**
+
+<img width="800" alt="Start Menu" src="https://github.com/user-attachments/assets/0c251738-e864-4302-8de3-c56c01c92adb" />
+
+<br><br>
+
+**3. Quick Launch Pinned Apps**
+
+<img width="800" alt="Quick launch pinned apps" src="https://github.com/user-attachments/assets/02f417a4-a3e1-42ed-a69d-fc981313a0eb" />
+
+<br><br>
+
+**4. Tab's Context Menu**
+
+<img width="800" alt="Tab context menu" src="https://github.com/user-attachments/assets/4f390c64-a2ed-4103-8956-cc26318a09ad" />
+
+<br><br>
+
+**5. Customization & Advanced Settings**
+
+<img width="800" alt="Customization and advanced settings" src="https://github.com/user-attachments/assets/ace2dd16-2770-42ac-8e5e-48a6d25abb85" />
+
+</div>
+
+> All screenshots are rendered at a fixed display **width of 800px** with height left unset, so each one scales by its own native aspect ratio instead of being stretched or squashed to match its neighbors.
+
+[⬆ Back to top](#aerobar)
 
 ---
 
@@ -71,9 +126,11 @@ That's it. The taskbar appears at the bottom of your screen immediately.
 
 macOS is a great operating system but if you spent years on Windows, the workflow transition is genuinely rough. The Dock hides, the menu bar is at the top, open windows have no persistent visual reference, and there's no Start Menu to search and launch from. You end up hunting.
 
-**AeroBar fixes that.** It's a persistent taskbar that lives at the bottom of every display, built to feel like the Windows Vista / Windows 7 Aero taskbar translucent glass surface, a Start Orb, a live window tab strip, a pinned app launcher, and a Spotlight search field — all rendered natively on macOS using real system materials, not a skin on top.
+**AeroBar fixes that.** It's a persistent taskbar that lives at the bottom of every display, built to feel like the Windows Vista / Windows 7 Aero taskbar — translucent glass surface, a Start Orb, a live window tab strip, a pinned app launcher, and a Spotlight search field — all rendered natively on macOS using real system materials, not a skin on top.
 
 It is not a theme. It is not a wrapper. It talks directly to macOS accessibility APIs to track, focus, minimize, and raise your windows in real time.
+
+[⬆ Back to top](#aerobar)
 
 ---
 
@@ -91,7 +148,7 @@ Every open, non-minimized window across every running app appears as a tab in th
 - **Minimizes** it if it is already the front window
 - **Unminimizes** it if it was minimized
 
-This gives you the exact same one-click window switching behaviour Windows users are used to no Exposé, no Command-Tab cycling required.
+This gives you the exact same one-click window switching behaviour Windows users are used to — no Exposé, no Command-Tab cycling required.
 
 ### Pinned App Launcher
 A drag-and-drop tray of your favourite apps lives between the Orb and the window tabs. Pinned apps behave the way Windows taskbar icons do:
@@ -103,7 +160,7 @@ A drag-and-drop tray of your favourite apps lives between the Orb and the window
 Pinned order persists across reboots.
 
 ### Spotlight Quick Search
-A search field sits inline in the taskbar (toggleable). It fires macOS Spotlight directly type an app name, file, or calculation and press Return, exactly like the Windows search box in the taskbar.
+A search field sits inline in the taskbar (toggleable). It fires macOS Spotlight directly — type an app name, file, or calculation and press Return, exactly like the Windows search box in the taskbar.
 
 ### Start Menu
 The full Start Menu panel opens from the Orb and contains:
@@ -147,9 +204,9 @@ All settings persist across reboots.
 - **Recommendations** — toggle the recent files panel in the Start Menu
 - **Auto-update check** — checks for new builds on launch, configurable to Daily or Weekly
 
+[⬆ Back to top](#aerobar)
+
 ---
-
-
 
 ## How to Use
 
@@ -166,6 +223,8 @@ All settings persist across reboots.
 | Customize appearance | Click the **Start Orb → Appearance Lab** |
 | Move a window between displays | Drag normally — AeroBar won't interfere while your mouse button is held |
 
+[⬆ Back to top](#aerobar)
+
 ---
 
 ## System Requirements
@@ -176,6 +235,8 @@ All settings persist across reboots.
 | **Architecture** | Apple Silicon & Intel |
 | **Permission** | Accessibility (required) |
 
+[⬆ Back to top](#aerobar)
+
 ---
 
 ## Known Limitations
@@ -185,22 +246,36 @@ All settings persist across reboots.
 - Self-signed build requires a one-time Gatekeeper bypass on first launch.
 - Window tab ordering follows the order macOS reports running apps, not launch order.
 
+[⬆ Back to top](#aerobar)
+
 ---
 
 ## Status
 
 > **⚠️ Experimental Alpha** — AeroBar is a personal project in active development. It interacts with macOS system-level UI via Accessibility APIs. Use it knowing that and keep backups of anything important. No warranties, no guarantees of stability.
 
+[⬆ Back to top](#aerobar)
+
+---
+
 ## Community & Feedback
 
 Have a feature request, a bug report, or just want to share your AeroBar setup? We use **GitHub Discussions** to keep the roadmap transparent and community-driven.
 
-*   **[Start a Discussion](https://github.com/adityaonx/AeroBar/discussions/new/choose)** — Use this for general questions, feedback, or sharing your ideas.
-*   **[Report a Bug](https://github.com/adityaonx/AeroBar/issues/new)** — Use the issue tracker for technical bugs (please include your macOS version and logs if possible).
+- **[Start a Discussion](https://github.com/adityaonx/AeroBar/discussions/new/choose)** — Use this for general questions, feedback, or sharing your ideas.
+- **[Report a Bug](https://github.com/adityaonx/AeroBar/issues/new)** — Use the issue tracker for technical bugs (please include your macOS version and logs if possible).
+
+[⬆ Back to top](#aerobar)
+
+---
 
 ## Architecture
 
 If you're contributing or just curious how it fits together, [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) has the class diagram, data-flow diagram, and launch/window-switch sequence diagrams.
+
+[⬆ Back to top](#aerobar)
+
+---
 
 ## Built With
 
@@ -211,6 +286,12 @@ If you're contributing or just curious how it fits together, [docs/ARCHITECTURE.
 - **ServiceManagement** — launch-at-login
 - **Core Animation** — glass surface and visual effects
 
+[⬆ Back to top](#aerobar)
+
 ---
 
+<div align="center">
+
 *Made for people who switched from Windows and know exactly where the taskbar should be.*
+
+</div>
