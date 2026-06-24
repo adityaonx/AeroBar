@@ -1,7 +1,7 @@
 # AeroBar
 ### A Windows-style taskbar for macOS
 
-Missed the Windows taskbar after switching to Mac? AeroBar puts it back — Aero glass look, Start Menu, live window tabs, pinned app launcher, all sitting at the bottom of your screen exactly where you expect it.
+Missed the Windows taskbar after switching to Mac? AeroBar puts it back, Aero glass look, Start Menu, live window tabs, pinned app launcher, all sitting at the bottom of your screen exactly where you expect it.
 
 **[Download the latest .dmg](https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg)** · [see all releases](https://github.com/adityaonx/AeroBar/releases)
 
