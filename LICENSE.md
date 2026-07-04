@@ -1,4 +1,4 @@
-# END USER LICENSE AGREEMENT (EULA) AND TERMS OF CONDITIONS
+# END USER LICENSE AGREEMENT, TERMS OF CONDITIONS, AND PRIVACY POLICY
 
 **IMPORTANT – READ CAREFULLY:** This End User License Agreement ("EULA" or "Agreement") is a legal agreement between you (either an individual or a single legal entity) and the developer of AeroBar ("Licensor", "we", "us", or "our") for the software product identified above, which includes computer software and may include associated media, printed materials, and "online" or electronic documentation ("Software").
 
@@ -49,7 +49,17 @@ You agree to indemnify, defend, and hold harmless the Licensor from and against 
 ## 9. SEVERABILITY AND ENTIRE AGREEMENT
 If any provision of this Agreement is held to be unenforceable or invalid by a court of competent jurisdiction, such provision will be changed and interpreted to accomplish the objectives of such provision to the greatest extent possible under applicable law, and the remaining provisions will continue in full force and effect. This Agreement constitutes the entire agreement between you and the Licensor regarding the Software and supersedes all prior or contemporaneous understandings regarding such subject matter. No oral or written information or advice given by Licensor or its authorized representatives shall create a warranty or in any way increase the scope of this Agreement.
 
-## 10. GOVERNING LAW
+## 10. PRIVACY POLICY
+AeroBar is designed with privacy as a fundamental principle.
+(a) **Local Processing:** The Software operates entirely on your local Apple macOS device. Window management, accessibility processing, and clipboard history encryption are performed locally.
+(b) **No Telemetry or Data Collection:** We do not collect, store, transmit, or monetize any of your personal data, clipboard contents, screen captures, or usage telemetry to our servers or any third-party servers.
+(c) **Data Security:** The Software uses standard Apple frameworks (such as AES-GCM) to secure local features like clipboard history.
+By using the Software, you acknowledge and agree to this Privacy Policy.
+
+## 11. MODIFICATIONS TO THIS AGREEMENT
+Licensor reserves the right, at its sole discretion, to modify or replace this Agreement (including the EULA, Terms of Conditions, and Privacy Policy) at any time. If a revision is material, we will provide reasonable notice prior to any new terms taking effect. By continuing to access or use the Software after those revisions become effective, you agree to be bound by the revised terms.
+
+## 12. GOVERNING LAW
 This Agreement will be governed by and construed in accordance with the laws of your jurisdiction of residence, excluding its conflict of law principles. 
 
 **BY USING THIS SOFTWARE, YOU ACKNOWLEDGE THAT YOU HAVE READ THIS AGREEMENT, UNDERSTAND IT, AND AGREE TO BE BOUND BY ITS TERMS AND CONDITIONS.**
