@@ -1,8 +1,10 @@
 # AeroBar
 ### A Windows-style taskbar for macOS
+
 Missed the Windows taskbar after switching to Mac? AeroBar puts it back, Aero glass look, Start Menu, live window tabs, pinned app launcher, all sitting at the bottom of your screen exactly where you expect it.
 
 **[Download the latest .dmg](https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg)** · [see all releases](https://github.com/adityaonx/AeroBar/releases)
+
 If you liked this theme, please consider <img width="20" height="20" alt="star-img" src="https://github.com/user-attachments/assets/14fa5920-374f-4985-acd6-d04bff1d4580" /> this project. Thanks.
 
 <hr>
@@ -55,6 +57,7 @@ Supported: macOS Sequoia/Tahoe
 - [Status](#status)
 - [Community & Feedback](#community--feedback)
 - [Architecture](#architecture)
+- [Built With](#built-with)
 
 ---
 
@@ -261,9 +264,14 @@ All settings persist across reboots.
 
 ---
 
-## Status
+## Status & Licensing
 
-AeroBar is a personal project in active development, currently in Experimental Alpha. It interacts with macOS system-level UI via Accessibility APIs — use it knowing that, and keep backups of anything important. No warranties, no guarantees of stability.
+AeroBar is in **Active Development** with a hyper-focus on performance and native macOS integration.
+
+### Monetization (Upcoming)
+As AeroBar stabilizes towards a 1.0 release, the monetization strategy will be:
+- **Free Trial**: Users will get unrestricted access to the app for a set period (e.g., 7 or 14 days) to fully experience the workflow.
+- **One-Time Pro Unlock**: After the trial, users can purchase a one-time perpetual license to unlock the full "Pro" feature set (including advanced theming, unlimited pinned apps, multi-display controls, and clipboard managers). There will be **no subscriptions**.
 
 [⬆ Back to top](#aerobar)
 
@@ -275,6 +283,17 @@ Have a feature request, a bug report, or just want to share your AeroBar setup? 
 
 - **[Start a Discussion](https://github.com/adityaonx/AeroBar/discussions/new/choose)** — Use this for general questions, feedback, or sharing your ideas.
 - **[Report a Bug](https://github.com/adityaonx/AeroBar/issues/new)** — Use the issue tracker for technical bugs (please include your macOS version and logs if possible).
+
+[⬆ Back to top](#aerobar)
+
+## Architecture & Performance
+
+### 0% CPU Idle & Microhang Eradication
+AeroBar is heavily optimized for zero impact on battery life and system performance. When not being actively interacted with, the app idles at 0.0% CPU.
+- **Swift 6 & macOS Tahoe**: Fully compliant with Swift 6 Strict Concurrency and built for macOS 15 Tahoe and macOS 14 Sequoia.
+
+### Built With
+- **AI Pair Programming** — Accelerated and profiled using Google DeepMind's AntiGravity (AGY) agentic coding system.
 
 [⬆ Back to top](#aerobar)
 
