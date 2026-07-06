@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AeroBar - Windows-style Taskbar for macOS</title>
+  <meta name="description" content="Missed the Windows taskbar after switching to Mac? AeroBar brings it back - Aero glass look, Start Menu, live window tabs, pinned app launcher. Free for macOS Sequoia & Tahoe." />
+  <meta property="og:title" content="AeroBar - Windows-style Taskbar for macOS" />
+  <meta property="og:description" content="Missed the Windows taskbar after switching to Mac? AeroBar brings it back - Aero glass look, Start Menu, live window tabs, pinned app launcher." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #3b82f6;
+      --blue-light: #60a5fa;
+      --blue-dark: #1d4ed8;
+      --blue-glow: rgba(59, 130, 246, 0.35);
+      --purple: #8b5cf6;
+      --teal: #06b6d4;
+      --bg: #060b14;
+      --surface: rgba(255,255,255,0.04);
+      --surface-hover: rgba(255,255,255,0.07);
+      --border: rgba(255,255,255,0.08);
+      --border-bright: rgba(255,255,255,0.15);
+      --text: #f0f6ff;
+      --text-muted: rgba(240,246,255,0.55);
+      --text-dim: rgba(240,246,255,0.35);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ── BACKGROUND ORBS ── */
+    .bg-orbs {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.18;
+    }
+    .orb-1 { width: 700px; height: 700px; background: var(--blue); top: -200px; left: -200px; animation: drift 18s ease-in-out infinite alternate; }
+    .orb-2 { width: 500px; height: 500px; background: var(--purple); top: 30%; right: -150px; animation: drift 22s ease-in-out infinite alternate-reverse; }
+    .orb-3 { width: 400px; height: 400px; background: var(--teal); bottom: 10%; left: 20%; animation: drift 16s ease-in-out infinite alternate; }
+    @keyframes drift { from { transform: translate(0,0); } to { transform: translate(40px, 30px); } }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      height: 64px;
+      background: rgba(6,11,20,0.7);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em;
+      text-decoration: none; color: var(--text);
+    }
+    .nav-logo .orb-icon {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #60a5fa, #1d4ed8 60%, #1e3a8a);
+      box-shadow: 0 0 14px var(--blue-glow), inset 0 1px 2px rgba(255,255,255,0.35);
+    }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a {
+      font-size: 0.875rem; font-weight: 500; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--blue); color: #fff; padding: 0.45rem 1.1rem;
+      border-radius: 8px; font-size: 0.875rem; font-weight: 600;
+      text-decoration: none; transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 14px var(--blue-glow);
+    }
+    .nav-cta:hover { background: var(--blue-light); box-shadow: 0 0 22px var(--blue-glow); }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px clamp(1.5rem, 5vw, 4rem) 80px;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.3);
+      color: var(--blue-light); border-radius: 999px;
+      padding: 0.3rem 1rem; font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.6s ease both;
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #34d399; box-shadow: 0 0 6px #34d399; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      max-width: 850px;
+      animation: fadeInUp 0.7s ease 0.1s both;
+    }
+    h1 .gradient {
+      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #06b6d4 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 560px; margin: 1.5rem auto 0;
+      animation: fadeInUp 0.7s ease 0.2s both;
+    }
+    .hero-actions {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      justify-content: center; margin-top: 2.5rem;
+      animation: fadeInUp 0.7s ease 0.3s both;
+    }
+    .btn-primary {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--blue); color: #fff;
+      padding: 0.8rem 1.8rem; border-radius: 12px;
+      font-size: 1rem; font-weight: 700; text-decoration: none;
+      box-shadow: 0 0 30px var(--blue-glow);
+      transition: all 0.25s; position: relative; overflow: hidden;
+    }
+    .btn-primary::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 44px var(--blue-glow); background: #4f95ff; }
+    .btn-secondary {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--surface); color: var(--text);
+      border: 1px solid var(--border-bright);
+      padding: 0.8rem 1.8rem; border-radius: 12px;
+      font-size: 1rem; font-weight: 600; text-decoration: none;
+      backdrop-filter: blur(10px);
+      transition: all 0.25s;
+    }
+    .btn-secondary:hover { background: var(--surface-hover); border-color: rgba(255,255,255,0.25); transform: translateY(-2px); }
+
+    .hero-stats {
+      margin-top: 1.5rem; display: flex; gap: 1.5rem; justify-content: center;
+      font-size: 0.85rem; color: var(--text-dim);
+      animation: fadeInUp 0.7s ease 0.5s both;
+    }
+    .hero-stats span { display: flex; align-items: center; gap: 6px; }
+    .hero-stats b { color: var(--text-muted); font-weight: 600; font-variant-numeric: tabular-nums; }
+    .hero-compat {
+      margin-top: 1rem; font-size: 0.8rem; color: var(--text-dim);
+      animation: fadeInUp 0.7s ease 0.6s both;
+    }
+    .hero-compat span { color: var(--text-muted); }
+
+    /* ── TASKBAR PREVIEW ── */
+    .taskbar-preview {
+      width: 100%; max-width: 900px; margin: 3.5rem auto 0;
+      animation: fadeInUp 0.8s ease 0.5s both;
+      position: relative;
+    }
+    .taskbar-preview-glow {
+      position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%);
+      width: 60%; height: 60px;
+      background: var(--blue);
+      filter: blur(50px); opacity: 0.25;
+    }
+    .taskbar-demo {
+      background: rgba(20, 30, 50, 0.6);
+      backdrop-filter: blur(30px) saturate(200%);
+      -webkit-backdrop-filter: blur(30px) saturate(200%);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow:
+        0 4px 40px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.12);
+      position: relative;
+      overflow: hidden;
+    }
+    .taskbar-demo::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    }
+    .demo-orb {
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      background: radial-gradient(circle at 35% 35%, #60a5fa, #1d4ed8 60%, #1e3a8a);
+      box-shadow: 0 0 16px rgba(59,130,246,0.6), inset 0 1px 2px rgba(255,255,255,0.4);
+      cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .demo-orb:hover { transform: scale(1.1); box-shadow: 0 0 24px rgba(59,130,246,0.8), inset 0 1px 2px rgba(255,255,255,0.4); }
+    .demo-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.12); flex-shrink: 0; }
+    .demo-pinned { display: flex; gap: 6px; }
+    .demo-pin {
+      width: 34px; height: 34px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .demo-pin:hover { background: rgba(255,255,255,0.1); transform: scale(1.1); }
+    .demo-tabs { display: flex; gap: 4px; flex: 1; overflow: hidden; }
+    .demo-tab {
+      display: flex; align-items: center; gap: 6px;
+      padding: 5px 10px; border-radius: 8px;
+      font-size: 0.72rem; font-weight: 500; color: var(--text-muted);
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .demo-tab.active {
+      background: rgba(59,130,246,0.2); border-color: rgba(59,130,246,0.4);
+      color: var(--blue-light);
+    }
+    .demo-tab:hover { background: rgba(255,255,255,0.1); }
+    .demo-tab-icon { font-size: 0.9rem; }
+    .demo-spotlight {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0; cursor: pointer;
+      color: var(--text-dim); transition: background 0.2s, color 0.2s;
+    }
+    .demo-spotlight:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    .demo-trash {
+      width: 34px; height: 34px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0; cursor: pointer;
+      color: var(--text-muted); transition: background 0.2s;
+    }
+    .demo-trash:hover { background: rgba(255,255,255,0.1); }
+
+    @keyframes fadeInUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
+
+    /* ── SCREENSHOTS SECTION ── */
+    #screenshots {
+      padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 5vw, 4rem);
+    }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--blue-light);
+      text-align: center; margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800; letter-spacing: -0.03em;
+      text-align: center; margin-bottom: 1rem; line-height: 1.15;
+    }
+    .section-sub {
+      text-align: center; color: var(--text-muted);
+      font-size: 1.05rem; max-width: 520px; margin: 0 auto 3.5rem;
+    }
+    .screenshots-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 1.5rem; max-width: 1100px; margin: 0 auto;
+    }
+    .screenshot-card {
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .screenshot-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(59,130,246,0.2);
+    }
+    .screenshot-card img {
+      width: 100%; display: block;
+      border-bottom: 1px solid var(--border);
+    }
+    .screenshot-card-label {
+      padding: 12px 16px; font-size: 0.85rem; font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    /* ── FEATURES ── */
+    #features {
+      padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 5vw, 4rem);
+      background: linear-gradient(180deg, transparent, rgba(59,130,246,0.03), transparent);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: all 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-bright), transparent);
+    }
+    .feature-card:hover {
+      background: var(--surface-hover);
+      border-color: rgba(59,130,246,0.25);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+    .feature-icon {
+      font-size: 2rem; margin-bottom: 1rem;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 52px; height: 52px; border-radius: 12px;
+      background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2);
+    }
+    .feature-title {
+      font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+    .feature-desc {
+      font-size: 0.875rem; color: var(--text-muted); line-height: 1.65;
+    }
+    .feature-card.featured {
+      grid-column: span 2;
+      background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.08));
+      border-color: rgba(59,130,246,0.25);
+    }
+    @media (max-width: 700px) { .feature-card.featured { grid-column: span 1; } }
+
+    /* ── HOW TO USE ── */
+    #install {
+      padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 5vw, 4rem);
+    }
+    .install-steps {
+      max-width: 700px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 1.25rem;
+    }
+    .step {
+      display: flex; gap: 1.25rem; align-items: flex-start;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.5rem;
+      transition: all 0.25s;
+    }
+    .step:hover { border-color: rgba(59,130,246,0.3); background: var(--surface-hover); }
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 800; color: #fff;
+      box-shadow: 0 0 14px var(--blue-glow);
+    }
+    .step-content h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.35rem; }
+    .step-content p { font-size: 0.875rem; color: var(--text-muted); }
+    code {
+      background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.2);
+      color: var(--blue-light); border-radius: 6px;
+      padding: 2px 8px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85em;
+    }
+
+    /* ── PRICING TEASER ── */
+    #pricing {
+      padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 5vw, 4rem);
+    }
+    .pricing-card {
+      max-width: 520px; margin: 0 auto;
+      background: linear-gradient(135deg, rgba(59,130,246,0.12), rgba(139,92,246,0.08));
+      border: 1px solid rgba(59,130,246,0.3);
+      border-radius: 24px; padding: 2.5rem;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .pricing-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--purple), var(--teal));
+    }
+    .pricing-now { font-size: 3.5rem; font-weight: 900; letter-spacing: -0.04em; line-height: 1; }
+    .pricing-now span { font-size: 1.5rem; vertical-align: super; font-weight: 700; }
+    .pricing-sub { color: var(--text-muted); margin: 0.5rem 0 1.75rem; font-size: 0.9rem; }
+    .pricing-features { list-style: none; text-align: left; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.6rem; }
+    .pricing-features li { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
+    .pricing-features li::before { content: '✓'; color: #34d399; font-weight: 700; font-size: 0.9rem; }
+    .pricing-upcoming {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1rem 1.25rem;
+      font-size: 0.82rem; color: var(--text-muted); text-align: left;
+    }
+    .pricing-upcoming strong { color: var(--text); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem clamp(1.5rem, 5vw, 4rem);
+      text-align: center;
+    }
+    .footer-logo {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      margin-bottom: 1.25rem;
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; margin-bottom: 1.5rem; }
+    .footer-links a { font-size: 0.875rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { font-size: 0.8rem; color: var(--text-dim); }
+    .footer-copy a { color: var(--text-muted); text-decoration: none; }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .demo-tabs { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Background orbs -->
+<div class="bg-orbs" aria-hidden="true">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<!-- Nav -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo" aria-label="AeroBar home">
+    <div class="orb-icon"></div>
+    AeroBar
+  </a>
+  <div class="nav-links">
+    <a href="#screenshots">Screenshots</a>
+    <a href="#features">Features</a>
+    <a href="#install">Install</a>
+    <a href="#pricing">Pricing</a>
+    <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  <a href="https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
+    ↓ Download
+  </a>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="badge">
+    <span class="badge-dot"></span>
+    Experimental Alpha · Free for a limited time
+  </div>
+  <h1>The <span class="gradient">Windows Taskbar</span><br/>you missed on Mac</h1>
+  <p class="hero-sub">
+    Aero glass look, Start Menu, live window tabs, pinned app launcher - all sitting at the bottom of your screen, exactly where you expect it.
+  </p>
+  <div class="hero-actions">
+    <a href="https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg"
+       id="hero-download-btn" class="btn-primary">
+      ⬇ Download for Mac
+    </a>
+    <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener"
+       id="hero-github-btn" class="btn-secondary">
+      ★ View on GitHub
+    </a>
+  </div>
+  <div class="hero-stats">
+    <span title="Total downloads across all releases">📥 <b id="stat-downloads">--</b> Downloads</span>
+    <span id="visit-container" style="display: none;" title="Total page visits">👀 <b id="stat-visits">--</b> Visits</span>
+  </div>
+  <p class="hero-compat">Free (Limited Time) · macOS <span>Tahoe</span> · Apple Silicon</p>
+
+  <!-- Animated taskbar preview -->
+  <div class="taskbar-preview" role="img" aria-label="AeroBar taskbar preview">
+    <div class="taskbar-demo">
+      <div class="demo-orb" title="Start Orb"></div>
+      <div class="demo-spotlight" title="Spotlight Search">🔍</div>
+      <div class="demo-divider"></div>
+      <div class="demo-pinned">
+        <div class="demo-pin" title="Finder">🗂️</div>
+        <div class="demo-pin" title="Safari">🌐</div>
+        <div class="demo-pin" title="Terminal">⌨️</div>
+        <div class="demo-pin" title="Mail">✉️</div>
+      </div>
+      <div class="demo-divider"></div>
+      <div class="demo-tabs">
+        <div class="demo-tab active" id="tab-finder">
+          <span class="demo-tab-icon">🗂️</span> Finder
+        </div>
+        <div class="demo-tab" id="tab-safari">
+          <span class="demo-tab-icon">🌐</span> Safari
+        </div>
+        <div class="demo-tab" id="tab-code">
+          <span class="demo-tab-icon">💻</span> VS Code
+        </div>
+        <div class="demo-tab" id="tab-notes">
+          <span class="demo-tab-icon">📝</span> Notes
+        </div>
+      </div>
+      <div class="demo-trash" title="Trash">🗑️</div>
+    </div>
+    <div class="taskbar-preview-glow"></div>
+  </div>
+</section>
+
+<!-- Screenshots -->
+<section id="screenshots">
+  <p class="section-label reveal">See it in action</p>
+  <h2 class="section-title reveal">Built to feel native</h2>
+  <p class="section-sub reveal">Real macOS materials, real accessibility APIs - not a theme, not a wrapper.</p>
+  <div class="screenshots-grid">
+    <div class="screenshot-card reveal">
+      <img src="https://github.com/user-attachments/assets/33fced61-d520-46bf-8478-e262af05c88b"
+           alt="Quick switch between app windows in AeroBar" loading="lazy" />
+      <div class="screenshot-card-label">⚡ Quick Window Switching</div>
+    </div>
+    <div class="screenshot-card reveal">
+      <img src="https://github.com/user-attachments/assets/0c251738-e864-4302-8de3-c56c01c92adb"
+           alt="AeroBar Start Menu" loading="lazy" />
+      <div class="screenshot-card-label">🚀 Start Menu</div>
+    </div>
+    <div class="screenshot-card reveal">
+      <img src="https://github.com/user-attachments/assets/02f417a4-a3e1-42ed-a69d-fc981313a0eb"
+           alt="Pinned app launcher in AeroBar" loading="lazy" />
+      <div class="screenshot-card-label">📌 Pinned App Launcher</div>
+    </div>
+    <div class="screenshot-card reveal">
+      <img src="https://github.com/user-attachments/assets/ace2dd16-2770-42ac-8e5e-48a6d25abb85"
+           alt="AeroBar Appearance Lab customization" loading="lazy" />
+      <div class="screenshot-card-label">🎨 Appearance Lab</div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features">
+  <p class="section-label reveal">Every detail</p>
+  <h2 class="section-title reveal">Everything you loved about <br/>the Windows taskbar</h2>
+  <p class="section-sub reveal">And nothing that makes your Mac feel slow.</p>
+  <div class="features-grid">
+    <div class="feature-card featured reveal">
+      <div class="feature-icon">🪟</div>
+      <div class="feature-title">Liquid Glass Taskbar</div>
+      <div class="feature-desc">A persistent, borderless panel that lives at the very bottom of your screen across all Spaces and full-screen transitions. Uses Apple's native vibrancy material to sample your wallpaper - a genuine translucent glass surface, not a screenshot overlay. Five blend styles let you go from deep frosted to nearly transparent.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🔵</div>
+      <div class="feature-title">Mac Aero Start Orb</div>
+      <div class="feature-desc">The iconic circular Start Orb in the bottom-left corner. Click it and the full Start Menu opens anchored to your display. Light and dark hover states, fully customizable in Appearance Lab.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🗂️</div>
+      <div class="feature-title">Live Window Tab Strip</div>
+      <div class="feature-desc">Every open window appears as a tab in real time. Click to focus, click again to minimize, click a minimized tab to restore. Exactly like Windows - no Exposé cycling needed.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">📌</div>
+      <div class="feature-title">Pinned App Launcher</div>
+      <div class="feature-desc">Drag-and-drop your favourite apps into the tray. Click to launch, click to raise all windows, click again to minimize. Right-click any tab to pin that app directly.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🔍</div>
+      <div class="feature-title">Spotlight Quick Search</div>
+      <div class="feature-desc">An inline search field fires macOS Spotlight directly. Type an app name, file, or even a calculation and hit Return - exactly like the Windows taskbar search box.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">📋</div>
+      <div class="feature-title">Full Start Menu</div>
+      <div class="feature-desc">User avatar, live search across all sections, pinned app grid with drag-to-reorder, alphabetical all-apps browser, and recent file recommendations powered by Spotlight metadata.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🗑️</div>
+      <div class="feature-title">Recycle Bin Button</div>
+      <div class="feature-desc">The Trash shortcut lives exactly where Windows users expect - the right end of the bar. One click opens Trash in Finder.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🖥️</div>
+      <div class="feature-title">Multi-Display Support</div>
+      <div class="feature-desc">Show the taskbar on all monitors, main screen only, or external displays only. Each display's taskbar is fully independent. The Start Menu opens on whichever monitor you clicked.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🎨</div>
+      <div class="feature-title">Appearance Lab</div>
+      <div class="feature-desc">Tune everything: glass blend style, liquid tint hue (full color picker), surface tint density, specular bevel, icon-only mode, search field visibility, and display target. All settings persist across reboots.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">0% CPU at Idle</div>
+      <div class="feature-desc">Heavily optimized with Swift 6 Strict Concurrency. When not being interacted with, AeroBar idles at 0.0% CPU - zero battery drain, zero background churn.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Install -->
+<section id="install">
+  <p class="section-label reveal">Get started in minutes</p>
+  <h2 class="section-title reveal">Installation</h2>
+  <p class="section-sub reveal">Three steps and the taskbar is live at the bottom of your screen.</p>
+  <div class="install-steps">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Download &amp; Install</h3>
+        <p>Download <strong>AeroBar.dmg</strong>, open it, and drag <strong>AeroBar.app</strong> to your <code>/Applications</code> folder.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Bypass Gatekeeper (first launch only)</h3>
+        <p>AeroBar is self-signed. On first launch, go to <strong>System Settings → Privacy &amp; Security</strong> and click <strong>Open Anyway</strong>. Or run: <code>xattr -rd com.apple.quarantine /Applications/AeroBar.app</code></p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Grant Accessibility Permission</h3>
+        <p>AeroBar needs Accessibility access to track and control windows. The onboarding screen guides you directly to the right settings panel. Toggle AeroBar on, then click <strong>Start AeroBar</strong>. The taskbar appears instantly.</p>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top: 1rem;" class="reveal">
+      <a href="https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg"
+         id="install-download-btn" class="btn-primary" style="display:inline-flex;">
+        ⬇ Download AeroBar.dmg
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing">
+  <p class="section-label reveal">Honest pricing</p>
+  <h2 class="section-title reveal">Free for a limited time</h2>
+  <p class="section-sub reveal">No subscription, ever. Secure your copy for free during the Alpha.</p>
+  <div class="pricing-card reveal">
+    <div class="pricing-now">Free<span>*</span></div>
+    <p class="pricing-sub">Full access during Experimental Alpha</p>
+    <ul class="pricing-features">
+      <li>Liquid Glass Taskbar on all displays</li>
+      <li>Start Menu with All Apps browser</li>
+      <li>Live Window Tab Strip</li>
+      <li>Pinned App Launcher</li>
+      <li>Spotlight Search integration</li>
+      <li>Appearance Lab - full customization</li>
+      <li>0% CPU idle - zero battery impact</li>
+      <li>macOS Tahoe</li>
+    </ul>
+    <a href="https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg"
+       id="pricing-download-btn" class="btn-primary" style="width:100%; justify-content:center; margin-bottom:1.25rem;">
+      ⬇ Download for Free
+    </a>
+    <div class="pricing-upcoming">
+      <strong>* Upcoming (post v1.0):</strong> A free trial + one-time Pro unlock for advanced theming, unlimited pinned apps, and multi-display controls. <strong>No subscriptions. Ever.</strong>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">
+    <div class="orb-icon" style="width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#60a5fa,#1d4ed8 60%,#1e3a8a);box-shadow:0 0 12px rgba(59,130,246,0.4)"></div>
+    <span style="font-weight:700;font-size:1rem;">AeroBar</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://github.com/adityaonx/AeroBar/releases" target="_blank" rel="noopener">Releases</a>
+    <a href="https://github.com/adityaonx/AeroBar/discussions/new/choose" target="_blank" rel="noopener">Discussions</a>
+    <a href="https://github.com/adityaonx/AeroBar/issues/new" target="_blank" rel="noopener">Report a Bug</a>
+  </div>
+  <p class="footer-copy">
+    Made for people who switched from Windows and know exactly where the taskbar should be.<br/>
+    Built with <a href="https://deepmind.google" target="_blank" rel="noopener">Google DeepMind's AntiGravity</a> AI.
+  </p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Tab animation in demo
+  const tabs = document.querySelectorAll('.demo-tab');
+  let active = 0;
+  setInterval(() => {
+    tabs[active].classList.remove('active');
+    active = (active + 1) % tabs.length;
+    tabs[active].classList.add('active');
+  }, 1800);
+
+  // Nav scroll shadow
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.style.borderBottomColor = window.scrollY > 10 ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.06)';
+  }, { passive: true });
+
+  // Secret admin visits toggle
+  const visitContainer = document.getElementById('visit-container');
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('stats') === 'show') {
+    localStorage.setItem('showStats', 'true');
+  } else if (params.get('stats') === 'hide') {
+    localStorage.removeItem('showStats');
+  }
+  if (localStorage.getItem('showStats') === 'true') {
+    visitContainer.style.display = 'inline-flex';
+  }
+
+  // Fetch page visits (increments for everyone in background)
+  fetch('https://api.counterapi.dev/v1/adityaonx/AeroBar/up')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('stat-visits').textContent = data.count.toLocaleString();
+    })
+    .catch(() => {
+      visitContainer.style.display = 'none';
+    });
+
+  // Fetch GitHub downloads
+  fetch('https://api.github.com/repos/adityaonx/AeroBar/releases')
+    .then(response => response.json())
+    .then(releases => {
+      let totalDownloads = 0;
+      releases.forEach(release => {
+        release.assets.forEach(asset => {
+          if (asset.name.endsWith('.dmg')) {
+            totalDownloads += asset.download_count;
+          }
+        });
+      });
+      document.getElementById('stat-downloads').textContent = totalDownloads.toLocaleString();
+    })
+    .catch(() => {
+      document.getElementById('stat-downloads').parentElement.style.display = 'none';
+    });
+</script>
+</body>
+</html>
