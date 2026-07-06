@@ -9,6 +9,7 @@ If you liked this theme, please consider <img width="20" height="20" alt="star-i
 
 <hr>
 
+
 ## Screenshots
 <hr>
 
