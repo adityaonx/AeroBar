@@ -1,5 +1,4 @@
 {
-  "betaActive": false,
-  "mandatoryMinimumVersion": "9.0",
-  "betaExpiryMessage": "The AeroBar public beta has concluded. Please update to AeroBar Pro to continue."
+  "betaActive": true,
+  "betaExpiryMessage": "The AeroBar public beta has concluded. Please update AeroBar to latest version."
 }
