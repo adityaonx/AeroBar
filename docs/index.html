@@ -177,87 +177,427 @@
     }
     .hero-compat span { color: var(--text-muted); }
 
-    /* ── TASKBAR PREVIEW ── */
+    /* ── TASKBAR PREVIEW & INTERACTIVE MOCK ── */
+    .demo-with-presets {
+      display: flex;
+      align-items: stretch;
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
     .taskbar-preview {
-      width: 100%; max-width: 900px; margin: 3.5rem auto 0;
+      width: 100%; max-width: none; margin: 0;
+      flex: 1 1 auto;
+      min-width: 0;
       animation: fadeInUp 0.8s ease 0.5s both;
       position: relative;
     }
+    
+    .desktop-mock {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 16px;
+      overflow: hidden;
+      background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop') center/cover;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: opacity 0.18s ease;
+    }
+    .wallpaper-hint {
+      position: absolute;
+      top: 28%; left: 50%; transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.9);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.5s ease, top 0.3s ease;
+      z-index: 3;
+    }
+    .wallpaper-hint.hidden { opacity: 0; }
+
+    .mock-top-bar {
+      height: 28px;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(30px) saturate(220%);
+      -webkit-backdrop-filter: blur(30px) saturate(220%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 16px;
+      font-size: 0.8rem; color: rgba(255,255,255,0.85);
+      opacity: 0; transform: translateY(-100%);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 60;
+    }
+    .mock-top-bar.show { opacity: 1; transform: translateY(0); }
+    .mock-notch {
+      width: 160px; height: 22px;
+      background: #000;
+      border-radius: 0 0 12px 12px;
+      position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+    }
+
     .taskbar-preview-glow {
       position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%);
       width: 60%; height: 60px;
       background: var(--blue);
       filter: blur(50px); opacity: 0.25;
+      transition: background 0.4s ease;
     }
-    .taskbar-demo {
-      background: rgba(20, 30, 50, 0.6);
-      backdrop-filter: blur(30px) saturate(200%);
-      -webkit-backdrop-filter: blur(30px) saturate(200%);
-      border: 1px solid rgba(255,255,255,0.12);
+
+    /* MOCK POPUPS */
+    .mock-popup {
+      position: absolute;
+      bottom: 70px;
+      background: rgba(18, 18, 18, 0.9);
+      backdrop-filter: blur(40px) saturate(200%);
+      -webkit-backdrop-filter: blur(40px) saturate(200%);
+      border: 1px solid rgba(255,255,255,0.08);
       border-radius: 16px;
-      padding: 14px 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 10;
+    }
+    .mock-popup.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+
+    /* Start Menu Alt */
+    .start-menu {
+      left: 14px;
+      width: 720px;
+      height: 420px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    .start-header-alt {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+    }
+    .start-header-alt .user-name { font-weight: 700; font-size: 1.2rem; }
+    .user-avatar { width: 44px; height: 44px; border-radius: 50%; }
+    
+    .start-columns { display: flex; gap: 24px; flex: 1; }
+    .start-col { flex: 1; background: rgba(255,255,255,0.03); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,0.02); }
+    .col-title { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em; text-align: center; }
+    
+    .app-list, .rec-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; }
+    .list-item { display: flex; align-items: center; gap: 10px; padding: 6px 8px; border-radius: 7px; font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: background 0.15s; }
+    .list-item:hover { background: rgba(255,255,255,0.1); }
+    .list-icon { font-size: 0.95rem; width: 18px; text-align: center; flex-shrink: 0; line-height: 1; }
+    .tiny-icon { width: 16px; height: 16px; object-fit: contain; }
+    
+    .pinned-grid-alt { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .app-icon-alt { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; padding: 10px 6px; border-radius: 10px; transition: background 0.2s;}
+    .app-icon-alt:hover { background: rgba(255,255,255,0.1); }
+    .med-icon { width: 36px; height: 36px; object-fit: contain; }
+    .app-icon-alt span { font-size: 0.72rem; text-align: center; font-weight: 500; color: var(--text-muted); }
+
+    .rec-item { display: flex; align-items: center; gap: 10px; padding: 6px 8px; border-radius: 7px; cursor: pointer; transition: background 0.15s; }
+    .rec-item:hover { background: rgba(255,255,255,0.1); }
+    .rec-icon { font-size: 1.3rem; color: #f59e0b; flex-shrink: 0; }
+    .rec-text { display: flex; flex-direction: column; min-width: 0; }
+    .rec-name { font-size: 0.8rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
+    .rec-time { font-size: 0.68rem; color: var(--text-muted); margin-top: 1px; }
+
+    .start-footer { display: flex; justify-content: flex-end; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .footer-icons { display: flex; gap: 20px; }
+    .f-icon { font-size: 1.25rem; cursor: pointer; opacity: 0.7; transition: opacity 0.2s, transform 0.2s; }
+    .f-icon:hover { opacity: 1; transform: scale(1.1); }
+
+    /* Appearance Lab */
+    .appearance-lab {
+      right: 20px;
+      left: auto;
+      width: 240px;
+      padding: 20px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .lab-header { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    .setting-row { display: flex; flex-direction: column; gap: 8px; }
+    .setting-row label { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
+    #tint-picker { width: 100%; height: 40px; border: none; border-radius: 8px; cursor: pointer; background: transparent; }
+    #tint-picker::-webkit-color-swatch-wrapper { padding: 0; }
+    #tint-picker::-webkit-color-swatch { border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; }
+
+    /* Dynamic Window Previews */
+    .window-preview {
+      position: absolute;
+      bottom: 70px;
+      left: 200px;
+      background: rgba(30, 30, 30, 0.95);
+      backdrop-filter: blur(40px) saturate(200%);
+      -webkit-backdrop-filter: blur(40px) saturate(200%);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      width: 360px;
+      padding: 12px 12px 14px;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), left 0.1s ease;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1);
+      z-index: 200;
+    }
+    .window-preview.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .window-preview:hover {
+      cursor: pointer;
+    }
+    .window-preview:hover .preview-content {
+      border-color: #3b82f6;
+      box-shadow: inset 0 0 0 3px #3b82f6, 0 0 16px rgba(59,130,246,0.6);
+    }
+    .window-preview { transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), left 0.1s ease, border-color 0.15s ease, box-shadow 0.15s ease; }
+    
+    .preview-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .preview-title-group { display: flex; align-items: center; gap: 8px; flex: 1; overflow: hidden; }
+    .preview-app-icon { width: 18px; height: 18px; object-fit: contain; flex-shrink: 0; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+    .preview-app-emoji { font-size: 1rem; line-height: 1; flex-shrink: 0; }
+    .preview-title { font-size: 0.9rem; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.01em; }
+    .preview-controls { display: flex; gap: 8px; padding-right: 4px; }
+    .mac-btn { width: 14px; height: 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;}
+    .btn-zoom { background: #28c940; }
+    .btn-close { background: #ff5f56; }
+    
+    .preview-content {
+      height: 180px; border-radius: 8px; 
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.05);
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    /* Taskbar */
+    .taskbar-demo {
+      background: rgba(10, 12, 18, 0.42);
+      backdrop-filter: blur(55px) saturate(220%);
+      -webkit-backdrop-filter: blur(55px) saturate(220%);
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding: 8px 14px;
       display: flex;
       align-items: center;
       gap: 10px;
-      box-shadow:
-        0 4px 40px rgba(0,0,0,0.5),
-        inset 0 1px 0 rgba(255,255,255,0.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), inset 0 0 40px rgba(255,255,255,0.04), 0 -4px 40px rgba(0,0,0,0.5);
       position: relative;
+      transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s ease, box-shadow 0.5s ease, border-radius 0.5s cubic-bezier(0.16, 1, 0.3, 1), margin 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 60;
+      border-radius: 0;
+      margin: 0;
+    }
+    
+    /* AuraBar Theme — flat full-width bar (top bar appears instead) */
+    .taskbar-demo.theme-aurabar {
+      background: rgba(8, 6, 14, 0.3);
+      border-top: 1px solid rgba(255,255,255,0.18);
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+      border-radius: 0;
+      margin: 0;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 50px rgba(255,255,255,0.05), 0 -2px 20px rgba(0,0,0,0.4);
+      backdrop-filter: blur(80px) saturate(220%);
+      -webkit-backdrop-filter: blur(80px) saturate(220%);
+    }
+    
+    /* Desktop mock switches look on AuraBar */
+    .desktop-mock.mode-aurabar {
+      background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2564&auto=format&fit=crop');
+    }
+    
+    .demo-orb-alt {
+      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+      background: radial-gradient(circle at 35% 35%, #60a5fa, #1d4ed8 70%);
+      box-shadow: 0 0 20px rgba(59,130,246,0.5), inset 0 1px 2px rgba(255,255,255,0.4);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
       overflow: hidden;
     }
-    .taskbar-demo::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    }
-    .demo-orb {
-      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-      background: radial-gradient(circle at 35% 35%, #60a5fa, #1d4ed8 60%, #1e3a8a);
-      box-shadow: 0 0 16px rgba(59,130,246,0.6), inset 0 1px 2px rgba(255,255,255,0.4);
-      cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .demo-orb:hover { transform: scale(1.1); box-shadow: 0 0 24px rgba(59,130,246,0.8), inset 0 1px 2px rgba(255,255,255,0.4); }
-    .demo-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.12); flex-shrink: 0; }
-    .demo-pinned { display: flex; gap: 6px; }
+    .demo-orb-alt:hover { transform: scale(1.05); box-shadow: 0 0 28px rgba(59,130,246,0.7), inset 0 1px 2px rgba(255,255,255,0.4); }
+    .demo-orb-alt img { width: 26px; height: 26px; object-fit: contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4)); }
+
+    .demo-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
+    .demo-pinned { display: flex; gap: 4px; }
     .demo-pin {
-      width: 34px; height: 34px; border-radius: 8px;
+      width: 40px; height: 40px; border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
+      cursor: pointer; transition: background 0.2s;
     }
-    .demo-pin:hover { background: rgba(255,255,255,0.1); transform: scale(1.1); }
-    .demo-tabs { display: flex; gap: 4px; flex: 1; overflow: hidden; }
+    .demo-pin:hover { background: rgba(255,255,255,0.1); }
+    .pin-img { width: 28px; height: 28px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+    .pin-emoji { font-size: 1.4rem; line-height: 1; }
+    
+    .demo-tabs { display: flex; gap: 6px; flex: 1; overflow: hidden; }
     .demo-tab {
-      display: flex; align-items: center; gap: 6px;
-      padding: 5px 10px; border-radius: 8px;
-      font-size: 0.72rem; font-weight: 500; color: var(--text-muted);
-      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 14px; border-radius: 10px;
+      font-size: 0.85rem; font-weight: 500; color: #ddd;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
       cursor: pointer; transition: all 0.2s; white-space: nowrap;
     }
     .demo-tab.active {
-      background: rgba(59,130,246,0.2); border-color: rgba(59,130,246,0.4);
-      color: var(--blue-light);
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+      border-color: rgba(255,255,255,0.25);
+      color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
     }
-    .demo-tab:hover { background: rgba(255,255,255,0.1); }
-    .demo-tab-icon { font-size: 0.9rem; }
+    .demo-tab:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.35), 0 0 12px rgba(59,130,246,0.25);
+    }
+    .demo-tab:active { transform: scale(0.97); }
+
+    /* Maximized window overlay */
+    .window-maximized-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 50;
+    }
+    .window-maximized-overlay.show { opacity: 1; pointer-events: auto; }
+    .maximized-window {
+      width: 78%;
+      max-width: 880px;
+      height: 72%;
+      max-height: 560px;
+      background: rgba(30,30,30,0.97);
+      backdrop-filter: blur(40px) saturate(200%);
+      -webkit-backdrop-filter: blur(40px) saturate(200%);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1);
+      transform: scale(0.92) translateY(16px);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .window-maximized-overlay.show .maximized-window { transform: scale(1) translateY(0); }
+    .maximized-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      flex-shrink: 0;
+    }
+    .maximized-header img.preview-app-icon { width: 18px; height: 18px; }
+    .maximized-title { font-size: 0.9rem; font-weight: 700; color: #fff; flex: 1; }
+    .maximized-controls { display: flex; gap: 8px; }
+    .maximized-body { flex: 1; overflow: hidden; }
+    .maximized-body img { width: 100%; height: 100%; object-fit: cover; }
+    .tab-img { width: 20px; height: 20px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+    .tab-emoji-icon { font-size: 1.1rem; line-height: 1; flex-shrink: 0; }
+    .emoji-icon { display: inline-flex; align-items: center; justify-content: center; }
     .demo-spotlight {
-      width: 32px; height: 32px; border-radius: 8px;
+      width: 40px; height: 40px; border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; flex-shrink: 0; cursor: pointer;
-      color: var(--text-dim); transition: background 0.2s, color 0.2s;
+      font-size: 1.2rem; flex-shrink: 0; cursor: pointer;
+      color: var(--text-dim); transition: background 0.2s;
     }
-    .demo-spotlight:hover { background: rgba(255,255,255,0.1); color: var(--text); }
-    .demo-trash {
-      width: 34px; height: 34px; border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; flex-shrink: 0; cursor: pointer;
-      color: var(--text-muted); transition: background 0.2s;
-    }
-    .demo-trash:hover { background: rgba(255,255,255,0.1); }
+    .demo-spotlight:hover { background: rgba(255,255,255,0.1); }
 
     @keyframes fadeInUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
 
-    /* ── SCREENSHOTS SECTION ── */
+    /* ── STACKED PINNED PREVIEW ── */
+    .pinned-stack-preview {
+      position: absolute;
+      bottom: 70px;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.22s cubic-bezier(0.16,1,0.3,1), transform 0.22s cubic-bezier(0.16,1,0.3,1);
+      z-index: 8;
+    }
+    .pinned-stack-preview.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .pin-stack-card {
+      background: rgba(22, 22, 28, 0.97);
+      backdrop-filter: blur(40px) saturate(180%);
+      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08);
+      width: 280px;
+      padding: 10px 10px 12px;
+      position: absolute;
+      bottom: 0;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .pin-stack-card:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 18px 48px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.12);
+      cursor: pointer;
+    }
+    .pin-stack-card:hover .pin-card-thumb {
+      border-color: #3b82f6;
+      box-shadow: inset 0 0 0 3px #3b82f6, 0 0 16px rgba(59,130,246,0.6);
+    }
+    .pin-card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .pin-card-icon {
+      font-size: 0.9rem;
+      line-height: 1;
+    }
+    .pin-card-icon img {
+      width: 14px;
+      height: 14px;
+      object-fit: contain;
+    }
+    .pin-card-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+    .pin-card-btns { display: flex; gap: 5px; }
+    .pin-card-btn { width: 11px; height: 11px; border-radius: 50%; }
+    .pin-card-btn.grn { background: #28c940; }
+    .pin-card-btn.red { background: #ff5f56; }
+    .pin-card-thumb {
+      width: 100%;
+      height: 96px;
+      border-radius: 8px;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      border: 1px solid rgba(255,255,255,0.05);
+      opacity: 0.88;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+/* ── SCREENSHOTS SECTION ── */
     #screenshots {
       padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 5vw, 4rem);
     }
@@ -428,10 +768,66 @@
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: none; }
 
+    /* ── COLOR PRESETS COLUMN ── */
+    .color-presets-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 20px 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      flex: 0 0 auto;
+      margin: 0;
+    }
+    .presets-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      white-space: nowrap;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+    .presets-swatches {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .swatch {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2.5px solid transparent;
+      outline: 2.5px solid transparent;
+      outline-offset: 2px;
+      cursor: pointer;
+      transition: transform 0.18s ease, outline-color 0.18s ease, border-color 0.18s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      flex-shrink: 0;
+    }
+    .swatch:hover {
+      transform: scale(1.18);
+    }
+    .swatch.active {
+      outline-color: rgba(255,255,255,0.85);
+      border-color: rgba(0,0,0,0.3);
+      transform: scale(1.12);
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .demo-tabs { display: none; }
+      .demo-with-presets { flex-direction: column; }
+      .color-presets-row { flex-direction: row; }
+      .presets-swatches { flex-direction: row; flex-wrap: wrap; }
+      .presets-label { writing-mode: horizontal-tb; transform: none; }
     }
   </style>
 </head>
@@ -488,36 +884,189 @@
   </div>
   <p class="hero-compat">Free (Limited Time) · macOS <span>Tahoe</span> · Apple Silicon</p>
 
-  <!-- Animated taskbar preview -->
-  <div class="taskbar-preview" role="img" aria-label="AeroBar taskbar preview">
-    <div class="taskbar-demo">
-      <div class="demo-orb" title="Start Orb"></div>
-      <div class="demo-spotlight" title="Spotlight Search">🔍</div>
-      <div class="demo-divider"></div>
-      <div class="demo-pinned">
-        <div class="demo-pin" title="Finder">🗂️</div>
-        <div class="demo-pin" title="Safari">🌐</div>
-        <div class="demo-pin" title="Terminal">⌨️</div>
-        <div class="demo-pin" title="Mail">✉️</div>
+  <!-- Interactive taskbar preview -->
+  <div class="theme-toggle-container" style="text-align: center; margin-bottom: 20px; position: relative; z-index: 50;">
+    <button id="btn-toggle-theme" class="btn-secondary" onclick="toggleThemeMode()" style="margin: 0 auto; cursor:pointer;">Switch to AuraBar Mode</button>
+  </div>
+  
+  <div class="demo-with-presets">
+  <div class="taskbar-preview" id="interactive-preview">
+    <!-- Desktop Environment Mock -->
+    <div class="desktop-mock" id="desktop-bg" onclick="cycleWallpaper(event)" title="Click to change wallpaper">
+      <div class="wallpaper-hint" id="wallpaper-hint">🖱 Click wallpaper to change colors</div>
+      
+      <!-- Mock Top Bar (Notch) for AuraBar -->
+      <div class="mock-top-bar" id="mock-top-bar">
+        <div class="mock-menu-left" style="font-weight:600;"> &nbsp; Finder &nbsp; File &nbsp; Edit &nbsp; View &nbsp; Go &nbsp; Window &nbsp; Help</div>
+        <div class="mock-notch"></div>
+        <div class="mock-menu-right" style="font-weight:500;">🔋 100% &nbsp; Wi-Fi &nbsp; Mon 17:39</div>
       </div>
-      <div class="demo-divider"></div>
-      <div class="demo-tabs">
-        <div class="demo-tab active" id="tab-finder">
-          <span class="demo-tab-icon">🗂️</span> Finder
+
+      <!-- Start Menu Popup -->
+      <div class="mock-popup start-menu" id="mock-start-menu">
+        <div class="start-header-alt">
+          <img src="https://ui-avatars.com/api/?name=Adi+T&background=3b82f6&color=fff&rounded=true" class="user-avatar" alt="User">
+          <span class="user-name">AdiT</span>
         </div>
-        <div class="demo-tab" id="tab-safari">
-          <span class="demo-tab-icon">🌐</span> Safari
+        <div class="start-columns">
+          <div class="start-col">
+            <div class="col-title">All Applications</div>
+            <div class="app-list">
+              <div class="list-item"><span class="list-icon">🅰️</span>AeroBar</div>
+              <div class="list-item"><span class="list-icon">🎨</span>Affinity</div>
+              <div class="list-item"><span class="list-icon">📱</span>App Store</div>
+              <div class="list-item"><span class="list-icon">📅</span>Calendar</div>
+              <div class="list-item"><span class="list-icon">🌐</span>Safari</div>
+              <div class="list-item"><span class="list-icon">📷</span>Photos</div>
+              <div class="list-item"><span class="list-icon">🎵</span>Music</div>
+            </div>
+          </div>
+          <div class="start-col" style="flex: 1.2;">
+            <div class="col-title">Pinned Shortcuts</div>
+            <div class="pinned-grid-alt">
+              <div class="app-icon-alt"><span class="med-icon emoji-icon">🗂️</span><span>Finder</span></div>
+              <div class="app-icon-alt"><span class="med-icon emoji-icon">⚙️</span><span>System Settings</span></div>
+            </div>
+          </div>
+          <div class="start-col">
+            <div class="col-title">Recommended</div>
+            <div class="rec-list">
+              <div class="rec-item">
+                <span class="rec-icon">📁</span>
+                <div class="rec-text"><div class="rec-name">AeroBar 1</div><div class="rec-time">Just now</div></div>
+              </div>
+              <div class="rec-item">
+                <span class="rec-icon">📁</span>
+                <div class="rec-text"><div class="rec-name">AeroBar 2</div><div class="rec-time">Minutes ago</div></div>
+              </div>
+              <div class="rec-item">
+                <span class="rec-icon">📁</span>
+                <div class="rec-text"><div class="rec-name">Dmgs</div><div class="rec-time">An hour ago</div></div>
+              </div>
+              <div class="rec-item">
+                <span class="rec-icon">📁</span>
+                <div class="rec-text"><div class="rec-name">XCode</div><div class="rec-time">Earlier today</div></div>
+              </div>
+              <div class="rec-item">
+                <span class="rec-icon">📁</span>
+                <div class="rec-text"><div class="rec-name">Aerobar</div><div class="rec-time">Today</div></div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="demo-tab" id="tab-code">
-          <span class="demo-tab-icon">💻</span> VS Code
-        </div>
-        <div class="demo-tab" id="tab-notes">
-          <span class="demo-tab-icon">📝</span> Notes
+        <div class="start-footer">
+          <div class="footer-icons">
+            <span class="f-icon" title="Power">⏻</span>
+            <span class="f-icon" title="Appearance Lab" onclick="togglePopup('mock-appearance-lab')" style="color:#60a5fa;">🎨</span>
+            <span class="f-icon" title="Settings">⚙️</span>
+          </div>
         </div>
       </div>
-      <div class="demo-trash" title="Trash">🗑️</div>
+
+      <!-- Appearance Lab Popup -->
+      <div class="mock-popup appearance-lab" id="mock-appearance-lab">
+        <div class="lab-header">Appearance Lab</div>
+        <div class="setting-row">
+          <label>Glass Tint</label>
+          <input type="color" id="tint-picker" value="#141e32" onchange="updateTint(this.value)">
+        </div>
+      </div>
+
+      <!-- Dynamic Window Preview -->
+      <div class="window-preview" id="dynamic-preview" onmouseenter="clearTimeout(previewTimeout)" onmouseleave="hidePreview()" onclick="if(window.lastPreviewTab) openMaximizedWindow(window.lastPreviewTab)">
+        <div class="preview-header-bar">
+          <div class="preview-title-group">
+            <img src="" class="preview-app-icon" id="preview-icon" alt="">
+            <span class="preview-title" id="preview-title"></span>
+          </div>
+          <div class="preview-controls">
+            <div class="mac-btn btn-zoom"></div>
+            <div class="mac-btn btn-close"></div>
+          </div>
+        </div>
+        <div class="preview-content mac-window" id="preview-content-box">
+          <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=600&auto=format&fit=crop" style="width:100%;height:100%;object-fit:cover;opacity:0.85;transition:opacity 0.08s ease;" alt="Window content">
+        </div>
+      </div>
+
+      <!-- Maximized Window Overlay -->
+      <div class="window-maximized-overlay" id="window-maximized-overlay" onclick="if(event.target===this) closeMaximizedWindow()">
+        <div class="maximized-window">
+          <div class="maximized-header">
+            <img src="" class="preview-app-icon" id="maximized-icon" alt="">
+            <span class="maximized-title" id="maximized-title"></span>
+            <div class="maximized-controls">
+              <div class="mac-btn btn-zoom"></div>
+              <div class="mac-btn btn-close" onclick="closeMaximizedWindow()"></div>
+            </div>
+          </div>
+          <div class="maximized-body">
+            <img src="" id="maximized-img" alt="Maximized window">
+          </div>
+        </div>
+      </div>
+
+      <!-- Stacked Pinned Preview -->
+      <div class="pinned-stack-preview" id="pinned-stack-preview">
+        <!-- Cards injected by JS -->
+      </div>
+
+      <!-- Taskbar -->
+      <div class="taskbar-demo" id="mock-taskbar">
+        <!-- AeroBar Orb -->
+        <div class="demo-orb-alt" title="Start Menu" onclick="togglePopup('mock-start-menu')">
+          <img src="aerobar-mark.svg" alt="AeroBar" style="width:14px;height:14px;">
+        </div>
+        <div class="demo-spotlight" title="Spotlight Search" style="color:#10b981;">🔍</div>
+        <div class="demo-divider"></div>
+        <div class="demo-pinned" id="demo-pinned-bar">
+          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'Finder', 'finder.png', ['docs', 'Recents'], ['previews/finder-window.png','previews/finder-window.png'])" onmouseleave="hidePinnedPreview()"><img src="finder.png" class="pin-img"></div>
+          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'System Settings', '⚙️', ['General', 'Privacy & Security'], ['https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=400&auto=format&fit=crop'])" onmouseleave="hidePinnedPreview()"><span class="pin-emoji">⚙️</span></div>
+          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'Chrome', 'chrome.png', ['AeroBar - Windows-style...', 'GitHub — Build...'], ['previews/chrome-window.png','previews/chrome-window.png'])" onmouseleave="hidePinnedPreview()"><img src="chrome.png" class="pin-img"></div>
+        </div>
+        <div class="demo-divider"></div>
+        <div class="demo-tabs" id="demo-tabs-container">
+          <div class="demo-tab active" onclick="activateTab(this); openMaximizedWindow(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
+            data-preview="previews/vscode-window.png">
+            <img src="vscode.png" class="tab-img" data-icon="vscode.png">
+            <span class="demo-tab-text">AeroBar — AeroBarPanel.swift</span>
+          </div>
+          <div class="demo-tab" onclick="activateTab(this); openMaximizedWindow(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
+            data-preview="previews/chrome-window.png">
+            <img src="chrome.png" class="tab-img" data-icon="chrome.png">
+            <span class="demo-tab-text">AeroBar - Windows-style...</span>
+          </div>
+          <div class="demo-tab" onclick="activateTab(this); openMaximizedWindow(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
+            data-preview="previews/finder-window.png"
+            data-icon-emoji="🗂️">
+            <span class="tab-emoji-icon">🗂️</span>
+            <span class="demo-tab-text">docs</span>
+          </div>
+          <div class="demo-tab" onclick="activateTab(this); openMaximizedWindow(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
+            data-preview="previews/safari-window.png">
+            <img src="safari.png" class="tab-img" data-icon="safari.png">
+            <span class="demo-tab-text">AeroBar - Windows-style Task...</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="taskbar-preview-glow"></div>
+    <div class="taskbar-preview-glow" id="taskbar-glow"></div>
+  </div>
+
+  <!-- Color Presets Column -->
+  <div class="color-presets-row" id="color-presets">
+    <span class="presets-label">Tint Color</span>
+    <div class="presets-swatches">
+      <button class="swatch active" data-r="59"  data-g="80"  data-b="180" style="background:linear-gradient(135deg,#4f6eb4,#1d4ed8)" title="Aero Blue"></button>
+      <button class="swatch" data-r="120" data-g="40"  data-b="200" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)" title="Violet"></button>
+      <button class="swatch" data-r="16"  data-g="120" data-b="140" style="background:linear-gradient(135deg,#06b6d4,#0e7490)" title="Teal"></button>
+      <button class="swatch" data-r="20"  data-g="140" data-b="60"  style="background:linear-gradient(135deg,#22c55e,#15803d)" title="Forest"></button>
+      <button class="swatch" data-r="210" data-g="95"  data-b="35"  style="background:linear-gradient(135deg,#f97316,#c2410c)" title="Ember"></button>
+      <button class="swatch" data-r="200" data-g="40"  data-b="100" style="background:linear-gradient(135deg,#ec4899,#be185d)" title="Rose"></button>
+      <button class="swatch" data-r="180" data-g="10"  data-b="10"  style="background:linear-gradient(135deg,#ef4444,#991b1b)" title="Crimson"></button>
+      <button class="swatch" data-r="40"  data-g="40"  data-b="50"  style="background:linear-gradient(135deg,#475569,#1e293b)" title="Midnight"></button>
+    </div>
+  </div>
   </div>
 </section>
 
@@ -608,7 +1157,6 @@
     </div>
   </div>
 </section>
-  
 
 <!-- Install -->
 <section id="install">
@@ -693,20 +1241,376 @@
 </footer>
 
 <script>
+  // ── Wallpaper cycling with color adaptation ──────────────────────────────
+  const wallpapers = [
+    {
+      url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop',
+      color: [59, 80, 180],   // Blue-purple
+      name: 'Cosmic Purple'
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2564&auto=format&fit=crop',
+      color: [210, 100, 40],  // Warm orange sunset
+      name: 'Golden Sunset'
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=2564&auto=format&fit=crop',
+      color: [20, 120, 140],  // Teal ocean
+      name: 'Ocean Teal'
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop',
+      color: [30, 100, 50],   // Deep forest green
+      name: 'Forest Green'
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2560&auto=format&fit=crop',
+      color: [160, 40, 200],  // Deep violet night
+      name: 'Northern Lights'
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1557682250-33bd709cbe85?q=80&w=2560&auto=format&fit=crop',
+      color: [200, 50, 100],  // Rose pink
+      name: 'Rosy Dawn'
+    }
+  ];
+
+  let wallpaperIdx = 0;
+  let hintHidden = false;
+
+  function cycleWallpaper(e) {
+    // Don't cycle if clicking inside a popup or the taskbar
+    if (e.target.closest('.mock-popup') || e.target.closest('.taskbar-demo') ||
+        e.target.closest('.window-preview') || e.target.closest('.mock-top-bar')) return;
+
+    wallpaperIdx = (wallpaperIdx + 1) % wallpapers.length;
+    const wp = wallpapers[wallpaperIdx];
+    const bg = document.getElementById('desktop-bg');
+
+    // Fade out, swap, fade in
+    bg.style.opacity = '0.6';
+    setTimeout(() => {
+      bg.style.backgroundImage = `url('${wp.url}')`;
+      bg.style.opacity = '1';
+    }, 180);
+
+    applyWallpaperColor(wp.color);
+
+    // Hide hint after first click
+    if (!hintHidden) {
+      document.getElementById('wallpaper-hint').classList.add('hidden');
+      hintHidden = true;
+    }
+  }
+
+  function applyWallpaperColor([r, g, b]) {
+    const taskbar = document.getElementById('mock-taskbar');
+    const glow   = document.getElementById('taskbar-glow');
+
+    if (!isAuraBar) {
+      // AeroBar: strong tint of wallpaper color, translucent for glass blur
+      taskbar.style.background = `rgba(${Math.round(r*0.6)}, ${Math.round(g*0.6)}, ${Math.round(b*0.6)}, 0.4)`;
+      taskbar.style.borderTopColor = `rgba(${r}, ${g}, ${b}, 0.5)`;
+      glow.style.background = `rgb(${r},${g},${b})`;
+      glow.style.opacity = '0.3';
+    } else {
+      // AuraBar: strong tint pill, translucent for glass blur
+      taskbar.style.background = `rgba(${Math.round(r*0.5)}, ${Math.round(g*0.5)}, ${Math.round(b*0.5)}, 0.3)`;
+      taskbar.style.borderColor = `rgba(${r}, ${g}, ${b}, 0.55)`;
+    }
+
+    // Colour-tint the top bar too (AuraBar)
+    const topbar = document.getElementById('mock-top-bar');
+    topbar.style.background = `rgba(${Math.round(r*0.5)}, ${Math.round(g*0.5)}, ${Math.round(b*0.5)}, 0.35)`;
+
+    // Glow adapts
+    glow.style.background = `rgb(${r},${g},${b})`;
+  }
+
+  // Override updateTint to also remember manual tint
+  function updateTint(color) {
+    const taskbar = document.getElementById('mock-taskbar');
+    let r = parseInt(color.slice(1,3),16), g = parseInt(color.slice(3,5),16), b = parseInt(color.slice(5,7),16);
+    if (!isAuraBar) taskbar.style.background = `rgba(${Math.round(r*0.6)},${Math.round(g*0.6)},${Math.round(b*0.6)},0.4)`;
+    else taskbar.style.background = `rgba(${Math.round(r*0.5)},${Math.round(g*0.5)},${Math.round(b*0.5)},0.3)`;
+  }
+
+  // ── Color Preset Swatches ─────────────────────────────────────────────────
+  document.querySelectorAll('.swatch').forEach(swatch => {
+    swatch.addEventListener('click', () => {
+      // Mark active
+      document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+      swatch.classList.add('active');
+
+      const r = parseInt(swatch.dataset.r);
+      const g = parseInt(swatch.dataset.g);
+      const b = parseInt(swatch.dataset.b);
+
+      // Apply to taskbar via shared function
+      applyWallpaperColor([r, g, b]);
+
+      // Also update glow color
+      const glow = document.getElementById('taskbar-glow');
+      glow.style.background = `rgb(${r},${g},${b})`;
+      glow.style.opacity = isAuraBar ? '0' : '0.3';
+    });
+  });
+
+  // ── Pinned App Stacked Preview ──────────────────────────────────────────
+  let pinnedHideTimer;
+
+  function showPinnedPreview(pinEl, appName, iconSrc, windowTitles, thumbUrls) {
+    clearTimeout(pinnedHideTimer);
+    // Hide tab preview if open
+    document.getElementById('dynamic-preview').classList.remove('show');
+
+    const stack = document.getElementById('pinned-stack-preview');
+    stack.innerHTML = '';
+
+    const CARD_W   = 280;
+    const CARD_H   = 128; // header + thumb
+    const CARD_GAP = 8;  // vertical gap between stacked cards
+
+    // Build cards back-to-front so front card is on top
+    const count = Math.min(windowTitles.length, thumbUrls.length);
+    for (let i = count - 1; i >= 0; i--) {
+      const card = document.createElement('div');
+      card.className = 'pin-stack-card';
+
+      const isImg = iconSrc && (iconSrc.startsWith('http') || /\.(png|jpg|jpeg|svg|webp)$/i.test(iconSrc));
+      const iconHtml = isImg
+        ? `<img src="${iconSrc}" style="width:14px;height:14px;object-fit:contain;">`
+        : `<span style="font-size:0.88rem;line-height:1">${iconSrc}</span>`;
+
+      card.innerHTML = `
+        <div class="pin-card-header">
+          <div class="pin-card-icon">${iconHtml}</div>
+          <div class="pin-card-title">${appName} — ${windowTitles[i]}</div>
+          <div class="pin-card-btns">
+            <div class="pin-card-btn grn"></div>
+            <div class="pin-card-btn red"></div>
+          </div>
+        </div>
+        <img class="pin-card-thumb" src="${thumbUrls[i]}" alt="${windowTitles[i]}">
+      `;
+
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        openMaximizedFromData({
+          iconSrc: isImg ? iconSrc : null,
+          emojiIcon: isImg ? null : iconSrc,
+          title: `${appName} — ${windowTitles[i]}`,
+          imageSrc: thumbUrls[i]
+        });
+      });
+
+      // Cards are laid out in normal flow, fully visible, stacked vertically
+      card.style.position = 'relative';
+      card.style.zIndex   = count - i;
+      if (i > 0) card.style.marginBottom = CARD_GAP + 'px';
+
+      stack.appendChild(card);
+    }
+
+    // Total visual height of stack (measured, so it's always accurate)
+    stack.style.height = 'auto';
+    const desktopRect = document.getElementById('desktop-bg').getBoundingClientRect();
+    const maxAvailable = desktopRect.height - 70 - 14; // minus bottom anchor + margin
+    const stackH = Math.min(stack.scrollHeight, maxAvailable);
+    stack.style.height = stackH + 'px';
+    stack.style.overflowY = stack.scrollHeight > stackH ? 'auto' : 'visible';
+
+    // Position above the hovered pin
+    const pinRect  = pinEl.getBoundingClientRect();
+    const containerRect = document.getElementById('desktop-bg').getBoundingClientRect();
+    let leftPos = (pinRect.left - containerRect.left) + (pinRect.width / 2) - (CARD_W / 2);
+    leftPos = Math.max(8, Math.min(leftPos, containerRect.width - CARD_W - 8));
+    stack.style.left = leftPos + 'px';
+
+    stack.classList.add('show');
+  }
+
+  function hidePinnedPreview() {
+    pinnedHideTimer = setTimeout(() => {
+      document.getElementById('pinned-stack-preview').classList.remove('show');
+    }, 350);
+  }
+
+  // Keep preview open while hovering it
+  document.getElementById('pinned-stack-preview').addEventListener('mouseenter', () => clearTimeout(pinnedHideTimer));
+  document.getElementById('pinned-stack-preview').addEventListener('mouseleave', hidePinnedPreview);
+
+  // ── Scroll reveal ─────────────────────────────────────────────────────────
   // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // Tab animation in demo
-  const tabs = document.querySelectorAll('.demo-tab');
-  let active = 0;
-  setInterval(() => {
-    tabs[active].classList.remove('active');
-    active = (active + 1) % tabs.length;
-    tabs[active].classList.add('active');
-  }, 1800);
+  // Interactive Mock JS
+  let isAuraBar = false;
+
+  function toggleThemeMode() {
+    isAuraBar = !isAuraBar;
+    const taskbar = document.getElementById('mock-taskbar');
+    const topbar = document.getElementById('mock-top-bar');
+    const desktopBg = document.getElementById('desktop-bg');
+    const btn = document.getElementById('btn-toggle-theme');
+    
+    if (isAuraBar) {
+      taskbar.classList.add('theme-aurabar');
+      topbar.classList.add('show');
+      desktopBg.classList.add('mode-aurabar');
+      btn.textContent = 'Switch to AeroBar Mode';
+      document.getElementById('taskbar-glow').style.opacity = '0';
+    } else {
+      taskbar.classList.remove('theme-aurabar');
+      topbar.classList.remove('show');
+      desktopBg.classList.remove('mode-aurabar');
+      btn.textContent = 'Switch to AuraBar Mode';
+      document.getElementById('taskbar-glow').style.opacity = '0.25';
+      // Re-apply custom tint if picker was used
+      const picker = document.getElementById('tint-picker');
+      if (picker) updateTint(picker.value);
+    }
+  }
+
+  function togglePopup(id) {
+    document.querySelectorAll('.mock-popup').forEach(p => {
+      if (p.id !== id) p.classList.remove('open');
+    });
+    const el = document.getElementById(id);
+    if(el) el.classList.toggle('open');
+  }
+
+  function activateTab(el) {
+    document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  let previewTimeout;
+  function showPreview(tabEl) {
+    clearTimeout(previewTimeout);
+    window.lastPreviewTab = tabEl;
+    
+    const preview = document.getElementById('dynamic-preview');
+    const imgEl = tabEl.querySelector('.tab-img');
+    const emojiIcon = tabEl.dataset.iconEmoji || tabEl.querySelector('.tab-emoji-icon')?.textContent;
+    const textSpan = tabEl.querySelector('.demo-tab-text');
+    const previewImg = tabEl.dataset.preview;
+    
+    // Dynamically update the icon, title, and window content
+    const previewIconEl = document.getElementById('preview-icon');
+    const iconContainer = previewIconEl.parentNode;
+    
+    // Remove old emoji element if any
+    const oldEmoji = iconContainer.querySelector('.preview-app-emoji');
+    if (oldEmoji) oldEmoji.remove();
+    
+    if (imgEl && imgEl.dataset.icon) {
+      previewIconEl.src = imgEl.dataset.icon;
+      previewIconEl.style.display = 'inline';
+    } else if (emojiIcon) {
+      previewIconEl.style.display = 'none';
+      const emojiEl = document.createElement('span');
+      emojiEl.className = 'preview-app-emoji';
+      emojiEl.textContent = emojiIcon;
+      iconContainer.insertBefore(emojiEl, iconContainer.firstChild);
+    }
+    
+    document.getElementById('preview-title').textContent = textSpan.textContent.trim();
+    
+    // Swap the preview screenshot
+    const previewBox = document.getElementById('preview-content-box');
+    const previewImgEl = previewBox.querySelector('img');
+    if (previewImgEl && previewImg) {
+      previewImgEl.style.opacity = '0';
+      setTimeout(() => {
+        previewImgEl.src = previewImg;
+        previewImgEl.style.opacity = '0.85';
+      }, 80);
+    }
+    
+    // Calculate position based on tab center
+    const tabRect = tabEl.getBoundingClientRect();
+    const containerRect = document.getElementById('desktop-bg').getBoundingClientRect();
+    
+    let leftPos = (tabRect.left - containerRect.left) + (tabRect.width / 2) - 180; // half of 360px
+    
+    if (leftPos < 10) leftPos = 10;
+    if (leftPos > containerRect.width - 370) leftPos = containerRect.width - 370;
+    
+    preview.style.left = leftPos + 'px';
+    preview.classList.add('show');
+  }
+
+  function hidePreview() {
+    previewTimeout = setTimeout(() => {
+      document.getElementById('dynamic-preview').classList.remove('show');
+    }, 350);
+  }
+
+  function openMaximizedWindow(tabEl) {
+    document.getElementById('dynamic-preview').classList.remove('show');
+
+    const imgEl = tabEl.querySelector('.tab-img');
+    const emojiIcon = tabEl.dataset.iconEmoji || tabEl.querySelector('.tab-emoji-icon')?.textContent;
+    const textSpan = tabEl.querySelector('.demo-tab-text');
+    const previewImg = tabEl.dataset.preview;
+
+    openMaximizedFromData({
+      iconSrc: (imgEl && imgEl.dataset.icon) ? imgEl.dataset.icon : null,
+      emojiIcon: emojiIcon || null,
+      title: textSpan.textContent.trim(),
+      imageSrc: previewImg
+    });
+  }
+
+  // Generic opener used by both taskbar tabs and pinned-app stack cards
+  function openMaximizedFromData({ iconSrc, emojiIcon, title, imageSrc }) {
+    const overlay = document.getElementById('window-maximized-overlay');
+
+    const iconEl = document.getElementById('maximized-icon');
+    const headerEl = iconEl.parentNode;
+    const oldEmoji = headerEl.querySelector('.preview-app-emoji');
+    if (oldEmoji) oldEmoji.remove();
+
+    if (iconSrc) {
+      iconEl.src = iconSrc;
+      iconEl.style.display = 'inline';
+    } else if (emojiIcon) {
+      iconEl.style.display = 'none';
+      const emojiEl = document.createElement('span');
+      emojiEl.className = 'preview-app-emoji';
+      emojiEl.textContent = emojiIcon;
+      headerEl.insertBefore(emojiEl, headerEl.firstChild);
+    }
+
+    document.getElementById('maximized-title').textContent = title;
+
+    const maxImgEl = document.getElementById('maximized-img');
+    if (imageSrc) maxImgEl.src = imageSrc;
+
+    overlay.classList.add('show');
+    document.getElementById('pinned-stack-preview').classList.remove('show');
+  }
+
+  function closeMaximizedWindow() {
+    document.getElementById('window-maximized-overlay').classList.remove('show');
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMaximizedWindow();
+  });
+
+  // updateTint defined above
+
+  // Close popups on background click
+  document.getElementById('desktop-bg').addEventListener('click', (e) => {
+    if (e.target.id === 'desktop-bg') {
+      document.querySelectorAll('.mock-popup').forEach(p => p.classList.remove('open'));
+    }
+  });
 
   // Nav scroll shadow
   const nav = document.getElementById('navbar');
