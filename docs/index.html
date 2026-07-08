@@ -76,8 +76,8 @@
     }
     .nav-logo .orb-icon {
       width: 30px; height: 30px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #60a5fa, #1d4ed8 60%, #1e3a8a);
-      box-shadow: 0 0 14px var(--blue-glow), inset 0 1px 2px rgba(255,255,255,0.35);
+      background: url('aerobar-orb.png') center/contain no-repeat;
+      box-shadow: 0 0 14px var(--blue-glow);
     }
     .nav-links { display: flex; align-items: center; gap: 2rem; }
     .nav-links a {
@@ -172,7 +172,7 @@
     .hero-stats span { display: flex; align-items: center; gap: 6px; }
     .hero-stats b { color: var(--text-muted); font-weight: 600; font-variant-numeric: tabular-nums; }
     .hero-compat {
-      margin-top: 1rem; font-size: 0.8rem; color: var(--text-dim);
+      margin-top: 1rem; margin-bottom: 2rem; font-size: 0.8rem; color: var(--text-dim);
       animation: fadeInUp 0.7s ease 0.6s both;
     }
     .hero-compat span { color: var(--text-muted); }
@@ -182,7 +182,7 @@
       display: flex;
       align-items: stretch;
       gap: 20px;
-      max-width: 1000px;
+      max-width: 1180px;
       margin: 0 auto;
     }
     .taskbar-preview {
@@ -196,10 +196,10 @@
     .desktop-mock {
       position: relative;
       width: 100%;
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 16 / 10.6;
       border-radius: 16px;
       overflow: hidden;
-      background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop') center/cover;
+      background: url('https://images.unsplash.com/photo-1687042277586-971369d3d241?q=80&w=2940&auto=format&fit=crop') center/cover;
       box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.1);
       display: flex;
       flex-direction: column;
@@ -240,9 +240,9 @@
     }
     .mock-top-bar.show { opacity: 1; transform: translateY(0); }
     .mock-notch {
-      width: 160px; height: 22px;
+      width: 130px; height: 24px;
       background: #000;
-      border-radius: 0 0 12px 12px;
+      border-radius: 0 0 10px 10px;
       position: absolute; left: 50%; top: 0; transform: translateX(-50%);
     }
 
@@ -269,14 +269,17 @@
       pointer-events: none;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 10;
+      overflow: hidden;
     }
     .mock-popup.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
 
     /* Start Menu Alt */
     .start-menu {
       left: 14px;
-      width: 720px;
-      height: 420px;
+      bottom: 70px;
+      width: min(720px, calc(100% - 28px));
+      height: auto;
+      max-height: min(420px, calc(100% - 100px));
       padding: 24px;
       display: flex;
       flex-direction: column;
@@ -287,8 +290,8 @@
     .start-header-alt .user-name { font-weight: 700; font-size: 1.2rem; }
     .user-avatar { width: 44px; height: 44px; border-radius: 50%; }
     
-    .start-columns { display: flex; gap: 24px; flex: 1; }
-    .start-col { flex: 1; background: rgba(255,255,255,0.03); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,0.02); }
+    .start-columns { display: flex; gap: 24px; flex: 1; min-height: 0; }
+    .start-col { flex: 1; min-height: 0; background: rgba(255,255,255,0.03); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,0.02); }
     .col-title { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em; text-align: center; }
     
     .app-list, .rec-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; }
@@ -345,6 +348,7 @@
       opacity: 0;
       transform: translateY(10px);
       pointer-events: none;
+      z-index: 65;
       transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), left 0.1s ease;
       box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1);
       z-index: 200;
@@ -384,10 +388,10 @@
       backdrop-filter: blur(55px) saturate(220%);
       -webkit-backdrop-filter: blur(55px) saturate(220%);
       border-top: 1px solid rgba(255,255,255,0.12);
-      padding: 8px 14px;
+      padding: 3px 10px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 7px;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), inset 0 0 40px rgba(255,255,255,0.04), 0 -4px 40px rgba(0,0,0,0.5);
       position: relative;
       transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s ease, box-shadow 0.5s ease, border-radius 0.5s cubic-bezier(0.16, 1, 0.3, 1), margin 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -412,36 +416,37 @@
     
     /* Desktop mock switches look on AuraBar */
     .desktop-mock.mode-aurabar {
-      background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2564&auto=format&fit=crop');
+      background-image: url('https://images.unsplash.com/photo-1687042277586-971369d3d241?q=80&w=2940&auto=format&fit=crop');
     }
     
     .demo-orb-alt {
-      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
-      background: radial-gradient(circle at 35% 35%, #60a5fa, #1d4ed8 70%);
-      box-shadow: 0 0 20px rgba(59,130,246,0.5), inset 0 1px 2px rgba(255,255,255,0.4);
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      background: url('aerobar-orb.png') center/contain no-repeat;
+      box-shadow: 0 0 20px rgba(59,130,246,0.5);
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
       overflow: hidden;
+      margin: 0;
     }
-    .demo-orb-alt:hover { transform: scale(1.05); box-shadow: 0 0 28px rgba(59,130,246,0.7), inset 0 1px 2px rgba(255,255,255,0.4); }
-    .demo-orb-alt img { width: 26px; height: 26px; object-fit: contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4)); }
+    .demo-orb-alt:hover { transform: scale(1.05); box-shadow: 0 0 28px rgba(59,130,246,0.7); }
+    .demo-orb-alt img { display: none; }
 
-    .demo-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
-    .demo-pinned { display: flex; gap: 4px; }
+    .demo-divider { width: 1px; height: 22px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
+    .demo-pinned { display: flex; gap: 2px; }
     .demo-pin {
-      width: 40px; height: 40px; border-radius: 10px;
+      width: 32px; height: 32px; border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; transition: background 0.2s;
     }
     .demo-pin:hover { background: rgba(255,255,255,0.1); }
-    .pin-img { width: 28px; height: 28px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
-    .pin-emoji { font-size: 1.4rem; line-height: 1; }
+    .pin-img { width: 24px; height: 24px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+    .pin-emoji { font-size: 1.1rem; line-height: 1; }
     
-    .demo-tabs { display: flex; gap: 6px; flex: 1; overflow: hidden; }
+    .demo-tabs { display: flex; gap: 4px; flex: 1; overflow: hidden; }
     .demo-tab {
-      display: flex; align-items: center; gap: 10px;
-      padding: 8px 14px; border-radius: 10px;
-      font-size: 0.85rem; font-weight: 500; color: #ddd;
+      display: flex; align-items: center; gap: 7px;
+      padding: 5px 10px; border-radius: 8px;
+      font-size: 0.72rem; font-weight: 500; color: #ddd;
       background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
       cursor: pointer; transition: all 0.2s; white-space: nowrap;
     }
@@ -503,16 +508,60 @@
     .maximized-controls { display: flex; gap: 8px; }
     .maximized-body { flex: 1; overflow: hidden; }
     .maximized-body img { width: 100%; height: 100%; object-fit: cover; }
-    .tab-img { width: 20px; height: 20px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
-    .tab-emoji-icon { font-size: 1.1rem; line-height: 1; flex-shrink: 0; }
+    .tab-img { width: 18px; height: 18px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+    .tab-emoji-icon { font-size: 0.95rem; line-height: 1; flex-shrink: 0; }
     .emoji-icon { display: inline-flex; align-items: center; justify-content: center; }
     .demo-spotlight {
-      width: 40px; height: 40px; border-radius: 10px;
+      width: 32px; height: 32px; border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem; flex-shrink: 0; cursor: pointer;
-      color: var(--text-dim); transition: background 0.2s;
+      flex-shrink: 0; cursor: pointer;
+      transition: background 0.2s;
     }
     .demo-spotlight:hover { background: rgba(255,255,255,0.1); }
+    .demo-spotlight img { width: 20px; height: 20px; object-fit: contain; }
+
+    /* ── SPOTLIGHT SEARCH PILL (macOS Tahoe style) ── */
+    .spotlight-pill {
+      position: absolute;
+      bottom: 66px;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px) scale(0.96);
+      width: min(420px, 80%);
+      background: rgba(30,32,40,0.72);
+      backdrop-filter: blur(30px) saturate(180%);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.12);
+      padding: 14px 18px;
+      display: flex; align-items: center; gap: 10px;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+      z-index: 60;
+    }
+    .spotlight-pill.show {
+      opacity: 1; visibility: visible; pointer-events: auto;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+    .spotlight-pill-icon { width: 18px; height: 18px; object-fit: contain; flex-shrink: 0; opacity: 0.8; }
+    .spotlight-pill-input {
+      flex: 1;
+      background: transparent;
+      border: none; outline: none;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+    }
+    .spotlight-pill-input::placeholder { color: var(--text-dim); }
+    .spotlight-pill-hint {
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      background: rgba(255,255,255,0.08);
+      border-radius: 5px;
+      padding: 2px 6px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
 
     @keyframes fadeInUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
 
@@ -529,7 +578,7 @@
       opacity: 0;
       transform: translateY(12px);
       transition: opacity 0.22s cubic-bezier(0.16,1,0.3,1), transform 0.22s cubic-bezier(0.16,1,0.3,1);
-      z-index: 8;
+      z-index: 65;
     }
     .pinned-stack-preview.show {
       opacity: 1;
@@ -820,6 +869,100 @@
       transform: scale(1.12);
     }
 
+    /* ── TINT SLIDERS COLUMN ── */
+    .tint-sliders-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      padding: 20px 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      flex: 0 0 auto;
+      margin: 0;
+    }
+    .tint-slider-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 40px;
+      flex-shrink: 0;
+    }
+    .tint-slider-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      white-space: nowrap;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+    .tint-slider-value {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      font-variant-numeric: tabular-nums;
+      width: 40px;
+      flex-shrink: 0;
+      text-align: center;
+    }
+    .tint-slider-vertical-wrap {
+      width: 32px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .tint-slider-vertical {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 120px;
+      height: 6px;
+      margin: 0;
+      transform: rotate(-90deg);
+      cursor: pointer;
+      background: rgba(255,255,255,0.12);
+      border-radius: 4px;
+      outline: none;
+    }
+    .tint-slider-vertical::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 4px;
+    }
+    .tint-slider-vertical::-moz-range-track {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 4px;
+      border: none;
+    }
+    .tint-slider-vertical::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #4f6eb4;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      cursor: pointer;
+      margin-top: -6px;
+    }
+    .tint-slider-vertical::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #4f6eb4;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      cursor: pointer;
+      border: none;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .nav-links { display: none; }
@@ -828,6 +971,9 @@
       .color-presets-row { flex-direction: row; }
       .presets-swatches { flex-direction: row; flex-wrap: wrap; }
       .presets-label { writing-mode: horizontal-tb; transform: none; }
+      .tint-sliders-row { flex-direction: row; }
+      .tint-slider-vertical-wrap { height: 90px; }
+      .tint-slider-vertical { width: 90px; }
     }
   </style>
 </head>
@@ -885,10 +1031,6 @@
   <p class="hero-compat">Free (Limited Time) · macOS <span>Tahoe</span> · Apple Silicon</p>
 
   <!-- Interactive taskbar preview -->
-  <div class="theme-toggle-container" style="text-align: center; margin-bottom: 20px; position: relative; z-index: 50;">
-    <button id="btn-toggle-theme" class="btn-secondary" onclick="toggleThemeMode()" style="margin: 0 auto; cursor:pointer;">Switch to AuraBar Mode</button>
-  </div>
-  
   <div class="demo-with-presets">
   <div class="taskbar-preview" id="interactive-preview">
     <!-- Desktop Environment Mock -->
@@ -912,20 +1054,22 @@
           <div class="start-col">
             <div class="col-title">All Applications</div>
             <div class="app-list">
-              <div class="list-item"><span class="list-icon">🅰️</span>AeroBar</div>
+              <div class="list-item"><span class="list-icon"><img src="aerobar-orb.png" style="width:14px;height:14px;object-fit:contain;border-radius:3px;"></span>AeroBar</div>
+              <div class="list-item"><span class="list-icon"><img src="finder.png" style="width:14px;height:14px;object-fit:contain;"></span>Finder</div>
               <div class="list-item"><span class="list-icon">🎨</span>Affinity</div>
               <div class="list-item"><span class="list-icon">📱</span>App Store</div>
               <div class="list-item"><span class="list-icon">📅</span>Calendar</div>
               <div class="list-item"><span class="list-icon">🌐</span>Safari</div>
               <div class="list-item"><span class="list-icon">📷</span>Photos</div>
               <div class="list-item"><span class="list-icon">🎵</span>Music</div>
+              <div class="list-item"><span class="list-icon"><img src="settings-icon.png" style="width:14px;height:14px;object-fit:contain;"></span>System Settings</div>
             </div>
           </div>
           <div class="start-col" style="flex: 1.2;">
             <div class="col-title">Pinned Shortcuts</div>
             <div class="pinned-grid-alt">
-              <div class="app-icon-alt"><span class="med-icon emoji-icon">🗂️</span><span>Finder</span></div>
-              <div class="app-icon-alt"><span class="med-icon emoji-icon">⚙️</span><span>System Settings</span></div>
+              <div class="app-icon-alt"><img src="finder.png" class="med-icon" style="object-fit:contain;"><span>Finder</span></div>
+              <div class="app-icon-alt"><img src="settings-icon.png" class="med-icon" style="object-fit:contain;"><span>System Settings</span></div>
             </div>
           </div>
           <div class="start-col">
@@ -958,7 +1102,7 @@
           <div class="footer-icons">
             <span class="f-icon" title="Power">⏻</span>
             <span class="f-icon" title="Appearance Lab" onclick="togglePopup('mock-appearance-lab')" style="color:#60a5fa;">🎨</span>
-            <span class="f-icon" title="Settings">⚙️</span>
+            <span class="f-icon" title="Settings"><img src="settings-icon.png" style="width:16px;height:16px;object-fit:contain;vertical-align:middle;"></span>
           </div>
         </div>
       </div>
@@ -1011,46 +1155,62 @@
         <!-- Cards injected by JS -->
       </div>
 
+      <!-- Spotlight Search Pill -->
+      <div class="spotlight-pill" id="spotlight-pill">
+        <img src="search-icon.png" class="spotlight-pill-icon" alt="">
+        <input type="text" class="spotlight-pill-input" placeholder="Search apps, files, and more…" id="spotlight-pill-input">
+        <span class="spotlight-pill-hint">esc</span>
+      </div>
+
       <!-- Taskbar -->
       <div class="taskbar-demo" id="mock-taskbar">
         <!-- AeroBar Orb -->
         <div class="demo-orb-alt" title="Start Menu" onclick="togglePopup('mock-start-menu')">
           <img src="aerobar-mark.svg" alt="AeroBar" style="width:14px;height:14px;">
         </div>
-        <div class="demo-spotlight" title="Spotlight Search" style="color:#10b981;">🔍</div>
+        <div class="demo-spotlight" title="Spotlight Search" onclick="toggleSpotlightPill(event)">
+          <img src="search-icon.png" alt="Search">
+        </div>
         <div class="demo-divider"></div>
         <div class="demo-pinned" id="demo-pinned-bar">
-          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'Finder', 'finder.png', ['docs', 'Recents'], ['previews/finder-window.png','previews/finder-window.png'])" onmouseleave="hidePinnedPreview()"><img src="finder.png" class="pin-img"></div>
-          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'System Settings', '⚙️', ['General', 'Privacy & Security'], ['https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=400&auto=format&fit=crop'])" onmouseleave="hidePinnedPreview()"><span class="pin-emoji">⚙️</span></div>
-          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'Chrome', 'chrome.png', ['AeroBar - Windows-style...', 'GitHub — Build...'], ['previews/chrome-window.png','previews/chrome-window.png'])" onmouseleave="hidePinnedPreview()"><img src="chrome.png" class="pin-img"></div>
+          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'Finder', 'finder.png', ['docs', 'Recents'], ['https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=400&auto=format&fit=crop','previews/finder-window.png'])" onmouseleave="hidePinnedPreview()"><img src="finder.png" class="pin-img"></div>
+          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'System Settings', 'settings-icon.png', ['General', 'Privacy & Security'], ['https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=400&auto=format&fit=crop'])" onmouseleave="hidePinnedPreview()"><img src="settings-icon.png" class="pin-img"></div>
+          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'Chrome', 'chrome.png', ['AeroBar - Windows-style...', 'GitHub — Build...'], ['previews/chrome-window.png','https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=400&auto=format&fit=crop'])" onmouseleave="hidePinnedPreview()"><img src="chrome.png" class="pin-img"></div>
         </div>
         <div class="demo-divider"></div>
         <div class="demo-tabs" id="demo-tabs-container">
-          <div class="demo-tab active" onclick="activateTab(this); openMaximizedWindow(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
+          <div class="demo-tab active" onclick="handleTabClick(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
             data-preview="previews/vscode-window.png">
             <img src="vscode.png" class="tab-img" data-icon="vscode.png">
             <span class="demo-tab-text">AeroBar — AeroBarPanel.swift</span>
           </div>
-          <div class="demo-tab" onclick="activateTab(this); openMaximizedWindow(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
+          <div class="demo-tab" onclick="handleTabClick(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
             data-preview="previews/chrome-window.png">
             <img src="chrome.png" class="tab-img" data-icon="chrome.png">
             <span class="demo-tab-text">AeroBar - Windows-style...</span>
           </div>
-          <div class="demo-tab" onclick="activateTab(this); openMaximizedWindow(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
-            data-preview="previews/finder-window.png"
-            data-icon-emoji="🗂️">
-            <span class="tab-emoji-icon">🗂️</span>
-            <span class="demo-tab-text">docs</span>
+          <div class="demo-tab" onclick="handleTabClick(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
+            data-preview="previews/finder-window.png">
+            <img src="finder.png" class="tab-img" data-icon="finder.png">
+            <span class="demo-tab-text">Finder</span>
           </div>
-          <div class="demo-tab" onclick="activateTab(this); openMaximizedWindow(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
+          <div class="demo-tab" onclick="handleTabClick(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
             data-preview="previews/safari-window.png">
             <img src="safari.png" class="tab-img" data-icon="safari.png">
             <span class="demo-tab-text">AeroBar - Windows-style Task...</span>
+          </div>
+          <div class="demo-tab" onclick="handleTabClick(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
+            data-preview="previews/finder-window.png">
+            <img src="finder.png" class="tab-img" data-icon="finder.png">
+            <span class="demo-tab-text">Downloads</span>
           </div>
         </div>
       </div>
     </div>
     <div class="taskbar-preview-glow" id="taskbar-glow"></div>
+    <p style="text-align:center; font-size:0.72rem; color:var(--text-dim); margin-top:10px; letter-spacing:0.01em;">
+      Illustration purposes only, actual UI may vary
+    </p>
   </div>
 
   <!-- Color Presets Column -->
@@ -1065,6 +1225,28 @@
       <button class="swatch" data-r="200" data-g="40"  data-b="100" style="background:linear-gradient(135deg,#ec4899,#be185d)" title="Rose"></button>
       <button class="swatch" data-r="180" data-g="10"  data-b="10"  style="background:linear-gradient(135deg,#ef4444,#991b1b)" title="Crimson"></button>
       <button class="swatch" data-r="40"  data-g="40"  data-b="50"  style="background:linear-gradient(135deg,#475569,#1e293b)" title="Midnight"></button>
+    </div>
+  </div>
+
+  <!-- Tint Intensity / Brightness Sliders -->
+  <div class="tint-sliders-row" id="tint-sliders">
+    <div class="tint-slider-group">
+      <span class="tint-slider-label">Tint Intensity</span>
+      <div class="tint-slider-vertical-wrap">
+        <input type="range" class="tint-slider-vertical" id="tint-intensity-slider"
+               min="0" max="100" value="40" step="1"
+               oninput="onTintIntensityChange(this.value)" title="Tint Intensity">
+      </div>
+      <span class="tint-slider-value" id="tint-intensity-value">40%</span>
+    </div>
+    <div class="tint-slider-group">
+      <span class="tint-slider-label">Tint Brightness</span>
+      <div class="tint-slider-vertical-wrap">
+        <input type="range" class="tint-slider-vertical" id="tint-brightness-slider"
+               min="0" max="100" value="60" step="1"
+               oninput="onTintBrightnessChange(this.value)" title="Tint Brightness">
+      </div>
+      <span class="tint-slider-value" id="tint-brightness-value">60%</span>
     </div>
   </div>
   </div>
@@ -1150,11 +1332,6 @@
       <div class="feature-title">Appearance Lab</div>
       <div class="feature-desc">Tune everything: glass blend style, liquid tint hue (full color picker), surface tint density, specular bevel, icon-only mode, search field visibility, and display target. All settings persist across reboots.</div>
     </div>
-    <div class="feature-card reveal">
-      <div class="feature-icon">⚡</div>
-      <div class="feature-title">0% CPU at Idle</div>
-      <div class="feature-desc">Heavily optimized with Swift 6 Strict Concurrency. When not being interacted with, AeroBar idles at 0.0% CPU - zero battery drain, zero background churn.</div>
-    </div>
   </div>
 </section>
 
@@ -1209,7 +1386,6 @@
       <li>Pinned App Launcher</li>
       <li>Spotlight Search integration</li>
       <li>Appearance Lab - full customization</li>
-      <li>0% CPU idle - zero battery impact</li>
       <li>macOS Tahoe</li>
     </ul>
     <a href="https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg"
@@ -1225,7 +1401,7 @@
 <!-- Footer -->
 <footer>
   <div class="footer-logo">
-    <div class="orb-icon" style="width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#60a5fa,#1d4ed8 60%,#1e3a8a);box-shadow:0 0 12px rgba(59,130,246,0.4)"></div>
+    <div class="orb-icon" style="width:26px;height:26px;border-radius:50%;background:url('aerobar-orb.png') center/contain no-repeat;box-shadow:0 0 12px rgba(59,130,246,0.4)"></div>
     <span style="font-weight:700;font-size:1rem;">AeroBar</span>
   </div>
   <div class="footer-links">
@@ -1244,32 +1420,32 @@
   // ── Wallpaper cycling with color adaptation ──────────────────────────────
   const wallpapers = [
     {
-      url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop',
+      url: 'https://images.unsplash.com/photo-1687042277586-971369d3d241?q=80&w=2940&auto=format&fit=crop',
       color: [59, 80, 180],   // Blue-purple
       name: 'Cosmic Purple'
     },
     {
-      url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2564&auto=format&fit=crop',
+      url: 'https://images.unsplash.com/photo-1642510665754-d0c92c336ad8?q=80&w=2960&auto=format&fit=crop',
       color: [210, 100, 40],  // Warm orange sunset
       name: 'Golden Sunset'
     },
     {
-      url: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=2564&auto=format&fit=crop',
+      url: 'https://images.unsplash.com/photo-1689028293810-731ea4d6df3e?q=80&w=2940&auto=format&fit=crop',
       color: [20, 120, 140],  // Teal ocean
       name: 'Ocean Teal'
     },
     {
-      url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop',
+      url: 'https://images.unsplash.com/photo-1740568439570-4be82141ebbd?q=80&w=3132&auto=format&fit=crop',
       color: [30, 100, 50],   // Deep forest green
       name: 'Forest Green'
     },
     {
-      url: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2560&auto=format&fit=crop',
+      url: 'https://images.unsplash.com/photo-1754994854307-e47e45ecd28d?q=80&w=2940&auto=format&fit=crop',
       color: [160, 40, 200],  // Deep violet night
       name: 'Northern Lights'
     },
     {
-      url: 'https://images.unsplash.com/photo-1557682250-33bd709cbe85?q=80&w=2560&auto=format&fit=crop',
+      url: 'https://images.unsplash.com/photo-1689028293810-731ea4d6df3e?q=80&w=2940&auto=format&fit=crop',
       color: [200, 50, 100],  // Rose pink
       name: 'Rosy Dawn'
     }
@@ -1303,36 +1479,59 @@
     }
   }
 
+  // ── Tint Intensity / Brightness state ─────────────────────────────────────
+  // intensity => alpha of the tint overlay (0-1), brightness => multiplier on r/g/b
+  let currentTintRGB = [59, 80, 180];
+  let tintIntensity = 0.40; // matches default AeroBar alpha (0.4)
+  let tintBrightness = 0.60; // matches default r*0.6 multiplier
+
   function applyWallpaperColor([r, g, b]) {
-    const taskbar = document.getElementById('mock-taskbar');
-    const glow   = document.getElementById('taskbar-glow');
+    currentTintRGB = [r, g, b];
+    applyTintToTaskbar();
 
-    if (!isAuraBar) {
-      // AeroBar: strong tint of wallpaper color, translucent for glass blur
-      taskbar.style.background = `rgba(${Math.round(r*0.6)}, ${Math.round(g*0.6)}, ${Math.round(b*0.6)}, 0.4)`;
-      taskbar.style.borderTopColor = `rgba(${r}, ${g}, ${b}, 0.5)`;
-      glow.style.background = `rgb(${r},${g},${b})`;
-      glow.style.opacity = '0.3';
-    } else {
-      // AuraBar: strong tint pill, translucent for glass blur
-      taskbar.style.background = `rgba(${Math.round(r*0.5)}, ${Math.round(g*0.5)}, ${Math.round(b*0.5)}, 0.3)`;
-      taskbar.style.borderColor = `rgba(${r}, ${g}, ${b}, 0.55)`;
-    }
-
-    // Colour-tint the top bar too (AuraBar)
-    const topbar = document.getElementById('mock-top-bar');
-    topbar.style.background = `rgba(${Math.round(r*0.5)}, ${Math.round(g*0.5)}, ${Math.round(b*0.5)}, 0.35)`;
-
-    // Glow adapts
+    const glow = document.getElementById('taskbar-glow');
     glow.style.background = `rgb(${r},${g},${b})`;
+    glow.style.opacity = isAuraBar ? '0' : '0.3';
   }
 
-  // Override updateTint to also remember manual tint
-  function updateTint(color) {
+  // Renders currentTintRGB onto BOTH the bottom taskbar (AeroBar) and top bar (AuraBar)
+  // using the current intensity/brightness sliders, so either mode always reflects them.
+  function applyTintToTaskbar() {
+    const [r, g, b] = currentTintRGB;
     const taskbar = document.getElementById('mock-taskbar');
+    const topbar = document.getElementById('mock-top-bar');
+    const br = tintBrightness;
+    const a  = tintIntensity;
+    const tr = Math.round(r*br), tg = Math.round(g*br), tb = Math.round(b*br);
+
+    taskbar.style.background = `rgba(${tr}, ${tg}, ${tb}, ${a})`;
+    topbar.style.background = `rgba(${tr}, ${tg}, ${tb}, ${a})`;
+
+    if (!isAuraBar) {
+      taskbar.style.borderTopColor = `rgba(${r}, ${g}, ${b}, 0.5)`;
+    } else {
+      taskbar.style.borderColor = `rgba(${r}, ${g}, ${b}, 0.55)`;
+      topbar.style.borderColor = `rgba(${r}, ${g}, ${b}, 0.55)`;
+    }
+  }
+
+  // Override updateTint to also remember manual tint (from the color picker)
+  function updateTint(color) {
     let r = parseInt(color.slice(1,3),16), g = parseInt(color.slice(3,5),16), b = parseInt(color.slice(5,7),16);
-    if (!isAuraBar) taskbar.style.background = `rgba(${Math.round(r*0.6)},${Math.round(g*0.6)},${Math.round(b*0.6)},0.4)`;
-    else taskbar.style.background = `rgba(${Math.round(r*0.5)},${Math.round(g*0.5)},${Math.round(b*0.5)},0.3)`;
+    currentTintRGB = [r, g, b];
+    applyTintToTaskbar();
+  }
+
+  function onTintIntensityChange(value) {
+    tintIntensity = value / 100;
+    document.getElementById('tint-intensity-value').textContent = `${value}%`;
+    applyTintToTaskbar();
+  }
+
+  function onTintBrightnessChange(value) {
+    tintBrightness = value / 100;
+    document.getElementById('tint-brightness-value').textContent = `${value}%`;
+    applyTintToTaskbar();
   }
 
   // ── Color Preset Swatches ─────────────────────────────────────────────────
@@ -1348,11 +1547,6 @@
 
       // Apply to taskbar via shared function
       applyWallpaperColor([r, g, b]);
-
-      // Also update glow color
-      const glow = document.getElementById('taskbar-glow');
-      glow.style.background = `rgb(${r},${g},${b})`;
-      glow.style.opacity = isAuraBar ? '0' : '0.3';
     });
   });
 
@@ -1447,33 +1641,25 @@
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // Interactive Mock JS
-  let isAuraBar = false;
+  // Interactive Mock JS — AuraBar mode is enabled by default (no toggle)
+  let isAuraBar = true;
 
-  function toggleThemeMode() {
-    isAuraBar = !isAuraBar;
+  function initThemeMode() {
     const taskbar = document.getElementById('mock-taskbar');
     const topbar = document.getElementById('mock-top-bar');
     const desktopBg = document.getElementById('desktop-bg');
-    const btn = document.getElementById('btn-toggle-theme');
-    
-    if (isAuraBar) {
-      taskbar.classList.add('theme-aurabar');
-      topbar.classList.add('show');
-      desktopBg.classList.add('mode-aurabar');
-      btn.textContent = 'Switch to AeroBar Mode';
-      document.getElementById('taskbar-glow').style.opacity = '0';
-    } else {
-      taskbar.classList.remove('theme-aurabar');
-      topbar.classList.remove('show');
-      desktopBg.classList.remove('mode-aurabar');
-      btn.textContent = 'Switch to AuraBar Mode';
-      document.getElementById('taskbar-glow').style.opacity = '0.25';
-      // Re-apply custom tint if picker was used
-      const picker = document.getElementById('tint-picker');
-      if (picker) updateTint(picker.value);
-    }
+
+    taskbar.classList.add('theme-aurabar');
+    topbar.classList.add('show');
+    desktopBg.classList.add('mode-aurabar');
+    document.getElementById('taskbar-glow').style.opacity = '0';
+
+    // Re-apply current tint/intensity/brightness so AuraBar mode
+    // immediately reflects whatever the sliders are set to, without
+    // requiring the user to touch a slider again.
+    applyTintToTaskbar();
   }
+  initThemeMode();
 
   function togglePopup(id) {
     document.querySelectorAll('.mock-popup').forEach(p => {
@@ -1481,11 +1667,58 @@
     });
     const el = document.getElementById(id);
     if(el) el.classList.toggle('open');
+    // Close spotlight pill if any other popup opens
+    document.getElementById('spotlight-pill')?.classList.remove('show');
   }
+
+  function toggleSpotlightPill(e) {
+    if (e) e.stopPropagation();
+    // Close start menu / other popups first
+    document.querySelectorAll('.mock-popup').forEach(p => p.classList.remove('open'));
+    const pill = document.getElementById('spotlight-pill');
+    const willShow = !pill.classList.contains('show');
+    pill.classList.toggle('show', willShow);
+    if (willShow) {
+      setTimeout(() => document.getElementById('spotlight-pill-input')?.focus(), 60);
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    const pill = document.getElementById('spotlight-pill');
+    if (!pill) return;
+    if (pill.classList.contains('show') && !pill.contains(e.target) && !e.target.closest('.demo-spotlight')) {
+      pill.classList.remove('show');
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.getElementById('spotlight-pill')?.classList.remove('show');
+    }
+  });
 
   function activateTab(el) {
     document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
+  }
+
+  // Tapping a tab: opens the window on first click, and toggles minimize/restore
+  // on subsequent clicks of the same tab while its window is maximized — mirrors
+  // real macOS taskbar behavior.
+  window.currentMaximizedTab = null;
+  function handleTabClick(el) {
+    const overlay = document.getElementById('window-maximized-overlay');
+    const isShowing = overlay.classList.contains('show');
+
+    if (isShowing && window.currentMaximizedTab === el) {
+      // Same tab tapped again while its window is open → minimize
+      closeMaximizedWindow();
+      return;
+    }
+
+    activateTab(el);
+    openMaximizedWindow(el);
+    window.currentMaximizedTab = el;
   }
 
   let previewTimeout;
@@ -1597,6 +1830,7 @@
 
   function closeMaximizedWindow() {
     document.getElementById('window-maximized-overlay').classList.remove('show');
+    window.currentMaximizedTab = null;
   }
 
   document.addEventListener('keydown', (e) => {
