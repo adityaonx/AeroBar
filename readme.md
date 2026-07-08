@@ -7,7 +7,7 @@
 Aero glass look, Start Menu, live window tabs, pinned app launcher — all sitting at the bottom of your screen, exactly where you expect it.
 
 [![Download for Mac](https://img.shields.io/badge/⬇_Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg)
-[![Website](https://img.shields.io/badge/🌐_Visit_Website-1a1a1a?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
+[![Website](https://img.shields.io/badge/%F0%9F%8C%90_Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
 
