@@ -98,11 +98,11 @@
 
     /* ── HERO ── */
     #hero {
-      min-height: 100vh;
+      min-height: auto;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       text-align: center;
-      padding: 120px clamp(1.5rem, 5vw, 4rem) 80px;
+      padding: 130px clamp(1.5rem, 5vw, 4rem) 30px;
     }
     .badge {
       display: inline-flex; align-items: center; gap: 6px;
@@ -648,7 +648,7 @@
     }
 /* ── SCREENSHOTS SECTION ── */
     #screenshots {
-      padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 5vw, 4rem);
+      padding: clamp(2.5rem, 4vw, 4.5rem) clamp(1.5rem, 5vw, 4rem);
     }
     .section-label {
       font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
@@ -690,7 +690,7 @@
 
     /* ── FEATURES ── */
     #features {
-      padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 5vw, 4rem);
+      padding: clamp(2.5rem, 4vw, 4.5rem) clamp(1.5rem, 5vw, 4rem);
       background: linear-gradient(180deg, transparent, rgba(59,130,246,0.03), transparent);
     }
     .features-grid {
@@ -740,7 +740,7 @@
 
     /* ── HOW TO USE ── */
     #install {
-      padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 5vw, 4rem);
+      padding: clamp(2.5rem, 4vw, 4.5rem) clamp(1.5rem, 5vw, 4rem);
     }
     .install-steps {
       max-width: 700px; margin: 0 auto;
@@ -768,9 +768,19 @@
       padding: 2px 8px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85em;
     }
 
+    .notarization-notice {
+      max-width: 700px; margin: 0 auto 2rem;
+      background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 16px; padding: 1.25rem 1.5rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .notarization-notice-icon { font-size: 1.5rem; line-height: 1; }
+    .notarization-notice-content h4 { font-size: 0.95rem; font-weight: 700; color: var(--blue-light); margin-bottom: 0.25rem; }
+    .notarization-notice-content p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
     /* ── PRICING TEASER ── */
     #pricing {
-      padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 5vw, 4rem);
+      padding: clamp(2.5rem, 4vw, 4.5rem) clamp(1.5rem, 5vw, 4rem);
     }
     .pricing-card {
       max-width: 520px; margin: 0 auto;
@@ -796,6 +806,118 @@
       font-size: 0.82rem; color: var(--text-muted); text-align: left;
     }
     .pricing-upcoming strong { color: var(--text); }
+
+    /* ── RELEASES SECTION ── */
+    #releases {
+      padding: clamp(2.5rem, 4vw, 4.5rem) clamp(1.5rem, 5vw, 4rem);
+    }
+    .releases-timeline {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .release-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: all 0.25s;
+    }
+    .release-card.featured-release {
+      border-color: rgba(59,130,246,0.35);
+      background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(6,11,20,0.4));
+      box-shadow: 0 0 25px rgba(59,130,246,0.1);
+    }
+    .release-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+    .release-title-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .release-version {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .release-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .release-badge.stable {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+    }
+    .release-badge.beta {
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: var(--blue-light);
+    }
+    .release-date {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+    .release-body {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .release-body h4 {
+      color: var(--text);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .release-body ul {
+      margin-left: 1.25rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .release-body li {
+      line-height: 1.5;
+    }
+
+    /* ── DOWNLOAD CHANNELS ── */
+    .channel-links-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .channel-links-row a {
+      color: var(--blue-light);
+      text-decoration: none;
+      transition: color 0.2s, text-shadow 0.2s;
+      font-weight: 500;
+    }
+    .channel-links-row a:hover {
+      color: var(--text);
+      text-shadow: 0 0 8px rgba(96, 165, 250, 0.4);
+    }
+    .channel-links-row span.separator {
+      color: var(--border-bright);
+    }
 
     /* ── FOOTER ── */
     footer {
@@ -849,14 +971,17 @@
       align-items: center;
     }
     .swatch {
+      display: inline-block;
+      -webkit-appearance: none;
+      appearance: none;
+      background-color: transparent;
+      padding: 0;
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      border: 2.5px solid transparent;
-      outline: 2.5px solid transparent;
-      outline-offset: 2px;
+      border: none;
       cursor: pointer;
-      transition: transform 0.18s ease, outline-color 0.18s ease, border-color 0.18s ease;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
       box-shadow: 0 2px 8px rgba(0,0,0,0.4);
       flex-shrink: 0;
     }
@@ -864,8 +989,7 @@
       transform: scale(1.18);
     }
     .swatch.active {
-      outline-color: rgba(255,255,255,0.85);
-      border-color: rgba(0,0,0,0.3);
+      box-shadow: 0 0 0 2px var(--bg), 0 0 0 4.5px rgba(255, 255, 255, 0.9), 0 2px 8px rgba(0,0,0,0.4) !important;
       transform: scale(1.12);
     }
 
@@ -963,17 +1087,260 @@
       border: none;
     }
 
+    /* ── INTERACTION HINT HAND ── */
+    .interaction-hint-hand {
+      position: absolute;
+      left: 65%;
+      top: 55%;
+      z-index: 50;
+      pointer-events: none;
+      color: rgba(255, 255, 255, 0.95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+      animation: handTapPulse 2.4s infinite ease-in-out;
+      opacity: 1;
+      transition: opacity 0.4s ease;
+    }
+    .interaction-hint-hand.hidden {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+    .hand-icon {
+      width: 96px;
+      height: 96px;
+      transform: rotate(-15deg);
+    }
+    .hint-pulse-circle {
+      position: absolute;
+      top: 0;
+      left: 24px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(96, 165, 250, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      transform: translate(-50%, -50%) scale(1);
+      animation: touchPulse 2.4s infinite ease-out;
+      pointer-events: none;
+      z-index: -1;
+    }
+    @keyframes handTapPulse {
+      0%, 100% {
+        transform: translate(0, 0) scale(1) rotate(-15deg);
+      }
+      40% {
+        transform: translate(-4px, -6px) scale(1.05) rotate(-15deg);
+      }
+      50% {
+        transform: translate(-4px, -6px) scale(0.9) rotate(-18deg);
+      }
+      60% {
+        transform: translate(-4px, -6px) scale(1.05) rotate(-15deg);
+      }
+    }
+    @keyframes touchPulse {
+      0%, 40%, 100% {
+        transform: translate(-50%, -50%) scale(0.1);
+        opacity: 0;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+      80% {
+        transform: translate(-50%, -50%) scale(2.2);
+        opacity: 0;
+      }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .demo-tabs { display: none; }
-      .demo-with-presets { flex-direction: column; }
-      .color-presets-row { flex-direction: row; }
-      .presets-swatches { flex-direction: row; flex-wrap: wrap; }
-      .presets-label { writing-mode: horizontal-tb; transform: none; }
-      .tint-sliders-row { flex-direction: row; }
-      .tint-slider-vertical-wrap { height: 90px; }
-      .tint-slider-vertical { width: 90px; }
+      #hero {
+        justify-content: flex-start !important;
+        padding-top: 100px !important;
+        padding-bottom: 15px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        min-height: auto !important;
+      }
+      .hero-compat {
+        margin-bottom: 1rem !important;
+      }
+      section {
+        padding: 2.5rem clamp(1rem, 4vw, 2rem) !important;
+      }
+      nav {
+        flex-wrap: wrap !important;
+        height: auto !important;
+        padding: 12px 15px !important;
+        gap: 12px !important;
+      }
+      .nav-links {
+        display: flex !important;
+        order: 3 !important;
+        width: 100% !important;
+        justify-content: flex-start !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        white-space: nowrap !important;
+        padding-bottom: 4px !important;
+        gap: 1.25rem !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+      .nav-links::-webkit-scrollbar {
+        display: none !important;
+      }
+      .nav-links a {
+        font-size: 0.8rem !important;
+        flex-shrink: 0 !important;
+      }
+      .nav-cta {
+        order: 2 !important;
+        padding: 0.35rem 0.8rem !important;
+        font-size: 0.8rem !important;
+      }
+      .demo-with-presets { flex-direction: column !important; gap: 15px !important; width: 100% !important; max-width: 100% !important; }
+      #hero .badge { order: 1 !important; }
+      #hero h1 { order: 2 !important; margin-bottom: 25px !important; }
+      #hero .demo-with-presets { order: 3 !important; }
+      #hero .hero-sub { order: 4 !important; }
+      #hero .hero-actions { order: 5 !important; }
+      #hero .channel-links-row { order: 6 !important; }
+      #hero .hero-stats { order: 7 !important; }
+      #hero .hero-compat { order: 8 !important; }
+      
+      .taskbar-preview {
+        width: 384px !important;
+        height: 254px !important;
+        margin: 0 auto !important;
+        position: relative !important;
+        overflow: hidden !important;
+        border-radius: 10px !important;
+      }
+      .desktop-mock {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 800px !important;
+        height: 530px !important;
+        min-width: 800px !important;
+        max-width: 800px !important;
+        min-height: 530px !important;
+        max-height: 530px !important;
+        transform: scale(0.48) !important;
+        transform-origin: top left !important;
+        aspect-ratio: auto !important;
+      }
+      @media (max-width: 440px) {
+        .taskbar-preview {
+          width: 344px !important;
+          height: 228px !important;
+          border-radius: 9px !important;
+        }
+        .desktop-mock {
+          transform: scale(0.43) !important;
+        }
+      }
+      @media (max-width: 380px) {
+        .taskbar-preview {
+          width: 304px !important;
+          height: 201px !important;
+          border-radius: 8px !important;
+        }
+        .desktop-mock {
+          transform: scale(0.38) !important;
+        }
+      }
+      
+      .color-presets-row {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 15px !important;
+        width: 100% !important;
+        margin: 0 !important;
+      }
+      .presets-swatches {
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        width: 100% !important;
+      }
+      .presets-label {
+        writing-mode: horizontal-tb !important;
+        transform: none !important;
+        margin-bottom: 0 !important;
+      }
+      
+      .tint-sliders-row {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 15px !important;
+        padding: 15px !important;
+        width: 100% !important;
+        margin: 0 !important;
+      }
+      .tint-slider-group {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 12px !important;
+      }
+      .tint-slider-label {
+        writing-mode: horizontal-tb !important;
+        transform: none !important;
+        font-size: 0.72rem !important;
+        width: 100px !important;
+        text-align: left !important;
+        flex-shrink: 0 !important;
+      }
+      .tint-slider-vertical-wrap {
+        flex-grow: 1 !important;
+        width: auto !important;
+        height: auto !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .tint-slider-vertical {
+        transform: none !important;
+        width: 100% !important;
+        height: 6px !important;
+        margin: 0 !important;
+      }
+      .tint-slider-value {
+        width: 40px !important;
+        text-align: right !important;
+        flex-shrink: 0 !important;
+      }
+      
+      .window-preview {
+        width: 260px !important;
+        bottom: 50px !important;
+        padding: 8px !important;
+      }
+      .preview-header-bar {
+        margin-bottom: 8px !important;
+      }
+      .preview-title {
+        font-size: 0.8rem !important;
+      }
+      .preview-content {
+        height: 130px !important;
+      }
+      .screenshots-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .features-grid {
+        grid-template-columns: 1fr !important;
+      }
     }
   </style>
 </head>
@@ -995,6 +1362,7 @@
   <div class="nav-links">
     <a href="#screenshots">Screenshots</a>
     <a href="#features">Features</a>
+    <a href="#releases">Releases</a>
     <a href="#install">Install</a>
     <a href="#pricing">Pricing</a>
     <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener">GitHub</a>
@@ -1008,7 +1376,7 @@
 <section id="hero">
   <div class="badge">
     <span class="badge-dot"></span>
-    Experimental Alpha · Free for a limited time
+    🔥 New Release: v8.1-beta is now live!
   </div>
   <h1>The <span class="gradient">Windows Taskbar</span><br/>you missed on Mac</h1>
   <p class="hero-sub">
@@ -1024,6 +1392,16 @@
       ★ View on GitHub
     </a>
   </div>
+
+  <div class="channel-links-row">
+    <span>Channels:</span>
+    <a href="https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg" title="Download latest stable v8.1-beta release">Stable (v8.1-beta)</a>
+    <span class="separator">•</span>
+    <a href="https://github.com/adityaonx/AeroBar/releases" target="_blank" rel="noopener" title="View experimental pre-releases">Beta Build</a>
+    <span class="separator">•</span>
+    <a href="https://github.com/adityaonx/AeroBar/releases" target="_blank" rel="noopener" title="View dev and nightly test builds">Test / Nightly</a>
+  </div>
+
   <div class="hero-stats">
     <span title="Total downloads across all releases">📥 <b id="stat-downloads">--</b> Downloads</span>
     <span id="visit-container" style="display: none;" title="Total page visits">👀 <b id="stat-visits">--</b> Visits</span>
@@ -1035,6 +1413,13 @@
   <div class="taskbar-preview" id="interactive-preview">
     <!-- Desktop Environment Mock -->
     <div class="desktop-mock" id="desktop-bg" onclick="cycleWallpaper(event)" title="Click to change wallpaper">
+      <!-- Pointing hand gesture hint -->
+      <div class="interaction-hint-hand" id="interaction-hint-hand">
+        <div class="hint-pulse-circle"></div>
+        <svg viewBox="0 0 24 24" class="hand-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 11V4a2 2 0 1 0-4 0v7M16 11V6a2 2 0 1 0-4 0v5M20 11V8a2 2 0 1 0-4 0v3M8 11V9a2 2 0 1 0-4 0v5c0 4.418 3.582 8 8 8h3c3.866 0 7-3.134 7-7v-3a2 2 0 1 0-4 0v3"/>
+        </svg>
+      </div>
       <div class="wallpaper-hint" id="wallpaper-hint">🖱 Click wallpaper to change colors</div>
       
       <!-- Mock Top Bar (Notch) for AuraBar -->
@@ -1217,14 +1602,14 @@
   <div class="color-presets-row" id="color-presets">
     <span class="presets-label">Tint Color</span>
     <div class="presets-swatches">
-      <button class="swatch active" data-r="59"  data-g="80"  data-b="180" style="background:linear-gradient(135deg,#4f6eb4,#1d4ed8)" title="Aero Blue"></button>
-      <button class="swatch" data-r="120" data-g="40"  data-b="200" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)" title="Violet"></button>
-      <button class="swatch" data-r="16"  data-g="120" data-b="140" style="background:linear-gradient(135deg,#06b6d4,#0e7490)" title="Teal"></button>
-      <button class="swatch" data-r="20"  data-g="140" data-b="60"  style="background:linear-gradient(135deg,#22c55e,#15803d)" title="Forest"></button>
-      <button class="swatch" data-r="210" data-g="95"  data-b="35"  style="background:linear-gradient(135deg,#f97316,#c2410c)" title="Ember"></button>
-      <button class="swatch" data-r="200" data-g="40"  data-b="100" style="background:linear-gradient(135deg,#ec4899,#be185d)" title="Rose"></button>
-      <button class="swatch" data-r="180" data-g="10"  data-b="10"  style="background:linear-gradient(135deg,#ef4444,#991b1b)" title="Crimson"></button>
-      <button class="swatch" data-r="40"  data-g="40"  data-b="50"  style="background:linear-gradient(135deg,#475569,#1e293b)" title="Midnight"></button>
+      <span class="swatch active" data-r="59"  data-g="80"  data-b="180" style="background:linear-gradient(135deg,#4f6eb4,#1d4ed8)" title="Aero Blue"></span>
+      <span class="swatch" data-r="120" data-g="40"  data-b="200" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)" title="Violet"></span>
+      <span class="swatch" data-r="16"  data-g="120" data-b="140" style="background:linear-gradient(135deg,#06b6d4,#0e7490)" title="Teal"></span>
+      <span class="swatch" data-r="20"  data-g="140" data-b="60"  style="background:linear-gradient(135deg,#22c55e,#15803d)" title="Forest"></span>
+      <span class="swatch" data-r="210" data-g="95"  data-b="35"  style="background:linear-gradient(135deg,#f97316,#c2410c)" title="Ember"></span>
+      <span class="swatch" data-r="200" data-g="40"  data-b="100" style="background:linear-gradient(135deg,#ec4899,#be185d)" title="Rose"></span>
+      <span class="swatch" data-r="180" data-g="10"  data-b="10"  style="background:linear-gradient(135deg,#ef4444,#991b1b)" title="Crimson"></span>
+      <span class="swatch" data-r="40"  data-g="40"  data-b="50"  style="background:linear-gradient(135deg,#475569,#1e293b)" title="Midnight"></span>
     </div>
   </div>
 
@@ -1234,19 +1619,19 @@
       <span class="tint-slider-label">Tint Intensity</span>
       <div class="tint-slider-vertical-wrap">
         <input type="range" class="tint-slider-vertical" id="tint-intensity-slider"
-               min="0" max="100" value="40" step="1"
+               min="0" max="100" value="80" step="1"
                oninput="onTintIntensityChange(this.value)" title="Tint Intensity">
       </div>
-      <span class="tint-slider-value" id="tint-intensity-value">40%</span>
+      <span class="tint-slider-value" id="tint-intensity-value">80%</span>
     </div>
     <div class="tint-slider-group">
       <span class="tint-slider-label">Tint Brightness</span>
       <div class="tint-slider-vertical-wrap">
         <input type="range" class="tint-slider-vertical" id="tint-brightness-slider"
-               min="0" max="100" value="60" step="1"
+               min="0" max="100" value="80" step="1"
                oninput="onTintBrightnessChange(this.value)" title="Tint Brightness">
       </div>
-      <span class="tint-slider-value" id="tint-brightness-value">60%</span>
+      <span class="tint-slider-value" id="tint-brightness-value">80%</span>
     </div>
   </div>
   </div>
@@ -1335,11 +1720,72 @@
   </div>
 </section>
 
+<!-- Releases -->
+<section id="releases">
+  <p class="section-label reveal">History & Updates</p>
+  <h2 class="section-title reveal">Releases</h2>
+  <p class="section-sub reveal">Track active development, features, and fixes added to AeroBar.</p>
+  
+  <div class="releases-timeline">
+    <!-- Featured Latest Release -->
+    <div class="release-card featured-release reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v8.1-beta</span>
+          <span class="release-badge stable">Latest Release</span>
+        </div>
+        <span class="release-date">Released July 2026</span>
+      </div>
+      <div class="release-body">
+        <p><strong>Note for old v8.0/older users:</strong> This update is marked as a full release to trigger updates automatically via the legacy check-for-updates system.</p>
+        
+        <h4>🛠️ Key Fixes & Features</h4>
+        <ul>
+          <li><strong>Cmd+Tab Gesture Switch Fix</strong>: Resolved issues switching back to the last active window via 3-4 finger swiping gestures.</li>
+          <li><strong>Liquid Design macOS Aesthetics</strong>: Added modern glassmorphism features including specular bevel highlights, light/dark mode-split accent settings, and customizable selection glow intensity.</li>
+          <li><strong>Zero-Stutter Performance</strong>: Built compliance with Swift 6 Strict Concurrency and moved slow accessibility IPC operations off the main thread.</li>
+          <li><strong>Memory Leak Mitigations</strong>: Fixed memory leak hazards during webpage refreshes and focus sleep updates.</li>
+          <li><strong>Flicker & Resize Fixes</strong>: Resolved window resize clipping and Space transitions/fullscreen flickers.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Previous Release -->
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v8.0</span>
+          <span class="release-badge stable">Stable</span>
+        </div>
+        <span class="release-date">Released June 2026</span>
+      </div>
+      <div class="release-body">
+        <h4>📦 Baseline Features</h4>
+        <ul>
+          <li><strong>Liquid Glass Taskbar</strong>: Blurs and tints desktop wallpapers dynamically.</li>
+          <li><strong>Start Orb & Menu</strong>: Interactive start launcher with application browser and Spotlight search integration.</li>
+          <li><strong>Live Window Tab Strip</strong>: One-click app switching showing window titles and app icons natively.</li>
+          <li><strong>Multi-Display Integration</strong>: Independent taskbar layout across all secondary monitors.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Install -->
 <section id="install">
   <p class="section-label reveal">Get started in minutes</p>
   <h2 class="section-title reveal">Installation</h2>
   <p class="section-sub reveal">Three steps and the taskbar is live at the bottom of your screen.</p>
+  
+  <div class="notarization-notice reveal">
+    <div class="notarization-notice-icon">🛡️</div>
+    <div class="notarization-notice-content">
+      <h4>Why these extra steps are needed</h4>
+      <p>Apple charges developers a $100/year subscription fee to sign and notarize Mac applications. To keep AeroBar entirely free during our experimental alpha, we self-sign the app rather than paying this fee. As a result, macOS Gatekeeper flags it by default, and window tracking requires Accessibility access to interact with your workspace. Both permissions are completely safe and take less than a minute to authorize below.</p>
+    </div>
+  </div>
+
   <div class="install-steps">
     <div class="step reveal">
       <div class="step-num">1</div>
@@ -1482,8 +1928,8 @@
   // ── Tint Intensity / Brightness state ─────────────────────────────────────
   // intensity => alpha of the tint overlay (0-1), brightness => multiplier on r/g/b
   let currentTintRGB = [59, 80, 180];
-  let tintIntensity = 0.40; // matches default AeroBar alpha (0.4)
-  let tintBrightness = 0.60; // matches default r*0.6 multiplier
+  let tintIntensity = 0.80; // default alpha (0.8)
+  let tintBrightness = 0.80; // default multiplier (0.8)
 
   function applyWallpaperColor([r, g, b]) {
     currentTintRGB = [r, g, b];
@@ -1768,10 +2214,12 @@
     const tabRect = tabEl.getBoundingClientRect();
     const containerRect = document.getElementById('desktop-bg').getBoundingClientRect();
     
-    let leftPos = (tabRect.left - containerRect.left) + (tabRect.width / 2) - 180; // half of 360px
+    const previewWidth = preview.offsetWidth || 360;
+    const halfWidth = previewWidth / 2;
+    let leftPos = (tabRect.left - containerRect.left) + (tabRect.width / 2) - halfWidth;
     
-    if (leftPos < 10) leftPos = 10;
-    if (leftPos > containerRect.width - 370) leftPos = containerRect.width - 370;
+    if (leftPos < 5) leftPos = 5;
+    if (leftPos > containerRect.width - previewWidth - 10) leftPos = containerRect.width - previewWidth - 10;
     
     preview.style.left = leftPos + 'px';
     preview.classList.add('show');
@@ -1891,6 +2339,20 @@
     .catch(() => {
       document.getElementById('stat-downloads').parentElement.style.display = 'none';
     });
+
+  // ── Interaction Hand Hint Hider ──
+  let handHintHidden = false;
+  function hideHandHint() {
+    if (!handHintHidden) {
+      const hand = document.getElementById('interaction-hint-hand');
+      if (hand) hand.classList.add('hidden');
+      handHintHidden = true;
+    }
+  }
+  document.getElementById('interactive-preview').addEventListener('mouseenter', hideHandHint, { once: true });
+  document.getElementById('interactive-preview').addEventListener('click', hideHandHint, { once: true });
+  document.getElementById('color-presets').addEventListener('click', hideHandHint, { once: true });
+  document.getElementById('tint-sliders').addEventListener('click', hideHandHint, { once: true });
 </script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 
 # The **Windows Taskbar** you missed on Mac
 
-Aero glass look, Start Menu, live window tabs, pinned app launcher, all sitting at the bottom of your screen, exactly where you expect it.
+Aero glass look, Start Menu, live window tabs, pinned app launcher — all sitting at the bottom of your screen, exactly where you expect it.
 
 [![Download for Mac](https://img.shields.io/badge/⬇_Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg)
 [![Website](https://img.shields.io/badge/%F0%9F%8C%90_Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
@@ -66,12 +66,15 @@ Supported: macOS Sequoia/Tahoe
 - [Known Limitations](#known-limitations)
 - [Status](#status)
 - [Community & Feedback](#community--feedback)
-- [Architecture](#architecture)
 - [Built With](#built-with)
 
 ---
 
 ## Installation
+
+> [!NOTE]
+> **Why are these extra setup steps required?**
+> Apple charges developers a $100/year subscription fee to sign and notarize macOS applications. To keep AeroBar completely free during our experimental alpha, we distribute it as a self-signed binary rather than paying Apple's fee. Because of this, macOS Gatekeeper flags it by default, and window tracking requires Accessibility access to interact with your workspace. Both permissions are completely safe and take less than a minute to authorize.
 
 ### 1. Download AeroBar.dmg
 
@@ -160,8 +163,17 @@ It is not a theme. It is not a wrapper. It talks directly to macOS accessibility
 
 ## Features
 
-### Liquid Glass Taskbar
-The taskbar itself is a persistent, borderless panel that sits at the very bottom of your screen at all times across Spaces, full-screen transitions, and display changes. It uses Apple's native vibrancy / blur materials to sample your wallpaper and produce a genuine translucent glass surface. Five distinct glass blend styles let you dial it from deep frosted to nearly transparent.
+### Liquid Glass Taskbar & Liquid Design macOS Aesthetics
+The taskbar itself is a persistent, borderless panel that sits at the very bottom of your screen at all times across Spaces, full-screen transitions, and display changes. 
+- **Genuine Glass Surface**: Uses Apple's native vibrancy and blur materials to sample your wallpaper dynamically.
+- **Five Glass Blend Styles**: Dial it from deep frosted to nearly transparent, featuring a 0.5pt specular bevel highlight line.
+- **Liquid Tinting & Intensity Sliders**: Fully custom light/dark mode-split accent colors with fine-grained tint and selection glow intensity controls.
+
+### Cmd+Tab Integration & Multi-Gesture Switching
+AeroBar integrates directly with macOS window focus behavior:
+- **Cmd+Tab & 3-4 Finger Swipe Fix**: Full support for 3-4 finger swipe gestures to switch to the last active window without losing focus or experiencing stutters.
+- **Window Preview Resizing**: Hover previews scale beautifully, matching your customized window preview sizes.
+- **Memory Leak & Stutter Mitigation**: High-efficiency Swift 6 background concurrency guarantees that webpage updates and window list refreshes never leak memory or cause UI microhangs.
 
 ### Mac Aero Start Orb
 The circular Start Orb in the bottom-left corner is your system hub. Click it and the Start Menu opens above it, anchored to whichever display you clicked on. Light and dark hover states are supported, and the orb itself is customizable in the Appearance Lab.
@@ -296,11 +308,6 @@ Have a feature request, a bug report, or just want to share your AeroBar setup? 
 
 [⬆ Back to top](#aerobar)
 
-## Architecture & Performance
-
-### 0% CPU Idle & Microhang Eradication
-AeroBar is heavily optimized for zero impact on battery life and system performance. When not being actively interacted with, the app idles at 0.0% CPU.
-- **Swift 6 & macOS Tahoe**: Fully compliant with Swift 6 Strict Concurrency and built for macOS 15 Tahoe and macOS 14 Sequoia.
 
 ### Built With
 - **AI Pair Programming** — Accelerated and profiled using Google DeepMind's AntiGravity (AGY) agentic coding system.
