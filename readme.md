@@ -64,6 +64,7 @@ Supported: macOS Sequoia/Tahoe
 - [How to Use](#how-to-use)
 - [System Requirements](#system-requirements)
 - [Known Limitations](#known-limitations)
+- [Releases](#releases)
 - [Status](#status)
 - [Community & Feedback](#community--feedback)
 - [Built With](#built-with)
@@ -286,7 +287,47 @@ All settings persist across reboots.
 
 ---
 
+## Releases
+
+### v8.1-beta2 — July 2026
+
+**Fixes**
+- Memory leak, lag, and battery optimizations.
+
+---
+
+### v8.1-beta — July 2026
+
+**⚡ Key Highlights**
+
+- **Cmd+Tab & Gesture Switching Fixes** — Fixed 3–4 finger swipe gestures and window preview size clipping.
+- **Liquid Design macOS Aesthetics** — Added glass vibrancy, split accent colors, and 0.5pt bevel highlights.
+- **UI Stutter & Memory Leak Resolution** — Fixed memory leaks causing lag and instability.
+- **Window Workspace Fixes** — Resolved fullscreen Space flicker and VLC rendering compatibility bugs.
+
+**🛠 Full Change List**
+
+*User Interface & Aesthetics*
+- Added a slider for selection highlight color intensity.
+- Added Active Tab Dimmer for inactive window states.
+- Fixed icon padding, welcome screen gaps, and EULA boot layout.
+
+*System & Battery Optimizations*
+- Moved window tracking updates to dynamic background threads.
+- Added battery drain warnings for heavy CPU background loops.
+- Reduced overall idle CPU utilization.
+
+*Stability & Reliability*
+- Added a delete confirmation prompt for Clipboard History.
+- Fixed bugs causing Context Menu freezes.
+- Upgraded license and trial handling logic.
+
+[⬆ Back to top](#aerobar)
+
+---
+
 ## Status & Licensing
+
 
 AeroBar is in **Active Development** with a hyper-focus on performance and native macOS integration.
 
