@@ -1,13 +1,13 @@
 <div align="center">
 
-<sub>🟢 EXPERIMENTAL ALPHA · FREE FOR A LIMITED TIME</sub>
+<sub>EXPERIMENTAL ALPHA · FREE FOR A LIMITED TIME</sub>
 
 # The **Windows Taskbar** you missed on Mac
 
 Aero glass look, Start Menu, live window tabs, pinned app launcher — all sitting at the bottom of your screen, exactly where you expect it.
 
-[![Download for Mac](https://img.shields.io/badge/⬇_Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.2-beta2/AeroBar.dmg)
-[![Website](https://img.shields.io/badge/%F0%9F%8C%90_Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
+[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.2-beta2/AeroBar.dmg)
+[![Website](https://img.shields.io/badge/Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
 
@@ -108,7 +108,7 @@ AeroBar needs Accessibility access to track and control your windows.
 
 That's it. The taskbar appears at the bottom of your screen immediately.
 
-[⬆ Back to top](#aerobar)
+[Back to top](#aerobar)
 
 ---
 
@@ -146,7 +146,7 @@ That's it. The taskbar appears at the bottom of your screen immediately.
 
 </div>
 
-[⬆ Back to top](#aerobar)
+[Back to top](#aerobar)
 
 ---
 
@@ -158,7 +158,7 @@ macOS is a great operating system but if you spent years on Windows, the workflo
 
 It is not a theme. It is not a wrapper. It talks directly to macOS accessibility APIs to track, focus, minimize, and raise your windows in real time.
 
-[⬆ Back to top](#aerobar)
+[Back to top](#aerobar)
 
 ---
 
@@ -174,7 +174,7 @@ The taskbar itself is a persistent, borderless panel that sits at the very botto
 AeroBar integrates directly with macOS window focus behavior:
 - **Cmd+Tab & 3-4 Finger Swipe Fix**: Full support for 3-4 finger swipe gestures to switch to the last active window without losing focus or experiencing stutters.
 - **Window Preview Resizing**: Hover previews scale beautifully, matching your customized window preview sizes.
-- **Memory Leak & Stutter Mitigation**: High-efficiency Swift 6 background concurrency guarantees that webpage updates and window list refreshes never leak memory or cause UI microhangs.
+- **Performance & Stability**: Prevents app updates and window switches from causing lag, keeping the interface responsive and light on system resources.
 
 ### Mac Aero Start Orb
 The circular Start Orb in the bottom-left corner is your system hub. Click it and the Start Menu opens above it, anchored to whichever display you clicked on. Light and dark hover states are supported, and the orb itself is customizable in the Appearance Lab.
@@ -241,7 +241,7 @@ All settings persist across reboots.
 - **Recommendations** — toggle the recent files panel in the Start Menu
 - **Auto-update check** — checks for new builds on launch, configurable to Daily or Weekly
 
-[⬆ Back to top](#aerobar)
+[Back to top](#aerobar)
 
 ---
 
@@ -260,7 +260,7 @@ All settings persist across reboots.
 | Customize appearance | Click the **Start Orb → Appearance Lab** |
 | Move a window between displays | Drag normally — AeroBar won't interfere while your mouse button is held |
 
-[⬆ Back to top](#aerobar)
+[Back to top](#aerobar)
 
 ---
 
@@ -272,7 +272,7 @@ All settings persist across reboots.
 | **Architecture** | Apple Silicon & Intel |
 | **Permission** | Accessibility (required) |
 
-[⬆ Back to top](#aerobar)
+[Back to top](#aerobar)
 
 ---
 
@@ -283,7 +283,7 @@ All settings persist across reboots.
 - Self-signed build requires a one-time Gatekeeper bypass on first launch.
 - Window tab ordering follows the order macOS reports running apps, not launch order.
 
-[⬆ Back to top](#aerobar)
+[Back to top](#aerobar)
 
 ---
 
@@ -310,14 +310,14 @@ All settings persist across reboots.
 
 ### v8.1-beta — July 2026
 
-**⚡ Key Highlights**
+**Key Highlights**
 
 - **Cmd+Tab & Gesture Switching Fixes** — Fixed 3–4 finger swipe gestures and window preview size clipping.
 - **Liquid Design macOS Aesthetics** — Added glass vibrancy, split accent colors, and 0.5pt bevel highlights.
 - **UI Stutter & Memory Leak Resolution** — Fixed memory leaks causing lag and instability.
 - **Window Workspace Fixes** — Resolved fullscreen Space flicker and VLC rendering compatibility bugs.
 
-**🛠 Full Change List**
+**Full Change List**
 
 *User Interface & Aesthetics*
 - Added a slider for selection highlight color intensity.
@@ -334,21 +334,21 @@ All settings persist across reboots.
 - Fixed bugs causing Context Menu freezes.
 - Upgraded license and trial handling logic.
 
-[⬆ Back to top](#aerobar)
+[Back to top](#aerobar)
 
 ---
 
 ## Status & Licensing
 
 
-AeroBar is in **Active Development** with a hyper-focus on performance and native macOS integration.
+AeroBar is in **Active Development** focusing on performance and native macOS integration.
 
 ### Monetization (Upcoming)
 As AeroBar stabilizes towards a 1.0 release, the monetization strategy will be:
 - **Free Trial**: Users will get unrestricted access to the app for a set period (e.g., 7 or 14 days) to fully experience the workflow.
 - **One-Time Pro Unlock**: After the trial, users can purchase a one-time perpetual license to unlock the full "Pro" feature set (including advanced theming, unlimited pinned apps, multi-display controls, and clipboard managers). There will be **no subscriptions**.
 
-[⬆ Back to top](#aerobar)
+[Back to top](#aerobar)
 
 ---
 
@@ -359,13 +359,13 @@ Have a feature request, a bug report, or just want to share your AeroBar setup? 
 - **[Start a Discussion](https://github.com/adityaonx/AeroBar/discussions/new/choose)** — Use this for general questions, feedback, or sharing your ideas.
 - **[Report a Bug](https://github.com/adityaonx/AeroBar/issues/new)** — Use the issue tracker for technical bugs (please include your macOS version and logs if possible).
 
-[⬆ Back to top](#aerobar)
+[Back to top](#aerobar)
 
 
 ### Built With
 - **AI Pair Programming** — Accelerated and profiled using Google DeepMind's AntiGravity (AGY) agentic coding system.
 
-[⬆ Back to top](#aerobar)
+[Back to top](#aerobar)
 
 ---
 
