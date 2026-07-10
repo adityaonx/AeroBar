@@ -1367,7 +1367,7 @@
     <a href="#pricing">Pricing</a>
     <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <a href="https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
+  <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.1-beta3/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
     ↓ Download
   </a>
 </nav>
@@ -1376,14 +1376,14 @@
 <section id="hero">
   <div class="badge">
     <span class="badge-dot"></span>
-    🔥 New Release: v8.1-beta is now live!
+    🔥 New Release: v8.1-beta3 is now live!
   </div>
   <h1>The <span class="gradient">Windows Taskbar</span><br/>you missed on Mac</h1>
   <p class="hero-sub">
     Aero glass look, Start Menu, live window tabs, pinned app launcher - all sitting at the bottom of your screen, exactly where you expect it.
   </p>
   <div class="hero-actions">
-    <a href="https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg"
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.1-beta3/AeroBar.dmg"
        id="hero-download-btn" class="btn-primary">
       ⬇ Download for Mac
     </a>
@@ -1395,7 +1395,7 @@
 
   <div class="channel-links-row">
     <span>Channels:</span>
-    <a href="https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg" title="Download latest stable v8.1-beta release">Stable (v8.1-beta)</a>
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.1-beta3/AeroBar.dmg" title="Download latest stable v8.1-beta3 release">Stable (v8.1-beta3)</a>
     <span class="separator">•</span>
     <a href="https://github.com/adityaonx/AeroBar/releases" target="_blank" rel="noopener" title="View experimental pre-releases">Beta Build</a>
     <span class="separator">•</span>
@@ -1731,21 +1731,67 @@
     <div class="release-card featured-release reveal">
       <div class="release-header">
         <div class="release-title-wrapper">
-          <span class="release-version">v8.1-beta</span>
+          <span class="release-version">v8.1-beta3</span>
           <span class="release-badge stable">Latest Release</span>
         </div>
         <span class="release-date">Released July 2026</span>
       </div>
       <div class="release-body">
-        <p><strong>Note for old v8.0/older users:</strong> This update is marked as a full release to trigger updates automatically via the legacy check-for-updates system.</p>
-        
-        <h4>🛠️ Key Fixes & Features</h4>
+        <p><strong>Note for old v8.0/older users:</strong> This update stabilizes our trackpad gestures and window positioning framework.</p>
+
+        <h4>⚡ Key Highlights &amp; Fixes</h4>
         <ul>
-          <li><strong>Cmd+Tab Gesture Switch Fix</strong>: Resolved issues switching back to the last active window via 3-4 finger swiping gestures.</li>
-          <li><strong>Liquid Design macOS Aesthetics</strong>: Added modern glassmorphism features including specular bevel highlights, light/dark mode-split accent settings, and customizable selection glow intensity.</li>
-          <li><strong>Zero-Stutter Performance</strong>: Built compliance with Swift 6 Strict Concurrency and moved slow accessibility IPC operations off the main thread.</li>
-          <li><strong>Memory Leak Mitigations</strong>: Fixed memory leak hazards during webpage refreshes and focus sleep updates.</li>
-          <li><strong>Flicker & Resize Fixes</strong>: Resolved window resize clipping and Space transitions/fullscreen flickers.</li>
+          <li><strong>Trackpad Gestures Redesign:</strong> Replaced the 4-finger swipe up/left/right gesture cycling with 3-finger swipes, completely freeing up 4-finger trackpad gestures for native macOS features (like Mission Control or spaces).</li>
+          <li><strong>No Update Interruptions:</strong> The update checker will no longer interrupt you with popups while any connected display is in true fullscreen mode or if the active app window is maximized.</li>
+          <li><strong>Window Positioning &amp; Repositioning Fix:</strong> Resolved a layout coordinate bug that caused window tabs and previews to reposition app windows slightly downward when switching or pulling cross-display.</li>
+          <li><strong>Customization Button Hover Fix:</strong> Fixed the customization button interaction bounds so tapping its surrounding hover area triggers the customization panel correctly.</li>
+          <li><strong>App Icon Corner Squircle:</strong> Adjusted the pinned app icon corner mask to match native macOS squircle/rounded icon design constraints.</li>
+          <li><strong>Hover Jitter Lock:</strong> Silenced physical trackpad cursor drift from interfering with the active 3-finger swipe gesture cycle highlights.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Previous Release -->
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v8.1-beta</span>
+          <span class="release-badge stable">Stable</span>
+        </div>
+        <span class="release-date">Released July 2026</span>
+      </div>
+      <div class="release-body">
+        <p><strong>Note for old v8.0/older users:</strong> This update is marked as a full release to trigger updates automatically via the legacy check-for-updates system.</p>
+
+        <h4>⚡ Key Highlights</h4>
+        <ul>
+          <li><strong>Cmd+Tab &amp; Gesture Switching Fixes:</strong> Solved issues when using 3–4 finger swipe gestures to switch back to the last active window. Window preview hovers now correctly follow the custom Window Preview Size settings without clipping.</li>
+          <li><strong>Liquid Design macOS Aesthetics:</strong> Introducing beautiful, native AppKit glass vibrancy with custom light/dark mode-split accent colors, customizable selection intensity, and a 0.5pt specular bevel highlight.</li>
+          <li><strong>UI Stutter &amp; Memory Leak Resolution:</strong> Leveraged Swift 6 background concurrency to move slow AXUIElement IPC calls off the main thread, resulting in a buttery-smooth 60fps experience while fixing memory leaks related to webpage updates and focus mode sleeping.</li>
+          <li><strong>Window Workspace Fixes:</strong> Resolved the fullscreen Space flicker and VLC fullscreen window rendering compatibility bugs.</li>
+        </ul>
+
+        <h4>🛠 Full Change List</h4>
+
+        <p><strong>User Interface &amp; Aesthetics</strong></p>
+        <ul>
+          <li>Added selection highlight color intensity slider.</li>
+          <li>Added Active Tab Dimmer for inactive states.</li>
+          <li>Fixed icon padding, welcome screen gaps, and EULA layout on boot.</li>
+        </ul>
+
+        <p><strong>System &amp; Battery Optimizations</strong></p>
+        <ul>
+          <li>Moved window tracking updates to dynamic background threads.</li>
+          <li>Added battery drain warning for heavy CPU background loops.</li>
+          <li>Improved overall idle CPU utilization (targeting 0% idle).</li>
+        </ul>
+
+        <p><strong>Stability &amp; Reliability</strong></p>
+        <ul>
+          <li>Added Clipboard History delete confirmation.</li>
+          <li>Fixed Context Menu freeze issues.</li>
+          <li>Upgraded license and trial handling logic.</li>
         </ul>
       </div>
     </div>
@@ -1809,7 +1855,7 @@
       </div>
     </div>
     <div style="text-align:center; margin-top: 1rem;" class="reveal">
-      <a href="https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg"
+      <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.1-beta3/AeroBar.dmg"
          id="install-download-btn" class="btn-primary" style="display:inline-flex;">
         ⬇ Download AeroBar.dmg
       </a>
@@ -1834,7 +1880,7 @@
       <li>Appearance Lab - full customization</li>
       <li>macOS Tahoe</li>
     </ul>
-    <a href="https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg"
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.1-beta3/AeroBar.dmg"
        id="pricing-download-btn" class="btn-primary" style="width:100%; justify-content:center; margin-bottom:1.25rem;">
       ⬇ Download for Free
     </a>
@@ -2322,7 +2368,7 @@
       visitContainer.style.display = 'none';
     });
 
-  // Fetch GitHub downloads
+  // Fetch GitHub downloads & dynamically update download links to latest release/pre-release
   fetch('https://api.github.com/repos/adityaonx/AeroBar/releases')
     .then(response => response.json())
     .then(releases => {
@@ -2335,6 +2381,20 @@
         });
       });
       document.getElementById('stat-downloads').textContent = totalDownloads.toLocaleString();
+
+      // Find the latest release (pre-release/beta or stable) that has a .dmg asset
+      const latestRelease = releases.find(r => r.assets && r.assets.some(a => a.name.endsWith('.dmg')));
+      if (latestRelease) {
+        const dmgAsset = latestRelease.assets.find(a => a.name.endsWith('.dmg'));
+        if (dmgAsset) {
+          const downloadUrl = dmgAsset.browser_download_url;
+          const buttonIds = ['nav-download-btn', 'hero-download-btn', 'install-download-btn', 'pricing-download-btn'];
+          buttonIds.forEach(id => {
+            const btn = document.getElementById(id);
+            if (btn) btn.href = downloadUrl;
+          });
+        }
+      }
     })
     .catch(() => {
       document.getElementById('stat-downloads').parentElement.style.display = 'none';

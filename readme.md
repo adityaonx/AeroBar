@@ -6,7 +6,7 @@
 
 Aero glass look, Start Menu, live window tabs, pinned app launcher — all sitting at the bottom of your screen, exactly where you expect it.
 
-[![Download for Mac](https://img.shields.io/badge/⬇_Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/latest/download/AeroBar.dmg)
+[![Download for Mac](https://img.shields.io/badge/⬇_Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.1-beta3/AeroBar.dmg)
 [![Website](https://img.shields.io/badge/%F0%9F%8C%90_Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
@@ -288,6 +288,18 @@ All settings persist across reboots.
 ---
 
 ## Releases
+
+### v8.1-beta3 — July 2026
+
+**Fixes**
+- **Trackpad Gestures Redesign**: Migrated multidirectional app cycling from 4-finger to 3-finger swipes, completely freeing up 4-finger trackpad gestures for native macOS settings (like Mission Control or fullscreen spaces).
+- **No Update Interruptions**: Prevented the update check popup from showing up and interrupting when any connected display is in true fullscreen mode or when the active app window is maximized.
+- **Window Positioning & Repositioning Fix**: Resolved layout coordinate bugs that caused window tabs and previews to reposition application windows slightly lower/downward on screen when pulled cross-screen or focused.
+- **Customization Button Interaction**: Fixed the AeroBar customization button click target so that clicking its hover area opens the customization panel correctly (previously only clicking the raw icon did so).
+- **Pinned App Icon Roundness**: Adjusted pinned app icon corners and masks to match native macOS squircle/rounded icon aesthetics.
+- **Hover Jitter Lock**: Silenced physical trackpad cursor drift from interfering with the active 3-finger swipe gesture cycle highlights.
+
+---
 
 ### v8.1-beta2 — July 2026
 
