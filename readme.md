@@ -4,9 +4,9 @@
 
 # The **Windows Taskbar** you missed on Mac
 
-Aero glass look, Start Menu, live window tabs, pinned app launcher — all sitting at the bottom of your screen, exactly where you expect it.
+Aero glass look, Start Menu, live window tabs, pinned app launcher - all sitting at the bottom of your screen, exactly where you expect it.
 
-[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.2-beta3/AeroBar.dmg)
+[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.2-beta4/AeroBar.dmg)
 [![Website](https://img.shields.io/badge/Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
@@ -85,13 +85,13 @@ Open the `.dmg`, drag **AeroBar.app** to your `/Applications` folder.
 
 AeroBar is self-signed. macOS will block the first launch.
 
-**Option A — System Settings:**
+**Option A - System Settings:**
 
 1. Try to open AeroBar. macOS will show a security warning.
 2. Go to **System Settings → Privacy & Security**.
 3. Scroll down to the Security section and click **Open Anyway**.
 
-**Option B — Terminal (if you see a "damaged app" error):**
+**Option B - Terminal (if you see a "damaged app" error):**
 
 ```bash
 xattr -rd com.apple.quarantine /Applications/AeroBar.app
@@ -102,7 +102,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app
 AeroBar needs Accessibility access to track and control your windows.
 
 1. On first launch, an onboarding screen will guide you.
-2. Click **Open Accessibility Settings** — this takes you directly to the right panel.
+2. Click **Open Accessibility Settings** - this takes you directly to the right panel.
 3. Toggle **AeroBar** on in the list.
 4. Click **Start AeroBar** in the onboarding panel.
 
@@ -154,7 +154,7 @@ That's it. The taskbar appears at the bottom of your screen immediately.
 
 macOS is a great operating system but if you spent years on Windows, the workflow transition is genuinely rough. The Dock hides, the menu bar is at the top, open windows have no persistent visual reference, and there's no Start Menu to search and launch from. You end up hunting.
 
-**AeroBar fixes that.** It's a persistent taskbar that lives at the bottom of every display, built to feel like the Windows Vista / Windows 7 Aero taskbar — translucent glass surface, a Start Orb, a live window tab strip, a pinned app launcher, and a Spotlight search field — all rendered natively on macOS using real system materials, not a skin on top.
+**AeroBar fixes that.** It's a persistent taskbar that lives at the bottom of every display, built to feel like the Windows Vista / Windows 7 Aero taskbar - translucent glass surface, a Start Orb, a live window tab strip, a pinned app launcher, and a Spotlight search field - all rendered natively on macOS using real system materials, not a skin on top.
 
 It is not a theme. It is not a wrapper. It talks directly to macOS accessibility APIs to track, focus, minimize, and raise your windows in real time.
 
@@ -185,7 +185,7 @@ Every open, non-minimized window across every running app appears as a tab in th
 - **Minimizes** it if it is already the front window
 - **Unminimizes** it if it was minimized
 
-This gives you the exact same one-click window switching behaviour Windows users are used to — no Exposé, no Command-Tab cycling required.
+This gives you the exact same one-click window switching behaviour Windows users are used to - no Exposé, no Command-Tab cycling required.
 
 ### Pinned App Launcher
 A drag-and-drop tray of your favourite apps lives between the Orb and the window tabs. Pinned apps behave the way Windows taskbar icons do:
@@ -197,7 +197,7 @@ A drag-and-drop tray of your favourite apps lives between the Orb and the window
 Pinned order persists across reboots.
 
 ### Spotlight Quick Search
-A search field sits inline in the taskbar (toggleable). It fires macOS Spotlight directly — type an app name, file, or calculation and press Return, exactly like the Windows search box in the taskbar.
+A search field sits inline in the taskbar (toggleable). It fires macOS Spotlight directly - type an app name, file, or calculation and press Return, exactly like the Windows search box in the taskbar.
 
 ### Start Menu
 The full Start Menu panel opens from the Orb and contains:
@@ -208,16 +208,16 @@ The full Start Menu panel opens from the Orb and contains:
 | **Search bar** | Live-filters all sections simultaneously as you type |
 | **Pinned Apps grid** | Your pinned Start apps, drag-to-reorder, right-click to pin/unpin |
 | **All Apps browser** | Full alphabetically grouped list of every app installed on your Mac |
-| **Recommendations** | Recent files surfaced via Spotlight metadata — the things you were just working on (toggleable panel) |
+| **Recommendations** | Recent files surfaced via Spotlight metadata - the things you were just working on (toggleable panel) |
 
 ### Recycle Bin Button
-A Trash shortcut lives on the right end of the taskbar — the same position Windows users expect. Click it to open the Trash in Finder.
+A Trash shortcut lives on the right end of the taskbar - the same position Windows users expect. Click it to open the Trash in Finder.
 
 ### Multi-Display Support
 AeroBar can show its taskbar rail on:
-- **All Displays** — every connected monitor gets its own taskbar
-- **Main Screen Only** — primary display only
-- **External Displays Only** — secondary monitors only
+- **All Displays** - every connected monitor gets its own taskbar
+- **Main Screen Only** - primary display only
+- **External Displays Only** - secondary monitors only
 
 Each display's taskbar is independent. The Start Menu opens anchored to the display you clicked on.
 
@@ -231,15 +231,15 @@ Every visual aspect of the bar is tunable from the Appearance Lab popover:
 | **Surface Tint Density** | 0–100% opacity slider |
 | **Upper Specular Bevel** | Toggles a 0.5pt highlight line along the top edge |
 | **Spotlight Search Icon** | Show/hide the inline search field |
-| **Window Label Collapse** | Icon-only mode — hides window title text in all tabs |
+| **Window Label Collapse** | Icon-only mode - hides window title text in all tabs |
 | **Display Target** | Which monitors show the bar |
 
 All settings persist across reboots.
 
 ### System Settings
-- **Launch at Login** — AeroBar starts automatically when you log in
-- **Recommendations** — toggle the recent files panel in the Start Menu
-- **Auto-update check** — checks for new builds on launch, configurable to Daily or Weekly
+- **Launch at Login** - AeroBar starts automatically when you log in
+- **Recommendations** - toggle the recent files panel in the Start Menu
+- **Auto-update check** - checks for new builds on launch, configurable to Daily or Weekly
 
 [Back to top](#aerobar)
 
@@ -258,7 +258,7 @@ All settings persist across reboots.
 | Search apps / files | Type in the **Spotlight field** in the bar, or use the Start Menu search |
 | Open Trash | Click the **bin icon** on the right end of the bar |
 | Customize appearance | Click the **Start Orb → Appearance Lab** |
-| Move a window between displays | Drag normally — AeroBar won't interfere while your mouse button is held |
+| Move a window between displays | Drag normally - AeroBar won't interfere while your mouse button is held |
 
 [Back to top](#aerobar)
 
@@ -279,7 +279,7 @@ All settings persist across reboots.
 ## Known Limitations
 
 - AeroBar is in **Experimental Alpha**. Expect rough edges.
-- Requires Accessibility permission — without it the app cannot track or control windows.
+- Requires Accessibility permission - without it the app cannot track or control windows.
 - Self-signed build requires a one-time Gatekeeper bypass on first launch.
 - Window tab ordering follows the order macOS reports running apps, not launch order.
 
@@ -289,14 +289,22 @@ All settings persist across reboots.
 
 ## Releases
 
-### v8.2-beta3 — July 2026
+### v8.2-beta4 - July 2026
+
+**Fixes**
+- **Screen Recording Lifecycle**: Fixed a critical leak where the screen recording session (and purple indicator dot) would remain permanently stuck on even after a live window preview popover was closed.
+- **Window Tab Previews**: Resolved an issue where window tab hover previews were completely blank or unresponsive due to a race condition in state synchronization.
+- **Chromium Live Previews**: Fixed a ScreenCaptureKit bug that caused live previews for Chromium browsers (Chrome, Edge, Brave, etc.) to immediately abort and fall back to static thumbnails.
+- **AeroBar Ghost Previews**: Prevented AeroBar from accidentally capturing its own invisible full-screen tracking overlays when generating a live preview for itself.
+
+### v8.2-beta3 - July 2026
 
 **Fixes**
 - **Performance**: Resolved a critical layout/rendering loop that caused massive 40% CPU overhead whenever the Start Menu or Cmd+Tab panels were open. The glass masking is now fully processed by native AppKit CoreAnimation layers.
 - **Responsiveness**: Re-architected AX accessibility hit-testing to run completely off the main thread, fixing frequent 5-second UI lockups when clicking zoom and window control buttons.
 - **Stability**: Fixed a layout crash (`Invalid frame dimension`) that occurred during the initial display of the Cmd+Tab panel.
 
-### v8.2-beta2 — July 2026
+### v8.2-beta2 - July 2026
 
 **Fixes**
 - **Trackpad Gestures Redesign**: Migrated multidirectional app cycling from 4-finger to 3-finger swipes, completely freeing up 4-finger trackpad gestures for native macOS settings (like Mission Control or fullscreen spaces).
@@ -308,21 +316,21 @@ All settings persist across reboots.
 
 ---
 
-### v8.1-beta2 — July 2026
+### v8.1-beta2 - July 2026
 
 **Fixes**
 - Memory leak, lag, and battery optimizations.
 
 ---
 
-### v8.1-beta — July 2026
+### v8.1-beta - July 2026
 
 **Key Highlights**
 
-- **Cmd+Tab & Gesture Switching Fixes** — Fixed 3–4 finger swipe gestures and window preview size clipping.
-- **Liquid Design macOS Aesthetics** — Added glass vibrancy, split accent colors, and 0.5pt bevel highlights.
-- **UI Stutter & Memory Leak Resolution** — Fixed memory leaks causing lag and instability.
-- **Window Workspace Fixes** — Resolved fullscreen Space flicker and VLC rendering compatibility bugs.
+- **Cmd+Tab & Gesture Switching Fixes** - Fixed 3–4 finger swipe gestures and window preview size clipping.
+- **Liquid Design macOS Aesthetics** - Added glass vibrancy, split accent colors, and 0.5pt bevel highlights.
+- **UI Stutter & Memory Leak Resolution** - Fixed memory leaks causing lag and instability.
+- **Window Workspace Fixes** - Resolved fullscreen Space flicker and VLC rendering compatibility bugs.
 
 **Full Change List**
 
@@ -363,14 +371,14 @@ As AeroBar stabilizes towards a 1.0 release, the monetization strategy will be:
 
 Have a feature request, a bug report, or just want to share your AeroBar setup? We use **GitHub Discussions** to keep the roadmap transparent and community-driven.
 
-- **[Start a Discussion](https://github.com/adityaonx/AeroBar/discussions/new/choose)** — Use this for general questions, feedback, or sharing your ideas.
-- **[Report a Bug](https://github.com/adityaonx/AeroBar/issues/new)** — Use the issue tracker for technical bugs (please include your macOS version and logs if possible).
+- **[Start a Discussion](https://github.com/adityaonx/AeroBar/discussions/new/choose)** - Use this for general questions, feedback, or sharing your ideas.
+- **[Report a Bug](https://github.com/adityaonx/AeroBar/issues/new)** - Use the issue tracker for technical bugs (please include your macOS version and logs if possible).
 
 [Back to top](#aerobar)
 
 
 ### Built With
-- **AI Pair Programming** — Accelerated and profiled using Google DeepMind's AntiGravity (AGY) agentic coding system.
+- **AI Pair Programming** - Accelerated and profiled using Google DeepMind's AntiGravity (AGY) agentic coding system.
 
 [Back to top](#aerobar)
 
