@@ -300,6 +300,15 @@ AeroBar respects your privacy and is built to be secure by design.
 
 ## Releases
 
+### v8.2-beta8 - July 2026
+
+**New Features**
+- **Display Background Dimmer**: Added a new toggle to optionally dim the wallpaper on secondary/inactive displays when they have no windows, preventing bright wallpapers from causing glare.
+
+**Fixes**
+- **Multi-Display Focus Mode**: Completely fixed multi-monitor Focus Mode bugs where dimming panels would display at the wrong coordinates (e.g., midway down external displays) or fail to correctly trigger on hover.
+- **Codebase Cleanup**: Fixed deprecated property warnings and modernized dictionary initializers.
+
 ### v8.2-beta6 - July 2026
 
 **UI & Styling Refinements**
