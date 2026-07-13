@@ -1367,7 +1367,7 @@
     <a href="#pricing">Pricing</a>
     <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.2-beta5/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
+  <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.2-beta6/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
     Download
   </a>
 </nav>
@@ -1376,14 +1376,14 @@
 <section id="hero">
   <div class="badge">
     <span class="badge-dot"></span>
-    New Release: v8.2-beta5 is now live!
+    New Release: v8.2-beta6 is now live!
   </div>
   <h1>The <span class="gradient">Windows Taskbar</span><br/>you missed on Mac</h1>
   <p class="hero-sub">
     Aero glass look, Start Menu, live window tabs, pinned app launcher - all sitting at the bottom of your screen, exactly where you expect it.
   </p>
   <div class="hero-actions">
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.2-beta5/AeroBar.dmg"
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.2-beta6/AeroBar.dmg"
        id="hero-download-btn" class="btn-primary">
       Download for Mac
     </a>
@@ -1395,7 +1395,7 @@
 
   <div class="channel-links-row">
     <span>Channels:</span>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.2-beta5/AeroBar.dmg" title="Download latest stable v8.2-beta5 release">Stable (v8.2-beta5)</a>
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.2-beta6/AeroBar.dmg" title="Download latest stable v8.2-beta6 release">Stable (v8.2-beta6)</a>
     <span class="separator">•</span>
     <a href="https://github.com/adityaonx/AeroBar/releases" target="_blank" rel="noopener" title="View experimental pre-releases">Beta Build</a>
     <span class="separator">•</span>
@@ -1737,6 +1737,38 @@
     </div>
   </div>
 </section>
+<!-- Privacy & Security -->
+<section id="privacy" style="background: rgba(6,11,20,0.4); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding-bottom: 80px;">
+  <p class="section-label reveal">100% Offline Core</p>
+  <h2 class="section-title reveal">Privacy & Security First</h2>
+  <p class="section-sub reveal" style="max-width: 700px;">AeroBar requires Accessibility access to interact with your windows. We know how sensitive this is, so we built the app to be verifiably secure by design.</p>
+  
+  <div class="features-grid" style="margin-top: 40px;">
+    <div class="feature-card reveal">
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      </div>
+      <div class="feature-title">Fully Offline Engine</div>
+      <div class="feature-desc">All window management, accessibility tracking, and clipboard functions run locally on your Mac. No data leaves your machine.</div>
+    </div>
+    
+    <div class="feature-card reveal">
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+      </div>
+      <div class="feature-title">Zero Telemetry</div>
+      <div class="feature-desc">AeroBar includes absolutely no analytics, user tracking, or crash reporting telemetry. What you do stays on your screen.</div>
+    </div>
+    
+    <div class="feature-card reveal">
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+      </div>
+      <div class="feature-title">Verifiable Network</div>
+      <div class="feature-desc">The *only* time AeroBar makes a network request is to ping the official GitHub repository for software updates.</div>
+    </div>
+  </div>
+</section>
 
 <!-- Releases -->
 <section id="releases">
@@ -1749,8 +1781,29 @@
     <div class="release-card featured-release reveal">
       <div class="release-header">
         <div class="release-title-wrapper">
-          <span class="release-version">v8.2-beta5</span>
+          <span class="release-version">v8.2-beta6</span>
           <span class="release-badge stable">Latest Release</span>
+        </div>
+        <span class="release-date">Released July 2026</span>
+      </div>
+      <div class="release-body">
+        <h4>Key Highlights &amp; Fixes</h4>
+        <ul>
+          <li><strong>Settings UI:</strong> Restructured "Surface Tint Density" to be grouped correctly under "Liquid Tint Hue", matching the visual style of "Tint Brightness" with a dark background fill.</li>
+          <li><strong>Focus Mode:</strong> Corrected the icon shading for the Search and Trash buttons to match dimmed buttons.</li>
+          <li><strong>Focus Mode:</strong> The dim tint now applies instantly upon resizing the AeroBar window.</li>
+          <li><strong>Focus Mode:</strong> Disabled the "bevel" edge effect on both the top and bottom bars while in focus mode.</li>
+          <li><strong>Focus Mode:</strong> Fixed a flickering issue that occurred when hovering over pinned apps.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Previous Release -->
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v8.2-beta5</span>
+          <span class="release-badge stable">Stable</span>
         </div>
         <span class="release-date">Released July 2026</span>
       </div>
