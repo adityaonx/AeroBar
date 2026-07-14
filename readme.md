@@ -300,10 +300,11 @@ AeroBar respects your privacy and is built to be secure by design.
 
 ## Releases
 
-### v8.2-beta10 - July 2026
+### v8.2-beta10 - July 2026 
 
 **Fixes**
 - **Memory Leaks & Performance**: Fixed severe memory leaks and CPU hitches related to window tracking and clipboard thumbnail generation.
+
 
 ### v8.2-beta8 - July 2026
 
