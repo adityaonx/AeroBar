@@ -6,6 +6,10 @@
 
 Aero glass look, Start Menu, live window tabs, pinned app launcher - all sitting at the bottom of your screen, exactly where you expect it.
 
+```bash
+brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew install --cask aerobar --no-quarantine
+```
+
 [![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.2-beta10/AeroBar.dmg)
 [![Website](https://img.shields.io/badge/Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
 
@@ -77,11 +81,21 @@ Supported: macOS Sequoia/Tahoe
 > **Why are these extra setup steps required?**
 > Apple charges developers a $100/year subscription fee to sign and notarize macOS applications. To keep AeroBar completely free during our experimental alpha, we distribute it as a self-signed binary rather than paying Apple's fee. Because of this, macOS Gatekeeper flags it by default, and window tracking requires Accessibility access to interact with your workspace. Both permissions are completely safe and take less than a minute to authorize.
 
-### 1. Download AeroBar.dmg
+### Option 1: Homebrew (Recommended)
+
+```bash
+brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar
+brew install --cask aerobar --no-quarantine
+```
+*(The `--no-quarantine` flag bypasses macOS Gatekeeper for this self-signed app. If you omit it, you will need to follow Step 2 below).*
+
+### Option 2: Manual Download
+
+#### 1. Download AeroBar.dmg
 
 Open the `.dmg`, drag **AeroBar.app** to your `/Applications` folder.
 
-### 2. Bypass Gatekeeper (first launch only)
+#### 2. Bypass Gatekeeper (first launch only)
 
 AeroBar is self-signed. macOS will block the first launch.
 
@@ -97,7 +111,7 @@ AeroBar is self-signed. macOS will block the first launch.
 xattr -rd com.apple.quarantine /Applications/AeroBar.app
 ```
 
-### 3. Grant Accessibility Permission
+### 3. Grant Accessibility Permission (Required for all installation methods)
 
 AeroBar needs Accessibility access to track and control your windows.
 
@@ -300,11 +314,10 @@ AeroBar respects your privacy and is built to be secure by design.
 
 ## Releases
 
-### v8.2-beta10 - July 2026 
+### v8.2-beta10 - July 2026
 
 **Fixes**
 - **Memory Leaks & Performance**: Fixed severe memory leaks and CPU hitches related to window tracking and clipboard thumbnail generation.
-
 
 ### v8.2-beta8 - July 2026
 
