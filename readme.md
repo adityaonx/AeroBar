@@ -15,7 +15,7 @@ brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew install 
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
 
-Free (Limited Time) · macOS Tahoe · Apple Silicon
+Free (Limited Time) · macOS Sonoma(14) - Sequoia(15) - Tahoe(26)  · Apple Silicon
 
 If you liked this project, please consider giving it a <img width="20" height="20" alt="star-img" src="https://github.com/user-attachments/assets/14fa5920-374f-4985-acd6-d04bff1d4580" /> star. Thanks.
 
@@ -43,7 +43,7 @@ If you liked this project, please consider giving it a <img width="20" height="2
 <hr>
 
 
-Supported: macOS Sequoia/Tahoe
+Supported: macOS Sonoma-14/Sequoia-15/Tahoe-26
 
 </div>
 
