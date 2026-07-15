@@ -67,6 +67,7 @@ Supported: macOS Sonoma-14/Sequoia-15/Tahoe-26
   - [System Settings](#system-settings)
 - [How to Use](#how-to-use)
 - [System Requirements](#system-requirements)
+- [Troubleshooting](#troubleshooting)
 - [Known Limitations](#known-limitations)
 - [Releases](#releases)
 - [Status](#status)
@@ -273,6 +274,7 @@ All settings persist across reboots.
 | Open Trash | Click the **bin icon** on the right end of the bar |
 | Customize appearance | Click the **Start Orb → Appearance Lab** |
 | Move a window between displays | Drag normally - AeroBar won't interfere while your mouse button is held |
+| Emergency Exit | Press `Cmd+Opt+Ctrl+Shift+Q` to forcefully quit AeroBar and safely restore your macOS Dock |
 
 [Back to top](#aerobar)
 
@@ -285,6 +287,14 @@ All settings persist across reboots.
 | **OS** | macOS Sequoia 14+ (macOS Tahoe compatible) |
 | **Architecture** | Apple Silicon & Intel |
 | **Permission** | Accessibility (required) |
+
+[Back to top](#aerobar)
+
+---
+
+## Troubleshooting
+
+- **Emergency Exit**: If AeroBar ever freezes or misbehaves, press `Cmd+Opt+Ctrl+Shift+Q` to forcefully quit the app and safely restore your standard macOS Dock immediately.
 
 [Back to top](#aerobar)
 
