@@ -314,6 +314,11 @@ AeroBar respects your privacy and is built to be secure by design.
 
 ## Releases
 
+### v8.3-beta4 - July 2026
+
+**Fixes**
+- **App Menu**: Fixed an issue where system apps inside subfolders (like Utilities) and user-specific apps were not showing up in the Start Menu app list.
+
 ### v8.3-beta3 - July 2026
 
 **Improvements**
