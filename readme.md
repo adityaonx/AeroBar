@@ -10,7 +10,7 @@ Aero glass look, Start Menu, live window tabs, pinned app launcher - all sitting
 brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew install --cask aerobar --no-quarantine
 ```
 
-[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.4-beta1/AeroBar.dmg)
+[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.4-beta2/AeroBar.dmg)
 [![Website](https://img.shields.io/badge/Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
@@ -324,10 +324,13 @@ AeroBar respects your privacy and is built to be secure by design.
 
 ## Releases
 
-### v8.4-beta1 - July 2026
+### v8.4-beta2 - July 2026
 
-**Fixes**
-- **Crash Fix**: Fixed a critical SwiftUI Rendering Crash caused by layout re-entrancy when generating window previews.
+**Fixes & Enhancements**
+- **Scroll View Fix**: Fixed an issue where adding a new window from a pinned tab would not automatically resize the tab scroll view.
+- **Pinned App New Window**: Fixed the "Open New Window" context menu action for pinned apps to reliably open a new window even when the application is already running.
+- **Preview Reliability**: Resolved a race condition where window previews on pinned apps would sometimes appear blank or missing during rapid mouse hovers.
+- **Performance Enhancement**: Dramatically reduced lag when hovering over pinned apps and opening their context menus by eliminating heavy main-thread IPC calls.
 
 ### v8.3-beta8 - July 2026
 
