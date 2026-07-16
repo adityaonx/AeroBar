@@ -10,7 +10,7 @@ Aero glass look, Start Menu, live window tabs, pinned app launcher - all sitting
 brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew install --cask aerobar --no-quarantine
 ```
 
-[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.3-beta9/AeroBar.dmg)
+[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.4-beta1/AeroBar.dmg)
 [![Website](https://img.shields.io/badge/Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
@@ -324,7 +324,7 @@ AeroBar respects your privacy and is built to be secure by design.
 
 ## Releases
 
-### v8.3-beta9 - July 2026
+### v8.4-beta1 - July 2026
 
 **Fixes**
 - **Crash Fix**: Fixed a critical SwiftUI Rendering Crash caused by layout re-entrancy when generating window previews.
