@@ -32,7 +32,7 @@ jobs:
           # Only commit if there are changes
           if ! git diff-index --quiet HEAD; then
             git commit -m "chore: bump cask version to ${{ env.VERSION }}"
-            git push
+            git push origin HEAD:main
           else
             echo "No changes to commit"
           fi

@@ -10,7 +10,7 @@ Aero glass look, Start Menu, live window tabs, pinned app launcher - all sitting
 brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew install --cask aerobar --no-quarantine
 ```
 
-[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.3-beta6/AeroBar.dmg)
+[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.3-beta8/AeroBar.dmg)
 [![Website](https://img.shields.io/badge/Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
@@ -314,8 +314,8 @@ All settings persist across reboots.
 ## Privacy & Security
 
 AeroBar respects your privacy and is built to be secure by design.
-- **100% Offline Core**: The app's window management, accessibility tracking, and clipboard functions operate entirely locally on your Mac.
-- **Zero Telemetry**: No analytics, no tracking, and no usage data leaves the app. 
+- **Local Processing**: The app's window management, accessibility tracking, and clipboard functions operate entirely locally on your Mac.
+- **Crash Reporting**: We do not collect any personal usage data or analytics. We only collect anonymous crash and hang diagnostics via Sentry. This is strictly necessary to identify complex deadlocks, fix system freezes, and guarantee a stable experience.
 - **Network Usage**: The *only* time AeroBar connects to the internet is to check for and download new update releases directly from GitHub.
 
 [Back to top](#aerobar)
@@ -323,6 +323,13 @@ AeroBar respects your privacy and is built to be secure by design.
 ---
 
 ## Releases
+
+### v8.3-beta8 - July 2026
+
+**Stability & Analytics**
+- **Sentry Integration**: Fully integrated Sentry SDK to track live crashes and performance metrics.
+- **Reliable Hang Detection**: Upgraded the Watchdog Service to spawn an independent AppleScript process, guaranteeing a functional crash popup even if the main thread completely deadlocks.
+- **Reduced Timeout**: Watchdog kill threshold optimized from 15s to 10s.
 
 ### v8.3-beta6 - July 2026
 

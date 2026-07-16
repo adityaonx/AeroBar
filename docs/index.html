@@ -1369,7 +1369,7 @@
     <a href="#contact">Contact</a>
     <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.3-beta6/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
+  <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.3-beta8/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
     Download
   </a>
 </nav>
@@ -1378,7 +1378,7 @@
 <section id="hero">
   <div class="badge">
     <span class="badge-dot"></span>
-    New Release: v8.3-beta6 is now live!
+    New Release: v8.3-beta8 is now live!
   </div>
   <h1>The <span class="gradient">Windows Taskbar</span><br/>you missed on Mac</h1>
   <p class="hero-sub">
@@ -1391,7 +1391,7 @@
   </div>
 
   <div class="hero-actions">
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.3-beta6/AeroBar.dmg"
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.3-beta8/AeroBar.dmg"
        class="btn-primary" id="hero-download-btn">
       Download for Mac
     </a>
@@ -1403,7 +1403,7 @@
 
   <div class="channel-links-row">
     <span>Channels:</span>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.3-beta6/AeroBar.dmg" title="Download latest stable v8.3-beta6 release">Stable (v8.3-beta6)</a>
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.3-beta8/AeroBar.dmg" title="Download latest stable v8.3-beta8 release">Stable (v8.3-beta8)</a>
     <span class="separator">•</span>
     <a href="https://github.com/adityaonx/AeroBar/releases" target="_blank" rel="noopener" title="View experimental pre-releases">Beta Build</a>
     <span class="separator">•</span>
@@ -1747,7 +1747,7 @@
 </section>
 <!-- Privacy & Security -->
 <section id="privacy" style="background: rgba(6,11,20,0.4); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding-bottom: 80px;">
-  <p class="section-label reveal">100% Offline Core</p>
+  <p class="section-label reveal">Privacy & Stability</p>
   <h2 class="section-title reveal">Privacy & Security First</h2>
   <p class="section-sub reveal" style="max-width: 700px;">AeroBar requires Accessibility access to interact with your windows. We know how sensitive this is, so we built the app to be verifiably secure by design.</p>
   
@@ -1756,7 +1756,7 @@
       <div class="feature-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
       </div>
-      <div class="feature-title">Fully Offline Engine</div>
+      <div class="feature-title">Local Processing</div>
       <div class="feature-desc">All window management, accessibility tracking, and clipboard functions run locally on your Mac. No data leaves your machine.</div>
     </div>
     
@@ -1764,8 +1764,8 @@
       <div class="feature-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
       </div>
-      <div class="feature-title">Zero Telemetry</div>
-      <div class="feature-desc">AeroBar includes absolutely no analytics, user tracking, or crash reporting telemetry. What you do stays on your screen.</div>
+      <div class="feature-title">Diagnostic Telemetry Only</div>
+      <div class="feature-desc">AeroBar tracks zero personal data or usage analytics. We only collect anonymous crash and hang diagnostics to ensure maximum app stability.</div>
     </div>
     
     <div class="feature-card reveal">
@@ -1789,7 +1789,7 @@
     <div class="release-card featured-release reveal">
       <div class="release-header">
         <div class="release-title-wrapper">
-          <span class="release-version">v8.3-beta6</span>
+          <span class="release-version">v8.3-beta8</span>
           <span class="release-badge stable">Latest Release</span>
         </div>
         <span class="release-date">Released July 2026</span>
@@ -1797,8 +1797,9 @@
       <div class="release-body">
         <h4>Key Highlights &amp; Fixes</h4>
         <ul>
-          <li><strong>Sleep Crashes</strong>: Fixed an issue where the app's watchdog timer would time out and crash the app when waking the Mac from sleep.</li>
-          <li><strong>System Freezes</strong>: Resolved a critical deadlock issue where the macOS WindowServer could freeze during Cmd+Tab or gesture switching when interacting with AeroBar settings due to main thread lock contention.</li>
+          <li><strong>Sentry Integration</strong>: Fully integrated Sentry SDK to track live crashes and performance metrics.</li>
+          <li><strong>Reliable Hang Detection</strong>: Upgraded the Watchdog Service to spawn an independent AppleScript process, guaranteeing a functional crash popup even if the main thread completely deadlocks.</li>
+          <li><strong>Reduced Timeout</strong>: Watchdog kill threshold optimized from 15s to 10s.</li>
         </ul>
       </div>
     </div>
@@ -2122,7 +2123,7 @@
       </div>
     </div>
     <div style="text-align:center; margin-top: 1rem;" class="reveal">
-      <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.3-beta6/AeroBar.dmg"
+      <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.3-beta8/AeroBar.dmg"
          class="btn-primary" style="display:inline-flex;">
         Download AeroBar.dmg
       </a>
@@ -2147,7 +2148,7 @@
       <li>Appearance Lab - full customization</li>
       <li>macOS Tahoe</li>
     </ul>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.3-beta6/AeroBar.dmg"
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.3-beta8/AeroBar.dmg"
        id="pricing-download-btn" class="btn-primary" style="width:100%; justify-content:center; margin-bottom:1.25rem;">
       Download for Free
     </a>
