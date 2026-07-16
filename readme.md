@@ -327,6 +327,7 @@ AeroBar respects your privacy and is built to be secure by design.
 ### v8.3-beta6 - July 2026
 
 **Fixes**
+- **Sleep Crashes**: Fixed an issue where the app's watchdog timer would time out and crash the app when waking the Mac from sleep.
 - **System Freezes**: Resolved a critical deadlock issue where the macOS WindowServer could freeze during Cmd+Tab or gesture switching when interacting with AeroBar settings due to main thread lock contention.
 
 ### v8.3-beta5 - July 2026
