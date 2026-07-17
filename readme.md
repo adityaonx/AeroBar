@@ -11,7 +11,7 @@ brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew install 
 ```
 
 [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/total.svg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest)
-[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.4-beta6/AeroBar.dmg)
+[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.4-beta7/AeroBar.dmg)
 [![Website](https://img.shields.io/badge/Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
@@ -325,7 +325,7 @@ AeroBar respects your privacy and is built to be secure by design.
 
 ## Releases
 
-### v8.4-beta6 - July 2026
+### v8.4-beta7 - July 2026
 
 **Fixes & Enhancements**
 - **Multi-Display Window Previews**: Fixed an issue where hovering over a window tab on a secondary display would incorrectly highlight tabs on the primary display, and resolved instances where window previews would pop up on the wrong screen.
