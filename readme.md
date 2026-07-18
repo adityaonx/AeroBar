@@ -14,7 +14,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app
 ```
 
 [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/total.svg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest)
-[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.5-beta3/AeroBar.dmg)
+[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.5-beta4/AeroBar.dmg)
 [![Website](https://img.shields.io/badge/Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
@@ -330,7 +330,7 @@ AeroBar respects your privacy and is built to be secure by design.
 
 ## Releases
 
-### v8.5-beta3 - July 2026
+### v8.5-beta4 - July 2026
 
 **Improvements**
 - Minor improvements and under-the-hood code decoupling.
