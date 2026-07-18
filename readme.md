@@ -10,6 +10,7 @@ Aero glass look, Start Menu, live window tabs, pinned app launcher - all sitting
 brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar
 brew trust adityaonx/aerobar
 HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
+xattr -rd com.apple.quarantine /Applications/AeroBar.app
 ```
 
 [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/total.svg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest)
@@ -91,6 +92,7 @@ Supported: macOS Sonoma-14/Sequoia-15/Tahoe-26
 brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar
 brew trust adityaonx/aerobar
 HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
+xattr -rd com.apple.quarantine /Applications/AeroBar.app
 ```
 *(The `HOMEBREW_NO_QUARANTINE=1` env var bypasses macOS Gatekeeper for this self-signed app. If you omit it, you will need to follow Step 2 below).*
 
