@@ -7,7 +7,9 @@
 Aero glass look, Start Menu, live window tabs, pinned app launcher - all sitting at the bottom of your screen, exactly where you expect it.
 
 ```bash
-brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew install --cask aerobar --no-quarantine
+brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar
+brew trust adityaonx/aerobar
+HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
 ```
 
 [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/total.svg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest)
@@ -87,9 +89,10 @@ Supported: macOS Sonoma-14/Sequoia-15/Tahoe-26
 
 ```bash
 brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar
-brew install --cask aerobar --no-quarantine
+brew trust adityaonx/aerobar
+HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
 ```
-*(The `--no-quarantine` flag bypasses macOS Gatekeeper for this self-signed app. If you omit it, you will need to follow Step 2 below).*
+*(The `HOMEBREW_NO_QUARANTINE=1` env var bypasses macOS Gatekeeper for this self-signed app. If you omit it, you will need to follow Step 2 below).*
 
 ### Option 2: Manual Download
 

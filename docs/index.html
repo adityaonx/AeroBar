@@ -1386,7 +1386,9 @@
   </p>
   
   <div style="margin: 1.5rem auto; width: 100%; max-width: 650px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; font-family: monospace; font-size: 0.9em; color: #e2e8f0; background: rgba(0,0,0,0.4); padding: 0.5rem 0.5rem 0.5rem 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
-    <span id="homebrew-cmd" style="user-select: all; overflow-x: auto; white-space: nowrap; margin-right: 1rem; flex: 1; min-width: 0; display: block; padding-bottom: 2px;">brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew install --cask aerobar --no-quarantine</span>
+    <span id="homebrew-cmd" style="user-select: all; overflow-x: auto; white-space: pre-wrap; margin-right: 1rem; flex: 1; min-width: 0; display: block; padding-bottom: 2px; text-align: left;">brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar
+brew trust adityaonx/aerobar
+HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar</span>
     <button onclick="navigator.clipboard.writeText(document.getElementById('homebrew-cmd').innerText); this.innerText='Copied!'; setTimeout(() => this.innerText='Copy', 2000);" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.85em; transition: background 0.2s; white-space: nowrap; flex-shrink: 0;">Copy</button>
   </div>
 

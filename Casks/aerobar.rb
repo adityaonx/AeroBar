@@ -11,9 +11,9 @@ cask "aerobar" do
 
   caveats <<~EOS
     AeroBar is self-signed. To avoid Gatekeeper blocks, we recommend installing with:
-      brew install --cask aerobar --no-quarantine
+      HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
 
-    If you didn't use --no-quarantine and encounter a "damaged app" error, run:
+    If you didn't use HOMEBREW_NO_QUARANTINE=1 and encounter a "damaged app" error, run:
       xattr -rd com.apple.quarantine /Applications/AeroBar.app
   EOS
 end
