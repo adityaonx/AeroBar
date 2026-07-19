@@ -6,6 +6,7 @@
 
 Aero glass look, Start Menu, live window tabs, pinned app launcher - all sitting at the bottom of your screen, exactly where you expect it.
 
+
 ```bash
 brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar
 brew trust adityaonx/aerobar
