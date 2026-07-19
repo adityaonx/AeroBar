@@ -331,8 +331,12 @@ AeroBar respects your privacy and is built to be secure by design.
 ## Releases
 
 ### v8.6-beta3 - July 2026
+- **Critical Bug Fix**: Resolved a major memory leak (100MB+) that occurred when plugging or unplugging external displays by aggressively shredding orphaned SwiftUI window previews.
+- **Update Prompt**: Engineered a flawless dynamic height system for the update panel that automatically shrink-wraps small release notes and natively scrolls massive release notes without cutting off UI elements.
 - **AeroBar Options**: Added a new "Show Bevel on Empty Displays" toggle to control bevel visibility when a display has no active windows.
 - **Bug Fix**: Fixed an issue where the AeroBar bevel line was incorrectly hidden by the focus mode dimming overlay when the display background dimmer was active on empty secondary displays.
+- **Bug Fix**: Fixed a minor memory leak where the Beta and Update alert panels failed to release their view controllers after being dismissed.
+- **Documentation**: Updated the memory optimizations guide to document edge-cases for display disconnects and clarify the difference between macOS Resident Memory (Warm Cache) and true active memory.
 
 ### v8.6-beta1 - July 2026
 - Fixed an issue where hovering over pinned apps and buttons on the internal display broke after disconnecting an external monitor.
