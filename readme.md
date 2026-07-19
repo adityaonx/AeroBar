@@ -14,7 +14,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app
 ```
 
 [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/total.svg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest)
-[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.6-beta3/AeroBar.dmg)
+[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.6-beta4/AeroBar.dmg)
 [![Website](https://img.shields.io/badge/Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
@@ -320,9 +320,9 @@ All settings persist across reboots.
 ## Privacy & Security
 
 AeroBar respects your privacy and is built to be secure by design.
-- **Local Processing**: The app's window management, accessibility tracking, and clipboard functions operate entirely locally on your Mac.
-- **Crash Reporting**: We do not collect any personal usage data or analytics. We only collect anonymous crash and hang diagnostics via Sentry. This is strictly necessary to identify complex deadlocks, fix system freezes, and guarantee a stable experience.
-- **Network Usage**: The *only* time AeroBar connects to the internet is to check for and download new update releases directly from GitHub.
+- **Local Data Storage**: All your personal data—including clipboard history, window layout preferences, widgets, and quick links—remains strictly offline, encrypted, and saved locally on your Mac. No user content ever leaves your machine.
+- **Beta Verification & Updates**: AeroBar connects to the internet for two system checks: (1) to verify your beta license status dynamically against a lightweight Cloudflare Worker once every 24 hours, and (2) to check GitHub for new app updates.
+- **Anonymous Diagnostics**: To resolve memory leaks, deadlocks, and system crashes (crucial during an experimental beta), the app uploads anonymous diagnostic telemetry via Sentry. We never collect personal data or usage analytics.
 
 [Back to top](#aerobar)
 
@@ -330,12 +330,13 @@ AeroBar respects your privacy and is built to be secure by design.
 
 ## Releases
 
-### v8.6-beta3 - July 2026
-- **Critical Bug Fix**: Resolved a major memory leak (100MB+) that occurred when plugging or unplugging external displays by aggressively shredding orphaned SwiftUI window previews.
+### v8.6-beta4 - July 2026
+- **Hardware-Derived Keys**: Migrated the clipboard encryption key directly to a secure, hardware-derived key using the Mac's logic board serial number, ensuring military-grade security without triggering macOS Keychain permission prompts.
+- **Improved Lockout Flow**: The beta lockout panel is now immovable and automatically hides the main AeroBar taskbar when active. Also fixed a bug where clicking 'Disable launch at start' closed the confirmation alert prematurely.
+- **Automated Check-Ins & Rate Limiting**: Implemented network change observation and a 24-hour background timer to fetch license updates automatically, with rate-limiting to protect free Cloudflare worker quotas.
+- **Critical Bug Fixes**: Resolved a major memory leak (100MB+) that occurred when plugging/unplugging external displays by aggressively shredding orphaned SwiftUI window previews. Also fixed a minor memory leak where the Beta/Update alert panels failed to release their view controllers.
 - **Update Prompt**: Engineered a flawless dynamic height system for the update panel that automatically shrink-wraps small release notes and natively scrolls massive release notes without cutting off UI elements.
-- **AeroBar Options**: Added a new "Show Bevel on Empty Displays" toggle to control bevel visibility when a display has no active windows.
-- **Bug Fix**: Fixed an issue where the AeroBar bevel line was incorrectly hidden by the focus mode dimming overlay when the display background dimmer was active on empty secondary displays.
-- **Bug Fix**: Fixed a minor memory leak where the Beta and Update alert panels failed to release their view controllers after being dismissed.
+- **AeroBar Options**: Added a new "Show Bevel on Empty Displays" toggle to control bevel visibility when a display has no active windows. Also fixed an issue where the bevel line was incorrectly hidden by the focus mode dimming overlay when the background dimmer was active.
 - **Documentation**: Updated the memory optimizations guide to document edge-cases for display disconnects and clarify the difference between macOS Resident Memory (Warm Cache) and true active memory.
 
 ### v8.6-beta1 - July 2026
@@ -385,7 +386,7 @@ AeroBar respects your privacy and is built to be secure by design.
 - **Sleep Crashes**: Fixed an issue where the app's watchdog timer would time out and crash the app when waking the Mac from sleep.
 - **System Freezes**: Resolved a critical deadlock issue where the macOS WindowServer could freeze during Cmd+Tab or gesture switching when interacting with AeroBar settings due to main thread lock contention.
 
-### v8.3-beta5 - July 2026
+### v8.3-beta4 - July 2026
 
 **Stability & Debugging**
 - **Native Crash Reporter**: Moved the crash popup to a clean native launch window instead of a background script.
@@ -437,7 +438,7 @@ AeroBar respects your privacy and is built to be secure by design.
   - Disabled the "bevel" edge effect on both the top and bottom bars while in focus mode.
   - Fixed a flickering issue that occurred when hovering over pinned apps.
 
-### v8.2-beta5 - July 2026
+### v8.2-beta4 - July 2026
 
 **Performance & Fixes**
 - **Daemon Optimization**: Eliminated severe CPU usage and UI hitches (saving ~500ms per tick) by caching Space IPC calls and eagerly short-circuiting invisible phantom windows.

@@ -1369,7 +1369,7 @@
     <a href="#contact">Contact</a>
     <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.6-beta3/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
+  <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.6-beta4/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
     Download
   </a>
 </nav>
@@ -1378,7 +1378,7 @@
 <section id="hero">
   <div class="badge">
     <span class="badge-dot"></span>
-    New Release: v8.6-beta3 is now live!
+    New Release: v8.6-beta4 is now live!
   </div>
   <h1>The <span class="gradient">Windows Taskbar</span><br/>you missed on Mac</h1>
   <p class="hero-sub">
@@ -1394,7 +1394,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
   </div>
 
   <div class="hero-actions">
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.6-beta3/AeroBar.dmg"
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.6-beta4/AeroBar.dmg"
        class="btn-primary" id="hero-download-btn">
       Download for Mac
     </a>
@@ -1406,7 +1406,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
 
   <div class="channel-links-row">
     <span>Channels:</span>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.6-beta3/AeroBar.dmg" title="Download latest stable v8.6-beta3 release">Stable (v8.6-beta3)</a>
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.6-beta4/AeroBar.dmg" title="Download latest stable v8.6-beta4 release">Stable (v8.6-beta4)</a>
     <span class="separator">•</span>
     <a href="https://github.com/adityaonx/AeroBar/releases" target="_blank" rel="noopener" title="View experimental pre-releases">Beta Build</a>
     <span class="separator">•</span>
@@ -1759,8 +1759,8 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
       <div class="feature-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
       </div>
-      <div class="feature-title">Local Processing</div>
-      <div class="feature-desc">All window management, accessibility tracking, and clipboard functions run locally on your Mac. No data leaves your machine.</div>
+      <div class="feature-title">Local Data Storage</div>
+      <div class="feature-desc">Your clipboard history, pinned applications, widgets, and layout configurations are kept strictly offline, encrypted, and stored locally on your Mac. No user data ever leaves your device.</div>
     </div>
     
     <div class="feature-card reveal">
@@ -1768,15 +1768,15 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
       </div>
       <div class="feature-title">Diagnostic Telemetry Only</div>
-      <div class="feature-desc">AeroBar tracks zero personal data or usage analytics. We only collect anonymous crash and hang diagnostics to ensure maximum app stability.</div>
+      <div class="feature-desc">AeroBar collects anonymous crash and hang diagnostics via Sentry to resolve system-level deadlocks and memory leaks. We never track personal usage habits or collect analytics.</div>
     </div>
     
     <div class="feature-card reveal">
       <div class="feature-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
       </div>
-      <div class="feature-title">Verifiable Network</div>
-      <div class="feature-desc">The *only* time AeroBar makes a network request is to ping the official GitHub repository for software updates.</div>
+      <div class="feature-title">Secure Verification & Updates</div>
+      <div class="feature-desc">The app connects to the internet only to dynamically verify your beta license status against our lightweight Cloudflare Worker once every 24 hours, and to ping GitHub for software updates.</div>
     </div>
   </div>
 </section>
@@ -1792,7 +1792,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
     <div class="release-card featured-release reveal">
       <div class="release-header">
         <div class="release-title-wrapper">
-          <span class="release-version">v8.6-beta3</span>
+          <span class="release-version">v8.6-beta4</span>
           <span class="release-badge stable">Latest Release</span>
         </div>
         <span class="release-date">Released July 2026</span>
@@ -1800,8 +1800,12 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
       <div class="release-body">
         <h4>Fixes &amp; Enhancements</h4>
         <ul>
-          <li><strong>AeroBar Options</strong>: Added a new "Show Bevel on Empty Displays" toggle to control bevel visibility when a display has no active windows.</li>
-          <li><strong>Bug Fix</strong>: Fixed an issue where the AeroBar bevel line was incorrectly hidden by the focus mode dimming overlay when the display background dimmer was active on empty secondary displays.</li>
+          <li><strong>Hardware-Derived Keys</strong>: Migrated the clipboard encryption key directly to a secure, hardware-derived key using the Mac's logic board serial number, ensuring military-grade security without triggering macOS Keychain permission prompts.</li>
+          <li><strong>Improved Lockout Flow</strong>: The beta lockout panel is now immovable and automatically hides the main AeroBar taskbar when active. Also fixed a bug where clicking 'Disable launch at start' closed the confirmation alert prematurely.</li>
+          <li><strong>Automated Check-Ins &amp; Rate Limiting</strong>: Implemented network change observation and a 24-hour background timer to fetch license updates automatically, with rate-limiting to protect free Cloudflare worker quotas.</li>
+          <li><strong>Critical Bug Fixes</strong>: Resolved a major memory leak (100MB+) that occurred when plugging/unplugging external displays by aggressively shredding orphaned SwiftUI window previews. Also fixed a minor memory leak where the Beta/Update alert panels failed to release their view controllers.</li>
+          <li><strong>Update Prompt</strong>: Engineered a flawless dynamic height system for the update panel that automatically shrink-wraps small release notes and natively scrolls massive release notes without cutting off UI elements.</li>
+          <li><strong>AeroBar Options</strong>: Added a new "Show Bevel on Empty Displays" toggle to control bevel visibility when a display has no active windows. Also fixed an issue where the bevel line was incorrectly hidden by the focus mode dimming overlay when the background dimmer was active.</li>
         </ul>
       </div>
     </div>
@@ -1862,7 +1866,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
     <div class="release-card reveal">
       <div class="release-header">
         <div class="release-title-wrapper">
-          <span class="release-version">v8.3-beta5</span>
+          <span class="release-version">v8.3-beta4</span>
         </div>
         <span class="release-date">Released July 2026</span>
       </div>
@@ -2000,7 +2004,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
     <div class="release-card reveal">
       <div class="release-header">
         <div class="release-title-wrapper">
-          <span class="release-version">v8.2-beta5</span>
+          <span class="release-version">v8.2-beta4</span>
           <span class="release-badge stable">Stable</span>
         </div>
         <span class="release-date">Released July 2026</span>
@@ -2177,7 +2181,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
       </div>
     </div>
     <div style="text-align:center; margin-top: 1rem;" class="reveal">
-      <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.6-beta3/AeroBar.dmg"
+      <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.6-beta4/AeroBar.dmg"
          class="btn-primary" style="display:inline-flex;">
         Download AeroBar.dmg
       </a>
@@ -2202,7 +2206,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
       <li>Appearance Lab - full customization</li>
       <li>macOS Tahoe</li>
     </ul>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.4-beta9/AeroBar.dmg"
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.6-beta4/AeroBar.dmg"
        id="pricing-download-btn" class="btn-primary" style="width:100%; justify-content:center; margin-bottom:1.25rem;">
       Download for Free
     </a>
