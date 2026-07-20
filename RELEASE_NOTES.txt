@@ -1,5 +1,0 @@
-AeroBar v8.5-beta3 Release Notes
-
-- **Stability Fix**: Resolved severe application hangs and Watchdog timeouts that could freeze the app entirely.
-- **Performance Enhancement**: Moved icon loading and image rasterization fully off the main thread (introducing `AsyncIconView`). This dramatically improves UI responsiveness and eliminates RenderBox/Metal compilation bottlenecks when rendering lots of application icons at once.
-- **Minor Bug Fixes**: Fixed a minor compilation visibility issue in the custom color picker (`AeroBarAppColorView`).
