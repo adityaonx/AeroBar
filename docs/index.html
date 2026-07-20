@@ -1768,7 +1768,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
       </div>
       <div class="feature-title">Diagnostic Telemetry Only</div>
-      <div class="feature-desc">AeroBar collects anonymous crash and hang diagnostics via Sentry to resolve system-level deadlocks and memory leaks. We never track personal usage habits or collect analytics.</div>
+      <div class="feature-desc">AeroBar collects anonymous crash and hang diagnostics via Sentry to resolve system-level deadlocks and memory leaks. These reports contain strictly technical diagnostic metadata and absolutely no personal data or clipboard contents. We never track usage habits or collect analytics.</div>
     </div>
     
     <div class="feature-card reveal">
@@ -1800,6 +1800,8 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
       <div class="release-body">
         <h4>Fixes &amp; Enhancements</h4>
         <ul>
+          <li><strong>CheckedContinuation Crash Fix</strong>: Resolved a fatal <code>SWIFT TASK CONTINUATION MISUSE</code> crash in the clipboard thumbnail generator where a checked continuation could be resumed multiple times on decryption failure.</li>
+          <li><strong>Main Thread App Hang &amp; Watchdog Fix</strong>: Moved AppleScript execution (session actions, onboarding permission checks, and keystroke automation) entirely off the main thread to background queues, eliminating UI hangs and Watchdog timeout crashes.</li>
           <li><strong>Unified Hover Highlights</strong>: All app icons and system buttons share the exact same selection-color border and glow highlights on hover.</li>
           <li><strong>MacOSSquircle Rendering</strong>: Applied mathematical macOS superellipse curves to all overlays and clipping masks to eliminate edge aliasing.</li>
           <li><strong>High-Resolution Icon Scaling</strong>: Refactored the icon rasterizer to retrieve high-resolution <code>256x256</code> representations and manually downsample them, preserving the squircle background on smaller bar heights.</li>

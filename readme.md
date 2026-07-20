@@ -322,7 +322,7 @@ All settings persist across reboots.
 AeroBar respects your privacy and is built to be secure by design.
 - **Local Data Storage**: All your personal data—including clipboard history, window layout preferences, widgets, and quick links—remains strictly offline, encrypted, and saved locally on your Mac. No user content ever leaves your machine.
 - **Beta Verification & Updates**: AeroBar connects to the internet for two system checks: (1) to verify your beta license status dynamically against a lightweight Cloudflare Worker once every 24 hours, and (2) to check GitHub for new app updates.
-- **Anonymous Diagnostics**: To resolve memory leaks, deadlocks, and system crashes (crucial during an experimental beta), the app uploads anonymous diagnostic telemetry via Sentry. We never collect personal data or usage analytics.
+- **Anonymous Diagnostics**: To resolve memory leaks, deadlocks, and system crashes (crucial during an experimental beta), the app uploads anonymous diagnostic telemetry via Sentry. We collect technical diagnostics (e.g. system hardware metrics, OS version, call stacks) strictly to resolve crashes, and absolutely never collect personal data, user input, or clipboard contents.
 
 [Back to top](#aerobar)
 
@@ -331,6 +331,8 @@ AeroBar respects your privacy and is built to be secure by design.
 ## Releases
 
 ### v8.6-beta7 - July 2026
+- **CheckedContinuation Crash Fix**: Resolved a fatal `SWIFT TASK CONTINUATION MISUSE` crash in the clipboard thumbnail generator where a checked continuation could be resumed multiple times when decryption failed.
+- **Main Thread App Hang & Watchdog Fix**: Moved AppleScript execution (such as session actions, onboarding permission checks, and keystroke automation) entirely off the main thread to background queues, eliminating severe UI hangs and Watchdog timeout crashes.
 - **Unified Hover Highlights**: All app icons and system buttons share the exact same selection-color border and glow highlights on hover.
 - **MacOSSquircle Rendering**: Applied mathematical macOS superellipse curves to all overlays and clipping masks to eliminate edge aliasing.
 - **High-Resolution Icon Scaling**: Refactored the icon rasterizer to retrieve high-resolution `256x256` representations and manually downsample them, preserving the squircle background on smaller bar heights.

@@ -52,7 +52,7 @@ If any provision of this Agreement is held to be unenforceable or invalid by a c
 ## 10. PRIVACY POLICY
 AeroBar is designed with privacy as a fundamental principle.
 (a) **Local Processing:** The Software operates entirely on your local Apple macOS device. Window management, accessibility processing, and clipboard history encryption are performed locally.
-(b) **No Telemetry or Data Collection:** We do not collect, store, transmit, or monetize any of your personal data, clipboard contents, screen captures, or usage telemetry to our servers or any third-party servers.
+(b) **Privacy & Crash Reporting:** We do not collect, store, transmit, or monetize your personal data, clipboard contents, database entries, or screen captures. To improve app stability and resolve runtime crashes/hangs, the Software collects anonymous crash and hang logs via Sentry. These reports contain strictly technical diagnostic metadata (such as system hardware architecture, operating system version, execution call stacks, and thread states) and absolutely no personal data, user input, or clipboard contents.
 (c) **Data Security:** The Software uses standard Apple frameworks (such as AES-GCM) to secure local features like clipboard history.
 By using the Software, you acknowledge and agree to this Privacy Policy.
 
