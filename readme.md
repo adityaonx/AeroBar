@@ -14,7 +14,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app
 ```
 
 [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/total.svg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest)
-[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.6-beta6/AeroBar.dmg)
+[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.6-beta7/AeroBar.dmg)
 [![Website](https://img.shields.io/badge/Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
@@ -329,6 +329,13 @@ AeroBar respects your privacy and is built to be secure by design.
 ---
 
 ## Releases
+
+### v8.6-beta7 - July 2026
+- **Unified Hover Highlights**: All app icons and system buttons share the exact same selection-color border and glow highlights on hover.
+- **MacOSSquircle Rendering**: Applied mathematical macOS superellipse curves to all overlays and clipping masks to eliminate edge aliasing.
+- **High-Resolution Icon Scaling**: Refactored the icon rasterizer to retrieve high-resolution `256x256` representations and manually downsample them, preserving the squircle background on smaller bar heights.
+- **Adaptive Button Sizing**: Dynamically scale system shortcut button containers and inner icons depending on active bar height to match the visible padding of native app icons.
+- **Window Tab App Icon Upgrades**: Updated window tab icons to use the high-resolution rasterized loader, aligning them with the main tray's sharp rendering.
 
 ### v8.6-beta6 - July 2026
 - **Window Tab Pruning Fix**: Fixed a bug where closed or stale app windows would still show up on the window tabs list for up to 15 seconds. Reduced the CGWindowList cache refresh interval to 0.5 seconds, ensuring closed windows are pruned immediately.
