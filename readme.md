@@ -14,7 +14,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app
 ```
 
 [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/AeroBar.dmg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest)
-[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.6-beta7/AeroBar.dmg)
+[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.6-beta8/AeroBar.dmg)
 [![Website](https://img.shields.io/badge/Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
@@ -329,6 +329,9 @@ AeroBar respects your privacy and is built to be secure by design.
 ---
 
 ## Releases
+
+### v8.6-beta8 - July 2026
+- **Per-Icon Show/Hide Toggles**: Added enable/disable switches to every row in Appearance → Icon Colors → Advanced - Per-Element, letting you hide individual bar icons (Search, Recycle Bin, File Shelf, Clipboard, Widgets, Quick Links, Pinned Folder, Show Desktop, Mission Control) independently, right alongside their color overrides. All icons remain enabled by default.
 
 ### v8.6-beta7 - July 2026
 - **CheckedContinuation Crash Fix**: Resolved a fatal `SWIFT TASK CONTINUATION MISUSE` crash in the clipboard thumbnail generator where a checked continuation could be resumed multiple times when decryption failed.
