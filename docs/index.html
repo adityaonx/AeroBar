@@ -1369,16 +1369,40 @@
     <a href="#contact">Contact</a>
     <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.7-beta3/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
+  <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.7-beta4/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
     Download
   </a>
 </nav>
+
+<!-- Release Announcement Banner -->
+<div class="announcement-banner" id="release-announcement">
+  <div class="announcement-content">
+    <span class="announcement-badge">v8.7-beta4</span>
+    <span class="announcement-text">New Release: v8.7-beta4 is now live!</span>
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.7-beta4/AeroBar.dmg" class="announcement-link">
+      Download DMG
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="hero-section">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="version-tag">
+      <span class="pulse"></span>
+      <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.7-beta4/AeroBar.dmg" title="Download latest stable v8.7-beta4 release">Stable (v8.7-beta4)</a>
+    </div>
+  </div>
+</section>
 
 <!-- Hero -->
 <section id="hero">
   <div class="badge">
     <span class="badge-dot"></span>
-    New Release: v8.7-beta3 is now live!
+    New Release: v8.7-beta4 is now live!
   </div>
   <h1>The <span class="gradient">Windows Taskbar</span><br/>you missed on Mac</h1>
   <p class="hero-sub">
@@ -1792,8 +1816,27 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
     <div class="release-card featured-release reveal">
       <div class="release-header">
         <div class="release-title-wrapper">
-          <span class="release-version">v8.7-beta3</span>
+          <span class="release-version">v8.7-beta4</span>
           <span class="release-badge stable">Latest Release</span>
+        </div>
+        <span class="release-date">Released July 2026</span>
+      </div>
+      <div class="release-body">
+        <h4>Fixes &amp; Performance Optimization</h4>
+        <ul>
+          <li><strong>Zero-Latency Hover Tracking</strong>: Upgraded context menu options and Power Menu item hover tracking to synchronous, click-transparent <code>hitTest</code> coordinators, completely eliminating mouse selection lag across pinned apps and window tabs.</li>
+          <li><strong>Power Menu Option Handler Fix</strong>: Replaced AppleScript dispatch routines for Sleep and Lock Screen with direct macOS process calls (<code>/usr/bin/pmset</code>) and fixed Log Out / Shut Down execution handlers.</li>
+          <li><strong>Eliminated Continuous Disk Writes</strong>: Removed a body-level debug file write in <code>PinnedAppsTray</code> that was triggering on every layout pass, reducing background disk write frequency dramatically.</li>
+          <li><strong>Watchdog &amp; Health Monitoring Optimization</strong>: Optimized watchdog heartbeat ping frequency and enabled automated Sentry release session tracking for active user health monitoring.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Previous Release -->
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v8.7-beta3</span>
         </div>
         <span class="release-date">Released July 2026</span>
       </div>

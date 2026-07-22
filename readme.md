@@ -13,9 +13,7 @@ HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
 xattr -rd com.apple.quarantine /Applications/AeroBar.app
 ```
 
-[![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/AeroBar.dmg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest)
-[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.7-beta3/AeroBar.dmg)
-[![Website](https://img.shields.io/badge/Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
+[![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/AeroBar.dmg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest)[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.7-beta4/AeroBar.dmg)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
 
@@ -38,11 +36,6 @@ If you liked this project, please consider giving it a <img width="20" height="2
 
 <hr>
 
-<img width="735" height="478" alt="image" src="https://github.com/user-attachments/assets/84bac2b9-b4ed-4122-bc45-5810ede0a83e" />
-
-<hr>
-
-<img width="735" height="478" alt="image" src="https://github.com/user-attachments/assets/596fb09f-b4c7-4d16-ab7d-64cc07766d5f" />
 
 <hr>
 
@@ -329,6 +322,12 @@ AeroBar respects your privacy and is built to be secure by design.
 ---
 
 ## Releases
+
+### v8.7-beta4 - July 2026
+- **Zero-Latency Hover Tracking**: Upgraded context menu options and Power Menu item hover tracking to synchronous, click-transparent `hitTest` coordinators, completely eliminating mouse selection lag across pinned apps and window tabs.
+- **Power Menu Action Handler Fix**: Replaced AppleScript dispatch routines for Sleep and Lock Screen with direct macOS process calls (`/usr/bin/pmset`) and fixed Log Out / Shut Down execution handlers.
+- **Eliminated Continuous Disk Writes**: Removed a body-level debug file write in `PinnedAppsTray` that was triggering on every layout pass, reducing background disk write frequency dramatically.
+- **Watchdog & Health Monitoring Optimization**: Optimized watchdog heartbeat ping frequency and enabled automated Sentry release session tracking for active user health monitoring.
 
 ### v8.7-beta3 - July 2026
 - **Pinned App & Mission Control Hover Highlight Fix**: Resolved an issue where dragging and rearranging pinned apps reversed their hover highlights, and fixed hover highlights missing on the Mission Control button by updating frame and layout tracking across all bar elements.
