@@ -14,7 +14,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app
 ```
 
 [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/AeroBar.dmg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest)
-[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.7-beta2/AeroBar.dmg)
+[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.7-beta3/AeroBar.dmg)
 [![Website](https://img.shields.io/badge/Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
@@ -329,6 +329,13 @@ AeroBar respects your privacy and is built to be secure by design.
 ---
 
 ## Releases
+
+### v8.7-beta3 - July 2026
+- **Pinned App & Mission Control Hover Highlight Fix**: Resolved an issue where dragging and rearranging pinned apps reversed their hover highlights, and fixed hover highlights missing on the Mission Control button by updating frame and layout tracking across all bar elements.
+- **Right-Side Utility Buttons Drag-to-Reorder**: Added live drag-to-reorder support for all right-side utility buttons (Clipboard, File Shelf, Quick Links, Widgets, Recycle Bin, Show Desktop, Pinned Folder) with customizable order storage.
+- **Independent Light & Dark Mode Indicator Styles**: Made Indicator Styles (Pill, Full Line, Trimmed Line, Dot, Border) and dimmer settings completely independent per appearance mode, defaulting to Full Line on Dark Mode and Pill on Light Mode.
+- **Refined Light Mode Pill Fill**: Upgraded the Pill indicator style (`.underline`) to render a smooth, rich rounded pill background fill with accent border in Light Mode.
+- **Automatic macOS App Icon Refresh**: Connected system appearance changes (`NSApp.effectiveAppearance`) to automatically purge icon caches and re-extract native app icons when switching between macOS Dark and Light modes.
 
 ### v8.7-beta2 - July 2026
 - **Troubleshooting & Fixes Tab**: Added a dedicated Troubleshoot tab in AeroBar Settings featuring a 4-step quick fix guide and direct System Settings shortcuts for resolving post-system freeze macOS HID event tap blocks (Cmd+Tab / 3-finger swipe, hover highlights, button popups).
