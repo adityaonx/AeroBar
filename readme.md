@@ -14,7 +14,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app
 ```
 
 [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/AeroBar.dmg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest)
-[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.7-beta1/AeroBar.dmg)
+[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.7-beta2/AeroBar.dmg)
 [![Website](https://img.shields.io/badge/Visit_Website-9B004D?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
@@ -329,6 +329,13 @@ AeroBar respects your privacy and is built to be secure by design.
 ---
 
 ## Releases
+
+### v8.7-beta2 - July 2026
+- **Troubleshooting & Fixes Tab**: Added a dedicated Troubleshoot tab in AeroBar Settings featuring a 4-step quick fix guide and direct System Settings shortcuts for resolving post-system freeze macOS HID event tap blocks (Cmd+Tab / 3-finger swipe, hover highlights, button popups).
+- **macOS App Icon Cache Refresh**: Added a "Refresh All macOS App Icons Now" tool to purge icon caches and force a system-wide reload across all pinned apps, window tabs, window previews, and start menu items when macOS themes or icon settings change.
+- **Fullscreen Popover Suppression**: Resolved an issue where button popups and preview panels (Quick Links, Widgets, Window Previews, File Shelf, Pinned Folders) appeared on hover when watching videos or running apps in true fullscreen mode.
+- **Opt-in Clipboard Background Processes**: Fully gated all clipboard background activity (0.4s pasteboard polling timer, system sleep/wake event observers, and thumbnail disk I/O) behind the Extensions setting toggle. When disabled, background clipboard activity and memory consumption drop to zero.
+- **Main Thread Safety**: Dispatched coordinate hover tracker evaluations to the main thread, eliminating thread sanitizer/Main Thread Checker warnings and ensuring thread-safe window property reads.
 
 ### v8.7-beta1 - July 2026
 - **Bar Height Dock Re-enforcement & Window Re-clamping**: Changing the Bar Height automatically re-enforces system Dock size defaults and autohide settings after a 500ms debounce, triggering window re-clamping across open applications.
