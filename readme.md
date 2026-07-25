@@ -13,6 +13,7 @@ HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
 xattr -rd com.apple.quarantine /Applications/AeroBar.app
 ```
 
+
 [![Visit Website](https://img.shields.io/badge/Visit_Website-3B82F6?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/) [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/AeroBar.dmg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest) [![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.7-beta8/AeroBar.dmg)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
