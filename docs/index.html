@@ -183,6 +183,27 @@
     }
     .btn-secondary:hover { background: var(--surface-hover); border-color: rgba(255,255,255,0.25); transform: translateY(-2px); }
 
+    .homebrew-cmd-box {
+      margin: 1.5rem auto; width: 100%; max-width: 650px; box-sizing: border-box;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: monospace; font-size: 0.85em; color: #e2e8f0;
+      background: rgba(0,0,0,0.4); padding: 0.5rem 0.5rem 0.5rem 1rem;
+      border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      animation: fadeInUp 0.7s ease 0.25s both;
+    }
+    .homebrew-cmd-box span {
+      user-select: all; overflow-x: auto; white-space: pre-wrap;
+      margin-right: 1rem; flex: 1; min-width: 0; display: block;
+      padding-bottom: 2px; text-align: left;
+    }
+    .homebrew-cmd-box button {
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.1);
+      color: white; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer;
+      font-size: 0.85em; transition: background 0.2s; white-space: nowrap; flex-shrink: 0;
+    }
+    .homebrew-cmd-box button:hover { background: rgba(255,255,255,0.25); }
+
     .hero-stats {
       margin-top: 1.5rem; display: flex; gap: 1.5rem; justify-content: center;
       font-size: 0.85rem; color: var(--text-dim);
@@ -1179,7 +1200,7 @@
     @media (max-width: 768px) {
       #hero {
         justify-content: flex-start !important;
-        padding-top: 100px !important;
+        padding-top: 105px !important;
         padding-bottom: 15px !important;
         padding-left: 15px !important;
         padding-right: 15px !important;
@@ -1230,13 +1251,14 @@
       }
       .demo-with-presets { flex-direction: column !important; gap: 15px !important; width: 100% !important; max-width: 100% !important; }
       #hero .badge { order: 1 !important; }
-      #hero h1 { order: 2 !important; margin-bottom: 25px !important; }
-      #hero .demo-with-presets { order: 3 !important; }
-      #hero .hero-sub { order: 4 !important; }
-      #hero .hero-actions { order: 5 !important; }
+      #hero h1 { order: 2 !important; margin-bottom: 15px !important; }
+      #hero .hero-sub { order: 3 !important; margin-top: 0.75rem !important; }
+      #hero .homebrew-cmd-box { order: 4 !important; font-size: 0.75em !important; margin: 1rem 0 !important; width: 100% !important; }
+      #hero .hero-actions { order: 5 !important; margin-top: 1rem !important; }
       #hero .channel-links-row { order: 6 !important; }
       #hero .hero-stats { order: 7 !important; }
       #hero .hero-compat { order: 8 !important; }
+      #hero .demo-with-presets { order: 9 !important; }
       
       .taskbar-preview {
         width: 384px !important;
@@ -1413,17 +1435,6 @@
   </div>
 </div>
 
-<!-- Hero Section -->
-<section class="hero" id="hero-section">
-  <div class="hero-bg"></div>
-  <div class="hero-content">
-    <div class="version-tag">
-      <span class="pulse"></span>
-      <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.7-beta4/AeroBar.dmg" title="Download latest stable v8.7-beta4 release">Stable (v8.7-beta4)</a>
-    </div>
-  </div>
-</section>
-
 <!-- Hero -->
 <section id="hero">
   <div class="badge">
@@ -1435,12 +1446,12 @@
     Aero glass look, Start Menu, live window tabs, pinned app launcher - all sitting at the bottom of your screen, exactly where you expect it.
   </p>
   
-  <div style="margin: 1.5rem auto; width: 100%; max-width: 650px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; font-family: monospace; font-size: 0.9em; color: #e2e8f0; background: rgba(0,0,0,0.4); padding: 0.5rem 0.5rem 0.5rem 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
-    <span id="homebrew-cmd" style="user-select: all; overflow-x: auto; white-space: pre-wrap; margin-right: 1rem; flex: 1; min-width: 0; display: block; padding-bottom: 2px; text-align: left;">brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar
+  <div class="homebrew-cmd-box">
+    <span id="homebrew-cmd">brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar
 brew trust adityaonx/aerobar
 HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
 xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
-    <button onclick="navigator.clipboard.writeText(document.getElementById('homebrew-cmd').innerText); this.innerText='Copied!'; setTimeout(() => this.innerText='Copy', 2000);" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.85em; transition: background 0.2s; white-space: nowrap; flex-shrink: 0;">Copy</button>
+    <button onclick="navigator.clipboard.writeText(document.getElementById('homebrew-cmd').innerText); this.innerText='Copied!'; setTimeout(() => this.innerText='Copy', 2000);">Copy</button>
   </div>
 
   <div class="hero-actions">
