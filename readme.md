@@ -13,7 +13,7 @@ HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
 xattr -rd com.apple.quarantine /Applications/AeroBar.app
 ```
 
-[![Visit Website](https://img.shields.io/badge/Visit_Website-3B82F6?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/) [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/AeroBar.dmg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest) [![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.7-beta6/AeroBar.dmg)
+[![Visit Website](https://img.shields.io/badge/Visit_Website-3B82F6?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/) [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/AeroBar.dmg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest) [![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.7-beta8/AeroBar.dmg)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
 
@@ -322,6 +322,11 @@ AeroBar respects your privacy and is built to be secure by design.
 ---
 
 ## Releases
+
+### v8.7-beta8 - July 2026
+- **Critical Crash Fix**: Fixed an issue where macOS Accessibility API calls on the main thread caused AeroBar to hang indefinitely when interacting with unresponsive applications. These calls have now been properly offloaded to background queues.
+- **Diagnostics**: Added automatic full thread sample capture to Sentry crash reports when the emergency hotkey (`Ctrl+Option+Cmd+Esc`) is triggered for app hangs.
+- **Security Patch**: Rotated cryptographic keys for beta verification and fixed an issue where configuration secrets were unintentionally bundled into the app.
 
 ### v8.7-beta6 - July 2026
 - **UI Refinements**: Fixed divider visibility logic between unpinned apps and utility buttons.
