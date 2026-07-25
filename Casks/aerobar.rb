@@ -1,5 +1,5 @@
 cask "aerobar" do
-  version "8.7-beta8"
+  version "8.7-beta9"
   sha256 :no_check
 
   url "https://github.com/adityaonx/AeroBar/releases/download/v#{version}/AeroBar.dmg"
