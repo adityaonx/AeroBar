@@ -13,7 +13,7 @@ HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
 xattr -rd com.apple.quarantine /Applications/AeroBar.app
 ```
 
-[![Visit Website](https://img.shields.io/badge/Visit_Website-3B82F6?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/) [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/AeroBar.dmg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest) [![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.7-beta10/AeroBar.dmg)
+[![Visit Website](https://img.shields.io/badge/Visit_Website-3B82F6?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/) [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/AeroBar.dmg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest) [![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.8-beta1/AeroBar.dmg)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
 
@@ -322,6 +322,11 @@ AeroBar respects your privacy and is built to be secure by design.
 ---
 
 ## Releases
+
+### v8.8-beta1 - July 2026
+- **Performance & Stability**: Fixed App Hang deadlocks that occurred when interacting with native Fullscreen spaces or using trackpad gestures under heavy system load.
+- **Sentry Integration**: Reconfigured the Sentry App Hang Tracker to ensure reliable crash logs without conflicting with custom watchdogs.
+- Improved battery life and CPU efficiency by optimizing global mouse tracking and space detection.
 
 ### v8.7-beta9 - July 2026
 - **Input Monitoring Guide Fix**: Fixed an issue where the permission guide popup would immediately close itself if macOS was experiencing the TCC recompilation bug, preventing users from reading the workaround instructions.
