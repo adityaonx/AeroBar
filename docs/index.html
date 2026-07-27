@@ -1860,11 +1860,13 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
         <span class="release-date">Released July 2026</span>
       </div>
       <div class="release-body">
-        <h4>Fixes &amp; Performance Optimization</h4>
+        <h4>New Features &amp; Fixes</h4>
         <ul>
-          <li><strong>Critical Crash Fix</strong>: Fixed an issue where macOS Accessibility API calls on the main thread caused AeroBar to hang indefinitely when interacting with unresponsive applications. These calls have now been properly offloaded to background queues.</li>
-          <li><strong>Diagnostics</strong>: Added automatic full thread sample capture to Sentry crash reports fully automatically in the background without requiring user input whenever an app freeze is detected.</li>
-          <li><strong>Security Patch</strong>: Rotated cryptographic keys for beta verification and fixed an issue where configuration secrets were unintentionally bundled into the app.</li>
+          <li><strong>Dynamic Liquid Glass (Default)</strong>: Introduced a brand new, highly optimized dynamic material that renders volumetric, real-time tracking liquid glass waves on hover. This breathtaking effect is now enabled by default for all users.</li>
+          <li><strong>Sleeker &amp; Synced Glass Menus</strong>: Reduced the App Menu and popup glass bevels to a much sleeker 1.5px and implemented custom, perfectly concentric squircle inner radii so that the inner glow and outer window borders are in flawless visual sync.</li>
+          <li><strong>Unblockable Global Hover Tracking</strong>: Rebuilt the hover tracking logic to use raw OS-level `CGEventTap` coordinates. Dynamic liquid glass waves now sweep smoothly back and forth across the entire bar, including straight across all window tabs without ever freezing or dropping frames.</li>
+          <li><strong>Faster Beta Cycles</strong>: Changed the default update check cycle to 2 hours (previously Daily) so testers get the latest hotfixes almost immediately.</li>
+          <li><strong>Performance &amp; Stability</strong>: Fixed App Hang deadlocks that occurred when interacting with native Fullscreen spaces or using trackpad gestures under heavy system load.</li>
         </ul>
       </div>
     </div>

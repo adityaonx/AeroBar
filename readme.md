@@ -324,6 +324,10 @@ AeroBar respects your privacy and is built to be secure by design.
 ## Releases
 
 ### v8.8-beta4 - July 2026
+- **Dynamic Liquid Glass (Default)**: Introduced a brand new, highly optimized dynamic material that renders volumetric, real-time tracking liquid glass waves on hover. This breathtaking effect is now enabled by default for all users.
+- **Sleeker & Synced Glass Menus**: Reduced the App Menu and popup glass bevels to a much sleeker 1.5px and implemented custom, perfectly concentric squircle inner radii so that the inner glow and outer window borders are in flawless visual sync.
+- **Unblockable Global Hover Tracking**: Rebuilt the hover tracking logic to use raw OS-level `CGEventTap` coordinates. Dynamic liquid glass waves now sweep smoothly back and forth across the entire bar, including straight across all window tabs without ever freezing or dropping frames.
+- **Faster Beta Cycles**: Changed the default update check cycle to 2 hours (previously Daily) so testers get the latest hotfixes almost immediately.
 - **Performance & Stability**: Fixed App Hang deadlocks that occurred when interacting with native Fullscreen spaces or using trackpad gestures under heavy system load.
 - **Sentry Integration**: Reconfigured the Sentry App Hang Tracker to ensure reliable crash logs without conflicting with custom watchdogs.
 - Improved battery life and CPU efficiency by optimizing global mouse tracking and space detection.
