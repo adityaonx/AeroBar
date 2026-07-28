@@ -13,7 +13,7 @@ HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
 xattr -rd com.apple.quarantine /Applications/AeroBar.app
 ```
 
-[![Visit Website](https://img.shields.io/badge/Visit_Website-3B82F6?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/) [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/AeroBar.dmg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest) [![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.8-beta8/AeroBar.dmg)
+[![Visit Website](https://img.shields.io/badge/Visit_Website-3B82F6?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/) [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/AeroBar.dmg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest) [![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.8-beta9/AeroBar.dmg)
 
 [see all releases](https://github.com/adityaonx/AeroBar/releases)
 
@@ -323,7 +323,7 @@ AeroBar respects your privacy and is built to be secure by design.
 
 ## Releases
 
-### v8.8-beta8 - July 2026
+### v8.8-beta9 - July 2026
 - **Dynamic Liquid Glass (Default)**: Introduced a brand new, highly optimized dynamic material that renders volumetric, real-time tracking liquid glass waves on hover. This breathtaking effect is now enabled by default for all users.
 - **Sleeker & Synced Glass Menus**: Reduced the App Menu and popup glass bevels to a much sleeker 1.5px and implemented custom, perfectly concentric squircle inner radii so that the inner glow and outer window borders are in flawless visual sync.
 - **Unblockable Global Hover Tracking**: Rebuilt the hover tracking logic to use raw OS-level `CGEventTap` coordinates. Dynamic liquid glass waves now sweep smoothly back and forth across the entire bar, including straight across all window tabs without ever freezing or dropping frames.
@@ -331,6 +331,12 @@ AeroBar respects your privacy and is built to be secure by design.
 - **Performance & Stability**: Fixed App Hang deadlocks that occurred when interacting with native Fullscreen spaces or using trackpad gestures under heavy system load.
 - **Sentry Integration**: Reconfigured the Sentry App Hang Tracker to ensure reliable crash logs without conflicting with custom watchdogs.
 - Improved battery life and CPU efficiency by optimizing global mouse tracking and space detection.
+- Smoother transitions for Mission Control.
+- Added confirmation prompts for Power Menu buttons and deleting Clipboard history.
+- The App Drawer button now auto-enables when the pinned apps section is disabled.
+- Improved the Troubleshooting menu layout and functionality.
+- Fixed broken fav-icons in Quick Links.
+- Fixed an issue preventing users from renaming Quick Links.
 
 ### v8.7-beta9 - July 2026
 - **Input Monitoring Guide Fix**: Fixed an issue where the permission guide popup would immediately close itself if macOS was experiencing the TCC recompilation bug, preventing users from reading the workaround instructions.
