@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
       defaultHeight: 'auto'
     });
     openMaximizedFromData({
-      title: 'Safari - Webpage',
+      title: 'Safari - Docs',
       iconSrc: 'assets/safari.png',
       imageSrc: 'assets/previews/9. Safari.png',
       defaultLeft: '40%',
