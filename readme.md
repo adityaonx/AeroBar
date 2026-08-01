@@ -11,13 +11,13 @@
 <br>
 <sub>EXPERIMENTAL ALPHA · FREE FOR A LIMITED TIME</sub><br>
 <sub>macOS Sonoma (14) - Sequoia (15) - Tahoe (26) · Apple Silicon</sub><br>
-<sub>If you liked this project, please consider giving it a ⭐ star. Thanks!</sub>
+<sub>If you liked this project, please consider giving it a star. Thanks!</sub>
 
 </div>
 
 ---
 
-## ⚡ Quick Start (Homebrew)
+## Quick Start (Homebrew)
 
 ```bash
 brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar
@@ -29,7 +29,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 <div align="center">
 
@@ -60,7 +60,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 Welcome to AeroBar! If you want to dive deeper into how the app works, install it, or troubleshoot issues, explore the documentation below:
 
@@ -72,7 +72,7 @@ Welcome to AeroBar! If you want to dive deeper into how the app works, install i
 
 ---
 
-## 🚀 Status & Licensing
+## Status & Licensing
 
 AeroBar is in **Active Development** focusing on performance and native macOS integration.
 
@@ -83,7 +83,7 @@ As AeroBar stabilizes towards a 1.0 release, the monetization strategy will be:
 
 ---
 
-## 💬 Community & Feedback
+## Community & Feedback
 
 Have a feature request, a bug report, or just want to share your AeroBar setup? We use **GitHub Discussions** to keep the roadmap transparent and community-driven.
 
