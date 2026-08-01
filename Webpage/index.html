@@ -76,7 +76,7 @@
     }
     .nav-logo .orb-icon {
       width: 30px; height: 30px; border-radius: 50%;
-      background: url('aerobar-orb.png') center/contain no-repeat;
+      background: url('assets/aerobar-orb-v2.svg') center/contain no-repeat;
       box-shadow: 0 0 14px var(--blue-glow);
     }
     .nav-links { display: flex; align-items: center; gap: 2rem; }
@@ -220,8 +220,9 @@
     /* ── TASKBAR PREVIEW & INTERACTIVE MOCK ── */
     .demo-with-presets {
       display: flex;
-      align-items: stretch;
+      align-items: flex-start;
       gap: 20px;
+      width: 100%;
       max-width: 1180px;
       margin: 0 auto;
     }
@@ -249,7 +250,7 @@
     }
     .wallpaper-hint {
       position: absolute;
-      top: 28%; left: 50%; transform: translate(-50%, -50%);
+      top: 40%; left: 50%; transform: translate(-50%, -50%);
       background: rgba(0,0,0,0.5);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255,255,255,0.15);
@@ -267,24 +268,25 @@
 
     .mock-top-bar {
       height: 28px;
+      width: 100%;
       background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(30px) saturate(220%);
-      -webkit-backdrop-filter: blur(30px) saturate(220%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
+      backdrop-filter: blur(25px) saturate(180%);
+      -webkit-backdrop-filter: blur(25px) saturate(180%);
+      box-shadow: inset 0 -1px 0 rgba(255,255,255,0.1);
       display: flex; justify-content: space-between; align-items: center;
       padding: 0 16px;
-      font-size: 0.8rem; color: rgba(255,255,255,0.85);
-      opacity: 0; transform: translateY(-100%);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      font-size: 0.65rem; color: #fff; font-weight: 500;
+      position: absolute; top: 0; left: 0;
       z-index: 60;
+      white-space: nowrap;
     }
-    .mock-top-bar.show { opacity: 1; transform: translateY(0); }
-    .mock-notch {
-      width: 130px; height: 24px;
-      background: #000;
-      border-radius: 0 0 10px 10px;
-      position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+    .desktop-mock.fullscreen .mock-top-bar {
+      font-size: 0.85rem;
     }
+    .mock-top-left { display: flex; align-items: center; gap: 16px; font-weight: 600; }
+    .mock-top-left svg { filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)); }
+    .mock-top-right { display: flex; align-items: center; gap: 12px; }
+    .mock-top-right svg { opacity: 0.9; }
 
     .taskbar-preview-glow {
       position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%);
@@ -297,7 +299,7 @@
     /* MOCK POPUPS */
     .mock-popup {
       position: absolute;
-      bottom: 70px;
+      bottom: 70px; left: 10px; top: auto;
       background: rgba(18, 18, 18, 0.9);
       backdrop-filter: blur(40px) saturate(200%);
       -webkit-backdrop-filter: blur(40px) saturate(200%);
@@ -308,55 +310,120 @@
       transform: translateY(20px) scale(0.95);
       pointer-events: none;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      z-index: 10;
+      z-index: 9999;
       overflow: hidden;
     }
     .mock-popup.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
 
-    /* Start Menu Alt */
+    /* Start Menu Alt (Redesigned) */
     .start-menu {
-      left: 14px;
-      bottom: 70px;
+      left: 14px; bottom: 70px;
       width: min(720px, calc(100% - 28px));
-      height: auto;
-      max-height: min(420px, calc(100% - 100px));
-      padding: 24px;
+      height: min(540px, calc(100% - 100px));
+      padding: 0; 
+      display: flex; flex-direction: column;
+      background: rgba(24, 24, 26, 0.98);
+      backdrop-filter: blur(40px) saturate(200%);
+      -webkit-backdrop-filter: blur(40px) saturate(200%);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+      overflow: hidden;
+    }
+    
+    .start-header-new {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 28px 16px;
+    }
+    
+    .start-user-group { display: flex; align-items: center; gap: 14px; }
+    .user-avatar-new { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+    .user-name-new { font-weight: 700; font-size: 1.15rem; letter-spacing: 0.02em; }
+    
+    .start-alert-pill {
+      background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 12px; padding: 6px 14px; display: flex; align-items: center; gap: 10px;
+    }
+    .start-alert-pill svg { width: 18px; height: 18px; fill: #f59e0b; }
+    .start-alert-text { display: flex; flex-direction: column; }
+    .start-alert-title { font-size: 0.75rem; font-weight: 700; color: #f59e0b; line-height: 1.2; }
+    .start-alert-sub { font-size: 0.65rem; color: rgba(255,255,255,0.7); }
+
+    .start-toggles-group { display: flex; flex-direction: column; gap: 8px; }
+    .start-toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.6); }
+    .start-switch { width: 36px; height: 20px; background: rgba(255,255,255,0.15); border-radius: 10px; position: relative; transition: background 0.2s; }
+    .start-switch::after { content: ''; position: absolute; left: 3px; top: 3px; width: 14px; height: 14px; background: #fff; border-radius: 50%; transition: left 0.2s, right 0.2s; }
+    .start-switch.active { background: #10b981; }
+    .start-switch.active::after { left: 19px; }
+    
+    .start-actions-group { display: flex; flex-direction: column; gap: 8px; }
+    .start-action-btn { 
+      background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+      padding: 5px 12px; font-size: 0.72rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px;
+      transition: background 0.15s;
+    }
+    .start-action-btn.restart { color: #10b981; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.05); }
+    .start-action-btn.restart:hover { background: rgba(16,185,129,0.15); }
+    .start-action-btn.quit { color: #ef4444; border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.05); }
+    .start-action-btn.quit:hover { background: rgba(239,68,68,0.15); }
+
+    .start-body-new { display: flex; flex: 1; padding: 0 16px 20px; gap: 16px; min-height: 0; }
+    
+    /* Left Col: Apps */
+    .start-apps-col { 
+      width: 250px; display: flex; flex-direction: column; 
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 16px; padding: 12px 0; margin-right: 4px;
+    }
+    .start-search {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px;
+      padding: 8px 12px; display: flex; align-items: center; gap: 8px; margin: 0 12px 12px 12px;
+    }
+    .start-search input { background: transparent; border: none; outline: none; color: #fff; font-size: 0.85rem; font-family: inherit; width: 100%; font-weight: 500; }
+    .start-search input::placeholder { color: rgba(255,255,255,0.4); }
+    
+    .start-apps-list { flex: 1; overflow-y: auto; padding-right: 8px; display: flex; flex-direction: column; gap: 2px; }
+    .start-alpha-header { 
+      width: 20px; height: 20px; border-radius: 50%;
+      background: #3b82f6; color: #fff; font-size: 0.65rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 12px 0 6px 14px; flex-shrink: 0;
+    }
+    .start-alpha-group {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      margin: 0 10px 4px 10px;
       display: flex;
       flex-direction: column;
     }
-    .start-header-alt {
-      display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+    .start-app-item { display: flex; align-items: center; gap: 14px; padding: 7px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer; color: #e5e5e5; transition: background 0.15s; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .start-app-item:last-child { border-bottom: none; }
+    .start-app-item:first-child { border-top-left-radius: 10px; border-top-right-radius: 10px; }
+    .start-app-item:last-child { border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; }
+    .start-app-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+    .start-app-icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+    .start-app-icon img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
+
+    /* Right Col: Pinned */
+    .start-pinned-col {
+      flex: 1; background: #131314; border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 18px; padding: 24px; display: flex; flex-direction: column; position: relative;
     }
-    .start-header-alt .user-name { font-weight: 700; font-size: 1.2rem; }
-    .user-avatar { width: 44px; height: 44px; border-radius: 50%; }
+    .start-pinned-title { text-align: center; font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.6); margin-bottom: 32px; letter-spacing: 0.02em; }
     
-    .start-columns { display: flex; gap: 24px; flex: 1; min-height: 0; }
-    .start-col { flex: 1; min-height: 0; background: rgba(255,255,255,0.03); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,0.02); }
-    .col-title { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em; text-align: center; }
+    .start-pinned-grid { display: flex; justify-content: center; gap: 32px; }
+    .start-pinned-item { display: flex; flex-direction: column; align-items: center; gap: 12px; cursor: pointer; }
+    .start-pinned-item:hover .pinned-item-icon { transform: scale(1.05); }
+    .pinned-item-icon { width: 54px; height: 54px; transition: transform 0.2s; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5)); object-fit: contain; }
+    .start-pinned-item span { font-size: 0.75rem; font-weight: 600; color: #ddd; text-align: center; }
     
-    .app-list, .rec-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; }
-    .list-item { display: flex; align-items: center; gap: 10px; padding: 6px 8px; border-radius: 7px; font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: background 0.15s; }
-    .list-item:hover { background: rgba(255,255,255,0.1); }
-    .list-icon { font-size: 0.95rem; width: 18px; text-align: center; flex-shrink: 0; line-height: 1; }
-    .tiny-icon { width: 16px; height: 16px; object-fit: contain; }
-    
-    .pinned-grid-alt { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    .app-icon-alt { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; padding: 10px 6px; border-radius: 10px; transition: background 0.2s;}
-    .app-icon-alt:hover { background: rgba(255,255,255,0.1); }
-    .med-icon { width: 36px; height: 36px; object-fit: contain; }
-    .app-icon-alt span { font-size: 0.72rem; text-align: center; font-weight: 500; color: var(--text-muted); }
-
-    .rec-item { display: flex; align-items: center; gap: 10px; padding: 6px 8px; border-radius: 7px; cursor: pointer; transition: background 0.15s; }
-    .rec-item:hover { background: rgba(255,255,255,0.1); }
-    .rec-icon { font-size: 1.3rem; color: #f59e0b; flex-shrink: 0; }
-    .rec-text { display: flex; flex-direction: column; min-width: 0; }
-    .rec-name { font-size: 0.8rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
-    .rec-time { font-size: 0.68rem; color: var(--text-muted); margin-top: 1px; }
-
-    .start-footer { display: flex; justify-content: flex-end; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08); }
-    .footer-icons { display: flex; gap: 20px; }
-    .f-icon { font-size: 1.25rem; cursor: pointer; opacity: 0.7; transition: opacity 0.2s, transform 0.2s; }
-    .f-icon:hover { opacity: 1; transform: scale(1.1); }
+    .start-footer-new {
+      position: absolute; bottom: 20px; right: 24px;
+      display: flex; gap: 16px; align-items: center;
+    }
+    .s-f-icon { width: 20px; height: 20px; cursor: pointer; opacity: 0.4; transition: opacity 0.2s, transform 0.2s; stroke: #fff; }
+    .s-f-icon:hover { opacity: 0.9; transform: scale(1.1); }
 
     /* Appearance Lab */
     .appearance-lab {
@@ -388,10 +455,9 @@
       opacity: 0;
       transform: translateY(10px);
       pointer-events: none;
-      z-index: 65;
       transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), left 0.1s ease;
       box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1);
-      z-index: 200;
+      z-index: 9999;
     }
     .window-preview.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
     .window-preview:hover {
@@ -414,8 +480,8 @@
     .btn-close { background: #ff5f56; }
     
     .preview-content {
-      height: 180px; border-radius: 8px; 
-      background: #111;
+      height: 225px; border-radius: 8px; 
+      background: #000;
       border: 1px solid rgba(255,255,255,0.05);
       overflow: hidden;
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
@@ -433,8 +499,8 @@
       align-items: center;
       gap: 7px;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), inset 0 0 40px rgba(255,255,255,0.04), 0 -4px 40px rgba(0,0,0,0.5);
-      position: relative;
-      transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s ease, box-shadow 0.5s ease, border-radius 0.5s cubic-bezier(0.16, 1, 0.3, 1), margin 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      position: absolute; bottom: 0; left: 0;
+      width: 100%;
       z-index: 60;
       border-radius: 0;
       margin: 0;
@@ -460,32 +526,29 @@
     }
     
     .demo-orb-alt {
-      width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
-      background: url('aerobar-orb.png') center/contain no-repeat;
-      box-shadow: 0 0 20px rgba(59,130,246,0.5);
+      width: 44px; height: 44px; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
-      overflow: hidden;
-      margin: 0;
+      cursor: pointer; transition: transform 0.2s;
+      margin: 0; position: relative;
     }
-    .demo-orb-alt:hover { transform: scale(1.05); box-shadow: 0 0 28px rgba(59,130,246,0.7); }
-    .demo-orb-alt img { display: none; }
+    .demo-orb-alt:hover { transform: scale(1.05); }
+    .demo-orb-alt img { width: 38px; height: 38px; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4)); transition: transform 0.2s; }
 
-    .demo-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
-    .demo-pinned { display: flex; gap: 3px; }
+    .demo-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.1); flex-shrink: 0; margin: 0 4px; }
+    .demo-pinned { display: flex; gap: 6px; }
     .demo-pin {
-      width: 40px; height: 40px; border-radius: 8px;
+      width: 44px; height: 44px; border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: background 0.2s;
+      cursor: pointer; transition: background 0.2s; margin: 0;
     }
     .demo-pin:hover { background: rgba(255,255,255,0.1); }
-    .pin-img { width: 32px; height: 32px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+    .pin-img { width: 38px; height: 38px; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4)); transition: transform 0.2s; }
     .pin-emoji { font-size: 1.35rem; line-height: 1; }
     
     .demo-tabs { display: flex; gap: 5px; flex: 1; overflow: hidden; }
     .demo-tab {
       display: flex; align-items: center; gap: 8px;
-      padding: 6px 12px; border-radius: 8px;
+      padding: 4px 10px; border-radius: 8px;
       font-size: 0.8rem; font-weight: 500; color: #ddd;
       background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
       cursor: pointer; transition: all 0.2s; white-space: nowrap;
@@ -515,7 +578,7 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      z-index: 50;
+      z-index: 40;
     }
     .window-maximized-overlay.show { opacity: 1; pointer-events: auto; }
     .maximized-window {
@@ -534,31 +597,39 @@
       transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       flex-direction: column;
+      position: absolute;
+      overflow: hidden;
     }
     .window-maximized-overlay.show .maximized-window { transform: scale(1) translateY(0); }
     .maximized-header {
+      position: relative; z-index: 10;
       display: flex; align-items: center; gap: 10px;
-      padding: 12px 16px;
-      background: rgba(255,255,255,0.03);
+      padding: 6px 12px;
+      background: rgba(30, 30, 30, 0.7);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(255,255,255,0.08);
       flex-shrink: 0;
     }
-    .maximized-header img.preview-app-icon { width: 18px; height: 18px; }
-    .maximized-title { font-size: 0.9rem; font-weight: 700; color: #fff; flex: 1; }
-    .maximized-controls { display: flex; gap: 8px; }
-    .maximized-body { flex: 1; overflow: hidden; }
-    .maximized-body img { width: 100%; height: 100%; object-fit: cover; }
-    .tab-img { width: 26px; height: 26px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+    .maximized-header img.preview-app-icon { width: 14px; height: 14px; }
+    .maximized-title { font-size: 0.8rem; font-weight: 600; color: #fff; flex: 1; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+    .maximized-controls { display: flex; gap: 8px; margin-right: 8px; align-items: center; }
+    .mac-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.15); cursor: pointer; }
+    .mac-dot.red { background: #ff5f56; }
+    .mac-dot.yellow { background: #ffbd2e; }
+    .mac-dot.green { background: #27c93f; }
+    .maximized-body { flex: 1; position: relative; overflow: hidden; }
+    .maximized-body img { width: 100%; height: auto; display: block; margin-top: -30px; }
+    .tab-img { width: 36px; height: 36px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
     .tab-emoji-icon { font-size: 1.15rem; line-height: 1; flex-shrink: 0; }
     .emoji-icon { display: inline-flex; align-items: center; justify-content: center; }
     .demo-spotlight {
-      width: 40px; height: 40px; border-radius: 8px;
+      width: 36px; height: 36px; border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; cursor: pointer;
-      transition: background 0.2s;
+      background: transparent; cursor: pointer; transition: 0.2s;
+      flex-shrink: 0; margin: 0 4px;
     }
-    .demo-spotlight:hover { background: rgba(255,255,255,0.1); }
-    .demo-spotlight img { width: 26px; height: 26px; object-fit: contain; }
+    .demo-spotlight:hover { background: rgba(255,255,255,0.1); transform: scale(1.05); }
+    .demo-spotlight img { width: 100%; height: 100%; object-fit: contain; }
 
     /* ── SPOTLIGHT SEARCH PILL (macOS Tahoe style) ── */
     .spotlight-pill {
@@ -618,7 +689,7 @@
       opacity: 0;
       transform: translateY(12px);
       transition: opacity 0.22s cubic-bezier(0.16,1,0.3,1), transform 0.22s cubic-bezier(0.16,1,0.3,1);
-      z-index: 65;
+      z-index: 9999;
     }
     .pinned-stack-preview.show {
       opacity: 1;
@@ -675,16 +746,28 @@
     .pin-card-btn { width: 11px; height: 11px; border-radius: 50%; }
     .pin-card-btn.grn { background: #28c940; }
     .pin-card-btn.red { background: #ff5f56; }
-    .pin-card-thumb {
+    .pin-card-thumb-wrapper {
       width: 100%;
-      height: 96px;
+      height: 160px;
       border-radius: 8px;
-      object-fit: cover;
-      object-position: top;
+      overflow: hidden;
       display: block;
       border: 1px solid rgba(255,255,255,0.05);
       opacity: 0.88;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .pin-stack-card:hover .pin-card-thumb-wrapper {
+      border-color: rgba(255,255,255,0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      opacity: 1;
+    }
+    .pin-card-thumb {
+      width: 100%;
+      height: calc(100% + 30px);
+      margin-top: -30px;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
     }
 /* ── SCREENSHOTS SECTION ── */
     #screenshots {
@@ -1132,7 +1215,7 @@
       position: absolute;
       left: 65%;
       top: 55%;
-      z-index: 50;
+      z-index: 40;
       pointer-events: none;
       color: rgba(255, 255, 255, 0.95);
       display: flex;
@@ -1381,7 +1464,7 @@
         font-size: 0.8rem !important;
       }
       .preview-content {
-        height: 130px !important;
+        height: 160px !important;
       }
       .screenshots-grid {
         grid-template-columns: 1fr !important;
@@ -1390,6 +1473,364 @@
         grid-template-columns: 1fr !important;
       }
     }
+    .fs-overlay-label {
+      position: absolute; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: opacity 0.3s;
+    }
+    .fs-overlay-label:hover .fs-prompt { transform: scale(1.05); }
+    .fs-overlay-blur {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .fs-prompt {
+      position: relative; z-index: 2; padding: 20px 32px; background: rgba(20,20,20,0.8);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; font-weight: 600; color: #fff;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform 0.3s; pointer-events: none;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    
+    .fs-btn {
+      position: absolute; top: 16px; right: 16px; z-index: 1001;
+      background: rgba(20,20,20,0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff;
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; cursor: pointer; transition: background 0.2s, transform 0.2s;
+    }
+    .fs-btn:hover { background: rgba(20,20,20,0.9); transform: scale(1.05); }
+
+    /* Hide label when in fullscreen */
+    :fullscreen .fs-overlay-label, :fullscreen .fs-btn { display: none; }
+    :-webkit-full-screen .fs-overlay-label, :-webkit-full-screen .fs-btn { display: none; }
+    :-ms-fullscreen .fs-overlay-label, :-ms-fullscreen .fs-btn { display: none; }
+    
+    .taskbar-preview:fullscreen { border-radius: 0; border: none; height: 100vh; }
+    .taskbar-preview:-webkit-full-screen { border-radius: 0; border: none; height: 100vh; }
+    
+    .taskbar-preview:fullscreen .desktop-mock { aspect-ratio: auto; height: 100%; max-height: none; border-radius: 0; }
+    .taskbar-preview:-webkit-full-screen .desktop-mock { aspect-ratio: auto; height: 100%; max-height: none; border-radius: 0; }
+    
+
+/* Base panel styling */
+.aero-ui-panel {
+  position: absolute;
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(50px) saturate(200%);
+  -webkit-backdrop-filter: blur(50px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow: hidden;
+  display: flex;
+}
+
+/* Sidebar styling */
+.aero-ui-sidebar {
+  width: 70px;
+  background: rgba(20, 20, 20, 0.6);
+  border-right: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0;
+  gap: 16px;
+}
+.aero-ui-sidebar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 54px;
+  padding: 8px 0;
+  border-radius: 8px;
+}
+.aero-ui-sidebar-item:hover {
+  background: rgba(255,255,255,0.05);
+  opacity: 0.9;
+}
+.aero-ui-sidebar-item.active {
+  background: rgba(40, 100, 255, 0.2);
+  border: 1px solid rgba(40, 100, 255, 0.4);
+  opacity: 1;
+}
+.aero-ui-sidebar-item.active span {
+  color: #60a5fa;
+}
+.aero-ui-sidebar-item svg {
+  width: 20px;
+  height: 20px;
+}
+.aero-ui-sidebar-item.active svg {
+  stroke: #60a5fa;
+  fill: #60a5fa;
+}
+.aero-ui-sidebar-item span {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* Main Content */
+.aero-ui-content {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Header */
+.aero-ui-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding-bottom: 12px;
+}
+.aero-ui-title {
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.aero-ui-title svg {
+  width: 16px;
+  height: 16px;
+  color: #60a5fa;
+}
+.aero-ui-badge {
+  background: #6d28d9;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+/* Common controls */
+.aero-ui-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.aero-ui-btn:hover {
+  background: rgba(255,255,255,0.15);
+}
+.aero-ui-section {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.aero-ui-section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ddd;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.aero-ui-pro-badge {
+  background: #2563eb;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+.aero-ui-select {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  width: 100%;
+  font-size: 12px;
+}
+.aero-ui-segment {
+  display: flex;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  padding: 2px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.aero-ui-segment-btn {
+  flex: 1;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 6px;
+  color: rgba(255,255,255,0.6);
+}
+.aero-ui-segment-btn.active {
+  background: rgba(255,255,255,0.1);
+  color: #60a5fa;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.aero-ui-color-grid {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+.aero-ui-color {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+}
+.aero-ui-color-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+.aero-ui-color.active .aero-ui-color-circle {
+  border-color: #60a5fa;
+  padding: 2px;
+  background-clip: content-box;
+}
+.aero-ui-slider-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #ccc;
+}
+.aero-ui-slider {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+  position: relative;
+  margin-top: 8px;
+}
+.aero-ui-slider-thumb {
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: -4px;
+  left: 11%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Tray Popups (Pinned, Links, Clipboard) */
+.aero-tray-panel {
+  width: 240px;
+  flex-direction: column;
+}
+.aero-tray-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.aero-tray-title {
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.aero-tray-title svg {
+  color: #3b82f6;
+  width: 14px;
+  height: 14px;
+}
+.aero-tray-list {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  gap: 4px;
+}
+.aero-tray-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.aero-tray-item:hover {
+  background: rgba(255,255,255,0.05);
+}
+.aero-tray-icon {
+  width: 32px;
+  height: 32px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aero-tray-icon img {
+  width: 24px;
+  height: 24px;
+}
+.aero-tray-text {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+  
+    .fs-overlay-label {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center; z-index: 1000;
+      cursor: pointer; opacity: 1; transition: opacity 0.3s;
+    }
+    .fs-overlay-blur {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .fs-prompt {
+      position: relative; z-index: 2; padding: 20px 32px; background: rgba(20,20,20,0.8);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; font-weight: 600; color: #fff;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform 0.3s; pointer-events: none;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    
+    .fs-btn {
+      position: absolute; top: 16px; right: 16px; z-index: 1001;
+      background: rgba(20,20,20,0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff;
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; cursor: pointer; transition: background 0.2s, transform 0.2s;
+    }
+    .fs-btn:hover { background: rgba(20,20,20,0.9); transform: scale(1.05); }
+
+    /* Hide label when in fullscreen */
+    :fullscreen .fs-overlay-label, :fullscreen .fs-btn { display: none; }
+    :-webkit-full-screen .fs-overlay-label, :-webkit-full-screen .fs-btn { display: none; }
+    :-ms-fullscreen .fs-overlay-label, :-ms-fullscreen .fs-btn { display: none; }
+    
+    .taskbar-preview:fullscreen { border-radius: 0; border: none; height: 100vh; }
+    .taskbar-preview:-webkit-full-screen { border-radius: 0; border: none; height: 100vh; }
+    
+    .taskbar-preview:fullscreen .desktop-mock { aspect-ratio: auto; height: 100%; max-height: none; border-radius: 0; }
+    .taskbar-preview:-webkit-full-screen .desktop-mock { aspect-ratio: auto; height: 100%; max-height: none; border-radius: 0; }
+
   </style>
 </head>
 <body>
@@ -1483,6 +1924,8 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
   <!-- Interactive taskbar preview -->
   <div class="demo-with-presets">
   <div class="taskbar-preview" id="interactive-preview">
+
+    <button class="fs-btn" id="fs-btn" onclick="toggleFullscreen()" title="Toggle Fullscreen">⛶</button>
     <!-- Desktop Environment Mock -->
     <div class="desktop-mock" id="desktop-bg" onclick="cycleWallpaper(event)" title="Click to change wallpaper">
       <!-- Pointing hand gesture hint -->
@@ -1496,74 +1939,160 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
       
       <!-- Mock Top Bar (Notch) for AuraBar -->
       <div class="mock-top-bar" id="mock-top-bar">
-        <div class="mock-menu-left" style="font-weight:600;"> &nbsp; Finder &nbsp; File &nbsp; Edit &nbsp; View &nbsp; Go &nbsp; Window &nbsp; Help</div>
-        <div class="mock-notch"></div>
-        <div class="mock-menu-right" style="font-weight:500;">🔋 100% &nbsp; Wi-Fi &nbsp; Mon 17:39</div>
+        <div class="mock-top-left">
+          <svg width="14" height="14" viewBox="0 0 170 170" fill="#fff"><path d="M105.7 65.5c-.3-17.6 14.3-26.2 15-26.7-8.1-11.9-20.7-13.6-25.2-13.8-10.7-1.1-21 6.3-26.5 6.3-5.5 0-14-6.1-22.9-5.9-11.6.2-22.3 6.7-28.3 17.1-12.1 21-3.1 52.1 8.8 69.3 5.8 8.4 12.6 17.8 21.6 17.4 8.7-.4 12.1-5.7 22.7-5.7 10.5 0 13.6 5.7 22.8 5.5 9.4-.2 15.3-8.6 21-17 6.6-9.6 9.3-18.9 9.5-19.4-.2-.1-18.2-7-18.5-27.1zM116 29.8c4.8-5.8 8.1-13.9 7.2-22-6.7.3-15.3 4.5-20.3 10.4-4 4.7-7.9 12.9-6.8 20.8 7.5.6 15.1-3.4 19.9-9.2z"/></svg>
+          <span style="font-weight:700;">Antigravity</span>
+          <span>File</span>
+          <span>Edit</span>
+          <span>View</span>
+          <span>Window</span>
+          <span>Help</span>
+        </div>
+        <div class="mock-top-right">
+          <img src="assets/aerobar-mark.svg" style="height:14px; opacity:0.9;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2" ry="2"/><path d="M23 13v-2"/><line x1="11" y1="6" x2="11" y2="18"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><line x1="16" y1="4" x2="16" y2="20"/><line x1="4" y1="12" x2="20" y2="12"/></svg>
+          <span>Sat 1 Aug 8:34 PM</span>
+        </div>
       </div>
 
       <!-- Start Menu Popup -->
       <div class="mock-popup start-menu" id="mock-start-menu">
-        <div class="start-header-alt">
-          <img src="https://ui-avatars.com/api/?name=Adi+T&background=3b82f6&color=fff&rounded=true" class="user-avatar" alt="User">
-          <span class="user-name">AdiT</span>
+        
+        <!-- Header -->
+        <div class="start-header-new">
+          <div class="start-user-group">
+            <img src="assets/aerobar-orb-v2.svg" class="user-avatar-new" alt="User" style="width:38px; height:38px; object-fit:contain; border-radius:0;">
+            <span class="user-name-new">AeroBar</span>
+          </div>
+          
+          <div class="start-alert-pill">
+            <svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm1 16h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+            <div class="start-alert-text">
+              <span class="start-alert-title">Facing Issues?</span>
+              <span class="start-alert-sub">Troubleshoot</span>
+            </div>
+          </div>
+          
+          <div class="start-toggles-group">
+            <div class="start-toggle-row">
+              Efficiency Mode
+              <div class="start-switch active"></div>
+            </div>
+            <div class="start-toggle-row">
+              Power Save Mode
+              <div class="start-switch"></div>
+            </div>
+          </div>
+          
+          <div class="start-actions-group">
+            <button class="start-action-btn restart" onclick="alert('Restart AeroBar triggered')">↻ Restart AeroBar</button>
+            <button class="start-action-btn quit" onclick="alert('Quit AeroBar triggered')">⏻ Quit AeroBar</button>
+          </div>
         </div>
 
-        <div class="start-columns">
-          <div class="start-col">
-            <div class="col-title">All Applications</div>
-            <div class="app-list">
-              <div class="list-item"><span class="list-icon"><img src="aerobar-orb.png" style="width:14px;height:14px;object-fit:contain;border-radius:3px;"></span>AeroBar</div>
-              <div class="list-item"><span class="list-icon"><img src="finder.png" style="width:14px;height:14px;object-fit:contain;"></span>Finder</div>
-              <div class="list-item"><span class="list-icon"></span>Affinity</div>
-              <div class="list-item"><span class="list-icon"></span>App Store</div>
-              <div class="list-item"><span class="list-icon"></span>Calendar</div>
-              <div class="list-item"><span class="list-icon"></span>Safari</div>
-              <div class="list-item"><span class="list-icon"></span>Photos</div>
-              <div class="list-item"><span class="list-icon"></span>Music</div>
-              <div class="list-item"><span class="list-icon"><img src="settings-icon.png" style="width:14px;height:14px;object-fit:contain;"></span>System Settings</div>
+        <!-- Body -->
+        <div class="start-body-new">
+          
+          <!-- Left Column -->
+          <div class="start-apps-col">
+            <div class="start-search">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" placeholder="Search Apps...">
+            </div>
+            
+            <div class="start-apps-list">
+              <div class="start-alpha-header">A</div>
+              <div class="start-alpha-group">
+                <div class="start-app-item" onclick="openMaximizedFromData({title:'AeroBar', iconSrc:'assets/aerobar-orb-v2.svg'})">
+                  <div class="start-app-icon"><img src="assets/aerobar-orb-v2.svg"></div>
+                  <span>AeroBar</span>
+                </div>
+                <div class="start-app-item" onclick="openMaximizedFromData({title:'Antigravity', iconSrc:'assets/dark-macosappicons/Antigravity.png'})">
+                  <div class="start-app-icon"><img src="assets/dark-macosappicons/Antigravity.png"></div>
+                  <span>Antigravity</span>
+                </div>
+              </div>
+              
+              <div class="start-alpha-header" style="margin-top: 8px;">C</div>
+              <div class="start-alpha-group">
+                <div class="start-app-item" onclick="openMaximizedFromData({title:'ChatGPT', iconSrc:'assets/dark-macosappicons/ChatGPTbw.png'})">
+                  <div class="start-app-icon"><img src="assets/dark-macosappicons/ChatGPTbw.png"></div>
+                  <span>ChatGPT</span>
+                </div>
+                <div class="start-app-item" onclick="openMaximizedFromData({title:'CrossOver', iconSrc:'assets/dark-macosappicons/CrossOver.png'})">
+                  <div class="start-app-icon"><img src="assets/dark-macosappicons/CrossOver.png"></div>
+                  <span>CrossOver</span>
+                </div>
+              </div>
+              
+              <div class="start-alpha-header" style="margin-top: 8px;">D</div>
+              <div class="start-alpha-group">
+                <div class="start-app-item" onclick="openMaximizedFromData({title:'DaVinci Resolve', iconSrc:'assets/dark-macosappicons/Davinci.png'})">
+                  <div class="start-app-icon"><img src="assets/dark-macosappicons/Davinci.png"></div>
+                  <span>DaVinci Resolve</span>
+                </div>
+              </div>
+              
+              <div class="start-alpha-header" style="margin-top: 8px;">E</div>
+              <div class="start-alpha-group">
+                <div class="start-app-item" onclick="openMaximizedFromData({title:'Excel', iconSrc:'assets/dark-macosappicons/Excel.png'})">
+                  <div class="start-app-icon"><img src="assets/dark-macosappicons/Excel.png"></div>
+                  <span>Excel</span>
+                </div>
+              </div>
+              
+              <div class="start-alpha-header" style="margin-top: 8px;">G</div>
+              <div class="start-alpha-group">
+                <div class="start-app-item" onclick="openMaximizedFromData({title:'Gemini', iconSrc:'assets/dark-macosappicons/Gemini.png'})">
+                  <div class="start-app-icon"><img src="assets/dark-macosappicons/Gemini.png"></div>
+                  <span>Gemini</span>
+                </div>
+                <div class="start-app-item" onclick="openMaximizedFromData({title:'Grok', iconSrc:'assets/dark-macosappicons/Grok.png'})">
+                  <div class="start-app-icon"><img src="assets/dark-macosappicons/Grok.png"></div>
+                  <span>Grok</span>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="start-col" style="flex: 1.2;">
-            <div class="col-title">Pinned Shortcuts</div>
-            <div class="pinned-grid-alt">
-              <div class="app-icon-alt"><img src="finder.png" class="med-icon" style="object-fit:contain;"><span>Finder</span></div>
-              <div class="app-icon-alt"><img src="settings-icon.png" class="med-icon" style="object-fit:contain;"><span>System Settings</span></div>
-            </div>
-          </div>
-          <div class="start-col">
-            <div class="col-title">Recommended</div>
-            <div class="rec-list">
-              <div class="rec-item">
-                <span class="rec-icon"></span>
-                <div class="rec-text"><div class="rec-name">AeroBar 1</div><div class="rec-time">Just now</div></div>
+          
+          <!-- Right Column -->
+          <div class="start-pinned-col">
+            <div class="start-pinned-title">Pinned Shortcuts</div>
+            
+            <div class="start-pinned-grid">
+              <div class="start-pinned-item" onclick="openMaximizedFromData({title:'Finder', iconSrc:'assets/finder.png', imageSrc:'assets/previews/10.1 Finder 1.png'})">
+                <img src="assets/finder.png" class="pinned-item-icon">
+                <span>Finder</span>
               </div>
-              <div class="rec-item">
-                <span class="rec-icon"></span>
-                <div class="rec-text"><div class="rec-name">AeroBar 2</div><div class="rec-time">Minutes ago</div></div>
+              <div class="start-pinned-item" onclick="openMaximizedFromData({title:'Safari', iconSrc:'assets/safari.png', imageSrc:'assets/previews/9. Safari.png'})">
+                <img src="assets/safari.png" class="pinned-item-icon">
+                <span>Safari</span>
               </div>
-              <div class="rec-item">
-                <span class="rec-icon"></span>
-                <div class="rec-text"><div class="rec-name">Dmgs</div><div class="rec-time">An hour ago</div></div>
-              </div>
-              <div class="rec-item">
-                <span class="rec-icon"></span>
-                <div class="rec-text"><div class="rec-name">XCode</div><div class="rec-time">Earlier today</div></div>
-              </div>
-              <div class="rec-item">
-                <span class="rec-icon"></span>
-                <div class="rec-text"><div class="rec-name">Aerobar</div><div class="rec-time">Today</div></div>
+              <div class="start-pinned-item" onclick="openMaximizedFromData({title:'Antigravity', iconSrc:'assets/dark-macosappicons/Antigravity.png'})">
+                <img src="assets/dark-macosappicons/Antigravity.png" class="pinned-item-icon">
+                <span>Antigravity</span>
               </div>
             </div>
+            
+            <!-- Footer Action Icons -->
+            <div class="start-footer-new">
+              <svg class="s-f-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" onclick="alert('Power triggered')"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
+              <svg class="s-f-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" onclick="alert('Feedback triggered')"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              <svg class="s-f-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+              <svg class="s-f-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </div>
+            
           </div>
-        </div>
-        <div class="start-footer">
-          <div class="footer-icons">
-            <span class="f-icon" title="Power">⏻</span>
-            <span class="f-icon" title="Appearance Lab" onclick="togglePopup('mock-appearance-lab')" style="color:#60a5fa;">Lab</span>
-            <span class="f-icon" title="Settings"><img src="settings-icon.png" style="width:16px;height:16px;object-fit:contain;vertical-align:middle;"></span>
-          </div>
+          
         </div>
       </div>
+
+      
 
       <!-- Appearance Lab Popup -->
       <div class="mock-popup appearance-lab" id="mock-appearance-lab">
@@ -1574,6 +2103,81 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
         </div>
       </div>
 
+      <!-- Pinned Panel Popup -->
+
+            <div class="mock-popup aero-ui-panel aero-tray-panel" id="mock-pinned-panel" onclick="event.stopPropagation()" style="right: -20px; left: auto; bottom: 70px; right: 20px; left: auto;">
+              <div class="aero-tray-header">
+                <div class="aero-tray-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+                  Pinned Items
+                </div>
+                <span style="font-size:10px; color:rgba(255,255,255,0.5);">Drop to pin</span>
+              </div>
+              <div class="aero-tray-list">
+                <div class="aero-tray-item">
+                  <div class="aero-tray-icon"><img src="assets/finder.png" style="width:16px;height:16px;"></div>
+                  <span class="aero-tray-text">index.html</span>
+                </div>
+                <div class="aero-tray-item">
+                  <div class="aero-tray-icon"><img src="assets/safari.png" style="width:16px;height:16px;"></div>
+                  <span class="aero-tray-text">Webpage</span>
+                </div>
+                <div class="aero-tray-item">
+                  <div class="aero-tray-icon"><img src="assets/safari.png" style="width:16px;height:16px;"></div>
+                  <span class="aero-tray-text">assets</span>
+                </div>
+              </div>
+            </div>
+
+<!-- Links Panel Popup -->
+
+            <div class="mock-popup aero-ui-panel aero-tray-panel" id="mock-links-panel" onclick="event.stopPropagation()" style="right: -20px; left: auto; bottom: 70px; right: 20px; left: auto;">
+              <div class="aero-tray-header">
+                <div class="aero-tray-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                  Quick Links
+                </div>
+              </div>
+              <div class="aero-tray-list" style="flex-direction:row; padding: 12px;">
+                <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 8px; cursor:pointer;">
+                  <div style="width: 32px; height: 32px; background: rgba(255,255,255,0.1); border-radius: 50%; display:flex; align-items:center; justify-content:center;">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#fff" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </div>
+                  <span style="font-size: 9px; text-align:center; color:#ccc; word-break:break-all; padding:0 4px;">aerobar-beta.aditya...</span>
+                </div>
+              </div>
+            </div>
+
+<!-- Clipboard Panel Popup -->
+
+            <div class="mock-popup aero-ui-panel aero-tray-panel" id="mock-clipboard-panel" onclick="event.stopPropagation()" style="right: -20px; left: auto; bottom: 70px; right: 20px; left: auto; width: 320px;">
+              <div class="aero-tray-header">
+                <div class="aero-tray-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                  Clipboard History
+                </div>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              </div>
+              <div style="padding: 12px;">
+                <input type="text" placeholder="Search clipboard..." style="width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); padding:8px 32px; border-radius:8px; color:#fff; font-size:12px; margin-bottom:12px; box-sizing: border-box;">
+                <div style="display:flex; gap:12px; font-size:11px; font-weight:600; margin-bottom:12px; overflow-x:auto;">
+                  <span style="background:#3b82f6; color:#fff; padding:4px 12px; border-radius:12px;">All</span>
+                  <span style="color:rgba(255,255,255,0.6); padding:4px 0;">Text</span>
+                  <span style="color:rgba(255,255,255,0.6); padding:4px 0;">Images</span>
+                  <span style="color:rgba(255,255,255,0.6); padding:4px 0;">GIFs</span>
+                  <span style="color:rgba(255,255,255,0.6); padding:4px 0;">Videos</span>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                  <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05); border-radius:8px; padding:8px;">
+                    <div style="height:80px; background:rgba(0,0,0,0.5); border-radius:4px; margin-bottom:8px;"></div>
+                    <div style="font-size:10px; color:rgba(255,255,255,0.5); text-align:center;">Copied 2 seconds ago</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+    
       <!-- Dynamic Window Preview -->
       <div class="window-preview" id="dynamic-preview" onmouseenter="clearTimeout(previewTimeout)" onmouseleave="hidePreview()" onclick="if(window.lastPreviewTab) openMaximizedWindow(window.lastPreviewTab)">
         <div class="preview-header-bar">
@@ -1624,42 +2228,46 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
       <div class="taskbar-demo" id="mock-taskbar">
         <!-- AeroBar Orb -->
         <div class="demo-orb-alt" title="Start Menu" onclick="togglePopup('mock-start-menu')">
-          <img src="aerobar-mark.svg" alt="AeroBar" style="width:14px;height:14px;">
+          <img src="assets/aerobar-orb-v2.svg" alt="AeroBar">
         </div>
         <div class="demo-spotlight" title="Spotlight Search" onclick="toggleSpotlightPill(event)">
-          <img src="search-icon.png" alt="Search">
+          <img src="assets/search-icon.png" alt="Search">
         </div>
         <div class="demo-divider"></div>
         <div class="demo-pinned" id="demo-pinned-bar">
-          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'Finder', 'finder.png', ['docs', 'Recents'], ['https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=400&auto=format&fit=crop','previews/finder-window.png'])" onmouseleave="hidePinnedPreview()"><img src="finder.png" class="pin-img"></div>
-          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'System Settings', 'settings-icon.png', ['General', 'Privacy & Security'], ['https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=400&auto=format&fit=crop'])" onmouseleave="hidePinnedPreview()"><img src="settings-icon.png" class="pin-img"></div>
-          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'Chrome', 'chrome.png', ['AeroBar - Windows-style...', 'GitHub - Build...'], ['previews/chrome-window.png','https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=400&auto=format&fit=crop'])" onmouseleave="hidePinnedPreview()"><img src="chrome.png" class="pin-img"></div>
+          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'Finder', 'assets/finder.png', ['Finder', 'Downloads'], ['assets/previews/10.1 Finder 1.png', 'assets/previews/10.2 Finder 2.png'])" onmouseleave="hidePinnedPreview()"><img src="assets/finder.png" class="pin-img"></div>
+          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'Safari', 'assets/safari.png', ['Safari'], ['assets/previews/9. Safari.png'])" onmouseleave="hidePinnedPreview()"><img src="assets/safari.png" class="pin-img"></div>
+          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'Gemini', 'assets/dark-macosappicons/Gemini.png', ['Gemini - Chat', 'Gemini - Code'], ['assets/previews/6. Gemini.png', 'assets/previews/7. Gemini.png'])" onmouseleave="hidePinnedPreview()"><img src="assets/dark-macosappicons/Gemini.png" class="pin-img"></div>
+          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'Reddit', 'assets/dark-macosappicons/Reddit1.png', ['Reddit'], ['assets/previews/3. Reddit.png'])" onmouseleave="hidePinnedPreview()"><img src="assets/dark-macosappicons/Reddit1.png" class="pin-img"></div>
+          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'X', 'assets/dark-macosappicons/X.png', ['X / Twitter'], ['assets/previews/5. X.png'])" onmouseleave="hidePinnedPreview()"><img src="assets/dark-macosappicons/X.png" class="pin-img"></div>
+          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'WhatsApp', 'assets/dark-macosappicons/Whatsapp.png', ['WhatsApp'], ['assets/previews/4. Whatsapp.png'])" onmouseleave="hidePinnedPreview()"><img src="assets/dark-macosappicons/Whatsapp.png" class="pin-img"></div>
+          <div class="demo-pin" onmouseenter="showPinnedPreview(this, 'VS Code', 'assets/vscode.png', ['AeroBarPanel.swift', 'index.html'], ['assets/previews/2. VS Code.png', 'assets/previews/8. VS Code.png'])" onmouseleave="hidePinnedPreview()"><img src="assets/vscode.png" class="pin-img"></div>
         </div>
         <div class="demo-divider"></div>
         <div class="demo-tabs" id="demo-tabs-container">
           <div class="demo-tab active" onclick="handleTabClick(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
-            data-preview="previews/vscode-window.png">
-            <img src="vscode.png" class="tab-img" data-icon="vscode.png">
+            data-preview="assets/previews/2. VS Code.png">
+            <img src="assets/vscode.png" class="tab-img" data-icon="assets/vscode.png">
             <span class="demo-tab-text">AeroBar - AeroBarPanel.swift</span>
           </div>
           <div class="demo-tab" onclick="handleTabClick(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
-            data-preview="previews/chrome-window.png">
-            <img src="chrome.png" class="tab-img" data-icon="chrome.png">
+            data-preview="assets/previews/3. Reddit.png">
+            <img src="assets/chrome.png" class="tab-img" data-icon="assets/chrome.png">
             <span class="demo-tab-text">AeroBar - Windows-style...</span>
           </div>
           <div class="demo-tab" onclick="handleTabClick(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
-            data-preview="previews/finder-window.png">
-            <img src="finder.png" class="tab-img" data-icon="finder.png">
+            data-preview="assets/previews/10.1 Finder 1.png">
+            <img src="assets/finder.png" class="tab-img" data-icon="assets/finder.png">
             <span class="demo-tab-text">Finder</span>
           </div>
           <div class="demo-tab" onclick="handleTabClick(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
-            data-preview="previews/safari-window.png">
-            <img src="safari.png" class="tab-img" data-icon="safari.png">
+            data-preview="assets/previews/9. Safari.png">
+            <img src="assets/safari.png" class="tab-img" data-icon="assets/safari.png">
             <span class="demo-tab-text">AeroBar - Windows-style Task...</span>
           </div>
           <div class="demo-tab" onclick="handleTabClick(this)" onmouseenter="showPreview(this)" onmouseleave="hidePreview()"
-            data-preview="previews/finder-window.png">
-            <img src="finder.png" class="tab-img" data-icon="finder.png">
+            data-preview="assets/previews/10.2 Finder 2.png">
+            <img src="assets/finder.png" class="tab-img" data-icon="assets/finder.png">
             <span class="demo-tab-text">Downloads</span>
           </div>
         </div>
@@ -2696,7 +3304,9 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
             <div class="pin-card-btn red"></div>
           </div>
         </div>
-        <img class="pin-card-thumb" src="${thumbUrls[i]}" alt="${windowTitles[i]}">
+        <div class="pin-card-thumb-wrapper">
+          <img class="pin-card-thumb" src="${thumbUrls[i]}" alt="${windowTitles[i]}">
+        </div>
       `;
 
       card.style.cursor = 'pointer';
@@ -3032,6 +3642,24 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
   document.getElementById('interactive-preview').addEventListener('click', hideHandHint, { once: true });
   document.getElementById('color-presets').addEventListener('click', hideHandHint, { once: true });
   document.getElementById('tint-sliders').addEventListener('click', hideHandHint, { once: true });
+
+  function toggleFullscreen() {
+    const preview = document.getElementById('interactive-preview');
+    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+      if (preview.requestFullscreen) {
+        preview.requestFullscreen();
+      } else if (preview.webkitRequestFullscreen) {
+        preview.webkitRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    }
+  }
+
 </script>
 </body>
 </html>
