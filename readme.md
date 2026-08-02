@@ -11,7 +11,7 @@
 <br>
 <sub>EXPERIMENTAL ALPHA · FREE FOR A LIMITED TIME</sub><br>
 <sub>macOS Sonoma (14) - Sequoia (15) - Tahoe (26) · Apple Silicon</sub><br>
-<sub>If you liked this project, please consider giving it a star. Thanks!</sub>
+<sub>If you liked this project, please consider giving it a <img width="20" height="20" alt="star-img" src="https://github.com/user-attachments/assets/14fa5920-374f-4985-acd6-d04bff1d4580" /> star. Thanks!</sub>
 
 </div>
 
