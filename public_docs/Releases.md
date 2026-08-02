@@ -1,5 +1,14 @@
 # Release Notes
 
+### v8.9-beta1 - August 2026
+- **Global Keyboard Shortcuts**: Introduced a brand new Shortcuts system! You can now configure global system-wide hotkeys (e.g. `⌥⇧C`) to instantly toggle AeroBar's panels (Clipboard History, File Shelf, Pinned Folders, Utility Tray, Widgets, Quick Links) or trigger key actions (Spotlight, Screen Search, Mission Control, Show Desktop, Open Trash) from anywhere, in any app.
+- **Shortcut Safety & macOS Conflict Protection**: Engineered a dual-layer safety mechanism into the new Shortcuts customizer. It automatically hard-blocks native macOS system conflicts (like `⌘Space` or `⌘Tab`) and requires the Option (`⌥`) modifier for all custom binds, ensuring you never accidentally override your other apps' standard hotkeys.
+- **Live Key Cap Previews**: Added beautiful, translucent hardware-style key cap badges (e.g. `[⌥][⇧][C]`) directly into panel headers and the Customizer UI, instantly updating the moment you record a new shortcut.
+- **First-Launch Start Menu Alignment**: Fixed an issue where the Start Menu would awkwardly misalign to the right on the very first launch by decoupling auto-launch coordinate logic from the initial mouse position.
+- **Onboarding Input Block Guide**: Improved the "Quick Fix" onboarding flow with explicit instructions to "Quit & Reopen" when macOS prompts for Input Monitoring permissions, completely eliminating first-run setup confusion.
+- **Indestructible Tooltips**: Re-engineered the tooltip window rendering layer to bypass macOS's `.transient` inactive-app lifecycle restrictions. Action button hover tooltips now display 100% reliably regardless of system focus or Start Menu states.
+- **Integrated Action Hotkeys**: Keyboard shortcut hints (e.g. `⌥⇧C`) now natively render inside the hover tooltips for all main Action Buttons (Mission Control, Trash, Show Desktop, Screen Search).
+- **Customizer 'New' Badges**: Added visual indicator badges to highlight newly introduced features in the Customizer.
 ### v8.8-beta9 - July 2026
 - **Dynamic Liquid Glass (Default)**: Introduced a brand new, highly optimized dynamic material that renders volumetric, real-time tracking liquid glass waves on hover. This breathtaking effect is now enabled by default for all users.
 - **Sleeker & Synced Glass Menus**: Reduced the App Menu and popup glass bevels to a much sleeker 1.5px and implemented custom, perfectly concentric squircle inner radii so that the inner glow and outer window borders are in flawless visual sync.
