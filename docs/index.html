@@ -1858,7 +1858,7 @@
     <a href="#contact">Contact</a>
     <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.8-beta9/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
+  <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta1/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
     Download
   </a>
@@ -1867,9 +1867,9 @@
 <!-- Release Announcement Banner -->
 <div class="announcement-banner" id="release-announcement">
   <div class="announcement-content">
-    <span class="announcement-badge">v8.8-beta9</span>
-    <span class="announcement-text">New Release: v8.8-beta9 is now live!</span>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.8-beta9/AeroBar.dmg" class="announcement-link">
+    <span class="announcement-badge">v8.9-beta1</span>
+    <span class="announcement-text">New Release: v8.9-beta1 is now live!</span>
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta1/AeroBar.dmg" class="announcement-link">
       Download DMG
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </a>
@@ -1880,7 +1880,7 @@
 <section id="hero">
   <div class="badge">
     <span class="badge-dot"></span>
-    New Release: v8.8-beta9 is now live!
+    New Release: v8.9-beta1 is now live!
   </div>
   <h1>The <span class="gradient">Windows Taskbar</span><br/>you missed on Mac</h1>
   <p class="hero-sub">
@@ -1896,7 +1896,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
   </div>
 
   <div class="hero-actions">
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.8-beta9/AeroBar.dmg"
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta1/AeroBar.dmg"
        class="btn-primary" id="hero-download-btn">
       Download for Mac
     </a>
@@ -1908,7 +1908,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
 
   <div class="channel-links-row">
     <span>Channels:</span>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.8-beta9/AeroBar.dmg" title="Download latest stable v8.8-beta9 release">Stable (v8.8-beta9)</a>
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta1/AeroBar.dmg" title="Download latest stable v8.9-beta1 release">Stable (v8.9-beta1)</a>
     <span class="separator">•</span>
     <a href="https://github.com/adityaonx/AeroBar/releases" target="_blank" rel="noopener" title="View experimental pre-releases">Beta Build</a>
     <span class="separator">•</span>
@@ -2458,12 +2458,47 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
   <p class="section-sub reveal">Track active development, features, and fixes added to AeroBar.</p>
   
   <div class="releases-timeline">
-    <!-- Featured Latest Release -->
+        <!-- Featured Latest Release -->
     <div class="release-card featured-release reveal">
       <div class="release-header">
         <div class="release-title-wrapper">
-          <span class="release-version">v8.8-beta9</span>
+          <span class="release-version">v8.9-beta1</span>
           <span class="release-badge stable">Latest Release</span>
+        </div>
+        <span class="release-date">Released August 2026</span>
+      </div>
+      <div class="release-body">
+        <h4>New Features &amp; Fixes</h4>
+        <ul>
+          <li><strong>Zero-I/O Watchdog</strong>: Completely eliminated background disk writes. The app now uses lightweight, in-memory Darwin IPC notifications for heartbeat monitoring, dropping disk usage by ~57,600 writes per day.</li>
+          <li><strong>Sentry Network Optimization</strong>: Implemented strict network throttling for crash reporting. Sentry now natively deduplicates identical crash traces in RAM and enforces a hard limit of 5 non-fatal error uploads per hour, protecting your network bandwidth.</li>
+          <li><strong>Diagnostics Verification</strong>: Audited the internal diagnostics recorder to ensure it strictly respects the 7-day retention policy and only performs SSD I/O when absolutely necessary.</li>
+          <li><strong>Clipboard History Upgrade</strong>: Added native spacebar QuickLook media previews, animated GIFs on hover, and a custom label/keyword tagging system tightly integrated with search.</li>
+          <li><strong>Start Menu Search Auto-Focus</strong>: The start menu now automatically focuses the search field instantly when summoned.</li>
+          <li><strong>Customizer Scrolling</strong>: Rewrote horizontal scroll chevrons from static icons into fully functional, bidirectional scroll engines for smoother customizer navigation.</li>
+          <li><strong>First-Launch Start Menu Alignment</strong>: Fixed an issue where the Start Menu would awkwardly misalign to the right on the very first launch.</li>
+          <li><strong>Onboarding Input Block Guide</strong>: Improved the "Quick Fix" onboarding flow with explicit instructions to "Quit &amp; Reopen" when macOS prompts for Input Monitoring permissions.</li>
+          <li><strong>Indestructible Tooltips</strong>: Re-engineered the tooltip window rendering layer to bypass macOS's `.transient` inactive-app lifecycle restrictions.</li>
+          <li><strong>Integrated Action Hotkeys</strong>: Keyboard shortcut hints (e.g. `⌥⇧C`) now natively render inside the hover tooltips for all main Action Buttons.</li>
+          <li><strong>Customizer 'New' Badges</strong>: Added visual indicator badges to highlight newly introduced features in the Customizer.</li>
+          <li><strong>Cumulative Updater Changelogs</strong>: The updater now aggregates and natively styles release notes for all intermediate builds.</li>
+          <li><strong>Seamless Onboarding</strong>: Deferred background engine initialization until after setup is complete, completely eliminating the aggressive "Keystroke Receiving" macOS prompt.</li>
+          <li><strong>Focus Mode Hit-Testing Fix</strong>: Fixed an issue where bar elements like the App Menu orb and icons would rapidly flicker when you moved your mouse away while Focus Mode was active.</li>
+          <li><strong>AuraBar Focus Mode Dimming</strong>: When Focus Mode is enabled, AuraBar now applies a true dark film over the native macOS menu bar, ensuring white text and icons are properly dimmed.</li>
+          <li><strong>ScreenCaptureKit Stability</strong>: Fixed a rare but fatal crash that could occur when fetching window content previews.</li>
+          <li><strong>AppleScript Performance</strong>: Resolved severe main-thread hangs and watchdog timeouts by offloading browser queries and window location lookups to background queues.</li>
+          <li><strong>Multi-Display Window Tabs</strong>: Fixed a bug where window tab hover previews would glitch or disappear if the exact same window was tabbed on two different monitors simultaneously.</li>
+          <li><strong>macOS 14+ Space Tracking</strong>: Implemented a robust workaround for a broken macOS API (`CGSCopySpacesForWindows`) to correctly track window placements across Spaces.</li>
+          <li><strong>Fullscreen Ghost Window Pruning</strong>: Tightened the window tracking heuristics to properly prune "ghost" windows from apps like Notes or PDFgear.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Previous Release -->
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v8.8-beta9</span>
         </div>
         <span class="release-date">Released July 2026</span>
       </div>
@@ -3059,7 +3094,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
       </div>
     </div>
     <div style="text-align:center; margin-top: 1rem;" class="reveal">
-      <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.8-beta9/AeroBar.dmg"
+      <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta1/AeroBar.dmg"
          class="btn-primary" style="display:inline-flex;">
         Download AeroBar.dmg
       </a>
@@ -3084,7 +3119,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
       <li>Appearance Lab - full customization</li>
       <li>macOS Tahoe</li>
     </ul>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.8-beta9/AeroBar.dmg"
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta1/AeroBar.dmg"
        id="pricing-download-btn" class="btn-primary" style="width:100%; justify-content:center; margin-bottom:1.25rem;">
       Download for Free
     </a>
