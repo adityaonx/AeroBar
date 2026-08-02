@@ -1,6 +1,10 @@
 # Release Notes
 
+### v8.9-beta2 - August 2026
+- **Tooltip Reliability Fix**: Fixed an issue where macOS would incorrectly force-hide hover tooltips for buttons (like Trash, Mission Control, etc.) when the Start Menu was open.
+
 ### v8.9-beta1 - August 2026
+
 - **Global Keyboard Shortcuts**: Introduced a brand new Shortcuts system! You can now configure global system-wide hotkeys (e.g. `⌥⇧C`) to instantly toggle AeroBar's panels (Clipboard History, File Shelf, Pinned Folders, Utility Tray, Widgets, Quick Links) or trigger key actions (Spotlight, Screen Search, Mission Control, Show Desktop, Open Trash) from anywhere, in any app.
 - **Shortcut Safety & macOS Conflict Protection**: Engineered a dual-layer safety mechanism into the new Shortcuts customizer. It automatically hard-blocks native macOS system conflicts (like `⌘Space` or `⌘Tab`) and requires the Option (`⌥`) modifier for all custom binds, ensuring you never accidentally override your other apps' standard hotkeys.
 - **Live Key Cap Previews**: Added beautiful, translucent hardware-style key cap badges (e.g. `[⌥][⇧][C]`) directly into panel headers and the Customizer UI, instantly updating the moment you record a new shortcut.
