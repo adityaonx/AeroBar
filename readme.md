@@ -1,18 +1,24 @@
 <div align="center">
 
-<img src="public_docs/aerobar-orb-v2.svg" alt="AeroBar Logo" width="120" style="margin-bottom: 10px;"/>
+<img src="docs/assets/aerobar-orb-v2.svg" alt="AeroBar Logo" width="120" style="margin-bottom: 10px;"/>
+
 
 # The **Windows Taskbar** you missed on Mac
 
 **Aero glass look, Start Menu, live window tabs, pinned app launcher - all sitting at the bottom of your screen, exactly where you expect it.**
 
 [![Visit Website](https://img.shields.io/badge/Visit_Website-3B82F6?style=for-the-badge&logoColor=white)](https://adityaonx.github.io/AeroBar/) [![Downloads](https://img.shields.io/github/downloads/adityaonx/AeroBar/AeroBar.dmg?style=for-the-badge&color=25C82A)](https://github.com/adityaonx/AeroBar/releases/latest) [![Download for Mac](https://img.shields.io/badge/Download_for_Mac-0A6CFF?style=for-the-badge&logoColor=white)](https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta1/AeroBar.dmg)
-
+<br>
+<sub>macOS Sonoma (14) - Sequoia (15) - Tahoe (26) · Apple Silicon</sub>
+<br>
+<sub>If you liked this project, please consider giving it a <img width="20" height="20" alt="star-img" src="https://github.com/user-attachments/assets/14fa5920-374f-4985-acd6-d04bff1d4580" /> star. Thanks!</sub>
 <br>
 <sub>EXPERIMENTAL ALPHA · FREE FOR A LIMITED TIME</sub><br>
-<sub>macOS Sonoma (14) - Sequoia (15) - Tahoe (26) · Apple Silicon</sub><br>
-<sub>If you liked this project, please consider giving it a <img width="20" height="20" alt="star-img" src="https://github.com/user-attachments/assets/14fa5920-374f-4985-acd6-d04bff1d4580" /> star. Thanks!</sub>
-
+<br>
+<a href="https://www.youtube.com/watch?v=NY2qc3SOwXk">
+  <img src="docs/assets/youtube_guide.svg" alt="YouTube Guide" width="160"/>
+</a>
+<br>
 </div>
 
 ---
