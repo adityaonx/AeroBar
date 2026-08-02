@@ -9,6 +9,15 @@
 - **Indestructible Tooltips**: Re-engineered the tooltip window rendering layer to bypass macOS's `.transient` inactive-app lifecycle restrictions. Action button hover tooltips now display 100% reliably regardless of system focus or Start Menu states.
 - **Integrated Action Hotkeys**: Keyboard shortcut hints (e.g. `⌥⇧C`) now natively render inside the hover tooltips for all main Action Buttons (Mission Control, Trash, Show Desktop, Screen Search).
 - **Customizer 'New' Badges**: Added visual indicator badges to highlight newly introduced features in the Customizer.
+- **Cumulative Updater Changelogs**: The updater now aggregates and natively styles release notes for all intermediate builds, ensuring you never miss what's new even if you skip a few beta versions.
+- **Seamless Onboarding**: Deferred background engine initialization until after setup is complete, completely eliminating the aggressive "Keystroke Receiving" macOS prompt that previously interrupted the first-run experience.
+- **Focus Mode Hit-Testing Fix**: Fixed an issue where bar elements like the App Menu orb and icons would rapidly flicker when you moved your mouse away while Focus Mode was active.
+- **AuraBar Focus Mode Dimming**: When Focus Mode is enabled, AuraBar now applies a true dark film over the native macOS menu bar, ensuring white text and icons are properly dimmed and no longer bleed through.
+- **ScreenCaptureKit Stability**: Fixed a rare but fatal crash that could occur when fetching window content previews if the system timed out or authorization changed.
+- **AppleScript Performance**: Resolved severe main-thread hangs and watchdog timeouts by offloading browser queries and window location lookups to background queues.
+- **Multi-Display Window Tabs**: Fixed a bug where window tab hover previews would glitch or disappear if the exact same window was tabbed on two different monitors simultaneously.
+- **macOS 14+ Space Tracking**: Implemented a robust workaround for a broken macOS API (`CGSCopySpacesForWindows`) to correctly track window placements across Spaces.
+- **Fullscreen Ghost Window Pruning**: Tightened the window tracking heuristics to properly prune "ghost" windows from apps like Notes or PDFgear without mistakenly removing genuinely fullscreened applications.
 ### v8.8-beta9 - July 2026
 - **Dynamic Liquid Glass (Default)**: Introduced a brand new, highly optimized dynamic material that renders volumetric, real-time tracking liquid glass waves on hover. This breathtaking effect is now enabled by default for all users.
 - **Sleeker & Synced Glass Menus**: Reduced the App Menu and popup glass bevels to a much sleeker 1.5px and implemented custom, perfectly concentric squircle inner radii so that the inner glow and outer window borders are in flawless visual sync.
