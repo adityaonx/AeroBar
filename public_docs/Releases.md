@@ -2,6 +2,10 @@
 
 ### v8.9-beta2 - August 2026
 - **Tooltip Reliability Fix**: Fixed an issue where macOS would incorrectly force-hide hover tooltips for buttons (like Trash, Mission Control, etc.) when the Start Menu was open.
+- **Start Menu Orb Fix**: Fixed an issue where clicking the Aero-menu Orb icon wouldn't toggle the Start Menu on and off.
+- **Quick Links Shortcut Fix**: Fixed an issue where using the keyboard shortcut for Quick Links would select the button but occasionally fail to render the panel.
+- **Drag & Drop Glow Effects**: Added glowing visual feedback to the Quick Links, File Shelf, and Pinned Folder buttons when dragging compatible files or URLs anywhere on your screen.
+- **Panel Drop Instructions**: Updated the empty-state text and interactions for File Shelf, Pinned Folders, and Quick Links so users can intuitively drop files directly into the expanded panels themselves rather than targeting the buttons.
 
 ### v8.9-beta1 - August 2026
 
