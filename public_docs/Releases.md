@@ -1,5 +1,22 @@
 # Release Notes
 
+### v8.9-beta4 - August 2026
+- **Window Preview Reliability**: Fixed an annoying quirk where clicking the "Authorize" button over window previews required two clicks instead of one.
+- **Recycle Bin Feedback**: The Trash icon now instantly highlights and glows whenever you drag any file or folder anywhere on your screen, perfectly mirroring the global drag feedback of the Pinned Folder and File Shelf.
+- **Clipboard History Text Readability**: Rebuilt the layout for the clipboard history panel to ensure text (especially short snippets like emojis) perfectly stays centered, while icons stay anchored correctly without misaligning the cell layout.
+- **Floating Bar Resizing Artifacts**: Fixed a lingering "bleed" or ghost shadow on the screen that would persist after shrinking the bar's height (such as switching from Default to Compact in Dock mode).
+- **Maximized Window Glitch**: Fixed a rare bug where maximizing a window (or using tools like Magnet) would cause a 1-frame screen tear or window flash every few seconds due to a tug-of-war with the bar's boundary enforcement engine.
+- **Memory & CPU Optimizations**: Fixed severe memory leaks in `AccessibilityService` and `MusicWidgetView` caused by missing autorelease pools on background queues, and resolved a main-thread CPU stall by moving AppleScript instantiations to background queues.
+
+### v8.9-beta3 - August 2026
+- **Dock Mode & Taskbar Mode**: Added a dedicated Dock Mode and Taskbar Mode in Settings, allowing you to force specific UI layouts (like macOS Dock or Windows Taskbar) without manually managing the visibility of Window Tabs and Pinned Apps. Dock Mode is now enabled by default for new users.
+- **System Dock Autohide Restoration**: Fixed a critical bug where AeroBar could leave the macOS Dock permanently hidden if the app was forcefully quit or crashed. Added a bulletproof background watchdog to guarantee your Dock autohide settings are safely restored no matter what.
+- **Music Widget UI Enhancements**: Completely overhauled the Music Widget layout with left/right tab support, visual separators, optimized caching, and fixed a race condition that caused spurious panel dismissals and shadow styling glitches.
+- **Music Widget Reliability**: Fixed a bug where the Music Widget panel wouldn't close when the mouse moved towards the unpinned apps taskbar section by migrating to precise native SwiftUI hover hit-testing.
+- **Music Widget Activation**: Fixed a bug where tapping the Music Widget album art required two clicks to focus the app. Now powered by modern macOS 14 Workspace APIs, a single click will aggressively pull Spotify or Apple Music to the front instantly.
+- **Drag & Drop to Trash**: You can now drag single or multiple files and folders directly from Finder onto the AeroBar Recycle Bin icon to instantly move them to macOS system Trash. The Trash icon dynamically highlights in red and animates during active drop targeting.
+- **Unified Extensions & Tool Controls**: Streamlined the Appearance Lab customizer by moving all element enable/disable toggles out of Icon Colors and centralizing them inside Extensions & Shelves. Includes full toggle coverage for Mission Control and Search Icon.
+
 ### v8.9-beta2 - August 2026
 - **Tooltip Reliability Fix**: Fixed an issue where macOS would incorrectly force-hide hover tooltips for buttons (like Trash, Mission Control, etc.) when the Start Menu was open.
 - **Start Menu Orb Fix**: Fixed an issue where clicking the Aero-menu Orb icon wouldn't toggle the Start Menu on and off.
