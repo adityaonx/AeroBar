@@ -1,5 +1,10 @@
 # Release Notes
 
+### v8.9-beta6 - August 2026
+- **Critical Crash Fix (`EXC_BAD_ACCESS` / `KERN_INVALID_ADDRESS at 0x8000000000000028`)**:
+  - **Memory Safety in Accessibility Callbacks**: Resolved a critical fatal crash in `AccessibilityService` and `WindowLifecycleEventWatcher` caused by C-level `AXUIElementRef` parameters being dispatched into main-queue async blocks without an explicit `CFRetain`. macOS released the temporary C element immediately upon callback completion, leaving a dangling pointer when the main-thread block executed. All C-level Accessibility references are now retained synchronously before dispatching (`Unmanaged.passRetained(element)`), eliminating memory corruption.
+  - **Global Event Tap Lifecycle Hardening**: Ensured background event tap runloops (`GlobalMouseTapService`) cleanly stop and invalidate MachPort runloops on object deallocation.
+
 ### v8.9-beta5 - August 2026
 - **Clipboard History Overhaul (Left Alignment, Spacebar QuickLook & Save As)**:
   - **Left-Aligned Text & Files**: Text snippets, code blocks, file names, folder paths, and link URLs now align cleanly to the left directly beside their icons.

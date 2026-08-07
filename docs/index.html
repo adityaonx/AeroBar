@@ -2483,8 +2483,29 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
     <div class="release-card featured-release reveal">
       <div class="release-header">
         <div class="release-title-wrapper">
-          <span class="release-version">v8.9-beta5</span>
+          <span class="release-version">v8.9-beta6</span>
           <span class="release-badge stable">Latest Release</span>
+        </div>
+        <span class="release-date">Released August 2026</span>
+      </div>
+      <div class="release-body">
+        <h4>Critical Fixes &amp; Stability Pass</h4>
+        <ul>
+          <li><strong>Critical Crash Fix (<code>EXC_BAD_ACCESS</code> / <code>0x8000000000000028</code>)</strong>:
+            <ul>
+              <li><strong>Accessibility Callback Memory Safety</strong>: Fixed a critical fatal crash in <code>AccessibilityService</code> and <code>WindowLifecycleEventWatcher</code> caused by C-level <code>AXUIElementRef</code> pointers being dispatched into main-queue async blocks without an explicit <code>CFRetain</code>. All C-level Accessibility references are now retained synchronously before dispatching (<code>Unmanaged.passRetained</code>), preventing dangling pointers and memory corruption.</li>
+              <li><strong>Global Event Tap Lifecycle Hardening</strong>: Ensured background event tap runloops (<code>GlobalMouseTapService</code>) cleanly stop and invalidate MachPort runloops on object deallocation.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Previous Release -->
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v8.9-beta5</span>
         </div>
         <span class="release-date">Released August 2026</span>
       </div>
