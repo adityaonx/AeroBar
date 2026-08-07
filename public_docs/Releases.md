@@ -1,5 +1,12 @@
 # Release Notes
 
+### v8.9-beta7 - August 2026
+- **Health Check Diagnostics & Watchdog Daemon Overhaul**:
+  - **100% Health Check Diagnostic Pass**: Resolved all failing items in the Settings Health Check diagnostic panel (`Heartbeat freshness`, `External watchdog helper`, and `Emergency exit overlay`).
+  - **In-Memory Heartbeat Tracking**: Updated `AeroBarWatchdogService` to track heartbeat freshness via in-memory main-thread Darwin IPC timestamps (`0.8s` freshness), eliminating unnecessary background disk I/O.
+  - **External Watchdog Helper Daemon**: Built `AeroBarWatchdogHelper` as an independent SPM background daemon and registered its LaunchAgent plist (`com.aerobar.watchdoghelper`). It watches AeroBar from outside its process space, automatically saving hang reports and force-relaunching AeroBar if the main process ever wedges completely.
+  - **Disabled-by-Design Overlay Status**: Updated `EmergencyExitOverlayService` health check status to accurately report `disabled by design (prevents UI overlap with menu bar and full-screen windows)` as a clean passing state.
+
 ### v8.9-beta6 - August 2026
 - **Critical Crash Fix (`EXC_BAD_ACCESS` / `KERN_INVALID_ADDRESS at 0x8000000000000028`)**:
   - **Memory Safety in Accessibility Callbacks**: Resolved a critical fatal crash in `AccessibilityService` and `WindowLifecycleEventWatcher` caused by C-level `AXUIElementRef` parameters being dispatched into main-queue async blocks without an explicit `CFRetain`. macOS released the temporary C element immediately upon callback completion, leaving a dangling pointer when the main-thread block executed. All C-level Accessibility references are now retained synchronously before dispatching (`Unmanaged.passRetained(element)`), eliminating memory corruption.

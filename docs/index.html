@@ -2483,8 +2483,30 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
     <div class="release-card featured-release reveal">
       <div class="release-header">
         <div class="release-title-wrapper">
-          <span class="release-version">v8.9-beta6</span>
+          <span class="release-version">v8.9-beta7</span>
           <span class="release-badge stable">Latest Release</span>
+        </div>
+        <span class="release-date">Released August 2026</span>
+      </div>
+      <div class="release-body">
+        <h4>Health Check Diagnostics &amp; Watchdog Overhaul</h4>
+        <ul>
+          <li><strong>Health Check Diagnostic Pass (100% Green)</strong>:
+            <ul>
+              <li><strong>In-Memory Heartbeat Tracking</strong>: Updated <code>AeroBarWatchdogService</code> to track heartbeat freshness via in-memory main-thread Darwin IPC timestamps (<code>0.8s</code> freshness), eliminating unnecessary background disk I/O.</li>
+              <li><strong>External Watchdog Helper Daemon</strong>: Built <code>AeroBarWatchdogHelper</code> as an independent SPM background daemon and registered its LaunchAgent plist (<code>com.aerobar.watchdoghelper</code>). It watches AeroBar from outside its process space, automatically saving hang reports and force-relaunching AeroBar if the main process ever wedges completely.</li>
+              <li><strong>Disabled-by-Design Overlay Status</strong>: Updated <code>EmergencyExitOverlayService</code> health check status to accurately report <code>disabled by design (prevents UI overlap with menu bar and full-screen windows)</code> as a clean passing state.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Previous Release -->
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v8.9-beta6</span>
         </div>
         <span class="release-date">Released August 2026</span>
       </div>
