@@ -1872,7 +1872,7 @@
     <a href="#contact">Contact</a>
     <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta4/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
+  <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta5/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
     Download
   </a>
@@ -1881,9 +1881,9 @@
 <!-- Release Announcement Banner -->
 <div class="announcement-banner" id="release-announcement">
   <div class="announcement-content">
-    <span class="announcement-badge">v8.9-beta4</span>
-    <span class="announcement-text">New Release: v8.9-beta4 is now live!</span>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta4/AeroBar.dmg" class="announcement-link">
+    <span class="announcement-badge">v8.9-beta5</span>
+    <span class="announcement-text">New Release: v8.9-beta5 is now live!</span>
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta5/AeroBar.dmg" class="announcement-link">
       Download DMG
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </a>
@@ -1894,7 +1894,7 @@
 <section id="hero">
   <div class="badge">
     <span class="badge-dot"></span>
-    New Release: v8.9-beta4 is now live!
+    New Release: v8.9-beta5 is now live!
   </div>
   <h1>The <span class="gradient">Windows Taskbar</span><br/>you missed on Mac</h1>
   <p class="hero-sub">
@@ -1910,7 +1910,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
   </div>
 
   <div class="hero-actions">
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta4/AeroBar.dmg"
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta5/AeroBar.dmg"
        class="btn-primary" id="hero-download-btn">
       Download for Mac
     </a>
@@ -1929,7 +1929,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
 
   <div class="channel-links-row">
     <span>Channels:</span>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta4/AeroBar.dmg" title="Download latest stable v8.9-beta4 release">Stable (v8.9-beta4)</a>
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta5/AeroBar.dmg" title="Download latest stable v8.9-beta5 release">Stable (v8.9-beta5)</a>
     <span class="separator">•</span>
     <a href="https://github.com/adityaonx/AeroBar/releases" target="_blank" rel="noopener" title="View experimental pre-releases">Beta Build</a>
     <span class="separator">•</span>
@@ -2483,7 +2483,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
     <div class="release-card featured-release reveal">
       <div class="release-header">
         <div class="release-title-wrapper">
-          <span class="release-version">v8.9-beta4</span>
+          <span class="release-version">v8.9-beta5</span>
           <span class="release-badge stable">Latest Release</span>
         </div>
         <span class="release-date">Released August 2026</span>
@@ -2491,26 +2491,98 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
       <div class="release-body">
         <h4>New Features &amp; Fixes</h4>
         <ul>
-          <li><strong>Zero-I/O Watchdog</strong>: Completely eliminated background disk writes. The app now uses lightweight, in-memory Darwin IPC notifications for heartbeat monitoring, dropping disk usage by ~57,600 writes per day.</li>
-          <li><strong>Sentry Network Optimization</strong>: Implemented strict network throttling for crash reporting. Sentry now natively deduplicates identical crash traces in RAM and enforces a hard limit of 5 non-fatal error uploads per hour, protecting your network bandwidth.</li>
-          <li><strong>Diagnostics Verification</strong>: Audited the internal diagnostics recorder to ensure it strictly respects the 7-day retention policy and only performs SSD I/O when absolutely necessary.</li>
-          <li><strong>Clipboard History Upgrade</strong>: Added native spacebar QuickLook media previews, animated GIFs on hover, and a custom label/keyword tagging system tightly integrated with search.</li>
-          <li><strong>Start Menu Search Auto-Focus</strong>: The start menu now automatically focuses the search field instantly when summoned.</li>
-          <li><strong>Customizer Scrolling</strong>: Rewrote horizontal scroll chevrons from static icons into fully functional, bidirectional scroll engines for smoother customizer navigation.</li>
-          <li><strong>First-Launch Start Menu Alignment</strong>: Fixed an issue where the Start Menu would awkwardly misalign to the right on the very first launch.</li>
-          <li><strong>Onboarding Input Block Guide</strong>: Improved the "Quick Fix" onboarding flow with explicit instructions to "Quit &amp; Reopen" when macOS prompts for Input Monitoring permissions.</li>
-          <li><strong>Indestructible Tooltips</strong>: Re-engineered the tooltip window rendering layer to bypass macOS's `.transient` inactive-app lifecycle restrictions.</li>
-          <li><strong>Integrated Action Hotkeys</strong>: Keyboard shortcut hints (e.g. `⌥⇧C`) now natively render inside the hover tooltips for all main Action Buttons.</li>
-          <li><strong>Customizer 'New' Badges</strong>: Added visual indicator badges to highlight newly introduced features in the Customizer.</li>
-          <li><strong>Cumulative Updater Changelogs</strong>: The updater now aggregates and natively styles release notes for all intermediate builds.</li>
-          <li><strong>Seamless Onboarding</strong>: Deferred background engine initialization until after setup is complete, completely eliminating the aggressive "Keystroke Receiving" macOS prompt.</li>
-          <li><strong>Focus Mode Hit-Testing Fix</strong>: Fixed an issue where bar elements like the App Menu orb and icons would rapidly flicker when you moved your mouse away while Focus Mode was active.</li>
-          <li><strong>AuraBar Focus Mode Dimming</strong>: When Focus Mode is enabled, AuraBar now applies a true dark film over the native macOS menu bar, ensuring white text and icons are properly dimmed.</li>
-          <li><strong>ScreenCaptureKit Stability</strong>: Fixed a rare but fatal crash that could occur when fetching window content previews.</li>
-          <li><strong>AppleScript Performance</strong>: Resolved severe main-thread hangs and watchdog timeouts by offloading browser queries and window location lookups to background queues.</li>
-          <li><strong>Multi-Display Window Tabs</strong>: Fixed a bug where window tab hover previews would glitch or disappear if the exact same window was tabbed on two different monitors simultaneously.</li>
-          <li><strong>macOS 14+ Space Tracking</strong>: Implemented a robust workaround for a broken macOS API (`CGSCopySpacesForWindows`) to correctly track window placements across Spaces.</li>
-          <li><strong>Fullscreen Ghost Window Pruning</strong>: Tightened the window tracking heuristics to properly prune "ghost" windows from apps like Notes or PDFgear.</li>
+          <li><strong>Clipboard History Overhaul (Left Alignment, Spacebar QuickLook &amp; Save As)</strong>:
+            <ul>
+              <li><strong>Left-Aligned Text &amp; Files</strong>: Text snippets, code blocks, file names, folder paths, and link URLs now align cleanly to the left directly beside their icons.</li>
+              <li><strong>Spacebar QuickLook for All Items</strong>: Pressing Spacebar on <em>any</em> item (text, code, files, folders, images, GIFs, videos, audio) opens full, scrollable native macOS QuickLook previews.</li>
+              <li><strong>1-Click Save As / Save To</strong>: Added a 1-click "Save As..." / "Save Image" / "Save To" hover button and right-click context menu options to export copied text as .txt files, images as .png files, or copy files and folders to custom locations.</li>
+            </ul>
+          </li>
+          <li><strong>Popover Gap &amp; Glass Panel Standardization</strong>: Standardized floating popover gap (~10pt above taskbar) across Music Widget, Window Previews, and Utility Buttons, with 24pt squircle panel masking.</li>
+          <li><strong>Pinned App Preview Border Alignment</strong>: Single-window pinned app previews now render with 0 outer margin, matching window tabs 1:1 and eliminating secondary dark box outlines.</li>
+          <li><strong>Multi-Display Placement Precision</strong>: Popover panels and window previews now open on the exact display your cursor is hovering over on multi-monitor setups.</li>
+          <li><strong>HUD Glass Previews for Cmd+Tab &amp; 3-Finger Swipe</strong>: Window previews shown during Cmd+Tab and 3-finger swipe gestures now render in vibrant, translucent Liquid Wallpaper HUD Glass while remaining 100% non-focus-stealing.</li>
+          <li><strong>AuraBar &amp; AeroBar 1:1 Synchronized Theming</strong>: Top menu bar (AuraBar) and bottom AeroBar now synchronize glass materials, tint hue, brightness, and surface tint density (default 50%) 1:1.</li>
+          <li><strong>macOS Tahoe Compositor &amp; Music Vibrancy Fixes</strong>: Fixed macOS Tahoe (16.0) Window Server compositor dimming on glass popovers and restored Liquid Glass album art vibrancy in Spotify &amp; Apple Music widgets.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Previous Release -->
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v8.9-beta4</span>
+        </div>
+        <span class="release-date">Released August 2026</span>
+      </div>
+      <div class="release-body">
+        <h4>New Features &amp; Fixes</h4>
+        <ul>
+          <li><strong>Window Preview Reliability</strong>: Fixed an issue where authorization prompts over window previews required two clicks instead of one.</li>
+          <li><strong>Recycle Bin Feedback</strong>: The Trash icon now instantly highlights and glows whenever you drag any file or folder anywhere on your screen.</li>
+          <li><strong>Floating Bar Resizing Fixes</strong>: Fixed a lingering ghost shadow on the screen after shrinking the bar height (such as switching from Default to Compact in Dock mode).</li>
+          <li><strong>Maximized Window Stability</strong>: Fixed a rare issue where maximizing a window (or using layout tools like Magnet) would cause a subtle 1-frame screen flash.</li>
+          <li><strong>Performance &amp; CPU Efficiency</strong>: Optimized background processing to reduce CPU and battery consumption across all running applications.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Previous Release -->
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v8.9-beta3</span>
+        </div>
+        <span class="release-date">Released August 2026</span>
+      </div>
+      <div class="release-body">
+        <h4>New Features &amp; Fixes</h4>
+        <ul>
+          <li><strong>Dock Mode &amp; Taskbar Mode</strong>: Easily force specific layouts (like macOS Dock or Windows Taskbar) directly from Settings. Dock Mode is now enabled by default for new users.</li>
+          <li><strong>System Dock Protection</strong>: Added a background watchdog to ensure your native macOS Dock settings are safely preserved under all conditions.</li>
+          <li><strong>Music Widget Layout &amp; Single-Click Focus</strong>: Overhauled the Music Widget with clean tab layouts, instant 1-click app focusing for Spotify and Apple Music, and smoother hover behavior.</li>
+          <li><strong>Drag &amp; Drop to Trash</strong>: Drag single or multiple files and folders directly from Finder onto the AeroBar Recycle Bin icon to instantly move them to macOS system Trash.</li>
+          <li><strong>Unified Extensions &amp; Shelves</strong>: Centralized all element enable/disable toggles inside Extensions &amp; Shelves with full toggle coverage for Mission Control and Search Icon.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Previous Release -->
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v8.9-beta2</span>
+        </div>
+        <span class="release-date">Released August 2026</span>
+      </div>
+      <div class="release-body">
+        <h4>New Features &amp; Fixes</h4>
+        <ul>
+          <li><strong>Tooltip Reliability</strong>: Fixed an issue where hover tooltips for buttons (like Trash, Mission Control) were hidden when the Start Menu was open.</li>
+          <li><strong>Start Menu Orb Toggle</strong>: Fixed an issue where clicking the Aero-menu Orb icon wouldn't toggle the Start Menu on and off.</li>
+          <li><strong>Quick Links Shortcut</strong>: Fixed an issue where using the keyboard shortcut for Quick Links would select the button but occasionally fail to render the panel.</li>
+          <li><strong>Drag &amp; Drop Glow Effects</strong>: Added glowing visual feedback to Quick Links, File Shelf, and Pinned Folder buttons when dragging compatible files or URLs anywhere on your screen.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Previous Release -->
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v8.9-beta1</span>
+        </div>
+        <span class="release-date">Released August 2026</span>
+      </div>
+      <div class="release-body">
+        <h4>New Features &amp; Fixes</h4>
+        <ul>
+          <li><strong>Global Keyboard Shortcuts</strong>: Configure custom system-wide hotkeys (e.g. `⌥⇧C`) to instantly toggle panels (Clipboard History, File Shelf, Pinned Folders, Utility Tray, Widgets, Quick Links) or trigger key actions from anywhere.</li>
+          <li><strong>Shortcut Safety &amp; macOS Protection</strong>: Built-in safety hard-blocks native system conflicts (like `⌘Space` or `⌘Tab`) and requires Option (`⌥`) modifier so you never override other apps.</li>
+          <li><strong>Hardware Key Cap Previews</strong>: Translucent hardware-style key cap badges (`[⌥][⇧][C]`) display directly in panel headers and Customizer UI.</li>
+          <li><strong>Indestructible Tooltips &amp; Action Hotkeys</strong>: Hover tooltips display 100% reliably regardless of system focus with integrated shortcut hints.</li>
+          <li><strong>Seamless Setup</strong>: Deferred background engine initialization until after setup is complete, eliminating aggressive macOS permission prompts.</li>
         </ul>
       </div>
     </div>
@@ -3115,7 +3187,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
       </div>
     </div>
     <div style="text-align:center; margin-top: 1rem;" class="reveal">
-      <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta4/AeroBar.dmg"
+      <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta5/AeroBar.dmg"
          class="btn-primary" style="display:inline-flex;">
         Download AeroBar.dmg
       </a>
@@ -3140,7 +3212,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
       <li>Appearance Lab - full customization</li>
       <li>macOS Tahoe</li>
     </ul>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta4/AeroBar.dmg"
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v8.9-beta5/AeroBar.dmg"
        id="pricing-download-btn" class="btn-primary" style="width:100%; justify-content:center; margin-bottom:1.25rem;">
       Download for Free
     </a>

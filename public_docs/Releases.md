@@ -1,86 +1,55 @@
 # Release Notes
 
+### v8.9-beta5 - August 2026
+- **Clipboard History Overhaul (Left Alignment, Spacebar QuickLook & Save As)**:
+  - **Left-Aligned Text & Files**: Text snippets, code blocks, file names, folder paths, and link URLs now align cleanly to the left directly beside their icons.
+  - **Spacebar QuickLook for All Items**: Pressing Spacebar on *any* item (text, code, files, folders, images, GIFs, videos, audio) opens full, scrollable native macOS QuickLook previews.
+  - **1-Click Save As / Save To**: Added a 1-click `"Save As..."` / `"Save Image"` / `"Save To"` hover button and right-click context menu options to export copied text as `.txt` files, images as `.png` files, or copy files and folders to custom locations.
+- **Popover Gap & Glass Panel Standardization**: Standardized floating popover gap (~10pt above taskbar) across Music Widget, Window Previews, and Utility Buttons, with 24pt squircle panel masking.
+- **Pinned App Preview Border Alignment**: Single-window pinned app previews now render with 0 outer margin, matching window tabs 1:1 and eliminating secondary dark box outlines.
+- **Multi-Display Placement Precision**: Popover panels and window previews now open on the exact display your cursor is hovering over on multi-monitor setups.
+- **HUD Glass Previews for Cmd+Tab & 3-Finger Swipe**: Window previews shown during `Cmd+Tab` and 3-finger swipe gestures now render in vibrant, translucent Liquid Wallpaper HUD Glass while remaining 100% non-focus-stealing.
+- **AuraBar & AeroBar 1:1 Synchronized Theming**: Top menu bar (AuraBar) and bottom AeroBar now synchronize glass materials, tint hue, brightness, and surface tint density (default 50%) 1:1.
+- **macOS Tahoe Compositor & Music Vibrancy Fixes**: Fixed macOS Tahoe (16.0) Window Server compositor dimming on glass popovers and restored Liquid Glass album art vibrancy in Spotify & Apple Music widgets.
+
 ### v8.9-beta4 - August 2026
-- **Window Preview Reliability**: Fixed an annoying quirk where clicking the "Authorize" button over window previews required two clicks instead of one.
-- **Recycle Bin Feedback**: The Trash icon now instantly highlights and glows whenever you drag any file or folder anywhere on your screen, perfectly mirroring the global drag feedback of the Pinned Folder and File Shelf.
-- **Clipboard History Text Readability**: Rebuilt the layout for the clipboard history panel to ensure text (especially short snippets like emojis) perfectly stays centered, while icons stay anchored correctly without misaligning the cell layout.
-- **Floating Bar Resizing Artifacts**: Fixed a lingering "bleed" or ghost shadow on the screen that would persist after shrinking the bar's height (such as switching from Default to Compact in Dock mode).
-- **Maximized Window Glitch**: Fixed a rare bug where maximizing a window (or using tools like Magnet) would cause a 1-frame screen tear or window flash every few seconds due to a tug-of-war with the bar's boundary enforcement engine.
-- **Memory & CPU Optimizations**: Fixed severe memory leaks in `AccessibilityService` and `MusicWidgetView` caused by missing autorelease pools on background queues, and resolved a main-thread CPU stall by moving AppleScript instantiations to background queues.
+- **Window Preview Reliability**: Fixed an issue where authorization prompts over window previews required two clicks instead of one.
+- **Recycle Bin Feedback**: The Trash icon now instantly highlights and glows whenever you drag any file or folder anywhere on your screen.
+- **Floating Bar Resizing Fixes**: Fixed a lingering ghost shadow on the screen after shrinking the bar height (such as switching from Default to Compact in Dock mode).
+- **Maximized Window Stability**: Fixed a rare issue where maximizing a window (or using layout tools like Magnet) would cause a subtle 1-frame screen flash.
+- **Performance & CPU Efficiency**: Optimized background processing to reduce CPU and battery consumption across all running applications.
 
 ### v8.9-beta3 - August 2026
-- **Dock Mode & Taskbar Mode**: Added a dedicated Dock Mode and Taskbar Mode in Settings, allowing you to force specific UI layouts (like macOS Dock or Windows Taskbar) without manually managing the visibility of Window Tabs and Pinned Apps. Dock Mode is now enabled by default for new users.
-- **System Dock Autohide Restoration**: Fixed a critical bug where AeroBar could leave the macOS Dock permanently hidden if the app was forcefully quit or crashed. Added a bulletproof background watchdog to guarantee your Dock autohide settings are safely restored no matter what.
-- **Music Widget UI Enhancements**: Completely overhauled the Music Widget layout with left/right tab support, visual separators, optimized caching, and fixed a race condition that caused spurious panel dismissals and shadow styling glitches.
-- **Music Widget Reliability**: Fixed a bug where the Music Widget panel wouldn't close when the mouse moved towards the unpinned apps taskbar section by migrating to precise native SwiftUI hover hit-testing.
-- **Music Widget Activation**: Fixed a bug where tapping the Music Widget album art required two clicks to focus the app. Now powered by modern macOS 14 Workspace APIs, a single click will aggressively pull Spotify or Apple Music to the front instantly.
-- **Drag & Drop to Trash**: You can now drag single or multiple files and folders directly from Finder onto the AeroBar Recycle Bin icon to instantly move them to macOS system Trash. The Trash icon dynamically highlights in red and animates during active drop targeting.
-- **Unified Extensions & Tool Controls**: Streamlined the Appearance Lab customizer by moving all element enable/disable toggles out of Icon Colors and centralizing them inside Extensions & Shelves. Includes full toggle coverage for Mission Control and Search Icon.
+- **Dock Mode & Taskbar Mode**: Easily force specific layouts (like macOS Dock or Windows Taskbar) directly from Settings. Dock Mode is now enabled by default for new users.
+- **System Dock Protection**: Added a background watchdog to ensure your native macOS Dock settings are safely preserved under all conditions.
+- **Music Widget Layout & Single-Click Focus**: Overhauled the Music Widget with clean tab layouts, instant 1-click app focusing for Spotify and Apple Music, and smoother hover behavior.
+- **Drag & Drop to Trash**: Drag single or multiple files and folders directly from Finder onto the AeroBar Recycle Bin icon to instantly move them to macOS system Trash.
+- **Unified Extensions & Shelves**: Centralized all element enable/disable toggles inside Extensions & Shelves with full toggle coverage for Mission Control and Search Icon.
 
 ### v8.9-beta2 - August 2026
-- **Tooltip Reliability Fix**: Fixed an issue where macOS would incorrectly force-hide hover tooltips for buttons (like Trash, Mission Control, etc.) when the Start Menu was open.
-- **Start Menu Orb Fix**: Fixed an issue where clicking the Aero-menu Orb icon wouldn't toggle the Start Menu on and off.
-- **Quick Links Shortcut Fix**: Fixed an issue where using the keyboard shortcut for Quick Links would select the button but occasionally fail to render the panel.
-- **Drag & Drop Glow Effects**: Added glowing visual feedback to the Quick Links, File Shelf, and Pinned Folder buttons when dragging compatible files or URLs anywhere on your screen.
-- **Panel Drop Instructions**: Updated the empty-state text and interactions for File Shelf, Pinned Folders, and Quick Links so users can intuitively drop files directly into the expanded panels themselves rather than targeting the buttons.
+- **Tooltip Reliability**: Fixed an issue where hover tooltips for buttons (like Trash, Mission Control) were hidden when the Start Menu was open.
+- **Start Menu Orb Toggle**: Fixed an issue where clicking the Aero-menu Orb icon wouldn't toggle the Start Menu on and off.
+- **Quick Links Shortcut**: Fixed an issue where using the keyboard shortcut for Quick Links would select the button but occasionally fail to render the panel.
+- **Drag & Drop Glow Effects**: Added glowing visual feedback to Quick Links, File Shelf, and Pinned Folder buttons when dragging compatible files or URLs anywhere on your screen.
 
 ### v8.9-beta1 - August 2026
+- **Global Keyboard Shortcuts**: Configure custom system-wide hotkeys (e.g. `⌥⇧C`) to instantly toggle panels (Clipboard History, File Shelf, Pinned Folders, Utility Tray, Widgets, Quick Links) or trigger key actions from anywhere.
+- **Shortcut Safety & macOS Protection**: Built-in safety hard-blocks native system conflicts (like `⌘Space` or `⌘Tab`) and requires Option (`⌥`) modifier so you never override other apps.
+- **Hardware Key Cap Previews**: Translucent hardware-style key cap badges (`[⌥][⇧][C]`) display directly in panel headers and Customizer UI.
+- **Indestructible Tooltips & Action Hotkeys**: Hover tooltips display 100% reliably regardless of system focus with integrated shortcut hints.
+- **Seamless Setup**: Deferred background engine initialization until after setup is complete, eliminating aggressive macOS permission prompts.
 
-- **Global Keyboard Shortcuts**: Introduced a brand new Shortcuts system! You can now configure global system-wide hotkeys (e.g. `⌥⇧C`) to instantly toggle AeroBar's panels (Clipboard History, File Shelf, Pinned Folders, Utility Tray, Widgets, Quick Links) or trigger key actions (Spotlight, Screen Search, Mission Control, Show Desktop, Open Trash) from anywhere, in any app.
-- **Shortcut Safety & macOS Conflict Protection**: Engineered a dual-layer safety mechanism into the new Shortcuts customizer. It automatically hard-blocks native macOS system conflicts (like `⌘Space` or `⌘Tab`) and requires the Option (`⌥`) modifier for all custom binds, ensuring you never accidentally override your other apps' standard hotkeys.
-- **Live Key Cap Previews**: Added beautiful, translucent hardware-style key cap badges (e.g. `[⌥][⇧][C]`) directly into panel headers and the Customizer UI, instantly updating the moment you record a new shortcut.
-- **First-Launch Start Menu Alignment**: Fixed an issue where the Start Menu would awkwardly misalign to the right on the very first launch by decoupling auto-launch coordinate logic from the initial mouse position.
-- **Onboarding Input Block Guide**: Improved the "Quick Fix" onboarding flow with explicit instructions to "Quit & Reopen" when macOS prompts for Input Monitoring permissions, completely eliminating first-run setup confusion.
-- **Indestructible Tooltips**: Re-engineered the tooltip window rendering layer to bypass macOS's `.transient` inactive-app lifecycle restrictions. Action button hover tooltips now display 100% reliably regardless of system focus or Start Menu states.
-- **Integrated Action Hotkeys**: Keyboard shortcut hints (e.g. `⌥⇧C`) now natively render inside the hover tooltips for all main Action Buttons (Mission Control, Trash, Show Desktop, Screen Search).
-- **Customizer 'New' Badges**: Added visual indicator badges to highlight newly introduced features in the Customizer.
-- **Cumulative Updater Changelogs**: The updater now aggregates and natively styles release notes for all intermediate builds, ensuring you never miss what's new even if you skip a few beta versions.
-- **Seamless Onboarding**: Deferred background engine initialization until after setup is complete, completely eliminating the aggressive "Keystroke Receiving" macOS prompt that previously interrupted the first-run experience.
-- **Focus Mode Hit-Testing Fix**: Fixed an issue where bar elements like the App Menu orb and icons would rapidly flicker when you moved your mouse away while Focus Mode was active.
-- **AuraBar Focus Mode Dimming**: When Focus Mode is enabled, AuraBar now applies a true dark film over the native macOS menu bar, ensuring white text and icons are properly dimmed and no longer bleed through.
-- **ScreenCaptureKit Stability**: Fixed a rare but fatal crash that could occur when fetching window content previews if the system timed out or authorization changed.
-- **AppleScript Performance**: Resolved severe main-thread hangs and watchdog timeouts by offloading browser queries and window location lookups to background queues.
-- **Multi-Display Window Tabs**: Fixed a bug where window tab hover previews would glitch or disappear if the exact same window was tabbed on two different monitors simultaneously.
-- **macOS 14+ Space Tracking**: Implemented a robust workaround for a broken macOS API (`CGSCopySpacesForWindows`) to correctly track window placements across Spaces.
-- **Fullscreen Ghost Window Pruning**: Tightened the window tracking heuristics to properly prune "ghost" windows from apps like Notes or PDFgear without mistakenly removing genuinely fullscreened applications.
 ### v8.8-beta9 - July 2026
-- **Dynamic Liquid Glass (Default)**: Introduced a brand new, highly optimized dynamic material that renders volumetric, real-time tracking liquid glass waves on hover. This breathtaking effect is now enabled by default for all users.
-- **Sleeker & Synced Glass Menus**: Reduced the App Menu and popup glass bevels to a much sleeker 1.5px and implemented custom, perfectly concentric squircle inner radii so that the inner glow and outer window borders are in flawless visual sync.
-- **Unblockable Global Hover Tracking**: Rebuilt the hover tracking logic to use raw OS-level `CGEventTap` coordinates. Dynamic liquid glass waves now sweep smoothly back and forth across the entire bar, including straight across all window tabs without ever freezing or dropping frames.
-- **Faster Beta Cycles**: Changed the default update check cycle to 2 hours (previously Daily) so testers get the latest hotfixes almost immediately.
-- **Performance & Stability**: Fixed App Hang deadlocks that occurred when interacting with native Fullscreen spaces or using trackpad gestures under heavy system load.
-- **Sentry Integration**: Reconfigured the Sentry App Hang Tracker to ensure reliable crash logs without conflicting with custom watchdogs.
-- Improved battery life and CPU efficiency by optimizing global mouse tracking and space detection.
-- Smoother transitions for Mission Control.
-- Added confirmation prompts for Power Menu buttons and deleting Clipboard history.
-- The App Drawer button now auto-enables when the pinned apps section is disabled.
-- Improved the Troubleshooting menu layout and functionality.
-- Fixed broken fav-icons in Quick Links.
-- Fixed an issue preventing users from renaming Quick Links.
-
-### v8.7-beta9 - July 2026
-- **Input Monitoring Guide Fix**: Fixed an issue where the permission guide popup would immediately close itself if macOS was experiencing the TCC recompilation bug, preventing users from reading the workaround instructions.
-- **Critical Crash Fix**: Fixed an issue where macOS Accessibility API calls on the main thread caused AeroBar to hang indefinitely when interacting with unresponsive applications. These calls have now been properly offloaded to background queues.
-- **Diagnostics**: Added automatic full thread sample capture to Sentry crash reports when the emergency hotkey (`Ctrl+Option+Cmd+Esc`) is triggered for app hangs.
-- **Security Patch**: Rotated cryptographic keys for beta verification and fixed an issue where configuration secrets were unintentionally bundled into the app.
-
-### v8.7-beta6 - July 2026
-- **UI Refinements**: Fixed divider visibility logic between unpinned apps and utility buttons.
-- **Start Menu**: Prevented a small blank rectangle from flashing on first open.
-- **Customizer**: Added "NEW" badges to recently added features.
-
-### v8.7-beta4 - July 2026
-- **Zero-Latency Hover Tracking**: Upgraded context menu options and Power Menu item hover tracking to synchronous, click-transparent `hitTest` coordinators, completely eliminating mouse selection lag across pinned apps and window tabs.
-- **Power Menu Action Handler Fix**: Replaced AppleScript dispatch routines for Sleep and Lock Screen with direct macOS process calls (`/usr/bin/pmset`) and fixed Log Out / Shut Down execution handlers.
-- **Eliminated Continuous Disk Writes**: Removed a body-level debug file write in `PinnedAppsTray` that was triggering on every layout pass, reducing background disk write frequency dramatically.
-- **Watchdog & Health Monitoring Optimization**: Optimized watchdog heartbeat ping frequency and enabled automated Sentry release session tracking for active user health monitoring.
+- **Dynamic Liquid Glass (Default)**: Introduced a brand new, highly optimized dynamic material that renders volumetric, real-time tracking liquid glass waves on hover.
+- **Sleeker Glass Menus**: Reduced popup glass bevels to 1.5px with concentric squircle inner radii so inner glow and outer borders stay in visual sync.
+- **Smooth Global Hover Tracking**: Dynamic liquid glass waves now sweep smoothly across the entire bar without freezing or dropping frames.
+- **Battery & Performance**: Improved battery life and CPU efficiency by optimizing global mouse tracking and space detection.
 
 ### v8.7-beta3 - July 2026
-- **Pinned App & Mission Control Hover Highlight Fix**: Resolved an issue where dragging and rearranging pinned apps reversed their hover highlights, and fixed hover highlights missing on the Mission Control button by updating frame and layout tracking across all bar elements.
-- **Right-Side Utility Buttons Drag-to-Reorder**: Added live drag-to-reorder support for all right-side utility buttons (Clipboard, File Shelf, Quick Links, Widgets, Recycle Bin, Show Desktop, Pinned Folder) with customizable order storage.
-- **Independent Light & Dark Mode Indicator Styles**: Made Indicator Styles (Pill, Full Line, Trimmed Line, Dot, Border) and dimmer settings completely independent per appearance mode, defaulting to Full Line on Dark Mode and Pill on Light Mode.
-- **Refined Light Mode Pill Fill**: Upgraded the Pill indicator style (`.underline`) to render a smooth, rich rounded pill background fill with accent border in Light Mode.
-- **Automatic macOS App Icon Refresh**: Connected system appearance changes (`NSApp.effectiveAppearance`) to automatically purge icon caches and re-extract native app icons when switching between macOS Dark and Light modes.
+- **Pinned App & Mission Control Hover Highlights**: Fixed hover highlight positioning on pinned apps and Mission Control buttons.
+- **Utility Buttons Drag-to-Reorder**: Added live drag-to-reorder support for all right-side utility buttons (Clipboard, File Shelf, Quick Links, Widgets, Recycle Bin, Show Desktop, Pinned Folder).
+- **Independent Light & Dark Mode Indicator Styles**: Made Indicator Styles (Pill, Full Line, Trimmed Line, Dot, Border) independent per appearance mode.
+- **Automatic macOS App Icon Refresh**: System appearance changes automatically refresh native app icons when switching between Light and Dark modes.
 
 ### v8.7-beta2 - July 2026
 - **Troubleshooting & Fixes Tab**: Added a dedicated Troubleshoot tab in AeroBar Settings featuring a 4-step quick fix guide and direct System Settings shortcuts for resolving post-system freeze macOS HID event tap blocks (Cmd+Tab / 3-finger swipe, hover highlights, button popups).
