@@ -1,5 +1,30 @@
 # Release Notes
 
+### v8.9-beta8 - August 2026
+- **Screenshot Thumbnail Conflict Resolved**:
+  - AeroBar now automatically disables the macOS floating screenshot thumbnail preview (bottom-right corner) while it is running, preventing it from being obscured behind AeroBar's elevated window level.
+  - On quit or crash, the original screenshot thumbnail setting is fully restored so the native thumbnail reappears normally when AeroBar is not running.
+- **Dock Mode / Taskbar Mode Layout Auto-Correction**:
+  - Switching between Dock Mode and Taskbar Mode now instantly re-clamps all background windows to the correct screen boundary, eliminating the gap or overlap that previously required a restart.
+- **Bottom Gap Auto-Fill on Bar Height Reduction**:
+  - When the AeroBar height is reduced (e.g. dragging the height slider down), windows docked above the bar now automatically expand downward to fill the freed space, keeping the screen fully utilized.
+- **Singleton Initialization Crash Fixed (`EXC_BREAKPOINT`)**:
+  - Fixed a crash during launch caused by `AeroBarSettings` static singleton re-entrancy when `updateBarHeight()` was called inside the initializer. All height update calls from settings setters are now safely dispatched async to the main thread.
+- **Window Clamping on Mode Switch**:
+  - Toggling Dock Mode, Taskbar Mode, or changing bar height now reliably triggers `WindowArrangementDaemon.updateBarHeight()` to re-clamp all windows instantly.
+- **Aero Start Menu Positioning**:
+  - Fixed the Start Menu anchoring directly above the Aero Vista Orb icon in Dock Mode instead of centering on screen.
+  - Fixed taskbar button hover no longer prematurely dismissing the Aero Start Menu panel.
+- **Default Bar Height**:
+  - Updated the default AeroBar height to 60pt for new users and factory-reset profiles.
+- **Music Widget Smart Play**:
+  - Pressing Play when no track is loaded now automatically opens and focuses the selected music app (Spotify / Apple Music).
+  - Fixed Apple Music window tab display when the app is closed or has no active AX windows.
+- **UI Polish**:
+  - Fixed horizontal spacing between the Aero Vista Orb and the pinned Finder icon.
+  - Fixed utility tray button sizing staying correctly at 40pt inside the Utility Tray at all bar heights.
+  - Standardized popover panel dismiss grace period (850ms) across all utility buttons and gap traversal zones.
+
 ### v8.9-beta7 - August 2026
 - **Health Check Diagnostics & Watchdog Daemon Overhaul**:
   - **100% Health Check Diagnostic Pass**: Resolved all failing items in the Settings Health Check diagnostic panel (`Heartbeat freshness`, `External watchdog helper`, and `Emergency exit overlay`).

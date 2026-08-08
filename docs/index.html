@@ -2483,8 +2483,35 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
     <div class="release-card featured-release reveal">
       <div class="release-header">
         <div class="release-title-wrapper">
-          <span class="release-version">v8.9-beta7</span>
+          <span class="release-version">v8.9-beta8</span>
           <span class="release-badge stable">Latest Release</span>
+        </div>
+        <span class="release-date">Released August 2026</span>
+      </div>
+      <div class="release-body">
+        <h4>Screenshot Conflict Fix &amp; Layout Auto-Corrections</h4>
+        <ul>
+          <li><strong>Screenshot Thumbnail Conflict Resolved</strong>:
+            <ul>
+              <li>AeroBar now automatically disables the macOS floating screenshot thumbnail preview (bottom-right corner) while running, preventing it from being obscured behind AeroBar's elevated window level.</li>
+              <li>On quit or crash, the original screenshot thumbnail setting is fully restored so the native thumbnail reappears normally.</li>
+            </ul>
+          </li>
+          <li><strong>Dock / Taskbar Mode Layout Auto-Correction</strong>: Switching between Dock Mode and Taskbar Mode now instantly re-clamps all background windows to the correct screen boundary — no restart required.</li>
+          <li><strong>Bottom Gap Auto-Fill</strong>: Reducing bar height now automatically expands docked windows downward to fill the freed screen space.</li>
+          <li><strong>Singleton Crash Fixed (<code>EXC_BREAKPOINT</code>)</strong>: Resolved a launch crash caused by <code>AeroBarSettings</code> static singleton re-entrancy during initialization.</li>
+          <li><strong>Aero Start Menu Positioning</strong>: Start Menu now anchors directly above the Aero Vista Orb in Dock Mode; taskbar button hover no longer prematurely closes it.</li>
+          <li><strong>Music Widget Smart Play</strong>: Pressing Play with no track loaded now auto-opens and focuses the music app. Fixed Apple Music window tab display when the app is closed.</li>
+          <li><strong>UI Polish</strong>: Fixed Vista Orb / Finder icon spacing, utility tray button sizing at all bar heights, and standardized popover dismiss grace period (850ms).</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Previous Release -->
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v8.9-beta7</span>
         </div>
         <span class="release-date">Released August 2026</span>
       </div>
