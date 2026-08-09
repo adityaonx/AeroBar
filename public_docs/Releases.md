@@ -1,5 +1,14 @@
 # Release Notes
 
+### v8.9-beta9 - August 2026
+- **Memory Leaks Fixed (Part 1 — WindowServer & UI Panels)**:
+  - Fixed multiple memory leaks that were causing AeroBar to accumulate hundreds of megabytes of memory over time through normal use. WindowServer no longer ramps up to ~500 MB just from the bar sitting on screen.
+  - Fixed a permanent ~50 MB memory leak that occurred every time the Aero Menu or Customizer panel was opened. Memory is now fully released after closing them.
+  - Optimized the display background dimmer service to defer heavy WindowServer surface allocations until the panel is actually shown, significantly reducing the idle WindowServer memory footprint.
+  - Icon bitmap cache is now capped to prevent unbounded RAM growth when many apps are running simultaneously.
+  - Memory from closed panels is now proactively returned to the OS via allocator pressure relief, keeping AeroBar's working set lean.
+  - **What you'll notice**: AeroBar's base memory use is dramatically lower. Short spikes when opening Aero Menu / Customizer are expected and fully self-healing — memory comes back down after closing them.
+
 ### v8.9-beta8 - August 2026
 - **Screenshot Thumbnail Conflict Resolved**:
   - AeroBar now automatically disables the macOS floating screenshot thumbnail preview (bottom-right corner) while it is running, preventing it from being obscured behind AeroBar's elevated window level.
