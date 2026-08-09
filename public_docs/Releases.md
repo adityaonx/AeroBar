@@ -1,5 +1,12 @@
 # Release Notes
 
+### v9.0-beta1 - August 2026
+- **Memory Usage Nearly Halved**:
+  - Continued the memory work from v8.9-beta9 with a deeper pass across the app. Typical memory usage is now nearly 50% lower than v8.9-beta9.
+  - AeroBar should feel noticeably lighter, especially if you keep it running for long stretches or leave your Mac on for days at a time.
+- **General Stability Improvements**:
+  - Small fixes and polish throughout the app based on beta feedback.
+
 ### v8.9-beta9 - August 2026
 - **Memory Leaks Fixed (Part 1 — WindowServer & UI Panels)**:
   - Fixed multiple memory leaks that were causing AeroBar to accumulate hundreds of megabytes of memory over time through normal use. WindowServer no longer ramps up to ~500 MB just from the bar sitting on screen.
