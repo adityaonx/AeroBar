@@ -1,5 +1,10 @@
 # Release Notes
 
+### v9.0-beta2 - August 2026
+- **Reset Options Fixed**:
+  - Fixed Total Factory Reset, Dry Wipe, and Reset Settings & Cache all quitting AeroBar without relaunching it afterward.
+  - Fixed a rare crash that could occur specifically during Total Factory Reset, caused by a settings-save reentrancy issue.
+
 ### v9.0-beta1 - August 2026
 - **Memory Usage Nearly Halved**:
   - Continued the memory work from v8.9-beta9 with a deeper pass across the app. Typical memory usage is now nearly 50% lower than v8.9-beta9.
