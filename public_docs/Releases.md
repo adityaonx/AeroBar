@@ -1,9 +1,31 @@
 # Release Notes
 
+### v9.0-beta3 - August 2026
+- **Diagnostics HUD**: Added an intuitive, in-app draggable floating panel when clicking "Submit Issues" to seamlessly drag-and-drop diagnostic logs directly into GitHub, bypassing Safari sandboxing restrictions.
+- **Troubleshooting Menu**: Moved diagnostics export tools from the hidden Developer section directly to the Troubleshooting tab.
+- **System State Snapshot**: Diagnostic logs will now dynamically append the exact macOS version and AeroBar build state even if there are zero crash events recorded, saving diagnostic time.
+- **Focus & Activation Reliability**:
+  - Fixed a major bug where rapid hovering across pinned apps would permanently steal focus from your active application by safely canceling overlapping activation requests.
+- **Hover Engine Recovery**:
+  - Fixed an issue where hovering would permanently die after the Mac was put to sleep multiple times by removing an overly aggressive safety tripwire.
+- **Preview Hit-Testing & Dead Zones**:
+  - Fixed overlapping "ghost" hover zones from scrolled window tabs preventing hovers from registering correctly.
+- **Customizer & Settings Theming Fixes**:
+  - Fixed a missing color overlay on macOS 26.0 Tahoe's native `.glassEffect` that prevented custom Liquid Glass tint colors from applying to the Aero Menu and Customizer panels.
+  - Re-enabled the volumetric cursor glow for native Tahoe glass.
+  - Fixed a bug where the "Reset Section" button applied outdated solid background defaults instead of the true Liquid Glass factory defaults.
+- **Customizer Performance Lag**:
+  - Fixed massive cursor and menu lag in the Appearance Customizer caused by continuous 60Hz mouse updates triggering redundant 200ms Core Animation interpolations.
 ### v9.0-beta2 - August 2026
 - **Reset Options Fixed**:
   - Fixed Total Factory Reset, Dry Wipe, and Reset Settings & Cache all quitting AeroBar without relaunching it afterward.
   - Fixed a rare crash that could occur specifically during Total Factory Reset, caused by a settings-save reentrancy issue.
+- **In-App Update Reliability Fixed**:
+  - Fixed a bug where the in-app updater could quit and relaunch from the same old build if mounting the update disk image or swapping in the new app silently failed.
+  - The updater now verifies each step succeeded, automatically restores the previous build if a swap fails partway through, and shows a real error instead of failing silently.
+- **Panel Close Crash Fixed**:
+  - Fixed a crash ("NSWindow geometry should only be modified on the main thread!") that could occur when a panel (Start Menu, alert panels, etc.) closed.
+  - Panel teardown code is now guaranteed to always run on the main thread instead of occasionally landing on a background thread.
 
 ### v9.0-beta1 - August 2026
 - **Memory Usage Nearly Halved**:
