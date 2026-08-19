@@ -1,5 +1,6 @@
 # Release Notes
-### v9.0-beta6 - August 2026
+### v9.0-beta7 - August 2026
+- **Layout Hotfix**: Fixed a visual overlap bug where the taskbar expanded beyond its physical bounding box and bled behind windows due to mismatched icon scaling parameters from beta5.
 - **Critical Hotfix**: Taskbar auto-scaling layout logic introduced in beta5 has been completely reverted to prevent WindowServer crashes and macOS window sync failures, returning to the stable layout of beta4.
 - **Massive Memory Optimization**:
   - Automatically destroys the AeroBar Start Menu and Customizer UI off-screen 60 seconds after closing them, freeing up roughly ~200MB of pure WindowServer graphical memory.
