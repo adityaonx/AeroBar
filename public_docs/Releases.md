@@ -1,5 +1,11 @@
 # Release Notes
 
+### v9.0-beta4 - August 2026
+- **Performance & Stability Enhancements**:
+  - **WindowServer Crash Fix**: Drastically reduced CPU usage and completely eliminated WindowServer deadlocks/UI freezes that occurred when rapidly moving the mouse across multiple taskbar icons.
+  - **No More Dropped Keystrokes**: Fixed an issue where accidentally brushing your mouse past the taskbar would momentarily steal keyboard focus and cause you to drop keystrokes in your active application.
+  - **Smoother Liquid Glass**: The immediate "depth" effect of Liquid Glass when hovering taskbar icons has been optimized for macOS 16.0 Tahoe.
+
 ### v9.0-beta3 - August 2026
 - **Diagnostics HUD**: Added an intuitive, in-app draggable floating panel when clicking "Submit Issues" to seamlessly drag-and-drop diagnostic logs directly into GitHub, bypassing Safari sandboxing restrictions.
 - **Troubleshooting Menu**: Moved diagnostics export tools from the hidden Developer section directly to the Troubleshooting tab.
