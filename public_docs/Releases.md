@@ -1,7 +1,6 @@
 # Release Notes
-### v9.0-beta5 - August 2026
-- **Taskbar Overflow Scaling**: The taskbar now perfectly scales down its size automatically when you pin too many apps, preventing your pinned apps from clipping off the edges of the screen while preserving full scrolling for window tabs.
-- **Window Arrangement Synchronisation**: The physical hit-box and the invisible boundary that pushes your macOS windows up will now perfectly hug the taskbar when it dynamically shrinks.
+### v9.0-beta6 - August 2026
+- **Critical Hotfix**: Taskbar auto-scaling layout logic introduced in beta5 has been completely reverted to prevent WindowServer crashes and macOS window sync failures, returning to the stable layout of beta4.
 - **Massive Memory Optimization**:
   - Automatically destroys the AeroBar Start Menu and Customizer UI off-screen 60 seconds after closing them, freeing up roughly ~200MB of pure WindowServer graphical memory.
   - Re-engineered icon retrieval for Search and Start Menu, utilizing ephemeral caches to starve the `iconservicesagent` memory bloat, recovering up to 800MB of RAM during intense searches.
