@@ -1,4 +1,10 @@
 # Release Notes
+### v9.0-beta8 - August 2026
+- **Antivirus False Positive Fix**: 
+  - Rewrote the background Dock watchdog to execute shell commands entirely in-memory instead of writing and executing hidden bash scripts to the system Temp folder. 
+  - Removed aggressive LaunchAgent polling and global keyboard hotkey hooks. 
+  - These changes completely eliminate the 'Trojan:Script/Wacatac.C!ml' false positive triggered by aggressive machine-learning antivirus scanners like Microsoft Defender.
+
 ### v9.0-beta7 - August 2026
 - **Layout Hotfix**: Fixed a visual overlap bug where the taskbar expanded beyond its physical bounding box and bled behind windows due to mismatched icon scaling parameters from beta5.
 - **Critical Hotfix**: Taskbar auto-scaling layout logic introduced in beta5 has been completely reverted to prevent WindowServer crashes and macOS window sync failures, returning to the stable layout of beta4.
