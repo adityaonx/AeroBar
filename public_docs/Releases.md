@@ -1,5 +1,5 @@
 # Release Notes
-### v9.0-beta8 - August 2026
+### v9.0-beta9 - August 2026
 - **Antivirus False Positive Fix**: 
   - Rewrote the background Dock watchdog to execute shell commands entirely in-memory instead of writing and executing hidden bash scripts to the system Temp folder. 
   - Removed aggressive LaunchAgent polling and global keyboard hotkey hooks. 
