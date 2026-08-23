@@ -1,9 +1,23 @@
 # Release Notes
+### v9.1-beta1 - August 2026
+- **Pixel-Perfect Layouts**: Fixed inconsistent horizontal gaps between utility extension buttons and the Mission Control divider caused by invisible ghost layout elements. The bar now maintains flawless symmetry.
+- **Sleek New Design Language**: Replaced custom-drawn UI shapes with gorgeous, native macOS-style dummy app icons. The entire bar feels completely at home on macOS while retaining that nostalgic Windows taskbar vibe.
+- **The "Shelf Hub"**: We've streamlined the extensions! The previously separate utilities have been merged into a single, unified "Shelf Hub" button, decluttering your taskbar while keeping all your power tools just a click away.
+- **Precision Focus Mode**: Focus Mode is now smarter than ever. Instead of the entire bar brightening up when you move your mouse, the bar stays beautifully dimmed in the shadows, and *only* the specific icon or tab you hover over gently illuminates. 
+- **Utility Tray Deprecated**: We removed the complex separate "Utility Tray" mode to focus on delivering a single, incredibly stable, and highly polished Unified Bar experience. 
+- **Lightweight & Fast**: By stripping out legacy equalizer animations and obsolete icon coloring engines, we've trimmed the fat and made AeroBar snappier and less resource-intensive.
+
 ### v9.0-beta9 - August 2026
 - **Antivirus False Positive Fix**: 
   - Rewrote the background Dock watchdog to execute shell commands entirely in-memory instead of writing and executing hidden bash scripts to the system Temp folder. 
   - Removed aggressive LaunchAgent polling and global keyboard hotkey hooks. 
   - These changes completely eliminate the 'Trojan:Script/Wacatac.C!ml' false positive triggered by aggressive machine-learning antivirus scanners like Microsoft Defender.
+- **Clipboard History Overhaul**:
+  - **Native Quick Look & Live Text**: Replaced the custom oversized OCR panel with native macOS Quick Look. Previewing images now provides a seamless, perfectly scaled Finder-style experience with Apple's Live Text built right in.
+  - **Crisp Retina Thumbnails**: Fixed a bug where copied image thumbnails looked blurry on Retina displays. Thumbnails are now rendered at 1000px resolution with expanded memory caching for buttery smooth scrolling.
+  - **New Pinned Tab**: Added a dedicated "Pinned" tab to the clipboard filter bar so you can instantly access your saved items.
+  - **Layout Fixes**: Increased the panel width to 500pt and fixed an issue where the "Files" tab label was clipped off the screen.
+  - **Code Cleanup**: Removed hundreds of lines of deprecated custom OCR code, keeping the app lightweight and fast.
 
 ### v9.0-beta7 - August 2026
 - **Layout Hotfix**: Fixed a visual overlap bug where the taskbar expanded beyond its physical bounding box and bled behind windows due to mismatched icon scaling parameters from beta5.
