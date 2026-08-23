@@ -1,3 +1,9 @@
+### v9.1-beta2 - August 2026
+- **Flawless Light Mode Aesthetics**: Completely overhauled the default Light Mode experience. Fresh installs and factory resets now default to a stunning 'Frosted Ice' Aero Blur with 100% brightness and 100% surface density for a pristine, premium glass aesthetic.
+- **Smart Brightness Clamping**: Increasing the Tint Brightness slider in Light Mode now intelligently boosts only the floating menus and panels, while protecting the main top/bottom bars from washing out and blinding you.
+- **High-Contrast Legibility Engine**: Added a smart dark-grey stroke that automatically outlines pure-white window tabs, section dividers, and Music Widget controls in Light Mode. This guarantees perfect legibility whether the translucent bar is floating over a pitch-black terminal or a glaring white webpage.
+- **Liquid Glass Deprecated in Light Mode**: Due to unpatchable CoreAnimation tearing bugs in macOS that caused Liquid Glass to become cloudy-white on theme changes, we've disabled it entirely for Light Mode to ensure a rock-solid, bug-free experience.
+
 # Release Notes
 ### v9.1-beta1 - August 2026
 - **Pixel-Perfect Layouts**: Fixed inconsistent horizontal gaps between utility extension buttons and the Mission Control divider caused by invisible ghost layout elements. The bar now maintains flawless symmetry.
