@@ -1,5 +1,9 @@
 # Release Notes
 
+### v9.1-beta4 - September 2026
+- **Customizer Popup Z-Order Fixed**: Fixed the "Show menu bar background" and "Menu bar auto-hide" guide popups drawing behind the Appearance Customizer and Start Menu when triggered from the Position control, so they now always appear on top where you can see and use them.
+- **No More Mid-Flow Customizer Dismissal**: Fixed the Customizer panel (and Start Menu) closing unexpectedly when interacting with those same guide popups — e.g. clicking "Open Control Center Settings" — so changing your Bar Placement no longer gets interrupted.
+
 ### v9.1-beta3 - August 2026
 - **Redesigned Settings – 7-Category Customizer**: Rebuilt the Appearance Customizer around a clean, progressive-disclosure layout split into 7 focused categories, replacing the old dense single-page view so options are far easier to find.
 - **Solid Background Override**: Added a dedicated "Solid Background Override" toggle for anyone who prefers a fully opaque bar over glass — consolidating and fixing the previous "Disable Glass Material" toggle, which wasn't reliably applying to AeroBar and AuraBar.
