@@ -1,10 +1,19 @@
+# Release Notes
+
+### v9.1-beta3 - August 2026
+- **Redesigned Settings – 7-Category Customizer**: Rebuilt the Appearance Customizer around a clean, progressive-disclosure layout split into 7 focused categories, replacing the old dense single-page view so options are far easier to find.
+- **Solid Background Override**: Added a dedicated "Solid Background Override" toggle for anyone who prefers a fully opaque bar over glass — consolidating and fixing the previous "Disable Glass Material" toggle, which wasn't reliably applying to AeroBar and AuraBar.
+- **Decoupled Focus Mode**: Fixed an issue where the Focus Mode menu bar dimming would break if you disabled the AuraBar. It now works flawlessly on its own, utilizing an invisible hover tracker.
+- **Extension Button Drag-to-Reorder Fixed**: Fixed drag-to-reorder for extension/utility buttons (Clipboard, File Shelf, Quick Links, Recycle Bin, Show Desktop, and more), which had silently stopped working for most buttons, and extended support to Left/Right vertical bar placements.
+- **Pinned Apps Tray Reliability**: Fixed the Pinned Apps popup getting stuck open — or dismissing unexpectedly — when switching bar placement mid-session, and restored a missing hover highlight on the Pinned Apps Grid button.
+- **Polish**: Reordered "Top" above "Bottom" in the Bar Placement settings list, and tightened the timing of the window-reveal focus handoff to eliminate a rare WindowServer race condition.
+
 ### v9.1-beta2 - August 2026
 - **Flawless Light Mode Aesthetics**: Completely overhauled the default Light Mode experience. Fresh installs and factory resets now default to a stunning 'Frosted Ice' Aero Blur with 100% brightness and 100% surface density for a pristine, premium glass aesthetic.
 - **Smart Brightness Clamping**: Increasing the Tint Brightness slider in Light Mode now intelligently boosts only the floating menus and panels, while protecting the main top/bottom bars from washing out and blinding you.
 - **High-Contrast Legibility Engine**: Added a smart dark-grey stroke that automatically outlines pure-white window tabs, section dividers, and Music Widget controls in Light Mode. This guarantees perfect legibility whether the translucent bar is floating over a pitch-black terminal or a glaring white webpage.
 - **Liquid Glass Deprecated in Light Mode**: Due to unpatchable CoreAnimation tearing bugs in macOS that caused Liquid Glass to become cloudy-white on theme changes, we've disabled it entirely for Light Mode to ensure a rock-solid, bug-free experience.
 
-# Release Notes
 ### v9.1-beta1 - August 2026
 - **Pixel-Perfect Layouts**: Fixed inconsistent horizontal gaps between utility extension buttons and the Mission Control divider caused by invisible ghost layout elements. The bar now maintains flawless symmetry.
 - **Sleek New Design Language**: Replaced custom-drawn UI shapes with gorgeous, native macOS-style dummy app icons. The entire bar feels completely at home on macOS while retaining that nostalgic Windows taskbar vibe.
