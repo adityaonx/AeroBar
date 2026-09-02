@@ -1,5 +1,8 @@
 # Release Notes
 
+### v9.1-beta7 - September 2026
+- **Fixed: Placement Screen Showing "Bottom" as Already Chosen**: On the setup screen where you pick where AeroBar sits (Top, Bottom, Left, or Right), the "Bottom" option was incorrectly shown as already selected before you'd tapped anything, and AeroBar wouldn't actually appear until you clicked something. Now no option is pre-selected, and the Continue button stays disabled until you've picked one.
+
 ### v9.1-beta6 - September 2026
 - **Snappy, Reliable Window Clamping**: Maximized/tiled windows that got shoved out of place (a title-bar click, another app fighting for the frame, etc.) now snap back to where they belong noticeably faster — the recovery delay is roughly 4x shorter than before. And it no longer ever gives up: previously, a window could occasionally get "stuck" out of position for good after enough rapid changes; now AeroBar just keeps quietly correcting it until it settles, with the same tear-free protection as always.
 
