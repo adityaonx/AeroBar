@@ -1,5 +1,8 @@
 # Release Notes
 
+### v9.1-beta6 - September 2026
+- **Snappy, Reliable Window Clamping**: Maximized/tiled windows that got shoved out of place (a title-bar click, another app fighting for the frame, etc.) now snap back to where they belong noticeably faster — the recovery delay is roughly 4x shorter than before. And it no longer ever gives up: previously, a window could occasionally get "stuck" out of position for good after enough rapid changes; now AeroBar just keeps quietly correcting it until it settles, with the same tear-free protection as always.
+
 ### v9.1-beta5 - September 2026
 - **Big Memory Fix — Start Menu**: The Start Menu was loading every single app icon at full resolution the instant you opened it, which could spike memory by 400-650MB on machines with a lot of installed apps. Icons are now cached and loaded lazily, so opening the Start Menu is lighter and noticeably snappier, especially on first launch.
 - **Customizer No Longer Leaks Memory**: Closing the Appearance Customizer wasn't fully releasing it from memory — repeated open/close cycles could quietly pile up. It's now properly torn down every time, so RAM usage stays flat no matter how many times you pop it open.
