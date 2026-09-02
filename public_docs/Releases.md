@@ -1,5 +1,13 @@
 # Release Notes
 
+### v9.1-beta5 - September 2026
+- **Big Memory Fix — Start Menu**: The Start Menu was loading every single app icon at full resolution the instant you opened it, which could spike memory by 400-650MB on machines with a lot of installed apps. Icons are now cached and loaded lazily, so opening the Start Menu is lighter and noticeably snappier, especially on first launch.
+- **Customizer No Longer Leaks Memory**: Closing the Appearance Customizer wasn't fully releasing it from memory — repeated open/close cycles could quietly pile up. It's now properly torn down every time, so RAM usage stays flat no matter how many times you pop it open.
+- **Customizer Restructured Like macOS Settings**: The Customizer now uses a sidebar layout in the style of the macOS Tahoe Settings app, making it faster to jump between categories. It also gained a real search bar — start typing a setting's name (like "badge" or "cmd+tab") and jump straight to it.
+- **New "Options" Tab**: Cmd+Tab switcher and trackpad gesture-switching settings now have a proper home of their own in the Customizer, instead of being buried elsewhere.
+- **Fewer Background Timers**: Cleaned up a bug where rapidly toggling the Start Menu or Customizer could leave several redundant cleanup timers running at once. Everything now cancels properly, trimming background CPU/memory churn.
+- **Stability**: Fixed a rare crash tied to computing tint colors (e.g. on light/dark mode switches) under heavy load.
+
 ### v9.1-beta4 - September 2026
 - **Customizer Popup Z-Order Fixed**: Fixed the "Show menu bar background" and "Menu bar auto-hide" guide popups drawing behind the Appearance Customizer and Start Menu when triggered from the Position control, so they now always appear on top where you can see and use them.
 - **No More Mid-Flow Customizer Dismissal**: Fixed the Customizer panel (and Start Menu) closing unexpectedly when interacting with those same guide popups — e.g. clicking "Open Control Center Settings" — so changing your Bar Placement no longer gets interrupted.

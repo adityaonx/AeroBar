@@ -1872,7 +1872,7 @@
     <a href="#contact">Contact</a>
     <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.1-beta3/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
+  <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.1-beta5/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
     Download
   </a>
@@ -1881,9 +1881,9 @@
 <!-- Release Announcement Banner -->
 <div class="announcement-banner" id="release-announcement">
   <div class="announcement-content">
-    <span class="announcement-badge">v9.1-beta3</span>
-    <span class="announcement-text">New Release: v9.1-beta3 is now live!</span>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.1-beta3/AeroBar.dmg" class="announcement-link">
+    <span class="announcement-badge">v9.1-beta5</span>
+    <span class="announcement-text">New Release: v9.1-beta5 is now live!</span>
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.1-beta5/AeroBar.dmg" class="announcement-link">
       Download DMG
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </a>
@@ -1894,7 +1894,7 @@
 <section id="hero">
   <div class="badge">
     <span class="badge-dot"></span>
-    New Release: v9.1-beta3 is now live!
+    New Release: v9.1-beta5 is now live!
   </div>
   <h1>The <span class="gradient">Windows Taskbar</span><br/>you missed on Mac</h1>
   <p class="hero-sub">
@@ -1910,7 +1910,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
   </div>
 
   <div class="hero-actions">
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.1-beta3/AeroBar.dmg"
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.1-beta5/AeroBar.dmg"
        class="btn-primary" id="hero-download-btn">
       Download for Mac
     </a>
@@ -1929,7 +1929,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
 
   <div class="channel-links-row">
     <span>Channels:</span>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.1-beta3/AeroBar.dmg" title="Download latest stable v9.1-beta3 release">Stable (v9.1-beta3)</a>
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.1-beta5/AeroBar.dmg" title="Download latest stable v9.1-beta5 release">Stable (v9.1-beta5)</a>
     <span class="separator">•</span>
     <a href="https://github.com/adityaonx/AeroBar/releases" target="_blank" rel="noopener" title="View experimental pre-releases">Beta Build</a>
     <span class="separator">•</span>
@@ -2483,8 +2483,44 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
     <div class="release-card featured-release reveal">
       <div class="release-header">
         <div class="release-title-wrapper">
-          <span class="release-version">v9.1-beta3</span>
+          <span class="release-version">v9.1-beta5</span>
           <span class="release-badge stable">Latest Release</span>
+        </div>
+        <span class="release-date">Released September 2026</span>
+      </div>
+      <div class="release-body">
+        <h4>Major Memory Fixes & Restructured Customizer</h4>
+        <ul>
+          <li><strong>Big Memory Fix – Start Menu</strong>: The Start Menu was loading every app icon at full resolution the instant you opened it, spiking memory by 400-650MB on machines with lots of installed apps. Icons are now cached and loaded lazily, so opening it is lighter and noticeably snappier.</li>
+          <li><strong>Customizer No Longer Leaks Memory</strong>: Closing the Appearance Customizer wasn't fully releasing it from memory. It's now properly torn down every time, so RAM usage stays flat no matter how many times you open it.</li>
+          <li><strong>Customizer Restructured Like macOS Settings</strong>: The Customizer now uses a sidebar layout in the style of the macOS Tahoe Settings app, with a real search bar — start typing a setting's name and jump straight to it.</li>
+          <li><strong>New "Options" Tab</strong>: Cmd+Tab switcher and trackpad gesture-switching settings now have a proper home of their own in the Customizer.</li>
+          <li><strong>Fewer Background Timers</strong>: Fixed rapid Start Menu/Customizer toggling leaving redundant cleanup timers running, trimming background CPU/memory churn.</li>
+          <li><strong>Stability</strong>: Fixed a rare crash tied to computing tint colors under heavy load.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v9.1-beta4</span>
+        </div>
+        <span class="release-date">Released September 2026</span>
+      </div>
+      <div class="release-body">
+        <h4>Customizer Popup Fixes</h4>
+        <ul>
+          <li><strong>Customizer Popup Z-Order Fixed</strong>: Fixed the "Show menu bar background" and "Menu bar auto-hide" guide popups drawing behind the Appearance Customizer and Start Menu when triggered from the Position control.</li>
+          <li><strong>No More Mid-Flow Customizer Dismissal</strong>: Fixed the Customizer panel (and Start Menu) closing unexpectedly when interacting with those same guide popups, so changing your Bar Placement no longer gets interrupted.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v9.1-beta3</span>
         </div>
         <span class="release-date">Released August 2026</span>
       </div>
@@ -3407,7 +3443,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
       </div>
     </div>
     <div style="text-align:center; margin-top: 1rem;" class="reveal">
-      <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.1-beta3/AeroBar.dmg"
+      <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.1-beta5/AeroBar.dmg"
          class="btn-primary" style="display:inline-flex;">
         Download AeroBar.dmg
       </a>
@@ -3432,7 +3468,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
       <li>Appearance Lab - full customization</li>
       <li>macOS Tahoe</li>
     </ul>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.1-beta3/AeroBar.dmg"
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.1-beta5/AeroBar.dmg"
        id="pricing-download-btn" class="btn-primary" style="width:100%; justify-content:center; margin-bottom:1.25rem;">
       Download for Free
     </a>
