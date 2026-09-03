@@ -1,5 +1,11 @@
 # Release Notes
 
+### v9.1-beta8 - September 2026
+- **Clipboard Screenshot Capture Fixed**: Fixed a bug where the Clipboard was sometimes missing screenshots you just took — they wouldn't show up in the Clipboard history even though the capture succeeded.
+- **Pinned/Unpinned Apps Not Populating Fixed**: Fixed an issue where pinned and unpinned apps could fail to populate in the taskbar, leaving your pinned app list looking empty or out of date.
+- **Menu Bar Permission Prompt No Longer Overlaps Customizer**: Fixed the menu bar permission overlay drawing on top of the Appearance Customizer panel; it's now dismissed automatically when you change AeroBar's size from the Customizer.
+- **Divider Drawing Fix**: Fixed an issue with how dividers were drawn between taskbar items.
+
 ### v9.1-beta7 - September 2026
 - **Fixed: Placement Screen Showing "Bottom" as Already Chosen**: On the setup screen where you pick where AeroBar sits (Top, Bottom, Left, or Right), the "Bottom" option was incorrectly shown as already selected before you'd tapped anything, and AeroBar wouldn't actually appear until you clicked something. Now no option is pre-selected, and the Continue button stays disabled until you've picked one.
 
