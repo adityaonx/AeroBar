@@ -1,5 +1,9 @@
 # Release Notes
 
+### v9.2-beta1 - September 2026
+- **Top Bevel Line Fixed**: Fixed the top bevel line so it renders cleanly across taskbar positions and appearance settings instead of showing artifacts.
+- **New: Accessibility Toggle Won't Turn On Troubleshooter**: Added a guided fix in Settings → Troubleshoot for the case where AeroBar is listed under Accessibility but the toggle won't turn on (or won't stay on) — remove AeroBar from the list with "−" and re-add it with "+" to force macOS to issue a fresh permission entry.
+
 ### v9.1-beta9 - September 2026
 - **New: Accessibility/Quarantine Troubleshooter**: Added a guided fix in Settings → Troubleshoot for the case where AeroBar won't show up under Accessibility and windows or pinned apps never populate — it detects where AeroBar is installed and gives you ready-to-copy Terminal commands for your exact setup.
 - **Clipboard Priority-Inversion / Hang Risk Fixed**: Fixed a background thumbnail-generation process that could occasionally starve the Clipboard's foreground work of a thread, showing up as a brief hang risk when browsing Clipboard history.
