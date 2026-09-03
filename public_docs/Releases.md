@@ -1,5 +1,9 @@
 # Release Notes
 
+### v9.1-beta9 - September 2026
+- **New: Accessibility/Quarantine Troubleshooter**: Added a guided fix in Settings → Troubleshoot for the case where AeroBar won't show up under Accessibility and windows or pinned apps never populate — it detects where AeroBar is installed and gives you ready-to-copy Terminal commands for your exact setup.
+- **Clipboard Priority-Inversion / Hang Risk Fixed**: Fixed a background thumbnail-generation process that could occasionally starve the Clipboard's foreground work of a thread, showing up as a brief hang risk when browsing Clipboard history.
+
 ### v9.1-beta8 - September 2026
 - **Clipboard Screenshot Capture Fixed**: Fixed a bug where the Clipboard was sometimes missing screenshots you just took — they wouldn't show up in the Clipboard history even though the capture succeeded.
 - **Pinned/Unpinned Apps Not Populating Fixed**: Fixed an issue where pinned and unpinned apps could fail to populate in the taskbar, leaving your pinned app list looking empty or out of date.
