@@ -1872,7 +1872,7 @@
     <a href="#contact">Contact</a>
     <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.2-beta1/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
+  <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.2-beta1.3/AeroBar.dmg" class="nav-cta" id="nav-download-btn">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
     Download
   </a>
@@ -1881,9 +1881,9 @@
 <!-- Release Announcement Banner -->
 <div class="announcement-banner" id="release-announcement">
   <div class="announcement-content">
-    <span class="announcement-badge">v9.2-beta1</span>
-    <span class="announcement-text">New Release: v9.2-beta1 is now live!</span>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.2-beta1/AeroBar.dmg" class="announcement-link">
+    <span class="announcement-badge">v9.2-beta1.3</span>
+    <span class="announcement-text">New Release: v9.2-beta1.3 is now live!</span>
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.2-beta1.3/AeroBar.dmg" class="announcement-link">
       Download DMG
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </a>
@@ -1894,7 +1894,7 @@
 <section id="hero">
   <div class="badge">
     <span class="badge-dot"></span>
-    New Release: v9.2-beta1 is now live!
+    New Release: v9.2-beta1.3 is now live!
   </div>
   <h1>The <span class="gradient">Windows Taskbar</span><br/>you missed on Mac</h1>
   <p class="hero-sub">
@@ -1910,7 +1910,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
   </div>
 
   <div class="hero-actions">
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.2-beta1/AeroBar.dmg"
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.2-beta1.3/AeroBar.dmg"
        class="btn-primary" id="hero-download-btn">
       Download for Mac
     </a>
@@ -1929,7 +1929,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
 
   <div class="channel-links-row">
     <span>Channels:</span>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.2-beta1/AeroBar.dmg" title="Download latest stable v9.2-beta1 release">Stable (v9.2-beta1)</a>
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.2-beta1.3/AeroBar.dmg" title="Download latest stable v9.2-beta1.3 release">Stable (v9.2-beta1.3)</a>
     <span class="separator">•</span>
     <a href="https://github.com/adityaonx/AeroBar/releases" target="_blank" rel="noopener" title="View experimental pre-releases">Beta Build</a>
     <span class="separator">•</span>
@@ -2483,8 +2483,55 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
     <div class="release-card featured-release reveal">
       <div class="release-header">
         <div class="release-title-wrapper">
-          <span class="release-version">v9.2-beta1</span>
+          <span class="release-version">v9.2-beta1.3</span>
           <span class="release-badge stable">Latest Release</span>
+        </div>
+        <span class="release-date">Released September 2026</span>
+      </div>
+      <div class="release-body">
+        <h4>Left/Right Auto-Shrink Fix</h4>
+        <ul>
+          <li><strong>Fixed: Left/Right Bar Not Auto-Shrinking with More Icons</strong>: On a Left or Right docked AeroBar, adding enough pinned apps or extension buttons could push the bar's content taller than the screen, cutting off the top or bottom instead of shrinking to fit. Vertical bars now auto-shrink the same way horizontal bars already did, scaling icon size down to fit the available screen height before falling back to your preferred size.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v9.2-beta1.2</span>
+        </div>
+        <span class="release-date">Released September 2026</span>
+      </div>
+      <div class="release-body">
+        <h4>Aerobar Dock Size on Left/Right</h4>
+        <ul>
+          <li><strong>Aerobar Dock Size Now Works at Left/Right</strong>: Renamed "Bar Height" to "Aerobar Dock Size" and fixed it so resizing actually takes effect when AeroBar is docked to the Left or Right edge — it was previously silently reset to the fixed Top-placement thickness (33 pt) any time you were at Left or Right, so the slider and Compact/Default presets appeared to do nothing.</li>
+          <li><strong>Size Section Now Only Locks at Top</strong>: The Aerobar Dock Size section is disabled (with an explanation) only when AeroBar is at the Top position, since Top always replaces the native menu bar at a fixed system thickness. It's fully adjustable at Bottom, Left, and Right.</li>
+          <li><strong>Window Clamping Respects Left/Right Size</strong>: Because window clamping already measured its reserved space directly off the live bar thickness, fixing the size bug above also fixes clamped/tiled windows leaving the wrong gap next to a resized Left/Right AeroBar — they now sit flush against whatever size you've set, same as Bottom already did.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v9.2-beta1.1</span>
+        </div>
+        <span class="release-date">Released September 2026</span>
+      </div>
+      <div class="release-body">
+        <h4>Display Background Dimmer Fix</h4>
+        <ul>
+          <li><strong>Display Background Dimmer: AuraBar Wasn't Dimming</strong>: Fixed Display Background Dimmer only dimming the wallpaper and the AeroBar taskbar, while the AuraBar menu-bar strip stayed fully lit. Both now dim in lockstep with AeroBar on any display with no windows, whenever Display Background Dimmer is enabled with 2+ displays connected.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="release-card reveal">
+      <div class="release-header">
+        <div class="release-title-wrapper">
+          <span class="release-version">v9.2-beta1</span>
         </div>
         <span class="release-date">Released September 2026</span>
       </div>
@@ -3524,7 +3571,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
       </div>
     </div>
     <div style="text-align:center; margin-top: 1rem;" class="reveal">
-      <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.2-beta1/AeroBar.dmg"
+      <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.2-beta1.3/AeroBar.dmg"
          class="btn-primary" style="display:inline-flex;">
         Download AeroBar.dmg
       </a>
@@ -3549,7 +3596,7 @@ xattr -rd com.apple.quarantine /Applications/AeroBar.app</span>
       <li>Appearance Lab - full customization</li>
       <li>macOS Tahoe</li>
     </ul>
-    <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.2-beta1/AeroBar.dmg"
+    <a href="https://github.com/adityaonx/AeroBar/releases/download/v9.2-beta1.3/AeroBar.dmg"
        id="pricing-download-btn" class="btn-primary" style="width:100%; justify-content:center; margin-bottom:1.25rem;">
       Download for Free
     </a>
