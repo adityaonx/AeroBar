@@ -1,5 +1,12 @@
 # Release Notes
 
+### v9.2-beta3 - September 2026
+- **In-App Updater Rebuilt**: Updator updated with real progress reporting, a staged install (the new build is fully verified and swapped in before AeroBar restarts), and a manual-update fallback if the automatic path can't complete — instead of appearing to hang or failing silently.
+- **Window Clamp Jitter Fixed**: Fixed a jitter/flicker in clamped and tiled windows caused by rapid, overlapping re-clamp passes fighting each other for the same window frame.
+- **Display Background Dimmer Fixed**: Fixed the Display Background Dimmer getting stuck fully black on a secondary display instead of dimming and releasing correctly as windows and Spaces changed.
+- **AeroBar Permission Fix**: Fixed an issue with how AeroBar was requesting/holding a system permission, and removed AeroBar's Finder & Disk Write permission entirely — it's no longer required for normal operation.
+- **Orphaned Divider Fixed**: Fixed a leftover divider line in the vertical (Left/Right) bar showing up on its own when there were no windows or unpinned apps to separate.
+
 ### v9.2-beta2 - September 2026
 - **Display Background Dimmer: AuraBar Wasn't Dimming** : Fixed the Background Dimmer only dimming the wallpaper and AeroBar's taskbar while the AuraBar menu-bar strip stayed fully lit. Both now dim together on any display with no windows, whenever Background Dimmer is enabled with 2+ displays connected.
 - **Aerobar Dock Size Now Works at Left/Right** : Renamed "Bar Height" to "Aerobar Dock Size" and fixed resizing so it actually takes effect when docked to Left or Right, instead of silently resetting to the fixed Top-placement thickness.
