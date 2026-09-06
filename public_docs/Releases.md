@@ -1,15 +1,22 @@
 # Release Notes
 
+### v9.2-beta2 - September 2026
+- **Display Background Dimmer: AuraBar Wasn't Dimming** : Fixed the Background Dimmer only dimming the wallpaper and AeroBar's taskbar while the AuraBar menu-bar strip stayed fully lit. Both now dim together on any display with no windows, whenever Background Dimmer is enabled with 2+ displays connected.
+- **Aerobar Dock Size Now Works at Left/Right** : Renamed "Bar Height" to "Aerobar Dock Size" and fixed resizing so it actually takes effect when docked to Left or Right, instead of silently resetting to the fixed Top-placement thickness.
+- **Size Section Now Only Locks at Top** : The Dock Size control is disabled (with an explanation) only at the Top position; it's fully adjustable at Bottom, Left, and Right.
+- **Window Clamping Respects Left/Right Size** : Fixed clamped/tiled windows leaving the wrong gap next to a resized Left/Right AeroBar; they now sit flush, matching Bottom's existing behavior.
+- **Fixed: Left/Right Bar Not Auto-Shrinking with More Icons** : On a Left or Right docked AeroBar, adding enough pinned apps or extension buttons could push the bar's content taller than the screen, cutting off the top or bottom instead of shrinking to fit. Vertical bars now auto-shrink the same way horizontal bars already did, scaling icon size down to fit the available screen height before falling back to your preferred size.
+
 ### v9.2-beta1 - September 2026
 - **Top Bevel Line Fixed**: Fixed the top bevel line so it renders cleanly across taskbar positions and appearance settings instead of showing artifacts.
-- **New: Accessibility Toggle Won't Turn On Troubleshooter**: Added a guided fix in Settings → Troubleshoot for the case where AeroBar is listed under Accessibility but the toggle won't turn on (or won't stay on) — remove AeroBar from the list with "−" and re-add it with "+" to force macOS to issue a fresh permission entry.
+- **New: Accessibility Toggle Won't Turn On Troubleshooter**: Added a guided fix in Settings → Troubleshoot for the case where AeroBar is listed under Accessibility but the toggle won't turn on (or won't stay on) : remove AeroBar from the list with "−" and re-add it with "+" to force macOS to issue a fresh permission entry.
 
 ### v9.1-beta9 - September 2026
-- **New: Accessibility/Quarantine Troubleshooter**: Added a guided fix in Settings → Troubleshoot for the case where AeroBar won't show up under Accessibility and windows or pinned apps never populate — it detects where AeroBar is installed and gives you ready-to-copy Terminal commands for your exact setup.
+- **New: Accessibility/Quarantine Troubleshooter**: Added a guided fix in Settings → Troubleshoot for the case where AeroBar won't show up under Accessibility and windows or pinned apps never populate : it detects where AeroBar is installed and gives you ready-to-copy Terminal commands for your exact setup.
 - **Clipboard Priority-Inversion / Hang Risk Fixed**: Fixed a background thumbnail-generation process that could occasionally starve the Clipboard's foreground work of a thread, showing up as a brief hang risk when browsing Clipboard history.
 
 ### v9.1-beta8 - September 2026
-- **Clipboard Screenshot Capture Fixed**: Fixed a bug where the Clipboard was sometimes missing screenshots you just took — they wouldn't show up in the Clipboard history even though the capture succeeded.
+- **Clipboard Screenshot Capture Fixed**: Fixed a bug where the Clipboard was sometimes missing screenshots you just took : they wouldn't show up in the Clipboard history even though the capture succeeded.
 - **Pinned/Unpinned Apps Not Populating Fixed**: Fixed an issue where pinned and unpinned apps could fail to populate in the taskbar, leaving your pinned app list looking empty or out of date.
 - **Menu Bar Permission Prompt No Longer Overlaps Customizer**: Fixed the menu bar permission overlay drawing on top of the Appearance Customizer panel; it's now dismissed automatically when you change AeroBar's size from the Customizer.
 - **Divider Drawing Fix**: Fixed an issue with how dividers were drawn between taskbar items.
@@ -18,26 +25,26 @@
 - **Fixed: Placement Screen Showing "Bottom" as Already Chosen**: On the setup screen where you pick where AeroBar sits (Top, Bottom, Left, or Right), the "Bottom" option was incorrectly shown as already selected before you'd tapped anything, and AeroBar wouldn't actually appear until you clicked something. Now no option is pre-selected, and the Continue button stays disabled until you've picked one.
 
 ### v9.1-beta6 - September 2026
-- **Snappy, Reliable Window Clamping**: Maximized/tiled windows that got shoved out of place (a title-bar click, another app fighting for the frame, etc.) now snap back to where they belong noticeably faster — the recovery delay is roughly 4x shorter than before. And it no longer ever gives up: previously, a window could occasionally get "stuck" out of position for good after enough rapid changes; now AeroBar just keeps quietly correcting it until it settles, with the same tear-free protection as always.
+- **Snappy, Reliable Window Clamping**: Maximized/tiled windows that got shoved out of place (a title-bar click, another app fighting for the frame, etc.) now snap back to where they belong noticeably faster : the recovery delay is roughly 4x shorter than before. And it no longer ever gives up: previously, a window could occasionally get "stuck" out of position for good after enough rapid changes; now AeroBar just keeps quietly correcting it until it settles, with the same tear-free protection as always.
 
 ### v9.1-beta5 - September 2026
-- **Big Memory Fix — Start Menu**: The Start Menu was loading every single app icon at full resolution the instant you opened it, which could spike memory by 400-650MB on machines with a lot of installed apps. Icons are now cached and loaded lazily, so opening the Start Menu is lighter and noticeably snappier, especially on first launch.
-- **Customizer No Longer Leaks Memory**: Closing the Appearance Customizer wasn't fully releasing it from memory — repeated open/close cycles could quietly pile up. It's now properly torn down every time, so RAM usage stays flat no matter how many times you pop it open.
-- **Customizer Restructured Like macOS Settings**: The Customizer now uses a sidebar layout in the style of the macOS Tahoe Settings app, making it faster to jump between categories. It also gained a real search bar — start typing a setting's name (like "badge" or "cmd+tab") and jump straight to it.
+- **Big Memory Fix : Start Menu**: The Start Menu was loading every single app icon at full resolution the instant you opened it, which could spike memory by 400-650MB on machines with a lot of installed apps. Icons are now cached and loaded lazily, so opening the Start Menu is lighter and noticeably snappier, especially on first launch.
+- **Customizer No Longer Leaks Memory**: Closing the Appearance Customizer wasn't fully releasing it from memory : repeated open/close cycles could quietly pile up. It's now properly torn down every time, so RAM usage stays flat no matter how many times you pop it open.
+- **Customizer Restructured Like macOS Settings**: The Customizer now uses a sidebar layout in the style of the macOS Tahoe Settings app, making it faster to jump between categories. It also gained a real search bar : start typing a setting's name (like "badge" or "cmd+tab") and jump straight to it.
 - **New "Options" Tab**: Cmd+Tab switcher and trackpad gesture-switching settings now have a proper home of their own in the Customizer, instead of being buried elsewhere.
 - **Fewer Background Timers**: Cleaned up a bug where rapidly toggling the Start Menu or Customizer could leave several redundant cleanup timers running at once. Everything now cancels properly, trimming background CPU/memory churn.
 - **Stability**: Fixed a rare crash tied to computing tint colors (e.g. on light/dark mode switches) under heavy load.
 
 ### v9.1-beta4 - September 2026
 - **Customizer Popup Z-Order Fixed**: Fixed the "Show menu bar background" and "Menu bar auto-hide" guide popups drawing behind the Appearance Customizer and Start Menu when triggered from the Position control, so they now always appear on top where you can see and use them.
-- **No More Mid-Flow Customizer Dismissal**: Fixed the Customizer panel (and Start Menu) closing unexpectedly when interacting with those same guide popups — e.g. clicking "Open Control Center Settings" — so changing your Bar Placement no longer gets interrupted.
+- **No More Mid-Flow Customizer Dismissal**: Fixed the Customizer panel (and Start Menu) closing unexpectedly when interacting with those same guide popups : e.g. clicking "Open Control Center Settings" : so changing your Bar Placement no longer gets interrupted.
 
 ### v9.1-beta3 - August 2026
 - **Redesigned Settings – 7-Category Customizer**: Rebuilt the Appearance Customizer around a clean, progressive-disclosure layout split into 7 focused categories, replacing the old dense single-page view so options are far easier to find.
-- **Solid Background Override**: Added a dedicated "Solid Background Override" toggle for anyone who prefers a fully opaque bar over glass — consolidating and fixing the previous "Disable Glass Material" toggle, which wasn't reliably applying to AeroBar and AuraBar.
+- **Solid Background Override**: Added a dedicated "Solid Background Override" toggle for anyone who prefers a fully opaque bar over glass : consolidating and fixing the previous "Disable Glass Material" toggle, which wasn't reliably applying to AeroBar and AuraBar.
 - **Decoupled Focus Mode**: Fixed an issue where the Focus Mode menu bar dimming would break if you disabled the AuraBar. It now works flawlessly on its own, utilizing an invisible hover tracker.
 - **Extension Button Drag-to-Reorder Fixed**: Fixed drag-to-reorder for extension/utility buttons (Clipboard, File Shelf, Quick Links, Recycle Bin, Show Desktop, and more), which had silently stopped working for most buttons, and extended support to Left/Right vertical bar placements.
-- **Pinned Apps Tray Reliability**: Fixed the Pinned Apps popup getting stuck open — or dismissing unexpectedly — when switching bar placement mid-session, and restored a missing hover highlight on the Pinned Apps Grid button.
+- **Pinned Apps Tray Reliability**: Fixed the Pinned Apps popup getting stuck open : or dismissing unexpectedly : when switching bar placement mid-session, and restored a missing hover highlight on the Pinned Apps Grid button.
 - **Polish**: Reordered "Top" above "Bottom" in the Bar Placement settings list, and tightened the timing of the window-reveal focus handoff to eliminate a rare WindowServer race condition.
 
 ### v9.1-beta2 - August 2026
@@ -117,13 +124,13 @@
   - Small fixes and polish throughout the app based on beta feedback.
 
 ### v8.9-beta9 - August 2026
-- **Memory Leaks Fixed (Part 1 — WindowServer & UI Panels)**:
+- **Memory Leaks Fixed (Part 1 : WindowServer & UI Panels)**:
   - Fixed multiple memory leaks that were causing AeroBar to accumulate hundreds of megabytes of memory over time through normal use. WindowServer no longer ramps up to ~500 MB just from the bar sitting on screen.
   - Fixed a permanent ~50 MB memory leak that occurred every time the Aero Menu or Customizer panel was opened. Memory is now fully released after closing them.
   - Optimized the display background dimmer service to defer heavy WindowServer surface allocations until the panel is actually shown, significantly reducing the idle WindowServer memory footprint.
   - Icon bitmap cache is now capped to prevent unbounded RAM growth when many apps are running simultaneously.
   - Memory from closed panels is now proactively returned to the OS via allocator pressure relief, keeping AeroBar's working set lean.
-  - **What you'll notice**: AeroBar's base memory use is dramatically lower. Short spikes when opening Aero Menu / Customizer are expected and fully self-healing — memory comes back down after closing them.
+  - **What you'll notice**: AeroBar's base memory use is dramatically lower. Short spikes when opening Aero Menu / Customizer are expected and fully self-healing : memory comes back down after closing them.
 
 ### v8.9-beta8 - August 2026
 - **Screenshot Thumbnail Conflict Resolved**:
