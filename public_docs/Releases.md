@@ -1,6 +1,11 @@
 # Release Notes
 
 ### v9.2-beta5 - September 2026
+- **Focus Mode Opaque Bar Toggle**: Added a toggle under Display Background Dimmer to let users disable the opaque dark bar effect when Focus Mode / Dimmer is active.
+- **Panel Depth Glass Toggle**: Added an experimental toggle to control glass/focus stealing on popups. Disabling this switches panels back to emulated glass and uses `orderFrontRegardless`, preventing WindowServer focus glitches.
+
+
+### v9.2-beta4 - September 2026
 - **PWA Music Widget Fixed (YouTube / YouTube Music):**: Fixed the Music Widget failing to detect and control playback for YouTube and YouTube Music when running as an installed PWA.
 - **Dead Chevron Fixed:**: Fixed a non-functional chevron control that wasn't responding to clicks.
 
