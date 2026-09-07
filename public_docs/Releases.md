@@ -1,5 +1,9 @@
 # Release Notes
 
+### v9.2-beta4 - September 2026
+- **PWA Music Widget Fixed (YouTube / YouTube Music):**: Fixed the Music Widget failing to detect and control playback for YouTube and YouTube Music when running as an installed PWA.
+- **Dead Chevron Fixed:**: Fixed a non-functional chevron control that wasn't responding to clicks.
+
 ### v9.2-beta3 - September 2026
 - **In-App Updater Rebuilt**: Updator updated with real progress reporting, a staged install (the new build is fully verified and swapped in before AeroBar restarts), and a manual-update fallback if the automatic path can't complete — instead of appearing to hang or failing silently.
 - **Window Clamp Jitter Fixed**: Fixed a jitter/flicker in clamped and tiled windows caused by rapid, overlapping re-clamp passes fighting each other for the same window frame.
