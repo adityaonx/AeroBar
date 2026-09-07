@@ -1,6 +1,6 @@
 # Release Notes
 
-### v9.2-beta4 - September 2026
+### v9.2-beta5 - September 2026
 - **PWA Music Widget Fixed (YouTube / YouTube Music):**: Fixed the Music Widget failing to detect and control playback for YouTube and YouTube Music when running as an installed PWA.
 - **Dead Chevron Fixed:**: Fixed a non-functional chevron control that wasn't responding to clicks.
 
