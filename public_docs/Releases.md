@@ -1,5 +1,9 @@
 # Release Notes
 
+### v9.2-beta6 - September 2026
+- **AuraBar Flickering Fixed**: Fixed a severe bug where the AuraBar (top menu bar) would randomly flicker or flash completely out of existence during rapid app switches or when background helpers stole focus.
+- **App Badges Reliability**: Fixed a bug where macOS Accessibility API would silently return incompatible types for badge counts and attention flags, causing AeroBar to stop displaying red badges or the bounce animation for some apps.
+
 ### v9.2-beta5 - September 2026
 - **Focus Mode Opaque Bar Toggle**: Added a toggle under Display Background Dimmer to let users disable the opaque dark bar effect when Focus Mode / Dimmer is active.
 - **Panel Depth Glass Toggle**: Added an experimental toggle to control glass/focus stealing on popups. Disabling this switches panels back to emulated glass and uses `orderFrontRegardless`, preventing WindowServer focus glitches.
@@ -56,6 +60,7 @@
 - **No More Mid-Flow Customizer Dismissal**: Fixed the Customizer panel (and Start Menu) closing unexpectedly when interacting with those same guide popups : e.g. clicking "Open Control Center Settings" : so changing your Bar Placement no longer gets interrupted.
 
 ### v9.1-beta3 - August 2026
+- **App Badges & Attention Bouncing**: Added full support for macOS App Badges (red notification dots and counts) which sync directly from your Dock. Apps that actively request attention will also pulse and gently bounce in the AeroBar to make sure you never miss an important notification.
 - **Redesigned Settings – 7-Category Customizer**: Rebuilt the Appearance Customizer around a clean, progressive-disclosure layout split into 7 focused categories, replacing the old dense single-page view so options are far easier to find.
 - **Solid Background Override**: Added a dedicated "Solid Background Override" toggle for anyone who prefers a fully opaque bar over glass : consolidating and fixing the previous "Disable Glass Material" toggle, which wasn't reliably applying to AeroBar and AuraBar.
 - **Decoupled Focus Mode**: Fixed an issue where the Focus Mode menu bar dimming would break if you disabled the AuraBar. It now works flawlessly on its own, utilizing an invisible hover tracker.
