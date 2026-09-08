@@ -3,6 +3,10 @@
 ### v9.2-beta6 - September 2026
 - **AuraBar Flickering Fixed**: Fixed a severe bug where the AuraBar (top menu bar) would randomly flicker or flash completely out of existence during rapid app switches or when background helpers stole focus.
 - **App Badges Reliability**: Fixed a bug where macOS Accessibility API would silently return incompatible types for badge counts and attention flags, causing AeroBar to stop displaying red badges or the bounce animation for some apps.
+- **Efficiency / Power Save Dialogs**: Fixed an issue in the Customizer where the Efficiency Mode and Power Save warning dialogs would instantly close the panel, and clicking "Continue" failed to properly disable the conflicting modes.
+- **Stable Telemetry Identities**: Migrated Cloudflare and Sentry telemetry to use a stable, cryptographically-hashed hardware ID (via IOKit) instead of random UUIDs, permanently solving dashboard duplicates when users factory reset, update macOS, or reinstall the app.
+- **Developer Opt-Outs**: Added new developer toggles to completely disable Sentry and Cloudflare reporting during local development.
+- **Dashboard Telemetry Tools**: Added manual cleanup tools and update deferral tracking metrics to the Cloudflare dashboard to monitor upgrade friction.
 
 ### v9.2-beta5 - September 2026
 - **Focus Mode Opaque Bar Toggle**: Added a toggle under Display Background Dimmer to let users disable the opaque dark bar effect when Focus Mode / Dimmer is active.
