@@ -1,6 +1,9 @@
 # Release Notes
 
 ### v9.2-beta7 - September 2026
+> [!WARNING]
+> **Manual Update Required for Beta 5/6 Users**: If you are currently on beta 5 or 6 and receive an "Update failed" error about an item with the same name already existing, your auto-updater is temporarily stuck due to a previous crash leaving a backup file stranded. **Please manually download the DMG and drag AeroBar into your Applications folder.** Once you install beta 7, this issue is permanently fixed and auto-updates will resume normally.
+
 - **Major App Hangs Fixed**: Eliminated 3+ second main-thread lockups by stripping out synchronous `IconServices` caching loops and pushing all dynamic icon color extraction (`AuraBar`) to detached background tasks.
 - **AppleScript Fatal Crashes Fixed**: Fixed severe `EXC_BAD_ACCESS` memory corruption crashes by routing all internal AppleScript executions (like the Start Menu and Music Widget) through a dedicated, process-wide serial queue, bypassing AppleScript's thread-safety flaws.
 - **Shelf Hub Icon Update**: Replaced the Shelf Hub icon with a new custom `.icon` design, fully compiled into a native Asset Catalog (`Assets.car`) to support real-time macOS dark mode and custom icon tints.
