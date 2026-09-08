@@ -1,5 +1,10 @@
 # Release Notes
 
+### v9.2-beta7 - September 2026
+- **Major App Hangs Fixed**: Eliminated 3+ second main-thread lockups by stripping out synchronous `IconServices` caching loops and pushing all dynamic icon color extraction (`AuraBar`) to detached background tasks.
+- **AppleScript Fatal Crashes Fixed**: Fixed severe `EXC_BAD_ACCESS` memory corruption crashes by routing all internal AppleScript executions (like the Start Menu and Music Widget) through a dedicated, process-wide serial queue, bypassing AppleScript's thread-safety flaws.
+- **Shelf Hub Icon Update**: Replaced the Shelf Hub icon with a new custom `.icon` design, fully compiled into a native Asset Catalog (`Assets.car`) to support real-time macOS dark mode and custom icon tints.
+
 ### v9.2-beta6 - September 2026
 - **AuraBar Flickering Fixed**: Fixed a severe bug where the AuraBar (top menu bar) would randomly flicker or flash completely out of existence during rapid app switches or when background helpers stole focus.
 - **App Badges Reliability**: Fixed a bug where macOS Accessibility API would silently return incompatible types for badge counts and attention flags, causing AeroBar to stop displaying red badges or the bounce animation for some apps.
