@@ -1,12 +1,11 @@
 # Release Notes
 
-### v9.2-beta7.1 - September 2026
-- **Auto-Updater Fixed**: Fixed a bug where the in-app updater would fail with "an item with the same name already exists" if a previous update's backup file wasn't cleanly deleted by the OS. The updater now uses unique UUIDs for backups and cleans up legacy backups to guarantee it never hits a collision.
-
 ### v9.2-beta7 - September 2026
 - **Major App Hangs Fixed**: Eliminated 3+ second main-thread lockups by stripping out synchronous `IconServices` caching loops and pushing all dynamic icon color extraction (`AuraBar`) to detached background tasks.
 - **AppleScript Fatal Crashes Fixed**: Fixed severe `EXC_BAD_ACCESS` memory corruption crashes by routing all internal AppleScript executions (like the Start Menu and Music Widget) through a dedicated, process-wide serial queue, bypassing AppleScript's thread-safety flaws.
 - **Shelf Hub Icon Update**: Replaced the Shelf Hub icon with a new custom `.icon` design, fully compiled into a native Asset Catalog (`Assets.car`) to support real-time macOS dark mode and custom icon tints.
+- **Auto-Updater Fixed**: Fixed a bug where the in-app updater would fail with "an item with the same name already exists" if a previous update's backup file wasn't cleanly deleted by the OS. The updater now uses unique UUIDs for backups and cleans up legacy backups to guarantee it never hits a collision.
+
 
 ### v9.2-beta6 - September 2026
 - **AuraBar Flickering Fixed**: Fixed a severe bug where the AuraBar (top menu bar) would randomly flicker or flash completely out of existence during rapid app switches or when background helpers stole focus.
