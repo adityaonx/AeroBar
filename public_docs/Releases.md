@@ -1,5 +1,12 @@
 # Release Notes
 
+### v9.2-beta8 - September 2026
+- **Windows 10/11 Taskbar Clamping Style**: AeroBar now matches the Windows taskbar clamping behavior. If you manually drag or resize a window so that it goes behind or over the AeroBar, the app will respect your placement and no longer forcefully push the window away. OS-level changes like maximizing a window or using edge snapping are still intelligently clamped so they don't get buried.
+- **Lightning Fast Maximize / Zoom Clamping**: Fixed a significant delay where double-clicking a window's title bar (especially in Electron apps like VS Code or Discord) would cause the window to overlap the AeroBar for up to 5 seconds before being clamped. Maximized windows now clamp instantly alongside their zoom animation.
+- **Horizontal Clamping Fixes**: Fixed bugs where manual overlap overrides were ignored when the AeroBar was placed on the left or right edges of the screen. Also fixed horizontal magnetic snapping to correctly trigger when dragged close to the edge.
+- **Crash Fixes**: Resolved a thread deadlock (`EXC_BREAKPOINT`) in the window arrangement coordinator.
+- **Taskbar Mode Flicker**: Fixed a visual bug in Taskbar Mode where window tab chips would randomly flash or flicker when the active window changed or the bar height was adjusted.
+
 ### v9.2-beta7 - September 2026
 > [!WARNING]
 > **Manual Update Required for Beta 5/6 Users**: If you are currently on beta 5 or 6 and receive an "Update failed" error about an item with the same name already existing, your auto-updater is temporarily stuck due to a previous crash leaving a backup file stranded. **Please manually download the DMG and drag AeroBar into your Applications folder.** Once you install beta 7, this issue is permanently fixed and auto-updates will resume normally.
