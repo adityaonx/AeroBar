@@ -1,5 +1,10 @@
 # Release Notes
 
+
+### v9.2-beta9 - September 2026
+- **Chromium Hover Cursor Bug Fixed**: Fixed an issue where hovering over the AeroBar from a maximized Chromium-based app (like Electron, Chrome, Edge) would cause the custom web cursor (e.g. pointing hand or I-beam) to get stuck hovering over the AeroBar. The AeroBar now features a completely solid hit-testing layer and a 2px visual gap to guarantee the OS properly registers a `mouseExited` event for the window beneath it, mirroring the uBar and Windows Taskbar style.
+- **Focus Mode Fullscreen Fix**: Fixed a bug where enabling Focus Mode would overlay a dark, dimming strip (designed to dim native menu bar icons) over the top of true fullscreen applications like games or YouTube videos. The dimming panel now automatically hides itself on any monitor currently displaying a fullscreen app.
+
 ### v9.2-beta8 - September 2026
 - **Windows 10/11 Taskbar Clamping Style**: AeroBar now matches the Windows taskbar clamping behavior. If you manually drag or resize a window so that it goes behind or over the AeroBar, the app will respect your placement and no longer forcefully push the window away. OS-level changes like maximizing a window or using edge snapping are still intelligently clamped so they don't get buried.
 - **Lightning Fast Maximize / Zoom Clamping**: Fixed a significant delay where double-clicking a window's title bar (especially in Electron apps like VS Code or Discord) would cause the window to overlap the AeroBar for up to 5 seconds before being clamped. Maximized windows now clamp instantly alongside their zoom animation.
