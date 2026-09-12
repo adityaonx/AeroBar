@@ -1,6 +1,9 @@
 # Release Notes
 
 
+### v9.3-beta1 - September 2026
+- **Flicker Fixes**: Fixed severe flickering of pinned apps, unpinned apps, and window tabs when Screen Recording permission is not granted.
+
 ### v9.2-beta9 - September 2026
 - **Chromium Hover Cursor Bug Fixed**: Fixed an issue where hovering over the AeroBar from a maximized Chromium-based app (like Electron, Chrome, Edge) would cause the custom web cursor (e.g. pointing hand or I-beam) to get stuck hovering over the AeroBar. The AeroBar now features a completely solid hit-testing layer and a 2px visual gap to guarantee the OS properly registers a `mouseExited` event for the window beneath it, mirroring the uBar and Windows Taskbar style.
 - **Focus Mode Fullscreen Fix**: Fixed a bug where enabling Focus Mode would overlay a dark, dimming strip (designed to dim native menu bar icons) over the top of true fullscreen applications like games or YouTube videos. The dimming panel now automatically hides itself on any monitor currently displaying a fullscreen app.
