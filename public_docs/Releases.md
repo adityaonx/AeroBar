@@ -1,6 +1,9 @@
 # Release Notes
 
 
+### v9.3-beta4 - September 2026
+- **Gatekeeper "Not Permitted" Bug Fixed**: Fixed a critical security / code-signing bug that caused some users to experience "ShowDesktopIcon.app not permitted" or "damaged app" errors. This issue occurred when third-party ZIP extractors (like The Unarchiver) corrupted the internal symlinks used by AeroBar's utility icons. The dummy apps have been entirely rebuilt using real shell scripts and valid ad-hoc signatures, rendering them 100% immune to ZIP corruption and macOS Gatekeeper false-positives forever.
+
 ### v9.3-beta2 - September 2026
 - **Window Preview Focus Glitch Fixed**: Fixed a major bug where clicking a live window preview thumbnail (from a window tab or pinned app hover popover) would glitch out. The popover would accidentally yank focus back to the previous application as it closed 80ms later, resulting in a failed or jittery window switch. Window previews now switch seamlessly and identically to the main taskbar tabs.
 - **Preview Animation Polish**: Removed redundant window-raise commands when clicking window previews. This stops a visual flash where background windows would jump to the front while still visually inactive/greyed out before their application fully activated.
