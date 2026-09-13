@@ -1,5 +1,8 @@
 # Release Notes
 
+### v9.3-beta8 - September 2026
+- **Clipboard Security & Permissions**: Redesigned the "Save To" feature for copied file pointers in the Clipboard History panel. To strictly adhere to the Principle of Least Privilege, file pointers can now only be "Revealed in Finder" rather than duplicated. This completely removes the reliance on `FileManager` and Apple Events, preventing macOS from falsely flagging AeroBar for Full Disk Access.
+
 ### v9.3-beta7 - September 2026
 - **Chromium UI Overlay Fix**: Fixed an issue introduced in beta6 where AeroBar would incorrectly clamp and shift Chromium-based browser (Google Chrome, Arc, Brave) search dropdowns, autocomplete menus, and focus rings.
 
