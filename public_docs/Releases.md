@@ -1,6 +1,10 @@
 # Release Notes
 
 
+### v9.3-beta5 - September 2026
+- **Light Mode Onboarding UI Fix**: Fixed a bug where the text during the first-time setup (like "Choose Placement") would render as black against the dark background on Macs running Light Mode, making it unreadable. The onboarding window now correctly enforces a dark appearance globally.
+- **Clearer EULA Checkbox**: Highlighted the "EULA and T&C" checkbox on the welcome screen with an accent-colored border and added a "Please check mark to continue" prompt. This clarifies the setup flow, as the Continue button remains hidden until the terms are accepted.
+
 ### v9.3-beta4 - September 2026
 - **Gatekeeper "Not Permitted" Bug Fixed**: Fixed a critical security / code-signing bug that caused some users to experience "ShowDesktopIcon.app not permitted" or "damaged app" errors. This issue occurred when third-party ZIP extractors (like The Unarchiver) corrupted the internal symlinks used by AeroBar's utility icons. The dummy apps have been entirely rebuilt using real shell scripts and valid ad-hoc signatures, rendering them 100% immune to ZIP corruption and macOS Gatekeeper false-positives forever.
 
