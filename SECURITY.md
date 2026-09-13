@@ -2,17 +2,17 @@
 
 ## Supported Versions
 
-We currently provide security updates for the latest major version of AeroBar.
+Security updates are provided for the current major release of AeroBar.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| >= 1.0  | :white_check_mark: |
-| < 1.0   | :x:                |
+| Version | Supported |
+| ------- | --------- |
+| >= 1.0  | Yes       |
+| < 1.0   | No        |
 
 ## Reporting a Vulnerability
 
-We take the security of AeroBar seriously. If you discover a security vulnerability, please **do not open a public issue**. 
+If a security vulnerability is identified, do not open a public issue.
 
-Instead, please report it by creating a private security advisory on GitHub, or by emailing the project maintainer directly at **adityaonx@gmail.com**.
+Report it by creating a private security advisory on GitHub, or by contacting the maintainer directly at adityaonx@gmail.com.
 
-We will try to respond to reports within 48 hours and keep you updated on the progress towards a fix.
+Reports will be acknowledged within 48 hours.
