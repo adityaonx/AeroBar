@@ -5,6 +5,8 @@
 - **macOS 15/16 Clipboard Compatibility**: Fixed an issue where the system clipboard would fail to record copied items while AeroBar was active. Added a 150ms read debounce and strict type validation to prevent AeroBar from interrupting background write transactions in macOS Sequoia and Tahoe.
 - **Divider Alignment**: Fixed an issue where section dividers would incorrectly render adjacent to empty space on vertical or top-placed taskbars when application lists did not fully fill the available screen area.
 - **Cross-Platform App Compatibility**: Relaxed macOS Accessibility (AX) window role restrictions. AeroBar now natively recognizes and manages custom-drawn windows from cross-platform frameworks (e.g. Qt-based apps like DaVinci Resolve) that omit standard macOS window subroles.
+- **Advanced Mode Deprecation**: Removed the "Advanced" toggle button from the Customizer. All advanced appearance and layout settings are now universally unlocked and visible by default for all users.
+- **Typography & UI Clean-up**: Stripped all emojis, icons, and non-standard punctuation (like em-dashes) from the application interface and diagnostics panel to maintain a clean, clinical aesthetic.
 
 ### v9.3-beta5 - September 2026
 - **Light Mode Onboarding UI**: Fixed text visibility during first-time setup on Macs running Light Mode by enforcing a dark appearance globally.
