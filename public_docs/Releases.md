@@ -1,6 +1,10 @@
 # Release Notes
 
 
+### v9.3-beta2 - September 2026
+- **Window Preview Focus Glitch Fixed**: Fixed a major bug where clicking a live window preview thumbnail (from a window tab or pinned app hover popover) would glitch out. The popover would accidentally yank focus back to the previous application as it closed 80ms later, resulting in a failed or jittery window switch. Window previews now switch seamlessly and identically to the main taskbar tabs.
+- **Preview Animation Polish**: Removed redundant window-raise commands when clicking window previews. This stops a visual flash where background windows would jump to the front while still visually inactive/greyed out before their application fully activated.
+
 ### v9.3-beta1 - September 2026
 - **Flicker Fixes**: Fixed severe flickering of pinned apps, unpinned apps, and window tabs when Screen Recording permission is not granted.
 
