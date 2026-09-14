@@ -1,5 +1,12 @@
 # Release Notes
 
+### v9.3-beta9 - September 2026
+- **Post-Update Experience**: Added a brand new "Update Successful" floating panel that automatically greets you with the release notes right after AeroBar completes an update and relaunches.
+- **Intelligent Updater UI**: The updater popup now renders GitHub release notes natively with Markdown, properly displaying clickable hyperlinks, bold text, and lists.
+- **Unified Liquid Glass Styling**: The updater popup now perfectly matches the OS-conditional Liquid Glass and Static Bar materials used in the onboarding UI.
+- **Simplified Update Settings**: Removed the confusing Release Channel selectors (Beta, Testing, Final) from Settings. The updater now strictly fetches the single latest release from GitHub to reduce complexity.
+- **Customizer Enhancements**: The Customizer's sidebar now automatically snaps back and expands the Layout section every time you open the panel.
+
 ### v9.3-beta8 - September 2026
 - **Clipboard Security & Permissions**: Redesigned the "Save To" feature for copied file pointers in the Clipboard History panel. To strictly adhere to the Principle of Least Privilege, file pointers can now only be "Revealed in Finder" rather than duplicated. This completely removes the reliance on `FileManager` and Apple Events, preventing macOS from falsely flagging AeroBar for Full Disk Access.
 
