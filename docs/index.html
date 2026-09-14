@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AeroBar - Advanced Dock for macOS</title>
+  <meta name="description" content="Looking for a more powerful dock experience? AeroBar delivers - Aero glass look, Start Menu, live window tabs, pinned app launcher. Free for macOS Sequoia & Tahoe." />
+  <meta property="og:title" content="AeroBar - Advanced Dock for macOS" />
+  <meta property="og:description" content="Looking for a more powerful dock experience? AeroBar delivers - Aero glass look, Start Menu, live window tabs, pinned app launcher." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #007aff;
+      --blue-light: #0a84ff;
+      --blue-dark: #1d4ed8;
+      --blue-glow: rgba(59, 130, 246, 0.35);
+      --purple: #8b5cf6;
+      --teal: #06b6d4;
+      --bg: #111111;
+      --surface: rgba(255,255,255,0.04);
+      --surface-hover: rgba(255,255,255,0.07);
+      --border: rgba(255,255,255,0.08);
+      --border-bright: rgba(255,255,255,0.15);
+      --text: #f0f6ff;
+      --text-muted: rgba(240,246,255,0.55);
+      --text-dim: rgba(240,246,255,0.35);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ── BACKGROUND ORBS ── */
+    .bg-orbs {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      overflow: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      height: 64px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em;
+      text-decoration: none; color: var(--text);
+    }
+    .nav-logo .orb-icon {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: url('assets/aerobar-orb-v2.svg') center/contain no-repeat;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a {
+      font-size: 0.875rem; font-weight: 500; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      white-space: nowrap; flex-shrink: 0; height: 36px; line-height: 1;
+      background: rgba(10, 132, 255, 0.75); color: #fff; padding: 0 1.1rem;
+      border-radius: 18px; font-size: 0.875rem; font-weight: 600; text-decoration: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.3);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      position: relative; overflow: hidden;
+    }
+    .nav-cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+      opacity: 0.5;
+    }
+    .nav-cta:hover { 
+      transform: scale(1.03); 
+      background: rgba(10, 132, 255, 0.5);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 4px 15px rgba(0,122,255,0.4), inset 0 1px 2px rgba(255,255,255,0.5);
+    }
+    .nav-cta svg {
+      width: 16px !important;
+      height: 16px !important;
+      min-width: 16px !important;
+      min-height: 16px !important;
+      max-width: 16px !important;
+      max-height: 16px !important;
+      flex-shrink: 0 !important;
+      display: inline-block !important;
+      vertical-align: middle;
+    }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: auto;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 130px clamp(1.5rem, 5vw, 4rem) 0;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.3);
+      color: var(--blue-light); border-radius: 999px;
+      padding: 0.3rem 1rem; font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.6s ease both;
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #34d399; box-shadow: 0 0 6px #34d399; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      max-width: 850px;
+      animation: fadeInUp 0.7s ease 0.1s both;
+    }
+    h1 .gradient {
+      background: linear-gradient(135deg, #ffffff 0%, #d1d5db 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: clamp(0.85rem, 1.5vw, 1rem);
+      color: var(--text-muted);
+      max-width: 560px; margin: 0 auto;
+      animation: fadeInUp 0.7s ease 0.2s both;
+    }
+    .hero-actions {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      justify-content: center; margin-top: 2.5rem;
+      animation: fadeInUp 0.7s ease 0.3s both;
+    }
+    .btn-primary {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(10, 132, 255, 0.75); color: #fff;
+      padding: 0.8rem 1.8rem; border-radius: 20px;
+      font-size: 1rem; font-weight: 700; text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.4);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+      opacity: 0.5;
+    }
+    .btn-primary:hover { 
+      transform: translateY(-2px) scale(1.02); 
+      background: rgba(10, 132, 255, 0.5);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 8px 30px rgba(0,122,255,0.4), inset 0 1px 2px rgba(255,255,255,0.6);
+    }
+    .btn-secondary {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255, 255, 255, 0.15); color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.8rem 1.8rem; border-radius: 20px;
+      font-size: 1rem; font-weight: 700; text-decoration: none;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .btn-secondary:hover { 
+      transform: translateY(-2px) scale(1.02); 
+      background: rgba(255, 255, 255, 0.1); 
+      border-color: rgba(255, 255, 255, 0.2); 
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    }
+    .btn-youtube {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(229, 45, 39, 0.8); color: #fff;
+      padding: 0.8rem 1.8rem; border-radius: 20px;
+      font-size: 1rem; font-weight: 700; text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.4);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      position: relative; overflow: hidden;
+    }
+    .btn-youtube::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+      opacity: 0.5;
+    }
+    .btn-youtube:hover { 
+      transform: translateY(-2px) scale(1.02); 
+      background: rgba(229, 45, 39, 0.5);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 8px 30px rgba(229, 45, 39, 0.8), inset 0 1px 2px rgba(255,255,255,0.6);
+    }
+
+    .homebrew-cmd-box {
+      margin: 1.5rem auto; width: 100%; max-width: 650px; box-sizing: border-box;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: monospace; font-size: 0.85em; color: #e2e8f0;
+      background: rgba(0,0,0,0.4); padding: 0.5rem 0.5rem 0.5rem 1rem;
+      border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      animation: fadeInUp 0.7s ease 0.25s both;
+    }
+    .homebrew-cmd-box span {
+      user-select: all; overflow-x: auto; white-space: pre-wrap;
+      margin-right: 1rem; flex: 1; min-width: 0; display: block;
+      padding-bottom: 2px; text-align: left;
+    }
+    .homebrew-cmd-box button {
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.1);
+      color: white; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer;
+      font-size: 0.85em; transition: background 0.2s; white-space: nowrap; flex-shrink: 0;
+    }
+    .homebrew-cmd-box button:hover { background: rgba(255,255,255,0.25); }
+
+    .hero-stats {
+      margin-top: 1.5rem; display: flex; gap: 1.5rem; justify-content: center;
+      font-size: 0.85rem; color: var(--text-dim);
+      animation: fadeInUp 0.7s ease 0.5s both;
+    }
+    .hero-stats span { display: flex; align-items: center; gap: 6px; }
+    .hero-stats b { color: var(--text-muted); font-weight: 600; font-variant-numeric: tabular-nums; }
+    .hero-compat {
+      margin-top: 1rem; margin-bottom: 2rem; font-size: 0.8rem; color: var(--text-dim);
+      animation: fadeInUp 0.7s ease 0.6s both;
+    }
+    .hero-compat span { color: var(--text-muted); }
+
+/* ── SCREENSHOTS SECTION ── */
+    #screenshots {
+      padding: clamp(1rem, 2vw, 2rem) clamp(1.5rem, 5vw, 4rem);
+    }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--blue-light);
+      text-align: center; margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800; letter-spacing: -0.03em;
+      text-align: center; margin-bottom: 1rem; line-height: 1.15;
+    }
+    .section-sub {
+      text-align: center; color: var(--text-muted);
+      font-size: 1.05rem; max-width: 520px; margin: 0 auto 1.5rem;
+    }
+    .screenshots-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 1.5rem; max-width: 1100px; margin: 0 auto;
+    }
+    .screenshot-card {
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .screenshot-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(59,130,246,0.2);
+    }
+    .screenshot-card img {
+      width: 100%; display: block;
+      border-bottom: 1px solid var(--border);
+    }
+    .screenshot-card-label {
+      padding: 12px 16px; font-size: 0.85rem; font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    /* ── FEATURES ── */
+    #features {
+      padding: clamp(1rem, 2vw, 2rem) clamp(1.5rem, 5vw, 4rem);
+      background: linear-gradient(180deg, transparent, rgba(59,130,246,0.03), transparent);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: all 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-bright), transparent);
+    }
+    .feature-card:hover {
+      background: var(--surface-hover);
+      border-color: rgba(59,130,246,0.25);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+    .feature-icon {
+      font-size: 2rem; margin-bottom: 1rem;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 52px; height: 52px; border-radius: 12px;
+      background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2);
+    }
+    .feature-title {
+      font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+    .feature-desc {
+      font-size: 0.875rem; color: var(--text-muted); line-height: 1.65;
+    }
+    .feature-card.featured {
+      grid-column: span 2;
+      background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.08));
+      border-color: rgba(59,130,246,0.25);
+    }
+    @media (max-width: 700px) { .feature-card.featured { grid-column: span 1; } }
+
+    /* ── HOW TO USE ── */
+    #install {
+      padding: clamp(1rem, 2vw, 2rem) clamp(1.5rem, 5vw, 4rem);
+    }
+    .install-steps {
+      max-width: 700px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 1.25rem;
+    }
+    .step {
+      display: flex; gap: 1.25rem; align-items: flex-start;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.5rem;
+      transition: all 0.25s;
+    }
+    .step:hover { border-color: rgba(59,130,246,0.3); background: var(--surface-hover); }
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 800; color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .step-content h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.35rem; }
+    .step-content p { font-size: 0.875rem; color: var(--text-muted); }
+    code {
+      background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.2);
+      color: var(--blue-light); border-radius: 6px;
+      padding: 2px 8px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85em;
+    }
+
+    .notarization-notice {
+      max-width: 700px; margin: 0 auto 2rem;
+      background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 16px; padding: 1.25rem 1.5rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .notarization-notice-icon { font-size: 1.5rem; line-height: 1; }
+    .notarization-notice-content h4 { font-size: 0.95rem; font-weight: 700; color: var(--blue-light); margin-bottom: 0.25rem; }
+    .notarization-notice-content p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+
+    .releases-timeline {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .release-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: all 0.25s;
+    }
+    .release-card.featured-release {
+      border-color: rgba(59,130,246,0.35);
+      background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(6,11,20,0.4));
+      box-shadow: 0 0 25px rgba(59,130,246,0.1);
+    }
+    .release-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+    .release-title-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .release-version {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .release-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .release-badge.stable {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+    }
+    .release-badge.beta {
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: var(--blue-light);
+    }
+    .release-date {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+    .release-body {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .release-body h4 {
+      color: var(--text);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .release-body ul {
+      margin-left: 1.25rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .release-body li {
+      line-height: 1.5;
+    }
+
+    /* ── DOWNLOAD CHANNELS ── */
+    .channel-links-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .channel-links-row a {
+      color: var(--blue-light);
+      text-decoration: none;
+      transition: color 0.2s, text-shadow 0.2s;
+      font-weight: 500;
+    }
+    .channel-links-row a:hover {
+      color: var(--text);
+      text-shadow: 0 0 8px rgba(96, 165, 250, 0.4);
+    }
+    .channel-links-row span.separator {
+      color: var(--border-bright);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem clamp(1.5rem, 5vw, 4rem);
+      text-align: center;
+    }
+    .footer-logo {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      margin-bottom: 1.25rem;
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; margin-bottom: 1.5rem; }
+    .footer-links a { font-size: 0.875rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { font-size: 0.8rem; color: var(--text-dim); }
+    .footer-copy a { color: var(--text-muted); text-decoration: none; }
+
+    /* ── SCROLL REVEAL ── */
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      #hero {
+        justify-content: flex-start !important;
+        padding-top: 105px !important;
+        padding-bottom: 15px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        min-height: auto !important;
+      }
+      .hero-compat {
+        margin-bottom: 1rem !important;
+      }
+      section {
+        padding: 2.5rem clamp(1rem, 4vw, 2rem) !important;
+      }
+      nav {
+        flex-wrap: wrap !important;
+        height: auto !important;
+        padding: 12px 15px !important;
+        gap: 12px !important;
+      }
+      .nav-links {
+        display: flex !important;
+        order: 3 !important;
+        width: 100% !important;
+        justify-content: flex-start !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        white-space: nowrap !important;
+        padding-bottom: 4px !important;
+        gap: 1.25rem !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+      .nav-links::-webkit-scrollbar {
+        display: none !important;
+      }
+      .nav-links a {
+        font-size: 0.8rem !important;
+        flex-shrink: 0 !important;
+      }
+      .nav-cta {
+        order: 2 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 6px !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        height: 32px !important;
+        padding: 0 0.8rem !important;
+        font-size: 0.8rem !important;
+      }
+      .demo-with-presets { flex-direction: column !important; gap: 15px !important; width: 100% !important; max-width: 100% !important; }
+      #hero .badge { order: 1 !important; }
+      #hero h1 { order: 2 !important; margin-bottom: 15px !important; }
+      #hero .hero-sub { order: 3 !important; margin-top: 0.75rem !important; }
+      #hero .homebrew-cmd-box { order: 4 !important; font-size: 0.75em !important; margin: 1rem 0 !important; width: 100% !important; }
+      #hero .hero-actions { order: 5 !important; margin-top: 1rem !important; }
+      #hero .channel-links-row { order: 6 !important; }
+      #hero .hero-stats { order: 7 !important; }
+      #hero .hero-compat { order: 8 !important; }
+      #hero .demo-with-presets { order: 9 !important; }
+      
+      .taskbar-preview {
+        width: 384px !important;
+        height: 254px !important;
+        margin: 0 auto !important;
+        position: relative !important;
+        overflow: hidden !important;
+        border-radius: 10px !important;
+      }
+      .desktop-mock {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 800px !important;
+        height: 530px !important;
+        min-width: 800px !important;
+        max-width: 800px !important;
+        min-height: 530px !important;
+        max-height: 530px !important;
+        transform: scale(0.48) !important;
+        transform-origin: top left !important;
+        aspect-ratio: auto !important;
+      }
+      @media (max-width: 440px) {
+        .taskbar-preview {
+          width: 344px !important;
+          height: 228px !important;
+          border-radius: 9px !important;
+        }
+        .desktop-mock {
+          transform: scale(0.43) !important;
+        }
+      }
+      @media (max-width: 380px) {
+        .taskbar-preview {
+          width: 304px !important;
+          height: 201px !important;
+          border-radius: 8px !important;
+        }
+        .desktop-mock {
+          transform: scale(0.38) !important;
+        }
+      }
+      
+      .color-presets-row {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 15px !important;
+        width: 100% !important;
+        margin: 0 !important;
+      }
+      .presets-swatches {
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        width: 100% !important;
+      }
+      .presets-label {
+        writing-mode: horizontal-tb !important;
+        transform: none !important;
+        margin-bottom: 0 !important;
+      }
+      
+      .tint-sliders-row {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 15px !important;
+        padding: 15px !important;
+        width: 100% !important;
+        margin: 0 !important;
+      }
+      .tint-slider-group {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 12px !important;
+      }
+      .tint-slider-label {
+        writing-mode: horizontal-tb !important;
+        transform: none !important;
+        font-size: 0.72rem !important;
+        width: 100px !important;
+        text-align: left !important;
+        flex-shrink: 0 !important;
+      }
+      .tint-slider-vertical-wrap {
+        flex-grow: 1 !important;
+        width: auto !important;
+        height: auto !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .tint-slider-vertical {
+        transform: none !important;
+        width: 100% !important;
+        height: 6px !important;
+        margin: 0 !important;
+      }
+      .tint-slider-value {
+        width: 40px !important;
+        text-align: right !important;
+        flex-shrink: 0 !important;
+      }
+      
+      .window-preview {
+        width: 260px !important;
+        bottom: 50px !important;
+        padding: 8px !important;
+      }
+      .preview-header-bar {
+        margin-bottom: 8px !important;
+      }
+      .preview-title {
+        font-size: 0.8rem !important;
+      }
+      .preview-content {
+        height: 160px !important;
+      }
+      .screenshots-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .features-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    .fs-overlay-label {
+      position: absolute; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: opacity 0.3s;
+    }
+    .fs-overlay-label:hover .fs-prompt { transform: scale(1.05); }
+    .fs-overlay-blur {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .fs-prompt {
+      position: relative; z-index: 2; padding: 20px 32px; background: rgba(20,20,20,0.8);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; font-weight: 600; color: #fff;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform 0.3s; pointer-events: none;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    
+    .fs-btn {
+      position: absolute; top: 16px; right: 16px; z-index: 1001;
+      background: rgba(20,20,20,0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff;
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; cursor: pointer; transition: background 0.2s, transform 0.2s;
+    }
+    .fs-btn:hover { background: rgba(20,20,20,0.9); transform: scale(1.05); }
+
+    
+    :fullscreen .fs-overlay-label, :fullscreen .fs-btn { display: none; }
+    :-webkit-full-screen .fs-overlay-label, :-webkit-full-screen .fs-btn { display: none; }
+    :-ms-fullscreen .fs-overlay-label, :-ms-fullscreen .fs-btn { display: none; }
+    
+    .taskbar-preview:fullscreen { border-radius: 0; border: none; height: 100vh; }
+    .taskbar-preview:-webkit-full-screen { border-radius: 0; border: none; height: 100vh; }
+    
+    .taskbar-preview:fullscreen .desktop-mock { aspect-ratio: auto; height: 100%; max-height: none; border-radius: 0; }
+    .taskbar-preview:-webkit-full-screen .desktop-mock { aspect-ratio: auto; height: 100%; max-height: none; border-radius: 0; }
+    
+
+/* Base panel styling */
+.aero-ui-panel {
+  position: absolute;
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(50px) saturate(200%);
+  -webkit-backdrop-filter: blur(50px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow: hidden;
+  display: flex;
+}
+
+/* Sidebar styling */
+.aero-ui-sidebar {
+  width: 70px;
+  background: rgba(20, 20, 20, 0.6);
+  border-right: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0;
+  gap: 16px;
+}
+.aero-ui-sidebar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 54px;
+  padding: 8px 0;
+  border-radius: 8px;
+}
+.aero-ui-sidebar-item:hover {
+  background: rgba(255,255,255,0.05);
+  opacity: 0.9;
+}
+.aero-ui-sidebar-item.active {
+  background: rgba(40, 100, 255, 0.2);
+  border: 1px solid rgba(40, 100, 255, 0.4);
+  opacity: 1;
+}
+.aero-ui-sidebar-item.active span {
+  color: #60a5fa;
+}
+.aero-ui-sidebar-item svg {
+  width: 20px;
+  height: 20px;
+}
+.aero-ui-sidebar-item.active svg {
+  stroke: #60a5fa;
+  fill: #60a5fa;
+}
+.aero-ui-sidebar-item span {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* Main Content */
+.aero-ui-content {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Header */
+.aero-ui-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding-bottom: 12px;
+}
+.aero-ui-title {
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.aero-ui-title svg {
+  width: 16px;
+  height: 16px;
+  color: #60a5fa;
+}
+.aero-ui-badge {
+  background: #6d28d9;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+/* Common controls */
+.aero-ui-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.aero-ui-btn:hover {
+  background: rgba(255,255,255,0.15);
+}
+.aero-ui-section {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.aero-ui-section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ddd;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.aero-ui-pro-badge {
+  background: #2563eb;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+.aero-ui-select {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  width: 100%;
+  font-size: 12px;
+}
+.aero-ui-segment {
+  display: flex;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  padding: 2px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.aero-ui-segment-btn {
+  flex: 1;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 6px;
+  color: rgba(255,255,255,0.6);
+}
+.aero-ui-segment-btn.active {
+  background: rgba(255,255,255,0.1);
+  color: #60a5fa;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.aero-ui-color-grid {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+.aero-ui-color {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+}
+.aero-ui-color-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+.aero-ui-color.active .aero-ui-color-circle {
+  border-color: #60a5fa;
+  padding: 2px;
+  background-clip: content-box;
+}
+.aero-ui-slider-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #ccc;
+}
+.aero-ui-slider {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+  position: relative;
+  margin-top: 8px;
+}
+.aero-ui-slider-thumb {
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: -4px;
+  left: 11%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Tray Popups (Pinned, Links, Clipboard) */
+.aero-tray-panel {
+  width: 240px;
+  flex-direction: column;
+}
+.aero-tray-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.aero-tray-title {
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.aero-tray-title svg {
+  color: #3b82f6;
+  width: 14px;
+  height: 14px;
+}
+.aero-tray-list {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  gap: 4px;
+}
+.aero-tray-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.aero-tray-item:hover {
+  background: rgba(255,255,255,0.05);
+}
+.aero-tray-icon {
+  width: 32px;
+  height: 32px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aero-tray-icon img {
+  width: 24px;
+  height: 24px;
+}
+.aero-tray-text {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+  
+    .fs-overlay-label {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center; z-index: 1000;
+      cursor: pointer; opacity: 1; transition: opacity 0.3s;
+    }
+    .fs-overlay-blur {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .fs-prompt {
+      position: relative; z-index: 2; padding: 20px 32px; background: rgba(20,20,20,0.8);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; font-weight: 600; color: #fff;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform 0.3s; pointer-events: none;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    
+    .fs-btn {
+      position: absolute; top: 16px; right: 16px; z-index: 1001;
+      background: rgba(20,20,20,0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff;
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; cursor: pointer; transition: background 0.2s, transform 0.2s;
+    }
+    .fs-btn:hover { background: rgba(20,20,20,0.9); transform: scale(1.05); }
+
+    
+    :fullscreen .fs-overlay-label, :fullscreen .fs-btn { display: none; }
+    :-webkit-full-screen .fs-overlay-label, :-webkit-full-screen .fs-btn { display: none; }
+    :-ms-fullscreen .fs-overlay-label, :-ms-fullscreen .fs-btn { display: none; }
+    
+    .taskbar-preview:fullscreen { border-radius: 0; border: none; height: 100vh; }
+    .taskbar-preview:-webkit-full-screen { border-radius: 0; border: none; height: 100vh; }
+    
+    .taskbar-preview:fullscreen .desktop-mock { aspect-ratio: auto; height: 100%; max-height: none; border-radius: 0; }
+    .taskbar-preview:-webkit-full-screen .desktop-mock { aspect-ratio: auto; height: 100%; max-height: none; border-radius: 0; }
+
+  </style>
+</head>
+<body>
+
+<!-- Background orbs -->
+<div class="bg-orbs" aria-hidden="true">
+</div>
+
+<!-- Nav -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo" aria-label="AeroBar home">
+    <div class="orb-icon"></div>
+    AeroBar
+  </a>
+  <div class="nav-links">
+    <a href="#screenshots">Screenshots</a>
+    <a href="#features">Features</a>
+    <a href="#troubleshooting">Troubleshooting</a>
+    <a href="#install">Install</a>
+    <a href="#contact">Contact</a>
+    <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  <a href="https://github.com/adityaonx/AeroBar/releases/latest" class="nav-cta" id="nav-download-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Download
+  </a>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <h1><span style="color: var(--blue-light);">AeroBar</span><br/><span style="font-size: 0.65em; font-weight: 500; color: #d1d5db;">Advanced Dock for macOS</span></h1>
+  <p class="hero-sub">
+    Aero glass look, Start Menu, live window tabs, pinned app launcher - all sitting at the bottom of your screen.
+  </p>
+  
+
+  <div class="hero-actions">
+    <a href="https://github.com/adityaonx/AeroBar/releases/latest"
+       class="btn-primary" id="hero-download-btn">
+      Download for Mac
+    </a>
+    <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener"
+       id="hero-github-btn" class="btn-secondary">
+      View on GitHub
+    </a>
+    <a href="https://www.youtube.com/watch?v=NY2qc3SOwXk" target="_blank" rel="noopener"
+       id="hero-youtube-btn" class="btn-youtube">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="margin-right: 4px;">
+        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+      </svg>
+      Video Guide
+    </a>
+  </div>
+
+  <div class="hero-stats">
+    <span title="Total downloads across all releases"><b id="stat-downloads">--</b> Downloads</span>
+    <span id="visit-container" style="display: none;" title="Total page visits"><b id="stat-visits">--</b> Visits</span>
+  </div>
+
+</section>
+
+<!-- Screenshots -->
+<section id="screenshots">
+  <p class="section-label reveal">See it in action</p>
+  <h2 class="section-title reveal">Native Integration</h2>
+  <p class="section-sub reveal">Real macOS materials, real accessibility APIs - not a theme, not a wrapper.</p>
+  <div class="screenshots-grid">
+    <div class="screenshot-card reveal">
+      <img src="https://github.com/user-attachments/assets/33fced61-d520-46bf-8478-e262af05c88b"
+           alt="Quick switch between app windows in AeroBar" loading="lazy" />
+      <div class="screenshot-card-label">Quick Window Switching</div>
+    </div>
+    <div class="screenshot-card reveal">
+      <img src="https://github.com/user-attachments/assets/0c251738-e864-4302-8de3-c56c01c92adb"
+           alt="AeroBar Start Menu" loading="lazy" />
+      <div class="screenshot-card-label">Start Menu</div>
+    </div>
+    <div class="screenshot-card reveal">
+      <img src="https://github.com/user-attachments/assets/02f417a4-a3e1-42ed-a69d-fc981313a0eb"
+           alt="Pinned app launcher in AeroBar" loading="lazy" />
+      <div class="screenshot-card-label">Pinned App Launcher</div>
+    </div>
+    <div class="screenshot-card reveal">
+      <img src="https://github.com/user-attachments/assets/ace2dd16-2770-42ac-8e5e-48a6d25abb85"
+           alt="AeroBar Appearance Lab customization" loading="lazy" />
+      <div class="screenshot-card-label">Appearance Lab</div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features">
+  <div class="features-grid">
+    <div class="feature-card featured reveal">
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 12 12 17 22 12"></polyline><polyline points="2 17 12 22 22 17"></polyline></svg>
+      </div>
+      <div class="feature-title">Liquid Glass Taskbar</div>
+      <div class="feature-desc">A persistent, borderless panel that lives at the very bottom of your screen across all Spaces and full-screen transitions. Uses Apple's native vibrancy material to sample your wallpaper - a genuine translucent glass surface, not a screenshot overlay. Five blend styles let you go from deep frosted to nearly transparent.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="14.31" y1="8" x2="20.05" y2="17.94"/><line x1="9.69" y1="8" x2="21.17" y2="8"/><line x1="7.38" y1="12" x2="13.12" y2="2.06"/><line x1="9.69" y1="16" x2="3.95" y2="6.06"/><line x1="14.31" y1="16" x2="2.83" y2="16"/><line x1="16.62" y1="12" x2="10.88" y2="21.94"/></svg>
+      </div>
+      <div class="feature-title">Mac Aero Start Orb</div>
+      <div class="feature-desc">The iconic circular Start Orb in the bottom-left corner. Click it and the full Start Menu opens anchored to your display. Light and dark hover states, fully customizable in Appearance Lab.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+      </div>
+      <div class="feature-title">Live Window Tab Strip</div>
+      <div class="feature-desc">Every open window appears as a tab in real time. Click to focus, click again to minimize, click a minimized tab to restore. Instant window switching - no Exposé cycling needed.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+      </div>
+      <div class="feature-title">Pinned App Launcher</div>
+      <div class="feature-desc">Drag-and-drop your favourite apps into the tray. Click to launch, click to raise all windows, click again to minimize. Right-click any tab to pin that app directly.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </div>
+      <div class="feature-title">Spotlight Quick Search</div>
+      <div class="feature-desc">An inline search field fires macOS Spotlight directly. Type an app name, file, or even a calculation and hit Return - exactly like a built-in search box.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      </div>
+      <div class="feature-title">Full Start Menu</div>
+      <div class="feature-desc">User avatar, live search across all sections, pinned app grid with drag-to-reorder, alphabetical all-apps browser, and recent file recommendations powered by Spotlight metadata.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+      </div>
+      <div class="feature-title">Recycle Bin Button</div>
+      <div class="feature-desc">The Trash shortcut lives at the right end of the bar for quick access. One click opens Trash in Finder.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+      </div>
+      <div class="feature-title">Multi-Display Support</div>
+      <div class="feature-desc">Show the taskbar on all monitors, main screen only, or external displays only. Each display's taskbar is fully independent. The Start Menu opens on whichever monitor you clicked.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+      </div>
+      <div class="feature-title">Appearance Lab</div>
+      <div class="feature-desc">Configurable blend styles, tint hues, densities, and display targets.</div>
+    </div>
+  </div>
+</section>
+<!-- Privacy & Security -->
+<section id="privacy" style="background: rgba(6,11,20,0.4); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding-bottom: 2rem;">
+  <p class="section-label reveal">Privacy & Stability</p>
+  <h2 class="section-title reveal">Privacy & Security First</h2>
+  <p class="section-sub reveal" style="max-width: 700px;">AeroBar requires Accessibility access to interact with your windows. AeroBar is designed with strict security parameters.</p>
+  
+  <div class="features-grid" >
+    <div class="feature-card reveal">
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      </div>
+      <div class="feature-title">Local Data Storage</div>
+      <div class="feature-desc">All user data is encrypted and stored locally.</div>
+    </div>
+    
+    <div class="feature-card reveal">
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+      </div>
+      <div class="feature-title">Diagnostic Telemetry Only</div>
+      <div class="feature-desc">Anonymous diagnostic telemetry is collected via Sentry for crash reporting. No personal data is transmitted.</div>
+    </div>
+    
+    <div class="feature-card reveal">
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+      </div>
+      <div class="feature-title">Secure Verification & Updates</div>
+      <div class="feature-desc">Network connections are limited to license verification and update checks.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Troubleshooting -->
+<section id="troubleshooting">
+  <p class="section-label reveal">Support</p>
+  <h2 class="section-title reveal">Troubleshooting</h2>
+  <div class="features-grid" >
+
+    <div class="feature-card reveal" style="grid-column: 1 / -1; background: rgba(245,158,11,0.05); border-color: rgba(245,158,11,0.2);">
+      <h3 style="color: #fbbf24; margin-bottom: 1rem; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        macOS Input Block / Freeze
+      </h3>
+      
+      <p style="color: var(--text-muted); margin-bottom: 0.75rem; font-size: 0.95rem;">
+        <strong>Symptoms:</strong>
+      </p>
+      <ul style="margin-left: 1.5rem; margin-bottom: 1.25rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+        <li>Cmd+Tab app switcher or 3-finger swipe window cycling not responding</li>
+        <li>Taskbar button hover highlights not triggering</li>
+        <li>Button popups (Widgets, Quick Links, Window Previews) not appearing on hover</li>
+      </ul>
+
+      <p style="color: var(--text-muted); margin-bottom: 0.75rem; font-size: 0.95rem;">
+        <strong>Quick Fix Guide (Lift the Block):</strong>
+      </p>
+      <ol style="margin-left: 1.5rem; margin-bottom: 1.25rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+        <li>Open <strong>System Settings → Privacy & Security → Input Monitoring</strong> (or <strong>Accessibility</strong>).</li>
+        <li>Temporarily <strong>toggle Input Monitoring ON</strong> for AeroBar (or add it if missing).</li>
+        <li>Toggle it back <strong>OFF</strong> (or remove it).</li>
+        <li>This forces macOS Security to reset the HID authorization token and immediately lifts the freeze block!</li>
+      </ol>
+
+      <p style="color: var(--text-muted); margin-bottom: 0; font-size: 0.9rem; line-height: 1.6;">
+        <strong>Alternative:</strong> Open <strong>AeroBar Settings</strong> → <strong>Troubleshoot</strong> tab, and click <strong>Restart Input Event Tap Service</strong>.
+      </p>
+    </div>
+
+    <div class="feature-card reveal" style="grid-column: 1 / -1; background: rgba(220,38,38,0.1); border-color: rgba(220,38,38,0.2);">
+      <h3 style="color: #fca5a5; margin-bottom: 0.75rem; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        Emergency Exit
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">If AeroBar ever freezes or misbehaves, press <code style="background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px; font-family: monospace; color: white;">Cmd+Opt+Ctrl+Shift+Q</code> to forcefully quit the app and safely restore your standard macOS Dock immediately.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Install -->
+<section id="install">
+  <p class="section-label reveal">Installation Guide</p>
+  <h2 class="section-title reveal">Installation</h2>
+  <p class="section-sub reveal">Follow these steps to install the application.</p>
+  
+  <div class="notarization-notice reveal">
+    <div class="notarization-notice-icon"></div>
+    <div class="notarization-notice-content">
+      <h4>Why these extra steps are needed</h4>
+      <p>Apple charges developers a $100/year subscription fee to sign and notarize Mac applications. To keep AeroBar entirely free during our experimental alpha, we self-sign the app rather than paying this fee. As a result, macOS Gatekeeper flags it by default, and window tracking requires Accessibility access to interact with your workspace. Both permissions are completely safe and take less than a minute to authorize below.</p>
+    </div>
+  </div>
+
+  <div class="install-steps">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Download &amp; Install</h3>
+        <p>Download <strong>AeroBar.dmg</strong>, open it, and drag <strong>AeroBar.app</strong> to your <code>/Applications</code> folder.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Bypass Gatekeeper (first launch only)</h3>
+        <p>AeroBar is self-signed. On first launch, go to <strong>System Settings → Privacy &amp; Security</strong> and click <strong>Open Anyway</strong>. Or run: <code>xattr -rd com.apple.quarantine /Applications/AeroBar.app</code></p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Grant Accessibility Permission</h3>
+        <p>AeroBar needs Accessibility access to track and control windows. The onboarding screen guides you directly to the right settings panel. Toggle AeroBar on, then click <strong>Start AeroBar</strong>. The taskbar appears instantly.</p>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top: 1rem;" class="reveal">
+      <a href="https://github.com/adityaonx/AeroBar/releases/latest"
+         class="btn-primary" style="display:inline-flex;" id="install-download-btn">
+        Download AeroBar.dmg
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- Contact -->
+<section id="contact" style="text-align: center; padding: 1.5rem 1rem; max-width: 800px; margin: 0 auto;">
+  <p class="section-label reveal">Contact</p>
+  <h2 class="section-title reveal">Contact</h2>
+  <p class="section-sub reveal">Contact us for support or feedback.</p>
+  <div class="reveal" style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap;">
+    <a href="https://x.com/adityaonx" target="_blank" rel="noopener" class="btn-secondary">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+      </svg>
+      Follow
+    </a>
+    <a href="mailto:adityaonx@gmail.com" class="btn-secondary">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path>
+      </svg>
+      Email
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">
+    <div class="orb-icon" style="width:26px;height:26px;border-radius:50%;background:url('assets/aerobar-orb-v2.svg') center/contain no-repeat;box-shadow:0 0 12px rgba(59,130,246,0.4)"></div>
+    <span style="font-weight:700;font-size:1rem;">AeroBar</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://github.com/adityaonx/AeroBar/releases" target="_blank" rel="noopener">Releases</a>
+    <a href="https://github.com/adityaonx/AeroBar/discussions/new/choose" target="_blank" rel="noopener">Discussions</a>
+    <a href="https://github.com/adityaonx/AeroBar/issues/new" target="_blank" rel="noopener">Report a Bug</a>
+    <a href="mailto:adityaonx@gmail.com">Contact Us</a>
+    <a href="https://x.com/adityaonx" target="_blank" rel="noopener">X.com</a>
+  </div>
+  <p class="footer-copy">
+    Advanced dock for macOS.<br/>
+    
+  </p>
+</footer>
+
+<script>
+  // Nav scroll shadow
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.style.borderBottomColor = window.scrollY > 10 ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.06)';
+  }, { passive: true });
+
+  // Secret admin visits toggle
+  const visitContainer = document.getElementById('visit-container');
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('stats') === 'show') {
+    localStorage.setItem('showStats', 'true');
+  } else if (params.get('stats') === 'hide') {
+    localStorage.removeItem('showStats');
+  }
+  if (localStorage.getItem('showStats') === 'true') {
+    visitContainer.style.display = 'inline-flex';
+  }
+
+  // Fetch page visits
+  fetch('https://api.counterapi.dev/v1/adityaonx/AeroBar/up')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('stat-visits').textContent = data.count.toLocaleString();
+    })
+    .catch(() => {
+      visitContainer.style.display = 'none';
+    });
+
+  // Fetch GitHub downloads
+  fetch('https://api.github.com/repos/adityaonx/AeroBar/releases')
+    .then(response => response.json())
+    .then(releases => {
+      let totalDownloads = 0;
+      releases.forEach(release => {
+        release.assets.forEach(asset => {
+          if (asset.name.endsWith('.dmg')) {
+            totalDownloads += asset.download_count;
+          }
+        });
+      });
+      document.getElementById('stat-downloads').textContent = totalDownloads.toLocaleString();
+
+    })
+    .catch(() => {
+      document.getElementById('stat-downloads').parentElement.style.display = 'none';
+    });
+</script>
+</body>
+</html>
