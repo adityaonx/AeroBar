@@ -8,6 +8,9 @@
 - **Drag-and-Drop Reliability**: Fixed an issue where dragging an app from the "All Apps" list and dropping it into the "Pinned Shortcuts" section would fail to register.
 - **Performance & Stability**: Fixed a severe bug where dragging certain system apps out of the Aero-Menu could cause AeroBar to hang and crash due to macOS sandbox restrictions on drag thumbnail generation.
 - **Under the Hood**: Resolved Xcode build warnings and excessive runtime console spam by migrating internal drag-and-drop payloads to standard string identifiers.
+- **Hover Consistency**: Fixed an issue where hovering over icons in Dock Mode failed to highlight or un-dim them when Display Dimmer or Focus Mode was enabled.
+- **UI Consistency**: Updated all remaining guide popups (such as the Top Placement and Native Menu Bar guides) to correctly use the new Liquid Glass design language, matching the main onboarding flow.
+- **Customizer**: The "Liquid Glass" bar material option is now unlocked and available for selection on all macOS versions (previously restricted to macOS Tahoe 26.0+). On older OSes, it will gracefully degrade to a high-quality ultra-thin material fallback.
 
 
 ### v9.3-beta9 - September 2026
