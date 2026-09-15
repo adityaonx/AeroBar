@@ -1,6 +1,6 @@
 # Release Notes
 
-### v9.4-beta1 - September 2026
+### v9.4-beta2 - September 2026
 - **Website UI**: Redesigned index.html buttons with a modern Liquid Glass aesthetic using backdrop-filter blurring and inset shadows.
 - **Documentation Alignment**: Re-anchored README headers and replaced external Shields.io badges with unified vector SVG buttons.
 - **Static Download Links**: Replaced dynamic GitHub API fetch operations with static URLs for release assets to improve load reliability.
