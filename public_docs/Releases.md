@@ -4,6 +4,10 @@
 - **Website UI**: Redesigned index.html buttons with a modern Liquid Glass aesthetic using backdrop-filter blurring and inset shadows.
 - **Documentation Alignment**: Re-anchored README headers and replaced external Shields.io badges with unified vector SVG buttons.
 - **Static Download Links**: Replaced dynamic GitHub API fetch operations with static URLs for release assets to improve load reliability.
+- **Drag-and-Drop Shortcuts**: Dragging an app from the Aero-Menu onto your Desktop or Finder now correctly generates a lightweight native macOS shortcut (alias), rather than incorrectly copying the entire application bundle.
+- **Drag-and-Drop Reliability**: Fixed an issue where dragging an app from the "All Apps" list and dropping it into the "Pinned Shortcuts" section would fail to register.
+- **Performance & Stability**: Fixed a severe bug where dragging certain system apps out of the Aero-Menu could cause AeroBar to hang and crash due to macOS sandbox restrictions on drag thumbnail generation.
+- **Under the Hood**: Resolved Xcode build warnings and excessive runtime console spam by migrating internal drag-and-drop payloads to standard string identifiers.
 
 
 ### v9.3-beta9 - September 2026
