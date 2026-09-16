@@ -1,5 +1,10 @@
 # Release Notes
 
+### v9.4-beta5 - September 2026
+- **App Tint Overrides**: Fixed a bug where opening the Customizer would automatically overwrite custom app tint rules for Chromium browsers with their auto-extracted colors due to an unprompted state update.
+- **Update Engine**: Significantly reduced the app restart delay during an update by pre-mounting the update disk image in the background before waiting for the app to quit.
+- **Focus Mode UI**: Fixed an issue in Light Mode where the sharp white dividers would remain intensely bright even when Focus Mode dimmed the bar to an opaque dark state, blending them smoothly instead.
+
 ### v9.4-beta4 - September 2026
 - **Custom Color Overrides**: Fixed a bug where AeroBar could accidentally target itself or Finder when assigning Active App Colors, overriding default system themes.
 - **Auto-Repair**: Added a startup check that automatically removes any accidentally saved color overrides for AeroBar or Finder to instantly repair stuck theming.
