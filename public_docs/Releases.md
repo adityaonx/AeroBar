@@ -1,5 +1,10 @@
 # Release Notes
 
+### v9.4-beta4 - September 2026
+- **Custom Color Overrides**: Fixed a bug where AeroBar could accidentally target itself or Finder when assigning Active App Colors, overriding default system themes.
+- **Auto-Repair**: Added a startup check that automatically removes any accidentally saved color overrides for AeroBar or Finder to instantly repair stuck theming.
+- **Menu Bar Interaction**: Fixed an issue where the native menu bar could become permanently unclickable due to an invisible focus tracking panel swallowing mouse clicks while AuraBar was disabled.
+
 ### v9.4-beta3 - September 2026
 - **Window Tabs**: Fixed an issue where window tabs could randomly flicker or redraw themselves if an application momentarily stopped responding to accessibility checks.
 - **PWA Support**: Expanded YouTube Music integration to correctly load track names and album art for Progressive Web Apps installed via Google Chrome or Microsoft Edge.
