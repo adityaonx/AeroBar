@@ -1,6 +1,13 @@
 # Release Notes
 
+### v9.4-beta3 - September 2026
+- **Window Tabs**: Fixed an issue where window tabs could randomly flicker or redraw themselves if an application momentarily stopped responding to accessibility checks.
+- **PWA Support**: Expanded YouTube Music integration to correctly load track names and album art for Progressive Web Apps installed via Google Chrome or Microsoft Edge.
+- **Start Menu**: Added a hardcoded fallback to ensure Finder always appears in the "All Apps" list, even if macOS indexing temporarily loses track of it.
+- **Stability**: Fixed a hard crash (Swift Exclusivity Violation) that occurred when rapidly dragging the "Surface Tint Density" slider in the Customizer.
+- **Welcome Panel**: Fixed a layout bug where the Post-Update welcome notes panel could erroneously anchor itself to the top-right corner of the screen instead of properly centering.
 ### v9.4-beta2 - September 2026
+
 - **Website UI**: Redesigned index.html buttons with a modern Liquid Glass aesthetic using backdrop-filter blurring and inset shadows.
 - **Documentation Alignment**: Re-anchored README headers and replaced external Shields.io badges with unified vector SVG buttons.
 - **Static Download Links**: Replaced dynamic GitHub API fetch operations with static URLs for release assets to improve load reliability.
