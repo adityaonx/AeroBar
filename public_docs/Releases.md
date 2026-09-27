@@ -1,5 +1,8 @@
 # Release Notes
 
+### v9.4-beta7 - September 2026
+- **False Malware warning fix**: Due to mediaadapter library was unsigned we got a false alarm from macos which restricted Aerobar app to launch, we fixed it.
+
 ### v9.4-beta5 - September 2026
 - **App Tint Overrides**: Fixed a bug where opening the Customizer would automatically overwrite custom app tint rules for Chromium browsers with their auto-extracted colors due to an unprompted state update.
 - **Update Engine**: Significantly reduced the app restart delay during an update by pre-mounting the update disk image in the background before waiting for the app to quit.
