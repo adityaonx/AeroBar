@@ -1,5 +1,11 @@
 # Release Notes
 
+### v9.4-beta9 - September 2026
+- **Onboarding Welcome Page Continue Button Clip Fix**
+
+### v9.4-beta8 - September 2026
+- **Open Source Acknowledgements**: Added a new section in Settings > General to view the attributions and licenses for third-party libraries powering AeroBar.
+
 ### v9.4-beta7 - September 2026
 - **False Malware warning fix**: Due to mediaadapter library was unsigned we got a false alarm from macos which restricted Aerobar app to launch, we fixed it.
 
