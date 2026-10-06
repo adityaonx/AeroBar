@@ -13,6 +13,6 @@ Security updates are provided for the current major release of AeroBar.
 
 If a security vulnerability is identified, do not open a public issue.
 
-Report it by creating a private security advisory on GitHub, or by contacting the maintainer directly at adityaonx@gmail.com.
+Report it by creating a private security advisory on GitHub, or by contacting the maintainer directly at adityaonlinux@gmail.com.
 
 Reports will be acknowledged within 48 hours.

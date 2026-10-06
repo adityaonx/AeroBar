@@ -11,7 +11,7 @@ AeroBar is published by an individual developer, Aditya from India. We decide wh
 - Your clipboard history, keystrokes, window contents, and screenshots stay on your Mac. Clipboard history is encrypted on disk.
 - AeroBar has no ads and no cross-app tracking, and it does not sell data.
 - The only data AeroBar sends to us is: a beta-verification code; optional usage statistics; optional crash and hang reports; and feedback you choose to write.
-- Usage statistics and crash reports are **on by default**. You can turn each off in **Settings → Privacy**.
+- Usage statistics and crash reports are **on by default**. You can turn each off in **Customizer → General**.
 - We identify your install with a random ID, not your name or email. This is **pseudonymous**, not anonymous: the ID, combined with other information, could single out an install. We treat it as personal data.
 - You can delete your usage data from our server at any time with **Delete My Usage Data & Reset ID**.
 
@@ -74,14 +74,14 @@ AeroBar is published by an individual developer, Aditya from India. We decide wh
 
 ## 4. Why we process this data (legal bases)
 - **Beta verification:** to provide the beta and enforce its expiry. This is necessary for the service you asked for, and is in our legitimate interest in running a time-limited beta.
-- **Usage statistics and crash reports:** our legitimate interest in counting active installs, finding crashes, and fixing bugs. Because the data is minimal and you can turn it off at any time, we believe this is proportionate. Where the law requires your consent (for example under India's DPDP Act), your consent is the choice you make in Settings → Privacy, and you can withdraw it there at any time.
+- **Usage statistics and crash reports:** our legitimate interest in counting active installs, finding crashes, and fixing bugs. Because the data is minimal and you can turn it off at any time, we believe this is proportionate. Where the law requires your consent, it is obtained during the initial onboarding setup, and you can withdraw it at any time in Customizer → General.
 - **Feedback and Screen Search:** your consent, given by pressing Send or by accepting the Screen Search prompt.
 
 We do not use your data for advertising, profiling, or automated decisions about you.
 
 ## 5. Your choices and rights
-- **Turn off** statistics and crash reports any time in Settings → Privacy. Turning off crash reporting stops the Sentry SDK, including session tracking.
-- **Delete** your server-side usage data and feedback: Settings → Privacy → **Delete My Usage Data & Reset ID**. This removes your usage record, feedback, and daily markers from our worker, then gives your install a new random ID. If the request fails, your ID is kept so you can try again.
+- **Turn off** statistics and crash reports any time in Customizer → General. Turning off crash reporting stops the Sentry SDK, including session tracking.
+- **Delete** your server-side usage data and feedback: Customizer → General → **Delete My Usage Data & Reset ID**. This removes your usage record, feedback, and daily markers from our worker, then gives your install a new random ID. If the request fails, your ID is kept so you can try again.
 - **Sentry reports** are not covered by that button. To have them deleted, email us the install ID shown in the same screen from before you reset it, and we will delete the matching reports from Sentry.
 - **Access, correct, or erase** other data, withdraw consent, or object: email adityaonlinux@gmail.com with your install ID. We may need the ID to find your data, because we hold no name or email for you.
 - **Under the DPDP Act, 2023** you may access information about your data, correct or erase it, nominate someone to exercise your rights if you die or cannot, and have your grievance answered. If we do not resolve it, you may complain to the Data Protection Board of India.
