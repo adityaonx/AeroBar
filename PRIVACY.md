@@ -17,18 +17,55 @@ AeroBar is published by an individual developer, Aditya from India. We decide wh
 
 ## 3. What AeroBar sends, to whom, and why
 
-| # | What | Data | Recipient | Can you stop it? | Kept for |
-|---|------|------|-----------|------------------|----------|
-| a | Beta verification (beta builds) | A one-time random code | Cloudflare Worker (ours) | No. It is needed to run the beta. | Not stored by us |
-| b | Usage statistics | Random install ID, app version, macOS version, update-reminder count; country (derived by Cloudflare from your IP); first-seen, last-seen, check-in count; a daily-active marker | Cloudflare Worker (ours) | Yes, "Share Usage Statistics" | 12 months after last check-in; daily markers 30 days |
-| c | Crash and hang reports | Call stack, app version, macOS version, CPU type, country code, install ID, and device details that Sentry's SDK attaches by default (such as device model, memory, locale, and time zone). Home-folder names in file paths are removed. | Sentry, EU data center in Germany | Yes, "Crash & Hang Reporting" | About 90 days (Sentry's retention) |
-| d | Updates | Standard web request (your IP address) | GitHub | Not while you use update checks | GitHub's own policy |
-| e | Feedback (only if you press Send) | Rating, issue categories, text you type, app and build version, macOS version, install ID | Cloudflare Worker (ours) | You choose whether to send | 12 months from submission |
-| f | Screen Search (only when you click it) | A screenshot of the area you select | Google Lens (lens.google.com) | Yes. Asks for consent before first use. | Google's own policy |
-| g | Quick Links icons | The domain of a linked site | That site, then DuckDuckGo and Google favicon services as fallback | Do not add Quick Links | Providers' own policies |
-| h | License Agreement and Privacy Policy text; Agreement version check | Standard web request (your IP address). After you have accepted, AeroBar also checks once per launch whether the published License Agreement has a newer version number. | GitHub | No | GitHub's own policy |
+**a. Beta verification (beta builds)**
+* **Data:** A one-time random code
+* **Recipient:** Cloudflare Worker (ours)
+* **Can you stop it?:** No. It is needed to run the beta.
+* **Kept for:** Not stored by us
 
-### Notes on the table
+**b. Usage statistics**
+* **Data:** Random install ID, app version, macOS version, update-reminder count; country (derived by Cloudflare from your IP); first-seen, last-seen, check-in count; a daily-active marker
+* **Recipient:** Cloudflare Worker (ours)
+* **Can you stop it?:** Yes, "Share Usage Statistics"
+* **Kept for:** 12 months after last check-in; daily markers 30 days
+
+**c. Crash and hang reports**
+* **Data:** Call stack, app version, macOS version, CPU type, country code, install ID, and device details that Sentry's SDK attaches by default (such as device model, memory, locale, and time zone). Home-folder names in file paths are removed.
+* **Recipient:** Sentry, EU data center in Germany
+* **Can you stop it?:** Yes, "Crash & Hang Reporting"
+* **Kept for:** About 90 days (Sentry's retention)
+
+**d. Updates**
+* **Data:** Standard web request (your IP address)
+* **Recipient:** GitHub
+* **Can you stop it?:** Not while you use update checks
+* **Kept for:** GitHub's own policy
+
+**e. Feedback (only if you press Send)**
+* **Data:** Rating, issue categories, text you type, app and build version, macOS version, install ID
+* **Recipient:** Cloudflare Worker (ours)
+* **Can you stop it?:** You choose whether to send
+* **Kept for:** 12 months from submission
+
+**f. Screen Search (only when you click it)**
+* **Data:** A screenshot of the area you select
+* **Recipient:** Google Lens (lens.google.com)
+* **Can you stop it?:** Yes. Asks for consent before first use.
+* **Kept for:** Google's own policy
+
+**g. Quick Links icons**
+* **Data:** The domain of a linked site
+* **Recipient:** That site, then DuckDuckGo and Google favicon services as fallback
+* **Can you stop it?:** Do not add Quick Links
+* **Kept for:** Providers' own policies
+
+**h. License Agreement and Privacy Policy text; Agreement version check**
+* **Data:** Standard web request (your IP address). After you have accepted, AeroBar also checks once per launch whether the published License Agreement has a newer version number.
+* **Recipient:** GitHub
+* **Can you stop it?:** No
+* **Kept for:** GitHub's own policy
+
+### Notes on the list
 - **IP addresses.** Any server you contact sees your IP address. Our Cloudflare Worker reads it only to derive a two-letter country code. We do not store it, and our code does not log it. Cloudflare, as our infrastructure provider, processes requests under its own terms and may keep technical logs for security and operation; we do not enable Worker log retention. Sentry is configured not to store IP addresses.
 - **Agreement check.** Once each time AeroBar starts, after you have accepted the License Agreement, it downloads LICENSE.md from GitHub to read the Agreement version number. If the number is newer, you are asked to review and accept it at the next launch. The request carries no install ID and does not depend on your statistics setting; GitHub sees the standard details of any web request, such as your IP address. If the download fails, nothing changes.
 - **Beta verification and crash reports.** Verification works even if usage statistics are off, and then sends only the one-time code. Crash and hang reporting only starts after you accept the license, and stops when you turn it off.
