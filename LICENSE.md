@@ -1,79 +1,43 @@
-# END USER LICENSE AGREEMENT, TERMS OF CONDITIONS, AND PRIVACY POLICY
+# AeroBar – License Agreement
 
-**IMPORTANT – READ CAREFULLY:** This End User License Agreement ("EULA" or "Agreement") is a legal agreement between you (either an individual or a single legal entity) and the developer of AeroBar ("Licensor", "we", "us", or "our") for the software product identified above, which includes computer software and may include associated media, printed materials, and "online" or electronic documentation ("Software").
+**Last updated:** October 2026
 
-BY DOWNLOADING, INSTALLING, COPYING, OR OTHERWISE USING THE SOFTWARE, YOU AGREE TO BE BOUND BY THE TERMS OF THIS EULA. IF YOU DO NOT AGREE TO THE TERMS OF THIS EULA, DO NOT DOWNLOAD, INSTALL, OR USE THE SOFTWARE.
+By downloading, installing, or using AeroBar for macOS ("Software"), you agree to this Agreement. If you do not agree, do not use the Software.
 
-## 1. GRANT OF LICENSE
-Subject to the terms and conditions of this Agreement, Licensor grants you a limited, non-exclusive, non-transferable, and revocable license to install and use the Software on Apple macOS devices that you own or control, strictly in accordance with the terms of this Agreement. 
-- **Beta/Pre-release:** If this Software is provided as a beta or pre-release version, it is for evaluation and testing purposes only. 
-- **Pro Features:** Certain features ("Pro Features") may require a valid license key purchased from the Licensor. 
+## 1. License
+You receive a personal, non-exclusive, non-transferable, revocable license to use the Software on Mac computers you own or control. The Software is licensed, not sold.
+- **Beta versions** are for testing, may contain bugs, may expire, and may stop working when the beta ends.
+- **Pro features** may require a valid license key.
 
-## 2. INTELLECTUAL PROPERTY RIGHTS
-The Software, including all source code, design, structure, and associated intellectual property rights, is the sole and exclusive property of the Licensor. The Software is licensed, not sold. You may not:
-(a) Reverse engineer, decompile, or disassemble the Software;
-(b) Modify, adapt, or create derivative works from the Software;
-(c) Rent, lease, lend, sell, redistribute, or sublicense the Software;
-(d) Remove, alter, or obscure any proprietary notices (including copyright and trademark notices) of the Licensor.
+## 2. Restrictions
+You may not copy, redistribute, sell, rent, or sublicense the Software. You may not reverse engineer, decompile, or modify the Software except where the law provides that right.
 
-## 3. DISCLAIMER OF WARRANTIES
-**YOU EXPRESSLY ACKNOWLEDGE AND AGREE THAT USE OF THE SOFTWARE IS AT YOUR SOLE RISK.** 
+## 3. No Warranty
+The Software is provided "as is" and "as available." To the maximum extent permitted by law, we disclaim all warranties, either express or implied, including fitness for a particular purpose. We do not promise the Software will be error-free or compatible with future macOS versions.
 
-TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE," WITH ALL FAULTS AND WITHOUT WARRANTY OF ANY KIND. LICENSOR HEREBY DISCLAIMS ALL WARRANTIES AND CONDITIONS WITH RESPECT TO THE SOFTWARE, EITHER EXPRESS, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES AND/OR CONDITIONS OF MERCHANTABILITY, OF SATISFACTORY QUALITY, OF FITNESS FOR A PARTICULAR PURPOSE, OF ACCURACY, OF QUIET ENJOYMENT, AND NON-INFRINGEMENT OF THIRD-PARTY RIGHTS.
+## 4. Limitation of Liability
+To the maximum extent permitted by law, we are not liable for indirect, incidental, special, or consequential damages, or for loss of data, profits, or productivity. Our total liability is limited to the amount you paid for the Software, or US$5.00 if you paid nothing.
 
-LICENSOR DOES NOT WARRANT THAT THE FUNCTIONS CONTAINED IN THE SOFTWARE WILL MEET YOUR REQUIREMENTS, THAT THE OPERATION OF THE SOFTWARE WILL BE UNINTERRUPTED OR ERROR-FREE, OR THAT DEFECTS IN THE SOFTWARE WILL BE CORRECTED. 
+## 5. Privacy & Data Collection
+**AeroBar operates locally on your Mac. Your clipboard contents, keystrokes, window contents, and screenshots never leave your device except as explicitly requested by you.**
 
-## 4. LIMITATION OF LIABILITY
-**NO LIABILITY FOR DAMAGES:** TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL LICENSOR BE LIABLE FOR ANY PERSONAL INJURY, OR ANY INCIDENTAL, SPECIAL, INDIRECT, OR CONSEQUENTIAL DAMAGES WHATSOEVER, INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF PROFITS, LOSS OF DATA, BUSINESS INTERRUPTION, LOSS OF PRODUCTIVITY, OR ANY OTHER COMMERCIAL DAMAGES OR LOSSES, ARISING OUT OF OR RELATED TO YOUR USE OR INABILITY TO USE THE SOFTWARE, HOWEVER CAUSED, REGARDLESS OF THE THEORY OF LIABILITY (CONTRACT, TORT, OR OTHERWISE) AND EVEN IF LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+The Software contacts the internet only for the following features:
 
-**TOTAL LIABILITY:** In no event shall Licensor's total liability to you for all damages (other than as may be required by applicable law in cases involving personal injury) exceed the amount of five dollars ($5.00). The foregoing limitations will apply even if the above stated remedy fails of its essential purpose.
+**a) Update Checks & Analytics:** To verify beta access and check for updates, the Software sends an anonymous, randomly generated install identifier to our Cloudflare server, along with your macOS and app version. Cloudflare determines your approximate geographic location (City and Country) from your IP address for aggregate analytics. **We do not store your IP address, and we do not use third-party tracking services.** (Can be disabled in Settings → Privacy).
 
-## 5. NO GUARANTEES POST-PURCHASE
-By purchasing a license or using the Software, you acknowledge that you are acquiring the Software in its current state. Licensor provides no guarantee, warranty, or promise regarding:
-(a) Future updates, bug fixes, or new features;
-(b) Ongoing maintenance or customer support;
-(c) Continued compatibility with future versions of macOS or third-party hardware/software.
+**b) Crash Reports:** If the app crashes or hangs, anonymous diagnostic data (call stacks, macOS version, thread states) is sent to Sentry to help us fix bugs. (Can be disabled in Settings → Privacy).
 
-## 6. REFUND POLICY
-**ALL SALES ARE FINAL.** Due to the nature of digital, downloadable software, we do not offer refunds, returns, or exchanges under any circumstances. By purchasing a license key, you expressly acknowledge and agree that your purchase is non-refundable. We highly recommend utilizing any provided Beta or Free versions to evaluate the Software prior to making a purchase.
+**c) Screen Search:** When you explicitly click the "Screen Search" button, a screenshot of the area you select is uploaded to Google Lens (lens.google.com). This feature is entirely user-initiated and asks for your consent before its first use.
 
-## 7. INDEMNIFICATION
-You agree to indemnify, defend, and hold harmless the Licensor from and against any and all claims, liabilities, damages, losses, costs, expenses, or fees (including reasonable attorneys' fees) that such parties may incur as a result of or arising from your (or anyone using your account/device) violation of this Agreement.
+**d) Quick Links:** The Software fetches website favicons directly from the linked domain, with fallback to DuckDuckGo and Google favicon services. Only the domain name is sent.
 
-## 8. BINDING ARBITRATION AND CLASS ACTION WAIVER
-**PLEASE READ THIS SECTION CAREFULLY – IT MAY SIGNIFICANTLY AFFECT YOUR LEGAL RIGHTS, INCLUDING YOUR RIGHT TO FILE A LAWSUIT IN COURT.**
-(a) **Arbitration:** Any dispute, claim, or controversy arising out of or relating to this Agreement or the breach, termination, enforcement, interpretation, or validity thereof, including the determination of the scope or applicability of this agreement to arbitrate, shall be determined by private, binding arbitration rather than in court.
-(b) **Class Action Waiver:** YOU AND LICENSOR AGREE THAT EACH MAY BRING CLAIMS AGAINST THE OTHER ONLY IN YOUR OR ITS INDIVIDUAL CAPACITY, AND NOT AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS OR REPRESENTATIVE PROCEEDING. The arbitrator may not consolidate more than one person's claims, and may not otherwise preside over any form of a representative or class proceeding.
-(c) **Waiver of Jury Trial:** If for any reason a claim proceeds in court rather than in arbitration, YOU AND LICENSOR UNCONDITIONALLY WAIVE ANY RIGHT TO A JURY TRIAL.
+**e) Feedback:** If you choose to submit feedback, your text, rating, and app version are sent anonymously. 
 
-## 9. SEVERABILITY AND ENTIRE AGREEMENT
-If any provision of this Agreement is held to be unenforceable or invalid by a court of competent jurisdiction, such provision will be changed and interpreted to accomplish the objectives of such provision to the greatest extent possible under applicable law, and the remaining provisions will continue in full force and effect. This Agreement constitutes the entire agreement between you and the Licensor regarding the Software and supersedes all prior or contemporaneous understandings regarding such subject matter. No oral or written information or advice given by Licensor or its authorized representatives shall create a warranty or in any way increase the scope of this Agreement.
+## 6. Refunds
+All sales are final for digital downloads. We recommend evaluating any free or beta version of the Software before making a purchase.
 
-## 10. PRIVACY POLICY
-AeroBar is designed with privacy as a fundamental principle.
+## 7. Third-Party Software
+AeroBar includes open-source components under their own licenses. Their notices are available in the app under **Acknowledgements**.
 
-(a) **Local Processing:** The Software operates entirely on your local Apple macOS device. Window management, accessibility processing, and clipboard history encryption are performed locally. Your clipboard contents, keystrokes, window contents, and screenshots never leave your device except as described below.
-
-(b) **Beta / Update Check:** To verify beta access and check for updates, the Software sends a non-hardware, install-scoped anonymous identifier to our Cloudflare server, together with your app version and macOS version. This identifier is a random value generated at install time. It is **not** derived from your hardware serial number, IOPlatformUUID, Apple ID, or any personal data, and it resets automatically when you reinstall the app or delete app preferences. Cloudflare receives your IP address as part of normal request delivery and uses it only to determine a country code for aggregate analytics. **We do not store your IP address, and we do not forward it to any third-party geolocation service.** You can disable this in **Settings → Privacy**.
-
-(c) **Crash & Hang Reporting:** To improve app stability, the Software sends anonymous crash and hang reports to Sentry. These reports contain strictly technical diagnostic metadata (hardware architecture, operating system version, call stacks, and thread states). We do not attach any user or device identifier to these reports. You can disable this in **Settings → Privacy**.
-
-(d) **Update checks:** The Software contacts api.github.com to fetch release information for update checks. GitHub receives your IP address as part of this request.
-
-(e) **Quick Links favicons:** When you add a Quick Link, the Software fetches the site's favicon directly from the linked site, then from DuckDuckGo (icons.duckduckgo.com) and Google (www.google.com/s2/favicons) as fallbacks. Only the domain name is sent, not your full URL or any personal data.
-
-(f) **Screen Search:** When you explicitly trigger Screen Search, a screenshot of the selected area is uploaded to Google Lens (lens.google.com) to perform the search. This feature is entirely user-initiated and only runs when you activate it.
-
-(g) **Feedback:** If you choose to submit feedback in the app, we receive your rating, selected issue categories, written text, app version, and macOS version. This data is linked to the same anonymous install identifier described in (b) and is retained for approximately 180 days.
-
-(h) **Data Security:** The Software uses standard Apple frameworks (such as AES-GCM) to secure local features like clipboard history.
-
-By using the Software, you acknowledge and agree to this Privacy Policy.
-
-## 11. MODIFICATIONS TO THIS AGREEMENT
-Licensor reserves the right, at its sole discretion, to modify or replace this Agreement (including the EULA, Terms of Conditions, and Privacy Policy) at any time. If a revision is material, we will provide reasonable notice prior to any new terms taking effect. By continuing to access or use the Software after those revisions become effective, you agree to be bound by the revised terms.
-
-## 12. GOVERNING LAW
-This Agreement will be governed by and construed in accordance with the laws of your jurisdiction of residence, excluding its conflict of law principles. 
-
-**BY USING THIS SOFTWARE, YOU ACKNOWLEDGE THAT YOU HAVE READ THIS AGREEMENT, UNDERSTAND IT, AND AGREE TO BE BOUND BY ITS TERMS AND CONDITIONS.**
+## 8. General
+We may update this Agreement at any time. By continuing to use the Software after revisions, you agree to the new terms. This Agreement is governed by the laws of your jurisdiction, without affecting any mandatory consumer or data protection rights you may have.
