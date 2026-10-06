@@ -50,22 +50,25 @@ You agree to indemnify, defend, and hold harmless the Licensor from and against 
 If any provision of this Agreement is held to be unenforceable or invalid by a court of competent jurisdiction, such provision will be changed and interpreted to accomplish the objectives of such provision to the greatest extent possible under applicable law, and the remaining provisions will continue in full force and effect. This Agreement constitutes the entire agreement between you and the Licensor regarding the Software and supersedes all prior or contemporaneous understandings regarding such subject matter. No oral or written information or advice given by Licensor or its authorized representatives shall create a warranty or in any way increase the scope of this Agreement.
 
 ## 10. PRIVACY POLICY
-AeroBar is designed with privacy and user control as foundational principles.
+AeroBar is designed with privacy as a fundamental principle.
 
-(a) **Local Processing:** The Software operates primarily on your local Apple macOS device. Window management, accessibility processing, and clipboard history encryption (utilizing standard Apple cryptography frameworks, such as AES-GCM) are executed entirely on-device. We do not collect, monitor, store, or transmit your clipboard contents, database entries, user keystrokes/inputs, or screen captures.
+(a) **Local Processing:** The Software operates entirely on your local Apple macOS device. Window management, accessibility processing, and clipboard history encryption are performed locally. Your clipboard contents, keystrokes, window contents, and screenshots never leave your device except as described below.
 
-(b) **License Verification & Usage Telemetry:** To manage beta access verification, enforce release expiration, monitor active software installations, and assess general usage patterns (such as active release adoption), the Software periodically communicates with our server infrastructure. During these routine checks, the Software transmits:
-- A pseudonymous installation identifier (`X-Device-ID`) generated locally on your machine, used solely to distinguish distinct installations, manage update rollout deferrals, and track aggregate active devices without linking to your real-world identity;
-- Technical environment metadata, including the active app version, build identifiers, operating system version, and routine heartbeat counters;
-- Coarse geographic metadata (such as city, country, and approximate regional coordinates derived from client IP lookups at the network boundary). Client IP addresses used for geolocation lookup are not permanently retained in our user records.
+(b) **Beta / Update Check:** To verify beta access and check for updates, the Software sends a non-hardware, install-scoped anonymous identifier to our Cloudflare server, together with your app version and macOS version. This identifier is a random value generated at install time. It is **not** derived from your hardware serial number, IOPlatformUUID, Apple ID, or any personal data, and it resets automatically when you reinstall the app or delete app preferences. Cloudflare receives your IP address as part of normal request delivery and uses it only to determine a country code for aggregate analytics. **We do not store your IP address, and we do not forward it to any third-party geolocation service.** You can disable this in **Settings → Privacy**.
 
-(c) **Crash & Diagnostic Reporting:** To improve app stability and diagnose runtime crashes or hangs, the Software collects crash logs and diagnostic event traces via Sentry. These reports contain strictly technical diagnostic metadata (such as system hardware architecture, operating system version, execution call stacks, and thread states) and contain no personal inputs or clipboard data.
+(c) **Crash & Hang Reporting:** To improve app stability, the Software sends anonymous crash and hang reports to Sentry. These reports contain strictly technical diagnostic metadata (hardware architecture, operating system version, call stacks, and thread states). We do not attach any user or device identifier to these reports. You can disable this in **Settings → Privacy**.
 
-(d) **Voluntary In-App Feedback:** If you elect to submit feedback, issue reports, or ratings through the Software's in-app feedback tool, your submission (including issue categories, optional descriptive text, ratings, and diagnostic app/system versions) is transmitted and associated with your pseudonymous device identifier to help us evaluate and resolve issues. Submitting feedback is entirely optional.
+(d) **Update checks:** The Software contacts api.github.com to fetch release information for update checks. GitHub receives your IP address as part of this request.
 
-(e) **Data Retention & Deletion:** Telemetry and optional feedback records are stored in secure cloud datastores. You may request the deletion of records associated with your pseudonymous device identifier by submitting a data removal request.
+(e) **Quick Links favicons:** When you add a Quick Link, the Software fetches the site's favicon directly from the linked site, then from DuckDuckGo (icons.duckduckgo.com) and Google (www.google.com/s2/favicons) as fallbacks. Only the domain name is sent, not your full URL or any personal data.
 
-By using the Software, you acknowledge and agree to this Privacy Policy[cite: 2].
+(f) **Screen Search:** When you explicitly trigger Screen Search, a screenshot of the selected area is uploaded to Google Lens (lens.google.com) to perform the search. This feature is entirely user-initiated and only runs when you activate it.
+
+(g) **Feedback:** If you choose to submit feedback in the app, we receive your rating, selected issue categories, written text, app version, and macOS version. This data is linked to the same anonymous install identifier described in (b) and is retained for approximately 180 days.
+
+(h) **Data Security:** The Software uses standard Apple frameworks (such as AES-GCM) to secure local features like clipboard history.
+
+By using the Software, you acknowledge and agree to this Privacy Policy.
 
 ## 11. MODIFICATIONS TO THIS AGREEMENT
 Licensor reserves the right, at its sole discretion, to modify or replace this Agreement (including the EULA, Terms of Conditions, and Privacy Policy) at any time. If a revision is material, we will provide reasonable notice prior to any new terms taking effect. By continuing to access or use the Software after those revisions become effective, you agree to be bound by the revised terms.
