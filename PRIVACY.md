@@ -11,7 +11,7 @@ AeroBar is published by an individual developer, Aditya from India. We decide wh
 - Your clipboard history, keystrokes, window contents, and screenshots stay on your Mac. Clipboard history is encrypted on disk.
 - AeroBar has no ads and no cross-app tracking, and it does not sell data.
 - The only data AeroBar sends to us is: a beta-verification code; optional usage statistics; optional crash and hang reports; and feedback you choose to write.
-- Usage statistics and crash reports are **on by default**. You can turn each off in **Customizer → General**.
+- Usage statistics and crash reports are **strictly opt-in for users in the EU/UK/CH** and **on by default everywhere else**. You can turn each off anytime in **Customizer → General**.
 - We identify your install with a random ID, not your name or email. This is **pseudonymous**, not anonymous: the ID, combined with other information, could single out an install. We treat it as personal data.
 - You can delete your usage data from our server at any time with **Delete My Usage Data & Reset ID**.
 

@@ -22,5 +22,6 @@
 ## Privacy & Security
 
 - **Local Data Storage**: All data, including clipboard history, window layout preferences, widgets, and quick links, is stored locally on the device. User content is not transmitted.
-- **Verification and Updates**: The application connects to the internet to verify beta license status via Cloudflare once every 24 hours, and to check for software updates via GitHub.
-- **Diagnostics**: Anonymous diagnostic telemetry is collected via Sentry to identify crashes and system deadlocks. This includes hardware metrics, OS version, and call stacks. No user input or clipboard data is collected.
+- **Verification and Updates**: Beta builds verify beta status with a Cloudflare Worker at launch, when the network returns, and every 2 hours while running. Update checks go to GitHub. If "Share Usage Statistics" is on in Settings -> Privacy, the verification also sends a random install ID, app version, macOS version and an update-reminder count; Cloudflare derives a country code from your IP address and only the country code is kept. If it is off, only a one-time random code is sent.
+- **Diagnostics**: If "Crash & Hang Reporting" is on in Settings -> Privacy, crashes and hangs are reported to Sentry (EU region) with the call stack, app and macOS version, CPU architecture, your country code and the random install ID. No user input, clipboard data or window titles are collected.
+- **Your Data**: Settings -> Privacy -> "Delete My Usage Data & Reset ID" deletes your usage record and feedback from our server. See the License Agreement, section 5, for details.
