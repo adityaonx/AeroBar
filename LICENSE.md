@@ -50,11 +50,22 @@ You agree to indemnify, defend, and hold harmless the Licensor from and against 
 If any provision of this Agreement is held to be unenforceable or invalid by a court of competent jurisdiction, such provision will be changed and interpreted to accomplish the objectives of such provision to the greatest extent possible under applicable law, and the remaining provisions will continue in full force and effect. This Agreement constitutes the entire agreement between you and the Licensor regarding the Software and supersedes all prior or contemporaneous understandings regarding such subject matter. No oral or written information or advice given by Licensor or its authorized representatives shall create a warranty or in any way increase the scope of this Agreement.
 
 ## 10. PRIVACY POLICY
-AeroBar is designed with privacy as a fundamental principle.
-(a) **Local Processing:** The Software operates entirely on your local Apple macOS device. Window management, accessibility processing, and clipboard history encryption are performed locally.
-(b) **Privacy & Crash Reporting:** We do not collect, store, transmit, or monetize your personal data, clipboard contents, database entries, or screen captures. To improve app stability and resolve runtime crashes/hangs, the Software collects anonymous crash and hang logs via Sentry. These reports contain strictly technical diagnostic metadata (such as system hardware architecture, operating system version, execution call stacks, and thread states) and absolutely no personal data, user input, or clipboard contents.
-(c) **Data Security:** The Software uses standard Apple frameworks (such as AES-GCM) to secure local features like clipboard history.
-By using the Software, you acknowledge and agree to this Privacy Policy.
+AeroBar is designed with privacy and user control as foundational principles.
+
+(a) **Local Processing:** The Software operates primarily on your local Apple macOS device. Window management, accessibility processing, and clipboard history encryption (utilizing standard Apple cryptography frameworks, such as AES-GCM) are executed entirely on-device. We do not collect, monitor, store, or transmit your clipboard contents, database entries, user keystrokes/inputs, or screen captures.
+
+(b) **License Verification & Usage Telemetry:** To manage beta access verification, enforce release expiration, monitor active software installations, and assess general usage patterns (such as active release adoption), the Software periodically communicates with our server infrastructure. During these routine checks, the Software transmits:
+- A pseudonymous installation identifier (`X-Device-ID`) generated locally on your machine, used solely to distinguish distinct installations, manage update rollout deferrals, and track aggregate active devices without linking to your real-world identity;
+- Technical environment metadata, including the active app version, build identifiers, operating system version, and routine heartbeat counters;
+- Coarse geographic metadata (such as city, country, and approximate regional coordinates derived from client IP lookups at the network boundary). Client IP addresses used for geolocation lookup are not permanently retained in our user records.
+
+(c) **Crash & Diagnostic Reporting:** To improve app stability and diagnose runtime crashes or hangs, the Software collects crash logs and diagnostic event traces via Sentry. These reports contain strictly technical diagnostic metadata (such as system hardware architecture, operating system version, execution call stacks, and thread states) and contain no personal inputs or clipboard data.
+
+(d) **Voluntary In-App Feedback:** If you elect to submit feedback, issue reports, or ratings through the Software's in-app feedback tool, your submission (including issue categories, optional descriptive text, ratings, and diagnostic app/system versions) is transmitted and associated with your pseudonymous device identifier to help us evaluate and resolve issues. Submitting feedback is entirely optional.
+
+(e) **Data Retention & Deletion:** Telemetry and optional feedback records are stored in secure cloud datastores. You may request the deletion of records associated with your pseudonymous device identifier by submitting a data removal request.
+
+By using the Software, you acknowledge and agree to this Privacy Policy[cite: 2].
 
 ## 11. MODIFICATIONS TO THIS AGREEMENT
 Licensor reserves the right, at its sole discretion, to modify or replace this Agreement (including the EULA, Terms of Conditions, and Privacy Policy) at any time. If a revision is material, we will provide reasonable notice prior to any new terms taking effect. By continuing to access or use the Software after those revisions become effective, you agree to be bound by the revised terms.
