@@ -17,6 +17,10 @@ sed -i '' "s/MARKETING_VERSION = \".*\";/MARKETING_VERSION = \"$NEW_VERSION\";/g
 sed -i '' "s/CURRENT_PROJECT_VERSION = \".*\";/CURRENT_PROJECT_VERSION = \"$NEW_VERSION\";/g" AeroBar.xcodeproj/project.pbxproj
 echo "✅ Updated AeroBar.xcodeproj/project.pbxproj"
 
+# 1b. v9.6-beta1.5x: the version compiled into the binary (decisions read this, not Info.plist)
+sed -i '' -E "s/(static let version = \").*(\")/\1$NEW_VERSION\2/" AeroBar/Core/Utilities/AeroBarBuildInfo.swift
+echo "✅ Updated AeroBar/Core/Utilities/AeroBarBuildInfo.swift"
+
 # 2. Update Homebrew Cask version
 sed -i '' -E "s/version \".*\"/version \"$NEW_VERSION\"/g" public/Casks/aerobar.rb
 echo "✅ Updated Casks/aerobar.rb"

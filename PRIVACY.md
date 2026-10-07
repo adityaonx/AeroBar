@@ -1,103 +1,91 @@
 # AeroBar – Privacy Policy
 
-**Policy version:** 3 · **Last updated:** 6 October 2026 · Applies to AeroBar for macOS, v9.6-beta1 and later
+**Policy version:** 4 · **Last updated:** 7 October 2026 · Applies to AeroBar for macOS, v9.6-beta1 and later
 
 ## 1. Who we are
-AeroBar is published by an individual developer, Aditya from India. We decide what data AeroBar collects and why (the "data fiduciary" under India's Digital Personal Data Protection Act, 2023, and the "controller" under the EU/UK GDPR).
+AeroBar is published by an individual developer, Aditya from India. We decide what personal data is handled and why (the "data fiduciary" under India's Digital Personal Data Protection Act, 2023, and the "controller" under the EU/UK GDPR).
 
 **Privacy and grievance contact:** adityaonlinux@gmail.com (subject line: "AeroBar privacy"). We reply within 30 days, usually sooner.
 
 ## 2. The short version
-- Your clipboard history, keystrokes, window contents, and screenshots stay on your Mac. Clipboard history is encrypted on disk.
-- AeroBar has no ads and no cross-app tracking, and it does not sell data.
-- The only data AeroBar sends to us is: a beta-verification code; optional usage statistics; optional crash and hang reports; and feedback you choose to write.
-- Usage statistics and crash reports are **strictly opt-in for users in the EU/UK/CH** and **on by default everywhere else**. You can turn each off anytime in **Customizer → General**.
-- We identify your install with a random ID, not your name or email. This is **pseudonymous**, not anonymous: the ID, combined with other information, could single out an install. We treat it as personal data.
-- You can delete your usage data from our server at any time with **Delete My Usage Data & Reset ID**.
+- **AeroBar's own code does not connect to the internet.** It has no analytics, no crash reporter, no update checker and no feedback upload. A script that we run before pushing changes to our repository scans our source code for networking code.
+- Things that need the internet (getting a beta code, downloading an update, sending feedback, Screen Search) happen **in your web browser**, when you start them. AeroBar asks you first before it opens any web or mail link, and before each Screen Search upload. The website you reach sees that request, as with any website.
+- Your clipboard history, keystrokes, window contents and screenshots stay on your Mac. Clipboard history is encrypted on disk.
+- AeroBar has no ads, no cross-app tracking, and does not sell data.
+- AeroBar identifies your install with a random ID created on your Mac. It is used only to tie a beta code to your install.
 
-## 3. What AeroBar sends, to whom, and why
+## 3. What stays on your Mac
+- **Settings, Quick Links, widgets and layouts:** stored in AeroBar's preferences and support folder.
+- **Clipboard history:** stored encrypted in AeroBar's support folder. You can clear it in the app. The encryption key is worked out on your Mac from your Mac's serial number each time AeroBar runs; it is never saved to disk and never sent anywhere. This keeps the files unreadable to other apps and in backups, but it does not protect them from someone who can already run AeroBar on your Mac.
+- **Install ID:** a random value stored in AeroBar's preferences. It is not derived from your hardware, serial number or Apple ID. Deleting AeroBar's preferences, or a factory reset in the app, creates a new one.
+- **Beta code:** stored in the macOS Keychain, together with the latest time AeroBar has seen, so a beta code cannot be reused after it expires by setting the clock back.
+- **Diagnostics:** AeroBar keeps a short local record of recent events and errors. It is never sent anywhere by AeroBar. You decide whether to share any of it (see 4d).
 
-**a. Beta verification (beta builds)**
-* **Data:** A one-time random code
-* **Recipient:** Cloudflare Worker (ours)
-* **Can you stop it?:** No. It is needed to run the beta.
-* **Kept for:** Not stored by us
+## 4. What happens in your browser, and who sees it
+Each item below starts only when you click it. AeroBar opens your default browser; AeroBar does not send the request itself.
 
-**b. Usage statistics**
-* **Data:** Random install ID, app version, macOS version, update-reminder count; country (derived by Cloudflare from your IP); first-seen, last-seen, check-in count; a daily-active marker
-* **Recipient:** Cloudflare Worker (ours)
-* **Can you stop it?:** Yes, "Share Usage Statistics"
-* **Kept for:** 12 months after last check-in; daily markers 30 days
+**a. Getting a beta code (beta builds)**
+* **What is sent:** Your install ID and the release channel (beta or testing), in the address of the activation page, and the one-time request you make by pressing "Get my code"
+* **Recipient:** Our activation page, run as a Cloudflare Worker
+* **What comes back:** A signed code, valid for 14 days, which you paste into AeroBar. AeroBar checks it on your Mac.
+* **Kept by us:** Nothing. The page keeps no database and no user list.
 
-**c. Crash and hang reports**
-* **Data:** Call stack, app version, macOS version, CPU type, country code, install ID, and device details that Sentry's SDK attaches by default (such as device model, memory, locale, and time zone). Home-folder names in file paths are removed.
-* **Recipient:** Sentry, EU data center in Germany
-* **Can you stop it?:** Yes, "Crash & Hang Reporting"
-* **Kept for:** About 90 days (Sentry's retention)
+**b. Downloading an update**
+* **What is sent:** A standard web request (your IP address)
+* **Recipient:** GitHub (the AeroBar releases page). If you install with Homebrew, Homebrew downloads the same release from GitHub; Homebrew's own privacy policy and analytics settings apply to that tool, not to AeroBar.
+* **What happens next:** You drop the downloaded file and its signature file into AeroBar, which checks them on your Mac before installing.
+* **Kept by:** GitHub, under its own policy
 
-**d. Updates**
-* **Data:** Standard web request (your IP address)
-* **Recipient:** GitHub
-* **Can you stop it?:** Not while you use update checks
-* **Kept for:** GitHub's own policy
+**c. Screen Search**
+* **What is sent:** A screenshot of the area you select
+* **Recipient:** Google Lens. AeroBar saves the screenshot inside a temporary page on your Mac and opens that page in your browser, which sends it to Google.
+* **Control:** After you select an area, AeroBar shows the capture and asks whether to send it to Google Lens. Nothing is written or opened if you choose Cancel. If you agree, AeroBar opens the page in your default web browser and deletes it from your Mac about two minutes later. A page left behind by a crash or quit is deleted the next time AeroBar starts.
+* **Kept by:** Google, under its own policy
 
-**e. Feedback (only if you press Send)**
-* **Data:** Rating, issue categories, text you type, app and build version, macOS version, install ID
-* **Recipient:** Cloudflare Worker (ours)
-* **Can you stop it?:** You choose whether to send
-* **Kept for:** 12 months from submission
+**d. Feedback and issue reports**
+* **What is sent:** A pre-filled GitHub issue containing your rating, the categories you pick, the text you type, and the AeroBar and macOS versions. AeroBar can also copy its local diagnostics to your clipboard so you can paste them, or save a crash report zip (Settings > Diagnostics > Export Crash Report). The zip holds the local event log, AeroBar's macOS crash files and any MetricKit reports; AeroBar shows a preview and removes your account name and install ID before saving. AeroBar never sends it; you choose whether to attach it to an issue. If you prefer not to use GitHub, the same report can be opened as an email draft in your mail app, addressed to us; nothing is sent until you press Send. Please read it first.
+* **Recipient:** GitHub. **Issues in the AeroBar repository are public.** Nothing is posted until you press Submit on GitHub.
+* **Kept by:** GitHub, under its own policy
 
-**f. Screen Search (only when you click it)**
-* **Data:** A screenshot of the area you select
-* **Recipient:** Google Lens (lens.google.com)
-* **Can you stop it?:** Yes. Asks for consent before first use.
-* **Kept for:** Google's own policy
+**e. Quick Links and Community links**
+* **What is sent:** A standard web request to the site you open
+* **Recipient:** That site
+* **Control:** AeroBar asks once before Quick Links are used, and asks again before every other link it opens (About, Contact, GitHub, releases, activation page, feedback). Links are opened in your default web browser.
+* **Note:** AeroBar does not download icons or page titles. Links show a coloured letter tile.
 
-**g. Quick Links icons**
-* **Data:** The domain of a linked site
-* **Recipient:** That site, then DuckDuckGo and Google favicon services as fallback
-* **Can you stop it?:** Do not add Quick Links
-* **Kept for:** Providers' own policies
+### Notes
+- **IP addresses.** Any website you reach sees your IP address. Our activation page uses your IP address only to limit how often one address can ask for a code, through Cloudflare's rate-limit feature. We do not store it or build a list of it. Cloudflare, as our infrastructure provider, processes requests under its own terms and may keep technical logs for security and operation; we do not enable Worker log retention.
+- **What we never collect.** Clipboard contents, window titles, file names or contents, keystrokes, your name, email address, Apple ID or hardware serial numbers.
+- **The License Agreement and this Privacy Policy** are bundled inside AeroBar and read from disk. Whether a newer version exists is only known when you install a newer AeroBar.
+- **Your Mac and other apps.** macOS itself may contact Apple (for example, to check an app's signature), and apps that AeroBar controls, such as Music or Spotify, use the internet on their own. AeroBar does not send or receive that traffic.
+- **Third-party software.** AeroBar includes open-source components; their notices are under Acknowledgements in the app. None of them is used to contact a server.
 
-**h. License Agreement and Privacy Policy text; Agreement version check**
-* **Data:** Standard web request (your IP address). After you have accepted, AeroBar also checks once per launch whether the published License Agreement has a newer version number.
-* **Recipient:** GitHub
-* **Can you stop it?:** No
-* **Kept for:** GitHub's own policy
+## 5. Earlier versions
+Builds before v9.6-beta1 could send usage statistics (install ID, app and macOS version, country), crash and hang reports (to Sentry, EU data center) and feedback (to our Cloudflare Worker). If you used one, you can ask us to delete anything we still hold: email us the install ID from before you updated, and we will delete the matching records. Reports held by Sentry are kept under Sentry's own retention rules; you can ask us to request their deletion.
 
-### Notes on the list
-- **IP addresses.** Any server you contact sees your IP address. Our Cloudflare Worker reads it only to derive a two-letter country code. We do not store it, and our code does not log it. Cloudflare, as our infrastructure provider, processes requests under its own terms and may keep technical logs for security and operation; we do not enable Worker log retention. Sentry is configured not to store IP addresses.
-- **Agreement check.** Once each time AeroBar starts, after you have accepted the License Agreement, it downloads LICENSE.md from GitHub to read the Agreement version number. If the number is newer, you are asked to review and accept it at the next launch. The request carries no install ID and does not depend on your statistics setting; GitHub sees the standard details of any web request, such as your IP address. If the download fails, nothing changes.
-- **Beta verification and crash reports.** Verification works even if usage statistics are off, and then sends only the one-time code. Crash and hang reporting only starts after you accept the license, and stops when you turn it off.
-- **What we never collect.** Clipboard contents, window titles, file names or contents, keystrokes, your name, email address, Apple ID, or hardware serial numbers. The install ID is a random value created on your Mac, not derived from your hardware.
-- **Free-text feedback.** Please do not write personal information into feedback. If you do, we keep it for the same 12 months and you can delete it as described below.
-
-## 4. Why we process this data (legal bases)
-- **Beta verification:** to provide the beta and enforce its expiry. This is necessary for the service you asked for, and is in our legitimate interest in running a time-limited beta.
-- **Usage statistics and crash reports:** our legitimate interest in counting active installs, finding crashes, and fixing bugs. Because the data is minimal and you can turn it off at any time, we believe this is proportionate. Where the law requires your consent, it is obtained during the initial onboarding setup, and you can withdraw it at any time in Customizer → General.
-- **Feedback and Screen Search:** your consent, given by pressing Send or by accepting the Screen Search prompt.
+## 6. Why we process this data (legal bases)
+- **Beta code:** to provide the beta and enforce its expiry. This is necessary for the service you asked for and is in our legitimate interest in running a time-limited beta.
+- **Feedback and Screen Search:** your consent, given when you accept the link prompt and press Submit on GitHub, or accept the Screen Search prompt that follows each capture.
 
 We do not use your data for advertising, profiling, or automated decisions about you.
 
-## 5. Your choices and rights
-- **Turn off** statistics and crash reports any time in Customizer → General. Turning off crash reporting stops the Sentry SDK, including session tracking.
-- **Delete** your server-side usage data and feedback: Customizer → General → **Delete My Usage Data & Reset ID**. This removes your usage record, feedback, and daily markers from our worker, then gives your install a new random ID. If the request fails, your ID is kept so you can try again.
-- **Sentry reports** are not covered by that button. To have them deleted, email us the install ID shown in the same screen from before you reset it, and we will delete the matching reports from Sentry.
-- **Access, correct, or erase** other data, withdraw consent, or object: email adityaonlinux@gmail.com with your install ID. We may need the ID to find your data, because we hold no name or email for you.
+## 7. Your rights
+- **Access, correct, or erase** data we hold, withdraw consent, or object: email adityaonlinux@gmail.com with your install ID. We may need the ID to find your data, because we hold no name or email for you.
 - **Under the DPDP Act, 2023** you may access information about your data, correct or erase it, nominate someone to exercise your rights if you die or cannot, and have your grievance answered. If we do not resolve it, you may complain to the Data Protection Board of India.
 - **Under the EU/UK GDPR** you also have the right to portability and to complain to your local supervisory authority.
+- **Data in third-party services** (GitHub issues you post, anything sent to Google) is handled by those services; use their tools to delete it.
 
-## 6. Where data goes
-Cloudflare runs a global network, so requests may be handled in many countries. Sentry data is stored in Germany, but Sentry's operator is a US company. GitHub and Google operate in the United States and elsewhere. We rely on these providers' standard contractual or certification-based safeguards for international transfers. By using AeroBar you understand your data may be processed outside your country.
+## 8. Where data goes
+Cloudflare runs a global network, so requests to our activation page may be handled in many countries. GitHub and Google operate in the United States and elsewhere. They rely on their own standard safeguards for international transfers. By using these browser features you understand your request may be processed outside your country.
 
-## 7. Retention and security
-Our server records expire automatically 12 months after your last check-in or submission (daily-active markers after 30 days). Feedback entries older than 12 months are removed whenever new feedback is saved, and expire with the record. Access to our dashboard is limited to the developer, protected by a secret password, and uses encrypted connections. No system is perfectly secure; if we learn of a breach that affects you, we will notify you and the authorities as the law requires.
+## 9. Security
+Beta codes are signed, and AeroBar checks the signature on your Mac. Updates are checked against a signature before installation. No system is perfectly secure. If we learn of a breach that affects you, we will notify you and the authorities as the law requires.
 
-## 8. Children
+## 10. Children
 AeroBar is not directed to children, and we do not knowingly collect data from anyone under 18. If you believe a child has sent us data, contact us and we will delete it.
 
-## 9. Changes
-We will update this policy as AeroBar changes. The version and date at the top show the current policy. If a change means we collect more data or share it with a new recipient, we will say so in the release notes or in the app before it takes effect and ask for your consent again where the law requires.
+## 11. Changes
+We will update this policy as AeroBar changes. The version and date at the top show the current policy. If a change means AeroBar handles more data or shares it with a new recipient, we will say so in the release notes or in the app before it takes effect and ask for your consent again where the law requires.
 
-## 10. Contact
+## 12. Contact
 adityaonlinux@gmail.com · AeroBar, India
