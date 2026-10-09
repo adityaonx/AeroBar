@@ -1,15 +1,75 @@
 # Release Notes
 
+## v9.6-beta3 - October 2026
+**The Customization & Clipboard Update**
+
+This beta adds encrypted Clipboard Backup, a stronger install and update safety net, a fix for the empty strip the macOS Dock leaves behind, much better macOS Dock + Extensions support, and a long list of fixes for the Aero Menu, the Music Widget and Top placement.
+
+✨ **What's New & Improved**
+
+**Encrypted Clipboard Backup**
+- **Back up your Clipboard History:** Protect your history with a password. Backups are encrypted on your Mac and saved in a folder you choose. Each run is incremental, so only new items are added.
+- **Save-your-password step:** Setup gives you a recovery key and makes you confirm you have saved both before the first backup. AeroBar cannot recover a backup if you lose the password and the recovery key.
+- **Restore what you want:** Open a backup, choose what comes back, preview it, then restore.
+- **Easy to find:** The Clipboard History header now has a "Backup & Restore" button that opens the backup card in the Customizer, with a one-time intro for existing users. Backups run when you press Back Up Now. There is no automatic schedule yet.
+
+**Install & Update Safety**
+- **Updates only through the Update Basket:** Dragging an app of another version into Applications no longer bypasses the signature, hash and no-downgrade checks.
+- **Signature check at every launch:** A modified, unsigned or re-signed copy of AeroBar does not run. After one, the next genuine copy resets settings once, keeps your Clipboard History and backup, and takes you back through setup and the beta code.
+- **Exact-build check:** The running build must be the one the Update Basket verified, so a different build of the same version does not run.
+- **Safer install details:** The install ID and trial start are kept in the Keychain with a second copy, and Customizer > General shows the accepted version and how it was installed.
+- **Homebrew:** `brew install --cask aerobar` now downloads the real release and checks it. AeroBar still updates through the Update Basket, so `brew upgrade` leaves it alone.
+- **Warnings stay in front:** Alerts, consent questions and Open and Save panels now appear above every window, including the bar.
+- **Feedback links ask first:** The Discussions and star links in Feedback now ask before opening your browser, like every other link.
+
+**macOS Dock + Extensions**
+- **Empty strip gone:** AeroBar now clears the empty strip macOS leaves where the Dock was. Customizer > Layout > Dock Gap Fix has two switches: "Refresh Dock space with System Settings" (on by default; System Settings opens in the background and closes at once) and "Show the Dock briefly before AeroBar takes over" (on by default).
+- **Same previews as the bar:** Dock hover previews now use the same window preview as the taskbar, Pinned Apps tray and Cmd-Tab. Multi-Window Stacking, Show Close Buttons and Add New Window Button are available in this mode too.
+- **Auto-hide Dock:** Hover previews now work when the Dock is set to auto-hide, appear sooner, and the Dock indicators slide in and out with the Dock.
+- **Settings carry over:** The Window Previews setting stays as you set it when you switch between the AeroBar and macOS Dock engines.
+- **Indicators:** The AeroBar engine now has an Indicators category, and Pinned App Indicator Style has moved to Indicators > Indicator Style.
+
+**Music Widget**
+- **Any music web app:** Add YouTube, YouTube Music, Gaana, Wynk, JioSaavn or any other music web app under Customizer > Extensions > Support Music Apps. The "+" next to the tabs takes you there.
+- **Tabs:** The tab strip also shows with a single source, and a tab name is saved when you click away.
+- **Same card in both engines:** The macOS Dock engine now has the full Music Widget settings, the same shadow and corner radius as the bar, and a more compact card. The card is no longer cut off at the top and bottom.
+
+**Aero Menu, Pinned Apps & Top Placement**
+- **Unpin Finder:** Finder can be unpinned and reordered in the Aero Menu and in AeroBar's pinned apps. Start Menu defaults are added only once, so an unpinned System Settings no longer returns after a restart.
+- **Apps reopen properly:** Clicking a pinned or unpinned app icon brings back its main window, even if only a child window (such as a mail draft) was open.
+- **Inner Glow Line:** The Aero Menu is 4 pt taller, so the Inner Glow Line shows along the top and bottom edges.
+- **Top placement:** The Tasks panel opens on hover and closes when the pointer leaves. With stacked displays, the cursor no longer jumps to the upper display's top edge. The Mission Control button now shows in Top Dock mode, between the pinned and unpinned apps.
+
+**Defaults & Polish**
+- **Hover panels:** Open Panels on Hover is on for everyone, with a Hover Delay slider and a one-time tip.
+- **Borders:** Custom Border Tint and the Inner Glow Line are on by default (#990AFF, 27%, 100%) and stay on after resets. Border settings are also shown in the macOS Dock engine.
+- **Surface Tint:** Density 100% and Brightness 0% by default, for new and existing users, in both engines.
+- **Setup window:** The glass in the onboarding window now follows the system window corners.
+
+**Beta Codes**
+- **Shorter validity:** A beta code is now valid for 7 days (was 14). The code page is protected by Cloudflare Turnstile.
+
+*Plus smaller fixes under the hood.*
+
+---
+
 ## v9.6-beta1 - October 2026
 **The Glass & Polish Update!**
 
 We've been hard at work bringing AeroBar's signature aesthetic to every corner of the app, alongside some massive under-the-hood polish.
 
-**What's New & Improved**
+✨ **What's New & Improved**
 - **Beautiful Glass Setup**: The entire setup wizard and gesture guides have been completely redesigned. They now feature our gorgeous, signature translucent glass material, perfectly blending with macOS's native window controls and rounded corners.
-- **Unified Customizer**: We are saying goodbye to the old settings popover! All privacy controls, telemetry options, and data deletion tools have been natively integrated into the modern Customizer under a brand new "General" tab. Everything is now in one sleek place.
-- **Smart Privacy Onboarding**: We've completely streamlined the onboarding flow. AeroBar now uses smart region-detection to give you a frictionless, single-click setup while automatically ensuring strict GDPR compliance (with explicit opt-ins) if you live in Europe. Existing users who move to Europe are also safely prompted to explicitly opt-in.
+- **Unified Customizer**: We are saying goodbye to the old settings popover! Settings now live in the modern Customizer under a brand new "General" tab.
+- **Simpler Privacy Onboarding**: The onboarding flow is shorter, with one agreement checkbox and the same wording in every region.
 - **Readable Documents**: The in-app License and Privacy Policy sheets now render with beautiful, proper formatting instead of a giant wall of text.
+- **AeroBar Stays Offline**: AeroBar no longer connects to the internet itself. There is no crash service, no usage statistics, no update check and no feedback upload. Things that need the web open in your browser.
+- **Beta Codes**: Beta builds ask for an activation code tied to your install. Get Code opens a page in your browser; paste the code back in. AeroBar checks it on your Mac.
+- **Update Basket**: AeroBar reminds you about once a week. Download the .dmg and its .sig file from the release page, drop both in the basket, and AeroBar checks the signature and version before installing.
+- **Feedback Without Upload**: Submit opens a pre-filled GitHub issue, or an email draft if you prefer. Diagnostics are copied for you to paste. Nothing is sent by AeroBar.
+- **Local Crash Reports**: Export a crash report as a zip you can read first. Your account name and install ID are removed. Nothing is sent.
+- **Letter Tiles for Quick Links**: Quick Links show coloured letter tiles instead of downloading site icons.
+- **Updated License and Privacy Policy**: Agreement version 4 and a rewritten Privacy Policy, both bundled in the app. You will be asked to accept the new Agreement once.
 
 Dive into the new Customizer and enjoy the glass!
 

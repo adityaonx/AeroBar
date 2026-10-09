@@ -34,6 +34,8 @@ HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
 xattr -rd com.apple.quarantine /Applications/AeroBar.app
 ```
 
+Homebrew installs AeroBar; it does not update it. AeroBar updates through its own **Update Basket**: download the `.dmg` and its `.sig` from the release page and drop both in the basket, which checks the signature before it installs. A plain `brew upgrade` skips AeroBar. If you force it (`brew upgrade --greedy`), AeroBar will not start that copy and will offer the Update Basket instead.
+
 For manual `.dmg` download instructions, please refer to the [Installation Guide](public_docs/Installation.md).
 
 
