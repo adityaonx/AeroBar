@@ -1,5 +1,25 @@
 # Release Notes
 
+## Privacy note - October 2026
+
+The beta code page now keeps a small record per install: a one-way hash of your install ID, release channel, AeroBar version, country, number of codes issued, and the dates of your first and latest code. It is deleted automatically 90 days after your last code. No IP address, city or coordinates are stored. The policy now also describes the Cloudflare Turnstile bot check on the activation page and that the AeroBar version is sent with the request. It also now says where the install ID and the Pro trial start are stored on your Mac and what a reset does. See the Privacy Policy, section 4a.
+
+## v9.6-beta4 - October 2026
+
+✨ **What's New & Improved**
+
+**Music Widget**
+- **Stays in sync:** The widget now keeps showing the right track, album art and play or pause state for YouTube Music, YouTube, Apple Music, Spotify and other music web apps, in the button panel, pinned-app hover panels and window tabs. Before, closing one panel could freeze the others on old data, and paused music could still show as playing.
+- **Pause and play respond at once:** The button holds the state you tapped and then follows the real player.
+- **Correct artwork:** A track without artwork no longer keeps the previous track's cover.
+- **Stops showing finished playback:** When a player is closed or stops, the card no longer shows the last track as playing.
+- **Fewer delays with Apple Music and Spotify:** A slow player can no longer make the card lag behind.
+
+**Menu Bar**
+- **Restart and Quit:** The AeroBar menu bar panel now has "Restart AeroBar" and "Quit AeroBar" buttons.
+
+---
+
 ## v9.6-beta3 - October 2026
 **The Customization & Clipboard Update**
 
@@ -50,6 +70,26 @@ This beta adds encrypted Clipboard Backup, a stronger install and update safety 
 - **Shorter validity:** A beta code is now valid for 7 days (was 14). The code page is protected by Cloudflare Turnstile.
 
 *Plus smaller fixes under the hood.*
+
+---
+
+## v9.6-beta2 - October 2026
+**The Privacy & Offline Update**
+
+This major release completely rebuilds AeroBar's core to run 100% offline. We have removed all analytics, telemetry, and background crash reporting. What happens on your Mac stays on your Mac.
+
+✨ **What's New & Improved**
+- **100% Offline Architecture**: AeroBar no longer connects to the internet. Usage stats, crash telemetry, and remote feedback uploads have been completely removed.
+- **Strict Link Consent**: AeroBar asks for explicit permission before opening any web link, mail draft, or performing a Screen Search upload.
+- **Local Diagnostics**: Crash reports and feedback diagnostics are now generated as scrubbed local `.zip` or text files. No data is sent automatically.
+- **Offline Updates**: Introducing the **Update Basket**—a new draggable drop-zone. Just drag and drop the `.dmg` and `.sig` files from GitHub into the basket to securely verify and install updates offline.
+- **Spaces & Window Management**: Major improvements to multi-display and macOS Spaces. Clicking an app icon now reliably switches to the correct Space and pulls preview windows to your active display.
+- **Top Placement & Taskbar Fixes**: You can now select the "Top" screen placement directly during the initial setup wizard. Fixed an issue where the Tasks panel would stick open when the bar was placed at the top.
+- **New Feedback Flow**: We've redesigned our feedback system to point directly to our GitHub Discussions and Issues tracker, making community support much cleaner.
+- **Performance**: Moved wallpaper color sampling to background quality-of-service, saving CPU and battery.
+- **Setup Integrity**: The setup wizard now verifies its own code signature (CDHash) to ensure your copy of AeroBar hasn't been tampered with.
+
+*Plus dozens of smaller bug fixes and UI refinements under the hood.*
 
 ---
 

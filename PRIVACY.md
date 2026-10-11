@@ -1,6 +1,6 @@
 # AeroBar – Privacy Policy
 
-**Policy version:** 4 · **Last updated:** 7 October 2026 · Applies to AeroBar for macOS, v9.6-beta1 and later
+**Policy version:** 7 · **Last updated:** 11 October 2026 · Applies to AeroBar for macOS, v9.6-beta1 and later
 
 ## 1. Who we are
 AeroBar is published by an individual developer, Aditya from India. We decide what personal data is handled and why (the "data fiduciary" under India's Digital Personal Data Protection Act, 2023, and the "controller" under the EU/UK GDPR).
@@ -17,18 +17,20 @@ AeroBar is published by an individual developer, Aditya from India. We decide wh
 ## 3. What stays on your Mac
 - **Settings, Quick Links, widgets and layouts:** stored in AeroBar's preferences and support folder.
 - **Clipboard history:** stored encrypted in AeroBar's support folder. You can clear it in the app. The encryption key is worked out on your Mac from your Mac's serial number each time AeroBar runs; it is never saved to disk and never sent anywhere. This keeps the files unreadable to other apps and in backups, but it does not protect them from someone who can already run AeroBar on your Mac.
-- **Install ID:** a random value stored in AeroBar's preferences. It is not derived from your hardware, serial number or Apple ID. Deleting AeroBar's preferences, or a factory reset in the app, creates a new one.
-- **Beta code:** stored in the macOS Keychain, together with the latest time AeroBar has seen, so a beta code cannot be reused after it expires by setting the clock back.
+- **Install ID:** a random value created on your Mac. It is not derived from your hardware, serial number or Apple ID. It is stored in the macOS Keychain, with a second copy in a small file, `~/Library/Application Support/AeroBar/install-state.json`, so that deleting one copy does not make your Mac look like a new install (if the Keychain cannot be written, the ID stays in AeroBar's preferences instead). Total Factory Reset in the app deletes it and creates a new one on the next start; deleting AeroBar's preferences does not.
+- **Pro trial start and licence key:** the date your Pro trial started is kept in the same two places as the install ID (the earliest date wins), and a Total Factory Reset keeps it. A Pro licence key, if you enter one, is stored in the Keychain. None of this is sent anywhere by AeroBar.
+- **Beta code:** stored in the macOS Keychain, together with the latest time AeroBar has seen, so a beta code cannot be reused after it expires by setting the clock back. Total Factory Reset removes the code and keeps that time.
 - **Diagnostics:** AeroBar keeps a short local record of recent events and errors. It is never sent anywhere by AeroBar. You decide whether to share any of it (see 4d).
 
 ## 4. What happens in your browser, and who sees it
 Each item below starts only when you click it. AeroBar opens your default browser; AeroBar does not send the request itself.
 
 **a. Getting a beta code (beta builds)**
-* **What is sent:** Your install ID and the release channel (beta or testing), in the address of the activation page, and the one-time request you make by pressing "Get my code"
-* **Recipient:** Our activation page, run as a Cloudflare Worker
-* **What comes back:** A signed code, valid for 14 days, which you paste into AeroBar. AeroBar checks it on your Mac.
-* **Kept by us:** Nothing. The page keeps no database and no user list.
+* **What is sent:** Your install ID, the release channel (beta or testing) and the AeroBar version, in the address of the activation page, and the one-time request you make by pressing "Get my code"
+* **Recipient:** Our activation page, run as a Cloudflare Worker, and Cloudflare Turnstile (a bot check, see below)
+* **Bot check:** The page runs Cloudflare Turnstile to keep automated requests out. Your browser loads the Turnstile script from Cloudflare, so Cloudflare sees that request. When you press "Get my code", our page passes the check result and your IP address to Cloudflare to verify it. We do not store your IP address. Cloudflare handles Turnstile data under its own terms.
+* **What comes back:** A signed code, valid for 7 days, which you paste into AeroBar. AeroBar checks it on your Mac.
+* **Kept by us:** A one-way hash of your install ID, the release channel and AeroBar version you sent, the country Cloudflare derives from your request, the number of codes issued to that install, and the dates of the first and most recent code. We keep this only to see how many beta installs exist and in which countries. It is deleted automatically 90 days after your last code. AeroBar itself sends us nothing while you use it. Total Factory Reset gives your Mac a new install ID.
 
 **b. Downloading an update**
 * **What is sent:** A standard web request (your IP address)
@@ -54,7 +56,7 @@ Each item below starts only when you click it. AeroBar opens your default browse
 * **Note:** AeroBar does not download icons or page titles. Links show a coloured letter tile.
 
 ### Notes
-- **IP addresses.** Any website you reach sees your IP address. Our activation page uses your IP address only to limit how often one address can ask for a code, through Cloudflare's rate-limit feature. We do not store it or build a list of it. Cloudflare, as our infrastructure provider, processes requests under its own terms and may keep technical logs for security and operation; we do not enable Worker log retention.
+- **IP addresses.** Any website you reach sees your IP address. Our activation page uses your IP address for two things only: to limit how often one address can ask for a code, through Cloudflare's rate-limit feature, and to let Cloudflare Turnstile verify the bot check (4a). We do not store your IP address. The only location we keep is the country, as described in 4a. Cloudflare, as our infrastructure provider, processes requests under its own terms and may keep technical logs for security and operation; we do not enable Worker log retention.
 - **What we never collect.** Clipboard contents, window titles, file names or contents, keystrokes, your name, email address, Apple ID or hardware serial numbers.
 - **The License Agreement and this Privacy Policy** are bundled inside AeroBar and read from disk. Whether a newer version exists is only known when you install a newer AeroBar.
 - **Your Mac and other apps.** macOS itself may contact Apple (for example, to check an app's signature), and apps that AeroBar controls, such as Music or Spotify, use the internet on their own. AeroBar does not send or receive that traffic.
@@ -64,7 +66,7 @@ Each item below starts only when you click it. AeroBar opens your default browse
 Builds before v9.6-beta1 could send usage statistics (install ID, app and macOS version, country), crash and hang reports (to Sentry, EU data center) and feedback (to our Cloudflare Worker). If you used one, you can ask us to delete anything we still hold: email us the install ID from before you updated, and we will delete the matching records. Reports held by Sentry are kept under Sentry's own retention rules; you can ask us to request their deletion.
 
 ## 6. Why we process this data (legal bases)
-- **Beta code:** to provide the beta and enforce its expiry. This is necessary for the service you asked for and is in our legitimate interest in running a time-limited beta.
+- **Beta code:** to provide the beta, enforce its expiry, count beta installs by country and keep automated requests out. This is necessary for the service you asked for and is in our legitimate interest in running a time-limited beta.
 - **Feedback and Screen Search:** your consent, given when you accept the link prompt and press Submit on GitHub, or accept the Screen Search prompt that follows each capture.
 
 We do not use your data for advertising, profiling, or automated decisions about you.
