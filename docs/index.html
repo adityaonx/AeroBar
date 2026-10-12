@@ -1,1481 +1,397 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AeroBar - Advanced Dock for macOS</title>
-  <meta name="description" content="Looking for a more powerful dock experience? AeroBar delivers - Aero glass look, Start Menu, live window tabs, pinned app launcher. 100% offline, no telemetry. Free for macOS Sequoia & Tahoe." />
-  <meta property="og:title" content="AeroBar - Advanced Dock for macOS" />
-  <meta property="og:description" content="Looking for a more powerful dock experience? AeroBar delivers - Aero glass look, Start Menu, live window tabs, pinned app launcher. 100% offline, no telemetry." />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AeroBar – A taskbar for macOS, or a better Dock</title>
+<meta name="description" content="Run AeroBar as a taskbar, a floating dock, or on top of the real macOS Dock. Live window previews, a window-level ⌘Tab, clipboard history, a file shelf and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#1a1a19;--ink:#f0f0ee;--mute:#a4a4a0;--line:#31312f;--panel:#242423;--blue:#3d8bff;--code:#111110;--glow:rgba(255,255,255,.12);--mac:url("data:image/svg+xml,%3Csvg width='2048' height='1241' viewBox='0 0 2048 1241' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cg clip-path='url(%23clip0_6103_5129)'%3E %3Cpath d='M1942.19 1235.64C1944.93 1235.09 1946.77 1232.65 1947.34 1231.5H1810.86C1811.44 1232.65 1813.27 1235.09 1816.01 1235.64C1816.3 1237.25 1817.56 1240.48 1820.3 1240.48H1937.9C1940.64 1240.48 1941.9 1237.25 1942.19 1235.64Z' fill='url(%23paint0_linear_6103_5129)'/%3E %3Cpath d='M1942.06 1236.2C1941.62 1237.89 1940.35 1240.48 1937.89 1240.48H1820.3C1817.74 1240.48 1816.47 1237.67 1816.08 1235.99H1942.06V1236.2Z' fill='black' fill-opacity='0.3'/%3E %3Cpath d='M231.028 1235.64C233.775 1235.09 235.606 1232.65 236.178 1231.5H99.7031C100.275 1232.65 102.106 1235.09 104.853 1235.64C105.139 1237.25 106.398 1240.48 109.145 1240.48H226.736C229.483 1240.48 230.742 1237.25 231.028 1235.64Z' fill='url(%23paint1_linear_6103_5129)'/%3E %3Cpath d='M230.904 1236.19C230.461 1237.89 229.197 1240.48 226.736 1240.48H109.145C106.583 1240.48 105.317 1237.67 104.926 1235.99H230.904V1236.19Z' fill='black' fill-opacity='0.3'/%3E %3Cmask id='mask0_6103_5129' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='0' y='1181' width='2048' height='51'%3E %3Cpath d='M2048 1186.57V1181.19H0V1186.57C0 1202.3 0 1210.16 4.40563 1216.17C8.28094 1221.45 14.4645 1225.74 22.0703 1228.44C30.7168 1231.5 42.0358 1231.5 64.6737 1231.5H1983.33C2005.96 1231.5 2017.28 1231.5 2025.93 1228.44C2033.54 1225.74 2039.72 1221.45 2043.59 1216.17C2048 1210.16 2048 1202.3 2048 1186.57Z' fill='white'/%3E %3C/mask%3E %3Cg mask='url(%23mask0_6103_5129)'%3E %3Cpath d='M2048 1186.57V1181.19H0V1186.57C0 1202.3 0 1210.16 4.40563 1216.17C8.28094 1221.45 14.4645 1225.74 22.0703 1228.44C30.7168 1231.5 42.0358 1231.5 64.6737 1231.5H1983.33C2005.96 1231.5 2017.28 1231.5 2025.93 1228.44C2033.54 1225.74 2039.72 1221.45 2043.59 1216.17C2048 1210.16 2048 1202.3 2048 1186.57Z' fill='url(%23paint2_linear_6103_5129)'/%3E %3Cpath d='M2048 1181.19H1818.05V1231.49H2048V1181.19Z' fill='url(%23paint3_linear_6103_5129)'/%3E %3Cpath d='M-0.000900269 1181.19H231.746V1231.49H-0.000900269V1181.19Z' fill='url(%23paint4_linear_6103_5129)'/%3E %3Cg filter='url(%23filter0_f_6103_5129)'%3E %3Cpath d='M4.49219 1172.21H30.5413V1198.71C30.5413 1205.9 24.71 1211.73 17.5167 1211.73C10.3235 1211.73 4.49219 1205.9 4.49219 1198.71V1172.21Z' fill='url(%23paint5_linear_6103_5129)'/%3E %3C/g%3E %3Cg filter='url(%23filter1_f_6103_5129)'%3E %3Cpath d='M2043.51 1172.21H2017.46V1198.71C2017.46 1205.9 2023.29 1211.73 2030.48 1211.73C2037.68 1211.73 2043.51 1205.9 2043.51 1198.71V1172.21Z' fill='url(%23paint6_linear_6103_5129)'/%3E %3C/g%3E %3C/g%3E %3Cpath d='M839.859 1181.19H1208.14C1208.14 1195.08 1196.88 1206.34 1182.99 1206.34H865.01C851.12 1206.34 839.859 1195.08 839.859 1181.19Z' fill='url(%23paint7_linear_6103_5129)'/%3E %3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M1881.83 61.0807C1881.83 27.3468 1854.48 0 1820.74 0H229.053C195.319 0 167.973 27.3468 167.973 61.0808V1145.26C167.973 1156.04 169.769 1181.19 181.446 1181.19H1868.35C1880.03 1181.19 1881.83 1156.04 1881.83 1145.26V61.0807ZM207 56.7962C207 44.8901 216.652 35.2383 228.558 35.2383H1820.44C1832.35 35.2383 1842 44.8901 1842 56.7962V1097.24H207V56.7962Z' fill='black'/%3E %3Cmask id='mask1_6103_5129' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='167' y='1125' width='1715' height='57'%3E %3Cpath d='M167.973 1181.19V1145.26C167.973 1134.35 176.82 1125.5 187.734 1125.5H1862.06C1872.98 1125.5 1881.83 1134.35 1881.83 1145.26V1181.19H1868.35H181.446H167.973Z' fill='black'/%3E %3C/mask%3E %3Cg mask='url(%23mask1_6103_5129)'%3E %3Cg filter='url(%23filter2_d_6103_5129)'%3E %3Cpath d='M1860.27 1181.19C1877.02 1176.41 1875.71 1149.65 1875.52 1135.55C1875.48 1133 1873.38 1130.82 1870.89 1131.38C1847.89 1136.49 1856.07 1180.35 1841.4 1181.19H1860.27Z' fill='%23141311'/%3E %3C/g%3E %3Cg filter='url(%23filter3_d_6103_5129)'%3E %3Cpath d='M189.611 1181.19C172.857 1176.41 174.173 1149.65 174.362 1135.55C174.396 1133 176.498 1130.82 178.986 1131.38C201.985 1136.49 193.813 1180.35 208.474 1181.19H189.611Z' fill='%23141311'/%3E %3C/g%3E %3C/g%3E %3Cg filter='url(%23filter4_ii_6103_5129)'%3E %3Cpath d='M1842.3 1181.19C1858.15 1181.19 1871 1166.83 1871.04 1149.09V1130.89H178.75V1149C178.75 1166.78 191.619 1181.19 207.494 1181.19H1842.3Z' fill='%23131415'/%3E %3C/g%3E %3Cg filter='url(%23filter5_ii_6103_5129)'%3E %3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M1820.75 5.39062H229.055C198.297 5.39062 173.363 30.3244 173.363 61.0819V1147.06C173.363 1165.91 188.645 1181.19 207.497 1181.19H363.791V1179.4C363.791 1177.41 362.183 1175.8 360.198 1175.8H207.497C191.622 1175.8 178.753 1162.93 178.753 1147.06V61.0819C178.753 33.301 201.274 10.7801 229.055 10.7801H1820.75C1848.53 10.7801 1871.05 33.301 1871.05 61.0819V1147.06C1871.05 1162.93 1858.18 1175.8 1842.3 1175.8H1689.6C1687.62 1175.8 1686.01 1177.41 1686.01 1179.4V1181.19H1842.3C1861.15 1181.19 1876.44 1165.91 1876.44 1147.06V61.0819C1876.44 30.3244 1851.5 5.39062 1820.75 5.39062Z' fill='%23131415'/%3E %3C/g%3E %3Cpath d='M907.234 35.0312H920.408C923.384 35.0312 925.797 37.4442 925.797 40.4207V60.1821C925.797 66.1352 930.623 70.9611 936.576 70.9611H1114.13C1120.09 70.9611 1124.91 66.1352 1124.91 60.1821V40.4207C1124.91 37.4442 1127.32 35.0312 1130.3 35.0312H1143.47H907.234Z' fill='black'/%3E %3Cg filter='url(%23filter6_f_6103_5129)'%3E %3Cpath d='M1024.9 52.9963C1030.85 52.9963 1035.68 48.1704 1035.68 42.2174C1035.68 36.2644 1030.85 31.4385 1024.9 31.4385C1018.95 31.4385 1014.12 36.2644 1014.12 42.2174C1014.12 48.1704 1018.95 52.9963 1024.9 52.9963Z' fill='%230F1316'/%3E %3C/g%3E %3Cg filter='url(%23filter7_f_6103_5129)'%3E %3Cpath d='M1024.9 50.3012C1029.37 50.3012 1032.98 46.6818 1032.98 42.217C1032.98 37.7522 1029.37 34.1328 1024.9 34.1328C1020.44 34.1328 1016.82 37.7522 1016.82 42.217C1016.82 46.6818 1020.44 50.3012 1024.9 50.3012Z' fill='%23080905'/%3E %3C/g%3E %3Cg filter='url(%23filter8_f_6103_5129)'%3E %3Cpath d='M1024.9 45.8108C1026.89 45.8108 1028.49 45.0064 1028.49 44.0143C1028.49 43.0221 1026.89 42.2178 1024.9 42.2178C1022.92 42.2178 1021.31 43.0221 1021.31 44.0143C1021.31 45.0064 1022.92 45.8108 1024.9 45.8108Z' fill='%2305111D'/%3E %3C/g%3E %3Cg filter='url(%23filter9_f_6103_5129)'%3E %3Cpath d='M1024.9 42.217C1026.89 42.217 1028.49 41.4127 1028.49 40.4205C1028.49 39.4283 1026.89 38.624 1024.9 38.624C1022.92 38.624 1021.31 39.4283 1021.31 40.4205C1021.31 41.4127 1022.92 42.217 1024.9 42.217Z' fill='%2305111D'/%3E %3C/g%3E %3Cg filter='url(%23filter10_f_6103_5129)'%3E %3Cpath d='M1024.9 45.81C1026.39 45.81 1027.6 45.2067 1027.6 44.4626C1027.6 43.7185 1026.39 43.1152 1024.9 43.1152C1023.41 43.1152 1022.21 43.7185 1022.21 44.4626C1022.21 45.2067 1023.41 45.81 1024.9 45.81Z' fill='%230F3455'/%3E %3C/g%3E %3Cg filter='url(%23filter11_f_6103_5129)'%3E %3Cpath d='M1024.9 42.217C1026.39 42.217 1027.6 41.4127 1027.6 40.4205C1027.6 39.4283 1026.39 38.624 1024.9 38.624C1023.41 38.624 1022.21 39.4283 1022.21 40.4205C1022.21 41.4127 1023.41 42.217 1024.9 42.217Z' fill='%230F3857'/%3E %3C/g%3E %3C/g%3E %3Cdefs%3E %3Cfilter id='filter0_f_6103_5129' x='-0.897293' y='1166.82' width='36.8297' height='50.2985' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='2.69474' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter1_f_6103_5129' x='2012.07' y='1166.82' width='36.8297' height='50.2985' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='2.69474' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter2_d_6103_5129' x='1840.5' y='1129.49' width='37.8117' height='53.4914' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dx='0.898246'/%3E %3CfeGaussianBlur stdDeviation='0.898246'/%3E %3CfeComposite in2='hardAlpha' operator='out'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.0784314 0 0 0 0 0.0745098 0 0 0 0 0.0666667 0 0 0 1 0'/%3E %3CfeBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_6103_5129'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow_6103_5129' result='shape'/%3E %3C/filter%3E %3Cfilter id='filter3_d_6103_5129' x='171.567' y='1129.49' width='37.8039' height='53.4914' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dx='-0.898246'/%3E %3CfeGaussianBlur stdDeviation='0.898246'/%3E %3CfeComposite in2='hardAlpha' operator='out'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.0784314 0 0 0 0 0.0745098 0 0 0 0 0.0666667 0 0 0 1 0'/%3E %3CfeBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_6103_5129'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow_6103_5129' result='shape'/%3E %3C/filter%3E %3Cfilter id='filter4_ii_6103_5129' x='177.852' y='1129.99' width='1694.09' height='51.1981' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dx='-0.898246' dy='-0.898246'/%3E %3CfeGaussianBlur stdDeviation='0.898246'/%3E %3CfeComposite in2='hardAlpha' operator='arithmetic' k2='-1' k3='1'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/%3E %3CfeBlend mode='normal' in2='shape' result='effect1_innerShadow_6103_5129'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dx='0.898246' dy='-0.898246'/%3E %3CfeGaussianBlur stdDeviation='0.898246'/%3E %3CfeComposite in2='hardAlpha' operator='arithmetic' k2='-1' k3='1'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/%3E %3CfeBlend mode='normal' in2='effect1_innerShadow_6103_5129' result='effect2_innerShadow_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter5_ii_6103_5129' x='173.363' y='5.39062' width='1703.08' height='1176.7' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dy='0.898246'/%3E %3CfeGaussianBlur stdDeviation='1.34737'/%3E %3CfeComposite in2='hardAlpha' operator='arithmetic' k2='-1' k3='1'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.1 0'/%3E %3CfeBlend mode='normal' in2='shape' result='effect1_innerShadow_6103_5129'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dy='0.898246'/%3E %3CfeGaussianBlur stdDeviation='0.898246'/%3E %3CfeComposite in2='hardAlpha' operator='arithmetic' k2='-1' k3='1'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/%3E %3CfeBlend mode='normal' in2='effect1_innerShadow_6103_5129' result='effect2_innerShadow_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter6_f_6103_5129' x='1012.32' y='29.642' width='25.1516' height='25.1506' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter7_f_6103_5129' x='1015.02' y='32.3363' width='19.761' height='19.761' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter8_f_6103_5129' x='1019.51' y='40.4213' width='10.7805' height='7.18576' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter9_f_6103_5129' x='1019.51' y='36.8275' width='10.7805' height='7.18576' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter10_f_6103_5129' x='1020.41' y='41.3187' width='8.98361' height='6.28732' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter11_f_6103_5129' x='1020.41' y='36.8275' width='8.98361' height='7.18576' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3ClinearGradient id='paint0_linear_6103_5129' x1='1810.86' y1='1235.99' x2='1947.34' y2='1235.99' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23565F6D'/%3E %3Cstop offset='0.173014' stop-color='%232E353F'/%3E %3Cstop offset='0.31824' stop-color='%2356606D'/%3E %3Cstop offset='0.691458' stop-color='%2356606D'/%3E %3Cstop offset='0.825754' stop-color='%232E353F'/%3E %3Cstop offset='1' stop-color='%23565F6D'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint1_linear_6103_5129' x1='99.7031' y1='1235.99' x2='236.178' y2='1235.99' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23565F6D'/%3E %3Cstop offset='0.173014' stop-color='%232E353F'/%3E %3Cstop offset='0.31824' stop-color='%2356606D'/%3E %3Cstop offset='0.691458' stop-color='%2356606D'/%3E %3Cstop offset='0.825754' stop-color='%232E353F'/%3E %3Cstop offset='1' stop-color='%23565F6D'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint2_linear_6103_5129' x1='1024' y1='1181.19' x2='1024' y2='1231.5' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23586170'/%3E %3Cstop offset='0.192522' stop-color='%2356606C'/%3E %3Cstop offset='0.376094' stop-color='%234F5965'/%3E %3Cstop offset='0.598958' stop-color='%23343C45'/%3E %3Cstop offset='0.713542' stop-color='%231B222C'/%3E %3Cstop offset='0.852125' stop-color='%23161D27'/%3E %3Cstop offset='0.931356' stop-color='%23444C57'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint3_linear_6103_5129' x1='2048' y1='1207.11' x2='1818.05' y2='1207.11' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23212733' stop-opacity='0'/%3E %3Cstop offset='0.259918' stop-color='%23212733'/%3E %3Cstop offset='1' stop-color='%23212733' stop-opacity='0'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint4_linear_6103_5129' x1='-0.000900269' y1='1207.1' x2='231.746' y2='1207.1' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23212733' stop-opacity='0'/%3E %3Cstop offset='0.259918' stop-color='%23212733'/%3E %3Cstop offset='1' stop-color='%23212733' stop-opacity='0'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint5_linear_6103_5129' x1='4.49219' y1='1185.76' x2='30.5413' y2='1185.76' gradientUnits='userSpaceOnUse'%3E %3Cstop offset='0.0875682' stop-color='white' stop-opacity='0.17'/%3E %3Cstop offset='0.272185' stop-color='white' stop-opacity='0.65'/%3E %3Cstop offset='0.489769' stop-color='white' stop-opacity='0.65'/%3E %3Cstop offset='0.677083' stop-color='white' stop-opacity='0.19'/%3E %3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint6_linear_6103_5129' x1='2043.51' y1='1185.76' x2='2017.46' y2='1185.76' gradientUnits='userSpaceOnUse'%3E %3Cstop offset='0.0875682' stop-color='white' stop-opacity='0.17'/%3E %3Cstop offset='0.272185' stop-color='white' stop-opacity='0.65'/%3E %3Cstop offset='0.489769' stop-color='white' stop-opacity='0.65'/%3E %3Cstop offset='0.677083' stop-color='white' stop-opacity='0.19'/%3E %3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint7_linear_6103_5129' x1='840.73' y1='1193.39' x2='1208.14' y2='1193.39' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23131A24'/%3E %3Cstop offset='0.015659' stop-color='%23343E4A'/%3E %3Cstop offset='0.035819' stop-color='%23626E7E'/%3E %3Cstop offset='0.0504351' stop-color='%237F8A9C'/%3E %3Cstop offset='0.479167' stop-color='%237E889B'/%3E %3Cstop offset='0.941214' stop-color='%237F8A9C'/%3E %3Cstop offset='0.970403' stop-color='%23626E7E'/%3E %3Cstop offset='0.980129' stop-color='%23343E4A'/%3E %3Cstop offset='1' stop-color='%23131A24'/%3E %3C/linearGradient%3E %3CclipPath id='clip0_6103_5129'%3E %3Crect width='2048' height='1241' fill='white'/%3E %3C/clipPath%3E %3C/defs%3E %3C/svg%3E");
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f5f6f8;--ink:#12151b;--mute:#586070;--line:#dde1e8;--panel:#fff;--blue:#0a6cff;--code:#07090c;--glow:transparent}}
+:root[data-theme="light"]{--bg:#f5f6f8;--ink:#12151b;--mute:#586070;--line:#dde1e8;--panel:#fff;--blue:#0a6cff;--code:#07090c;--glow:transparent}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 "Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}p{margin:0}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:100;background:var(--bg);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;text-decoration:none}
+.brand .o{width:26px;height:26px}
+nav{display:flex;align-items:center;gap:26px;font-size:15px}
+nav a{text-decoration:none;color:var(--mute)}nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;height:46px;padding:0 22px;border-radius:12px;font:600 15px "Hanken Grotesk",sans-serif;text-decoration:none;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.btn.pri{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.pri:hover{filter:brightness(1.1)}.btn:not(.pri):hover{border-color:var(--mute)}
+nav .btn{height:36px;padding:0 14px;font-size:14px;color:#fff}
+h1{font-size:clamp(42px,7.4vw,88px);line-height:1;letter-spacing:-.04em;font-weight:700;margin:0;max-width:13em}
+h2{font-size:clamp(28px,3.6vw,44px);line-height:1.08;letter-spacing:-.03em;margin:0 0 14px;font-weight:700}
+.lede{color:var(--mute);font-size:19px;max-width:33em}
+.hero{padding:80px 0 0}.hero .lede{margin-top:24px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin:32px 0 56px}
+.cap{color:var(--mute);font-size:14px;margin-top:14px}
 
-    :root {
-      --blue: #007aff;
-      --blue-light: #0a84ff;
-      --blue-dark: #1d4ed8;
-      --blue-glow: rgba(59, 130, 246, 0.35);
-      --purple: #8b5cf6;
-      --teal: #06b6d4;
-      --bg: #111111;
-      --surface: rgba(255,255,255,0.04);
-      --surface-hover: rgba(255,255,255,0.07);
-      --border: rgba(255,255,255,0.08);
-      --border-bright: rgba(255,255,255,0.15);
-      --text: #f0f6ff;
-      --text-muted: rgba(240,246,255,0.55);
-      --text-dim: rgba(240,246,255,0.35);
-    }
+/* ===== Mock screens: animated stand-ins for GIFs ===== */
+.media{margin:0;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#000;box-shadow:0 40px 80px -40px rgba(0,0,0,.7)}
+.media>img{display:block;width:100%;height:auto}
+.scr{position:relative;aspect-ratio:16/10;container-type:inline-size;overflow:hidden;background:var(--wp);isolation:isolate}
+.w1{--wp:radial-gradient(90% 70% at 15% 10%,#8fc0ff,transparent 60%),radial-gradient(80% 80% at 90% 100%,#3a2a8f,transparent 60%),#1d3a8a}
+.w2{--wp:radial-gradient(80% 70% at 80% 0,#ffb48a,transparent 60%),radial-gradient(90% 80% at 10% 100%,#7a2f8f,transparent 60%),#3b2a6a}
+.w3{--wp:radial-gradient(90% 70% at 20% 0,#7ee0c0,transparent 60%),radial-gradient(80% 80% at 90% 100%,#13486b,transparent 60%),#0f3a55}
+.mb{position:absolute;inset:0 0 auto 0;background:rgba(255,255,255,.14);z-index:11}
+.bar{position:absolute;left:1.2cqw;right:1.2cqw;bottom:1.2cqw;height:5.4cqw;border-radius:1.7cqw;display:flex;align-items:center;gap:.6cqw;padding:0 .9cqw;background:rgba(255,255,255,.2);backdrop-filter:blur(2cqw) saturate(1.7);-webkit-backdrop-filter:blur(2cqw) saturate(1.7);border:1px solid rgba(255,255,255,.34);z-index:9;overflow:hidden}
+.o{display:block;border-radius:50%;background:radial-gradient(circle at 50% 95%,#1f7bff 0,#1a1a1a 70%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3),0 1px 3px rgba(0,0,0,.4);flex:none}
+.bar .o{width:3.8cqw;height:3.8cqw}
+.ic{width:3.4cqw;height:3.4cqw;border-radius:.9cqw;background:var(--c,#888);flex:none}
+.u{width:3.2cqw;height:3.2cqw;border-radius:.9cqw;background:rgba(255,255,255,.14);color:#fff;font-size:1.8cqw;display:grid;place-items:center;flex:none}
+.u::before{content:attr(data-g)}
+.dv{width:1px;height:3cqw;background:rgba(255,255,255,.35);margin:0 .4cqw;flex:none}
+.t{position:relative;flex:none;width:12cqw;height:3.8cqw;padding:0 1.2cqw;border-radius:1cqw;background:rgba(255,255,255,.1);color:#fff;font-size:1.55cqw;display:flex;align-items:center;gap:.8cqw;white-space:nowrap}
+.t i{width:1.5cqw;height:1.5cqw;border-radius:.4cqw;flex:none;background:var(--c)}
+.sp{flex:1}.clk{color:#fff;font-size:1.5cqw;padding:0 .6cqw;flex:none}
+.bd{position:absolute;top:.2cqw;right:.3cqw;min-width:1.9cqw;height:1.9cqw;border-radius:1cqw;background:#ff453a;color:#fff;font-size:1.2cqw;display:grid;place-items:center}
+.w{position:absolute;background:#1f232c;border-radius:1cqw;box-shadow:0 2cqw 4cqw rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.09);overflow:hidden}
+.w::before{content:"";display:block;height:2.6cqw;background:color-mix(in srgb,var(--c,#6b7384) 38%,#1a1d25)}
+.w::after{content:"";position:absolute;left:1.6cqw;top:4.6cqw;width:55%;height:.9cqw;border-radius:1cqw;background:#3a404c;box-shadow:0 2.2cqw #3a404c,0 4.4cqw #3a404c,0 6.6cqw #3a404c}
+.cur{position:absolute;width:2.6cqw;height:3.2cqw;z-index:20;background:#fff;clip-path:polygon(0 0,0 100%,30% 78%,50% 100%,66% 92%,46% 70%,80% 70%);filter:drop-shadow(0 1px 1px #000)}
+.gl{background:rgba(245,247,251,.8);backdrop-filter:blur(3cqw);-webkit-backdrop-filter:blur(3cqw);border:1px solid rgba(255,255,255,.6);color:#232a38}
 
-    html { scroll-behavior: smooth; }
+/* Hero: bar and menu bar take the focused app's colour (Dynamic Tint + AuraBar) */
+.h .bar,.h .mb{animation:tint 9s infinite}
+.h .t{width:10.5cqw}.h .wa{--c:#4f8cff;left:5%;top:11%;width:46%;height:48%}.h .wb{--c:#ff9f43;left:36%;top:19%;width:44%;height:48%}.h .wc{--c:#34c759;left:14%;top:34%;width:34%;height:38%}
+.h .w{animation:hW 9s infinite}.h .wb,.h .tb{animation-delay:-6s}.h .wc,.h .tc{animation-delay:-3s}
+.h .t{animation:hT 9s infinite}.h .ta{animation-delay:0s}
+@keyframes tint{0%,30%{background:rgba(79,140,255,.55)}33%,63%{background:rgba(255,159,67,.55)}66%,96%{background:rgba(52,199,89,.5)}100%{background:rgba(79,140,255,.55)}}
+@keyframes hT{0%,30%{background:rgba(255,255,255,.38);box-shadow:inset 0 0 0 1px rgba(255,255,255,.6)}34%,100%{background:rgba(255,255,255,.1);box-shadow:none}}
+@keyframes hW{0%,30%{z-index:5}34%,100%{z-index:1}}
 
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
+/* 1: tabs, live preview, badges (9s) */
+.a .wa{--c:#4f8cff;left:6%;top:12%;width:46%;height:46%;z-index:1}.a .wb{--c:#ff9f43;left:34%;top:22%;width:44%;height:46%;z-index:2;animation:aMin 9s infinite}.a .wc{--c:#8e6bff;left:12%;top:36%;width:34%;height:36%;z-index:3}
+.a .tb{animation:aTab 9s infinite;background:rgba(255,255,255,.3)}
+.a .tb::after{content:"";position:absolute;left:30%;right:30%;bottom:.3cqw;height:.4cqw;border-radius:1cqw;background:#fff}
+.a .cur{animation:aCur 9s infinite}.a .pv{animation:aPv 9s infinite}
+.pv{background:rgba(31,35,44,.96);color:#e8ecf3;border-color:rgba(255,255,255,.12);position:absolute;left:19.1cqw;bottom:7.8cqw;width:15cqw;height:10cqw;border-radius:1.2cqw;z-index:12;opacity:0}
+.pv b{display:block;padding:.9cqw 1.3cqw;font-size:1.4cqw}
+.pv u{position:absolute;top:.6cqw;right:.8cqw;text-decoration:none;font-size:1.6cqw;width:2cqw;height:2cqw;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center}
+.pv::after{content:"";position:absolute;left:1.3cqw;top:4.2cqw;width:9cqw;height:.8cqw;border-radius:1cqw;background:#3a404c;box-shadow:0 1.7cqw #3a404c,0 3.4cqw #3a404c}
+.plus{position:absolute;left:35cqw;bottom:7.8cqw;width:4cqw;height:4cqw;border-radius:50%;font-size:2.4cqw;display:grid;place-items:center;z-index:12;opacity:0;animation:aPv 9s infinite}
+@keyframes aCur{0%{left:70cqw;top:28cqw}22%,52%{left:25cqw;top:59.5cqw}60%{left:25cqw;top:60.1cqw}68%{left:25cqw;top:59.5cqw}88%,100%{left:70cqw;top:32cqw}}
+@keyframes aPv{0%,24%{opacity:0;transform:translateY(1cqw)}30%,50%{opacity:1;transform:none}54%,100%{opacity:0}}
+@keyframes aMin{0%,58%{opacity:1;transform:none}66%,88%{opacity:0;transform:translateY(14cqw) scale(.7)}96%,100%{opacity:1;transform:none}}
+@keyframes aTab{0%,58%{opacity:1}66%,88%{opacity:.45}96%,100%{opacity:1}}
 
-    /* ── BACKGROUND ORBS ── */
-    .bg-orbs {
-      position: fixed; inset: 0; pointer-events: none; z-index: 0;
-      overflow: hidden;
-    }
+/* 2: Aero Menu (10s) */
+.b .wa{--c:#4f8cff;left:30%;top:14%;width:50%;height:44%}
+.b .menu{position:absolute;left:1.2cqw;bottom:7.6cqw;width:34cqw;height:46cqw;border-radius:2cqw;padding:2cqw;transform-origin:0 100%;z-index:10;animation:bMenu 10s infinite;font-size:1.3cqw}
+.b .sr{height:3.6cqw;border-radius:1cqw;background:rgba(0,0,0,.08);padding:.8cqw 1.2cqw;font-size:1.7cqw;white-space:nowrap;overflow:hidden}
+.b .sr span{display:block;overflow:hidden;width:0;border-right:1px solid #232a38;animation:bType 10s steps(6) infinite}
+.b h4{margin:1.8cqw 0 1cqw;font-size:1.3cqw;font-weight:600;color:#6a7384}
+.b .gr{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2cqw}.b .gr i{aspect-ratio:1.25;border-radius:1.4cqw;background:var(--c)}
+.b .gr i:nth-child(2){animation:bHi 10s infinite}
+.b .rc{display:flex;justify-content:space-between;height:3cqw;align-items:center;border-bottom:1px solid rgba(0,0,0,.07);font-size:1.4cqw}.rc em{font-style:normal;color:#8a93a3;font-size:1.2cqw}
+.b .pw{display:flex;gap:.6cqw;margin-top:1.6cqw}.b .pw span{flex:1;text-align:center;height:3.2cqw;line-height:3.2cqw;border-radius:1cqw;background:rgba(0,0,0,.07);font-size:1.2cqw}
+.b .bar .o{animation:bOrb 10s infinite}
+@keyframes bMenu{0%,10%{opacity:0;transform:scale(.9)}16%,88%{opacity:1;transform:none}95%,100%{opacity:0;transform:scale(.9)}}
+@keyframes bType{0%,26%{width:0}44%,100%{width:7cqw}}
+@keyframes bHi{0%,56%{box-shadow:none;transform:none}62%,88%{box-shadow:0 0 0 .4cqw #0a6cff;transform:scale(1.06)}100%{box-shadow:none}}
+@keyframes bOrb{0%,8%{box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}12%,88%{box-shadow:inset 0 0 0 1px rgba(255,255,255,.3),0 0 0 .6cqw rgba(255,255,255,.5)}100%{box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}}
 
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 clamp(1.5rem, 5vw, 4rem);
-      height: 64px;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em;
-      text-decoration: none; color: var(--text);
-    }
-    .nav-logo .orb-icon {
-      width: 30px; height: 30px; border-radius: 50%;
-      background: url('assets/aerobar-orb-v2.svg') center/contain no-repeat;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-    .nav-links { display: flex; align-items: center; gap: 2rem; }
-    .nav-links a {
-      font-size: 0.875rem; font-weight: 500; color: var(--text-muted);
-      text-decoration: none; transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-cta {
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      white-space: nowrap; flex-shrink: 0; height: 36px; line-height: 1;
-      background: rgba(10, 132, 255, 0.75); color: #fff; padding: 0 1.1rem;
-      border-radius: 18px; font-size: 0.875rem; font-weight: 600; text-decoration: none;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.3);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-      position: relative; overflow: hidden;
-    }
-    .nav-cta::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
-      opacity: 0.5;
-    }
-    .nav-cta:hover { 
-      transform: scale(1.03); 
-      background: rgba(10, 132, 255, 0.5);
-      border-color: rgba(255, 255, 255, 0.4);
-      box-shadow: 0 4px 15px rgba(0,122,255,0.4), inset 0 1px 2px rgba(255,255,255,0.5);
-    }
-    .nav-cta svg {
-      width: 16px !important;
-      height: 16px !important;
-      min-width: 16px !important;
-      min-height: 16px !important;
-      max-width: 16px !important;
-      max-height: 16px !important;
-      flex-shrink: 0 !important;
-      display: inline-block !important;
-      vertical-align: middle;
-    }
+/* 3: Smart Switcher (10s) */
+.s .wa{--c:#4f8cff;left:6%;top:12%;width:46%;height:46%}.s .wb{--c:#ff9f43;left:34%;top:22%;width:44%;height:46%}
+.s .dim{position:absolute;inset:0;background:rgba(0,0,0,.3);z-index:8;animation:sOn 10s infinite}
+.sw{position:absolute;left:50%;top:44%;display:flex;gap:2cqw;padding:2.4cqw;border-radius:2.4cqw;background:rgba(30,34,44,.66);backdrop-filter:blur(3cqw);-webkit-backdrop-filter:blur(3cqw);border:1px solid rgba(255,255,255,.18);z-index:10;animation:sSw 10s infinite}
+.sw::after{content:"Apps ⌘Tab  |  Windows ⌘`";position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:1.6cqw;padding:.6cqw 1.6cqw;border-radius:2cqw;background:rgba(0,0,0,.45);color:#fff;font-size:1.4cqw;white-space:nowrap}
+.cd{width:13cqw}.cd .th{height:9cqw;border-radius:1cqw;background:#1f232c;overflow:hidden;position:relative;animation:swHi 10s infinite var(--d)}
+.cd .th::before{content:"";display:block;height:2cqw;background:color-mix(in srgb,var(--c) 38%,#1a1d25)}
+.cd .th::after{content:"";position:absolute;left:1.2cqw;top:3.4cqw;width:55%;height:.7cqw;border-radius:1cqw;background:#3a404c;box-shadow:0 1.6cqw #3a404c,0 3.2cqw #3a404c}
+.cd p{margin:1cqw 0 0;color:#fff;font-size:1.4cqw;text-align:center}
+@keyframes sOn{0%,8%{opacity:0}13%,88%{opacity:1}94%,100%{opacity:0}}
+@keyframes sSw{0%,8%{opacity:0;transform:translateX(-50%) scale(.95)}13%,88%{opacity:1;transform:translateX(-50%)}94%,100%{opacity:0;transform:translateX(-50%) scale(.95)}}
+@keyframes swHi{0%,18%{box-shadow:0 0 0 .5cqw #fff;transform:scale(1.04)}19%,100%{box-shadow:none;transform:none}}
 
-    /* ── SECTIONS ── */
-    section { position: relative; z-index: 1; }
+/* 4: utilities (12s) */
+.d .wa{--c:#4f8cff;left:8%;top:12%;width:46%;height:46%}.d .wb{--c:#34c759;left:30%;top:22%;width:44%;height:42%}
+.d .bar .t{width:10cqw}
+.u.k{animation:uHi 12s infinite var(--d)}
+@keyframes uHi{0%{background:rgba(255,255,255,.14)}3%,22%{background:rgba(255,255,255,.45)}26%,100%{background:rgba(255,255,255,.14)}}
+.pn{position:absolute;bottom:7.8cqw;padding:1.6cqw;border-radius:2cqw;font-size:1.4cqw;z-index:10;opacity:0;animation:pn 12s infinite var(--d)}
+@keyframes pn{0%{opacity:0;transform:translateY(1cqw)}3%,22%{opacity:1;transform:none}26%,100%{opacity:0}}
+.pn h5{margin:0 0 1.2cqw;font-size:1.5cqw;display:flex;justify-content:space-between;align-items:center}
+.pn h5 em{font-style:normal;font-weight:500;font-size:1.1cqw;padding:.3cqw .9cqw;border-radius:2cqw;background:rgba(10,108,255,.14);color:#0a5bd6}
+.cl div{height:3.2cqw;line-height:3.2cqw;padding:0 1cqw;border-radius:.9cqw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cl div:first-of-type{background:rgba(10,108,255,.14)}
+.mu{display:flex;gap:1.6cqw;align-items:center}.mu .art{width:9cqw;height:9cqw;border-radius:1.4cqw;background:linear-gradient(135deg,#7b4dff,#ff5a8a)}
+.mu b{display:block;font-size:1.6cqw}.mu span{color:#6a7384}
+.mu .pr{height:.6cqw;border-radius:1cqw;background:rgba(0,0,0,.12);margin:1.2cqw 0;position:relative;overflow:hidden}.mu .pr::after{content:"";position:absolute;inset:0;width:100%;background:#7b4dff;transform-origin:0 0;animation:prog 6s linear infinite}
+.mu .ct{font-size:1.9cqw;letter-spacing:1.2cqw}
+@keyframes prog{from{transform:scaleX(.1)}to{transform:scaleX(1)}}
+.sy div{display:grid;grid-template-columns:7cqw 1fr;gap:1cqw;align-items:center;margin-bottom:1.2cqw}.sy i{display:block;height:1cqw;border-radius:1cqw;background:rgba(0,0,0,.1);position:relative;overflow:hidden}
+.sy i::after{content:"";position:absolute;left:0;top:0;bottom:0;border-radius:1cqw;background:#2f86ff;animation:fl 1.7s ease-in-out infinite alternate}.sy div:nth-child(3) i::after{animation-duration:1.1s;background:#34c759}.sy div:nth-child(4) i::after{animation-duration:2.3s;background:#ff9f43}
+@keyframes fl{from{width:25%}to{width:85%}}
+.sh .dz{border:.25cqw dashed rgba(0,0,0,.3);border-radius:1.4cqw;height:12cqw;display:grid;place-items:center;text-align:center;color:#6a7384;padding:0 2cqw;position:relative}
+.sh .fl{position:absolute;left:50%;top:50%;margin:-2cqw 0 0 -6cqw;width:12cqw;height:4cqw;line-height:4cqw;border-radius:1cqw;background:#fff;box-shadow:0 .6cqw 1.6cqw rgba(0,0,0,.25);text-align:center;color:#232a38;animation:fIn 12s infinite var(--d)}
+@keyframes fIn{0%{opacity:0;transform:translate(-14cqw,-12cqw)}8%{opacity:1;transform:translate(-14cqw,-12cqw)}14%,22%{opacity:1;transform:none}26%,100%{opacity:0}}
 
-    /* ── HERO ── */
-    #hero {
-      min-height: auto;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 130px clamp(1.5rem, 5vw, 4rem) 0;
-    }
-    .badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.3);
-      color: var(--blue-light); border-radius: 999px;
-      padding: 0.3rem 1rem; font-size: 0.78rem; font-weight: 600;
-      letter-spacing: 0.05em; text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      animation: fadeInUp 0.6s ease both;
-    }
-    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #34d399; box-shadow: 0 0 6px #34d399; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-
-    h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      line-height: 1.05;
-      max-width: 850px;
-      animation: fadeInUp 0.7s ease 0.1s both;
-    }
-    h1 .gradient {
-      background: linear-gradient(135deg, #ffffff 0%, #d1d5db 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-sub {
-      font-size: clamp(0.85rem, 1.5vw, 1rem);
-      color: var(--text-muted);
-      max-width: 560px; margin: 0 auto;
-      animation: fadeInUp 0.7s ease 0.2s both;
-    }
-    .hero-actions {
-      display: flex; flex-wrap: wrap; gap: 1rem;
-      justify-content: center; margin-top: 2.5rem;
-      animation: fadeInUp 0.7s ease 0.3s both;
-    }
-    .btn-primary {
-      display: flex; align-items: center; gap: 8px;
-      background: rgba(10, 132, 255, 0.75); color: #fff;
-      padding: 0.8rem 1.8rem; border-radius: 20px;
-      font-size: 1rem; font-weight: 700; text-decoration: none;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.4);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-      position: relative; overflow: hidden;
-    }
-    .btn-primary::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
-      opacity: 0.5;
-    }
-    .btn-primary:hover { 
-      transform: translateY(-2px) scale(1.02); 
-      background: rgba(10, 132, 255, 0.5);
-      border-color: rgba(255, 255, 255, 0.4);
-      box-shadow: 0 8px 30px rgba(0,122,255,0.4), inset 0 1px 2px rgba(255,255,255,0.6);
-    }
-    .btn-secondary {
-      display: flex; align-items: center; gap: 8px;
-      background: rgba(255, 255, 255, 0.15); color: var(--text);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 0.8rem 1.8rem; border-radius: 20px;
-      font-size: 1rem; font-weight: 700; text-decoration: none;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    }
-    .btn-secondary:hover { 
-      transform: translateY(-2px) scale(1.02); 
-      background: rgba(255, 255, 255, 0.1); 
-      border-color: rgba(255, 255, 255, 0.2); 
-      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-    }
-    .btn-youtube {
-      display: flex; align-items: center; gap: 8px;
-      background: rgba(229, 45, 39, 0.8); color: #fff;
-      padding: 0.8rem 1.8rem; border-radius: 20px;
-      font-size: 1rem; font-weight: 700; text-decoration: none;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.4);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-      position: relative; overflow: hidden;
-    }
-    .btn-youtube::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
-      opacity: 0.5;
-    }
-    .btn-youtube:hover { 
-      transform: translateY(-2px) scale(1.02); 
-      background: rgba(229, 45, 39, 0.5);
-      border-color: rgba(255, 255, 255, 0.4);
-      box-shadow: 0 8px 30px rgba(229, 45, 39, 0.8), inset 0 1px 2px rgba(255,255,255,0.6);
-    }
-
-    .homebrew-cmd-box {
-      margin: 1.5rem auto; width: 100%; max-width: 780px; box-sizing: border-box;
-      display: flex; align-items: center; justify-content: space-between;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.85em; color: #e2e8f0;
-      background: rgba(0,0,0,0.4); padding: 0.5rem 0.5rem 0.5rem 1rem;
-      border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      animation: fadeInUp 0.7s ease 0.25s both;
-    }
-    .homebrew-cmd-box span {
-      user-select: all; overflow-x: auto; white-space: pre-wrap;
-      margin-right: 1rem; flex: 1; min-width: 0; display: block;
-      padding-bottom: 2px; text-align: left;
-    }
-    .homebrew-cmd-box button {
-      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.1);
-      color: white; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer;
-      font-size: 0.85em; transition: background 0.2s; white-space: nowrap; flex-shrink: 0;
-    }
-    .homebrew-cmd-box button:hover { background: rgba(255,255,255,0.25); }
-
-    .hero-stats {
-      margin-top: 1.5rem; display: flex; gap: 1.5rem; justify-content: center;
-      font-size: 0.85rem; color: var(--text-dim);
-      animation: fadeInUp 0.7s ease 0.5s both;
-    }
-    .hero-stats span { display: flex; align-items: center; gap: 6px; }
-    .hero-stats b { color: var(--text-muted); font-weight: 600; font-variant-numeric: tabular-nums; }
-    .hero-compat {
-      margin-top: 1rem; margin-bottom: 2rem; font-size: 0.8rem; color: var(--text-dim);
-      animation: fadeInUp 0.7s ease 0.6s both;
-    }
-    .hero-compat span { color: var(--text-muted); }
-
-/* ── SCREENSHOTS SECTION ── */
-    #screenshots {
-      padding: clamp(1rem, 2vw, 2rem) clamp(1.5rem, 5vw, 4rem);
-    }
-    .section-label {
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--blue-light);
-      text-align: center; margin-bottom: 0.75rem;
-    }
-    .section-title {
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      font-weight: 800; letter-spacing: -0.03em;
-      text-align: center; margin-bottom: 1rem; line-height: 1.15;
-    }
-    .section-sub {
-      text-align: center; color: var(--text-muted);
-      font-size: 1.05rem; max-width: 520px; margin: 0 auto 1.5rem;
-    }
-    .screenshots-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-      gap: 1.5rem; max-width: 1100px; margin: 0 auto;
-    }
-    .screenshot-card {
-      border-radius: 16px; overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      transition: transform 0.3s, box-shadow 0.3s;
-      position: relative;
-    }
-    .screenshot-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(59,130,246,0.2);
-    }
-    .screenshot-card img {
-      width: 100%; display: block;
-      border-bottom: 1px solid var(--border);
-    }
-    .screenshot-card-label {
-      padding: 12px 16px; font-size: 0.85rem; font-weight: 500;
-      color: var(--text-muted);
-    }
-
-    /* ── FEATURES ── */
-    #features {
-      padding: clamp(1rem, 2vw, 2rem) clamp(1.5rem, 5vw, 4rem);
-      background: linear-gradient(180deg, transparent, rgba(59,130,246,0.03), transparent);
-    }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.25rem;
-      max-width: 1100px; margin: 0 auto;
-    }
-    .feature-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.75rem;
-      transition: all 0.3s;
-      position: relative; overflow: hidden;
-    }
-    .feature-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border-bright), transparent);
-    }
-    .feature-card:hover {
-      background: var(--surface-hover);
-      border-color: rgba(59,130,246,0.25);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
-    }
-    .feature-icon {
-      font-size: 2rem; margin-bottom: 1rem;
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 52px; height: 52px; border-radius: 12px;
-      background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2);
-    }
-    .feature-title {
-      font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem;
-      letter-spacing: -0.01em;
-    }
-    .feature-desc {
-      font-size: 0.875rem; color: var(--text-muted); line-height: 1.65;
-    }
-    .feature-card.featured {
-      grid-column: span 2;
-      background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.08));
-      border-color: rgba(59,130,246,0.25);
-    }
-    @media (max-width: 700px) { .feature-card.featured { grid-column: span 1; } }
-
-    /* ── HOW TO USE ── */
-    #install {
-      padding: clamp(1rem, 2vw, 2rem) clamp(1.5rem, 5vw, 4rem);
-    }
-    .install-steps {
-      max-width: 700px; margin: 0 auto;
-      display: flex; flex-direction: column; gap: 1.25rem;
-    }
-    .step {
-      display: flex; gap: 1.25rem; align-items: flex-start;
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 16px; padding: 1.5rem;
-      transition: all 0.25s;
-    }
-    .step:hover { border-color: rgba(59,130,246,0.3); background: var(--surface-hover); }
-    .step-num {
-      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem; font-weight: 800; color: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-    .step-content h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.35rem; }
-    .step-content p { font-size: 0.875rem; color: var(--text-muted); }
-    code {
-      background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.2);
-      color: var(--blue-light); border-radius: 6px;
-      padding: 2px 8px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85em;
-    }
-
-    .notarization-notice {
-      max-width: 700px; margin: 0 auto 2rem;
-      background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.2);
-      border-radius: 16px; padding: 1.25rem 1.5rem;
-      display: flex; gap: 1rem; align-items: flex-start;
-    }
-    .notarization-notice-icon { font-size: 1.5rem; line-height: 1; }
-    .notarization-notice-content h4 { font-size: 0.95rem; font-weight: 700; color: var(--blue-light); margin-bottom: 0.25rem; }
-    .notarization-notice-content p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+/* 5: any edge (12s) */
+.e .wa{--c:#4f8cff;left:14%;top:14%;width:50%;height:52%}.e .wb{--c:#ff9f43;left:34%;top:24%;width:50%;height:48%}
+.pb{opacity:0;animation:eb 12s infinite var(--d)}
+@keyframes eb{0%{opacity:0}3%,22%{opacity:1}26%,100%{opacity:0}}
+.bar.v{flex-direction:column;top:4.2cqw;bottom:1.2cqw;left:1.2cqw;right:auto;width:5.4cqw;height:auto;padding:.9cqw 0}.bar.v.r{left:auto;right:1.2cqw}.bar.t{bottom:auto;top:3.8cqw}
+.bar.v .sp{flex:1}
 
 
-    .releases-timeline {
-      max-width: 800px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-    .release-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.75rem;
-      transition: all 0.25s;
-    }
-    .release-card.featured-release {
-      border-color: rgba(59,130,246,0.35);
-      background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(6,11,20,0.4));
-      box-shadow: 0 0 25px rgba(59,130,246,0.1);
-    }
-    .release-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 1rem;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 1rem;
-      margin-bottom: 1rem;
-    }
-    .release-title-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .release-version {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--text);
-    }
-    .release-badge {
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .release-badge.stable {
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: #34d399;
-    }
-    .release-badge.beta {
-      background: rgba(59, 130, 246, 0.12);
-      border: 1px solid rgba(59, 130, 246, 0.3);
-      color: var(--blue-light);
-    }
-    .release-date {
-      font-size: 0.85rem;
-      color: var(--text-dim);
-    }
-    .release-body {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-    .release-body h4 {
-      color: var(--text);
-      font-size: 0.95rem;
-      margin-top: 1rem;
-      margin-bottom: 0.5rem;
-    }
-    .release-body ul {
-      margin-left: 1.25rem;
-      margin-bottom: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-    .release-body li {
-      line-height: 1.5;
-    }
+/* ===== Modes (mirrors onboarding "Choose Your Mode") ===== */
+.m{position:relative;aspect-ratio:2/1;container-type:inline-size;overflow:hidden;background:var(--wp);isolation:isolate}
+.m .w{border-radius:1.4cqw}.m .w::before{height:3.4cqw}.m .w::after{left:2cqw;top:6cqw;height:1.1cqw;box-shadow:0 2.8cqw #3a404c,0 5.6cqw #3a404c}
+.glass{background:rgba(255,255,255,.2);backdrop-filter:blur(2.4cqw) saturate(1.7);-webkit-backdrop-filter:blur(2.4cqw) saturate(1.7);border:1px solid rgba(255,255,255,.36)}
+.m .icn{width:6cqw;height:6cqw;border-radius:1.5cqw;background:var(--c);flex:none}
+.m .o{width:6cqw;height:6cqw;flex:none}
+.m .dv{height:5cqw}
+.dk{position:absolute;left:26.5cqw;bottom:2.4cqw;display:flex;align-items:flex-end;gap:1.4cqw;padding:1.2cqw 2cqw;border-radius:3cqw}
+.di{display:flex;flex-direction:column;align-items:center;gap:.6cqw}
+.di i{width:.8cqw;height:.8cqw;border-radius:50%;background:rgba(255,255,255,.8)}
+.di .icn{transform-origin:50% 100%;animation:mag 6s infinite}
+.di:nth-child(2) .icn{animation-delay:.35s}.di:nth-child(3) .icn{animation-delay:.7s}.di:nth-child(4) .icn{animation-delay:1.05s}.di:nth-child(5) .icn{animation-delay:1.4s}.di:nth-child(6) .icn{animation-delay:1.75s}
+@keyframes mag{0%,16%,100%{transform:scale(1)}7%{transform:scale(1.5)}}
+.thm{position:absolute;left:45.7cqw;bottom:14cqw;width:16cqw;height:10cqw;border-radius:1.4cqw;background:#1f232c;box-shadow:0 1.4cqw 3cqw rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.09);opacity:0;animation:thm 6s infinite;overflow:hidden}
+.thm::before{content:"";display:block;height:2.4cqw;background:color-mix(in srgb,#ff9f43 38%,#1a1d25)}
+.thm::after{content:"";position:absolute;left:1.6cqw;top:4.2cqw;width:9cqw;height:.9cqw;border-radius:1cqw;background:#3a404c;box-shadow:0 2cqw #3a404c,0 4cqw #3a404c}
+@keyframes thm{0%,20%{opacity:0;transform:translateY(1cqw)}25%,40%{opacity:1;transform:none}45%,100%{opacity:0}}
+.exg{position:absolute;left:76cqw;bottom:2.4cqw;display:flex;gap:1cqw;padding:1.2cqw 1.4cqw;border-radius:3cqw}
+.exg .u{width:5.4cqw;height:5.4cqw;font-size:3cqw;border-radius:1.4cqw}
+.fb{position:absolute;left:50%;transform:translateX(-50%);bottom:3cqw;display:flex;align-items:center;gap:1.6cqw;padding:1.2cqw 2.4cqw;border-radius:3.4cqw}
+.fb .icn{animation:lift 6s infinite}
+@keyframes lift{0%,16%,100%{transform:none;filter:none}6%,10%{transform:translateY(-1.4cqw);filter:brightness(1.15)}}
+.m2 .wa,.m4 .wa{--c:#4f8cff;left:46%;top:12%;width:40%;height:50%}
+.m3 .wa{--c:#4f8cff;left:12%;top:14%;width:40%;height:52%}.m3 .wb{--c:#ff9f43;left:30%;top:22%;width:40%;height:50%}.m3 .wc{--c:#34c759;left:48%;top:12%;width:38%;height:50%}
+.m3 .w{animation:hW 5.4s infinite}.m3 .wb,.m3 .bb:nth-of-type(2){animation-delay:-3.6s}.m3 .wc,.m3 .bb:nth-of-type(3){animation-delay:-1.8s}
+.tbar{position:absolute;left:0;right:0;bottom:0;height:8cqw;display:flex;align-items:center;gap:1.4cqw;padding:0 1.6cqw;border-width:1px 0 0}
+.bb{display:flex;align-items:center;gap:1.2cqw;width:18cqw;height:5cqw;padding:0 1.4cqw;border-radius:1.4cqw;background:rgba(255,255,255,.1);flex:none}
+.bb .icn{width:3.2cqw;height:3.2cqw;border-radius:.9cqw}.bb s{display:block;height:.9cqw;width:7cqw;border-radius:1cqw;background:rgba(255,255,255,.6)}
+.m3 .bb{animation:hT 5.4s infinite}.m3 .bb:nth-of-type(1){animation-delay:0s}
+.m4 .bb{width:15cqw}.m4 .bb:nth-of-type(1){animation:lT 3.6s infinite}.m4 .bb:nth-of-type(2){animation:lT 3.6s infinite -1.8s}
+.m4 .wa{animation:lW 3.6s infinite}
+@keyframes lT{0%,48%{background:rgba(255,255,255,.34);box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)}52%,100%{background:rgba(255,255,255,.1);box-shadow:none}}
+@keyframes lW{0%,48%{--c:#ff9f43}52%,100%{--c:#8e6bff}}
+.modes{display:grid;grid-template-columns:repeat(2,1fr);gap:48px 32px;margin-top:40px}
+.mc h3{font-size:22px;letter-spacing:-.015em;margin:18px 0 6px;font-weight:700}
+.mc ul{margin:0;padding:0;list-style:none;color:var(--mute);font-size:16px}
+.mc li::before{content:"";display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--mute);margin-right:10px;vertical-align:middle}
 
-    /* ── DOWNLOAD CHANNELS ── */
-    .channel-links-row {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 1rem;
-      margin-bottom: 0.5rem;
-      flex-wrap: wrap;
-    }
-    .channel-links-row a {
-      color: var(--blue-light);
-      text-decoration: none;
-      transition: color 0.2s, text-shadow 0.2s;
-      font-weight: 500;
-    }
-    .channel-links-row a:hover {
-      color: var(--text);
-      text-shadow: 0 0 8px rgba(96, 165, 250, 0.4);
-    }
-    .channel-links-row span.separator {
-      color: var(--border-bright);
-    }
 
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 3rem clamp(1.5rem, 5vw, 4rem);
-      text-align: center;
-    }
-    .footer-logo {
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      margin-bottom: 1.25rem;
-    }
-    .footer-links { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; margin-bottom: 1.5rem; }
-    .footer-links a { font-size: 0.875rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--text); }
-    .footer-copy { font-size: 0.8rem; color: var(--text-dim); }
-    .footer-copy a { color: var(--text-muted); text-decoration: none; }
+/* ===== MacBook Air frame around every preview (screen hole = 207,35 to 1842,1097 of 2048x1241) ===== */
+.media.mac{position:relative;isolation:isolate;aspect-ratio:2048/1241;border:0;background:radial-gradient(55% 60% at 50% 46%,var(--glow),transparent 72%);box-shadow:none;border-radius:0;overflow:visible}
+.mac::before{content:"";position:absolute;left:6%;right:6%;bottom:-1.5%;height:5%;background:radial-gradient(ellipse at center,rgba(0,0,0,.55),transparent 70%);filter:blur(14px)}
+.mac::after{content:"";position:absolute;inset:0;background:var(--mac) center/100% 100% no-repeat;pointer-events:none;z-index:30}
+.mac>.scr,.mac>.m{position:absolute;left:10.107%;top:2.84%;width:79.834%;height:85.576%;aspect-ratio:auto}
+.mb{height:2.2cqw;display:flex;align-items:center;justify-content:space-between;padding:0 1.4cqw;font-size:1.2cqw;color:rgba(255,255,255,.92);white-space:nowrap}
+.mb span{display:flex;gap:1.6cqw;align-items:center}.mb i{width:1.1cqw;height:1.1cqw;border-radius:50%;background:#fff;opacity:.9}
+.m .mb{height:2.2cqw}.m .mb span{display:none}
 
-    /* ── SCROLL REVEAL ── */
+/* ===== Page sections ===== */
+section{padding:112px 0 0}
+.row{display:grid;grid-template-columns:1fr 1.35fr;gap:72px;align-items:center;margin-top:96px}
+.row:nth-of-type(even){grid-template-columns:1.35fr 1fr}.row:nth-of-type(even) .txt{order:2}.row:first-of-type{margin-top:56px}
+.txt h3{font-size:clamp(24px,2.6vw,32px);line-height:1.15;letter-spacing:-.02em;margin:0 0 12px;font-weight:700}
+.txt p{color:var(--mute);font-size:17px;max-width:27em}
+.more{display:grid;grid-template-columns:repeat(2,1fr);gap:0 64px;margin-top:40px}
+.more div{padding:20px 0;border-top:1px solid var(--line)}.more b{display:block;font-size:17px;margin-bottom:2px}.more span{color:var(--mute);font-size:15.5px;display:block;max-width:30em}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:120px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.facts div{padding:32px 32px 32px 0}.facts div+div{padding-left:32px;border-left:1px solid var(--line)}
+.facts b{display:block;font-size:20px;letter-spacing:-.01em;margin-bottom:6px}.facts span{color:var(--mute);font-size:15.5px;display:block;max-width:22em}
+.inst{display:grid;grid-template-columns:1fr 1.15fr;gap:72px;align-items:start}
+.code{position:relative;background:var(--code);color:#e8ecf3;border-radius:14px;padding:18px 74px 18px 18px;font:13.5px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;word-break:normal;overflow-wrap:anywhere;border:1px solid var(--line)}
+.code button{position:absolute;top:10px;right:10px;height:30px;padding:0 10px;border-radius:8px;border:1px solid #2c323c;background:#1b2028;color:#cfd6e2;font:600 12px "Hanken Grotesk",sans-serif;cursor:pointer}
+.steps{margin:20px 0 0;padding-left:20px;color:var(--mute);font-size:16px}.steps li{margin-bottom:8px}
+.steps code{font:13px ui-monospace,Menlo,monospace;color:var(--ink);background:var(--panel);border:1px solid var(--line);padding:1px 6px;border-radius:6px;word-break:break-all}
+.lbl{color:var(--mute);font-size:14px;margin:0 0 8px}.lbl:not(:first-child){margin-top:22px}.code.one{white-space:nowrap;overflow-wrap:normal;overflow-x:auto}
+.alt p{color:var(--mute);font-size:16px;margin:24px 0 14px}
+footer{margin-top:120px;border-top:1px solid var(--line);padding:32px 0;color:var(--mute);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}footer nav{gap:20px;font-size:14px}
+@media(max-width:820px){nav a:not(.btn){display:none}.row,.row:nth-of-type(even),.inst,.more,.modes{grid-template-columns:1fr;gap:28px}.more{gap:0}.row:nth-of-type(even) .txt{order:0}.row{margin-top:64px}.facts{grid-template-columns:1fr}.facts div,.facts div+div{padding:24px 0;border-left:0}.facts div+div{border-top:1px solid var(--line)}.hero{padding-top:48px}section{padding-top:80px}.t span{display:none}.t,.h .t,.d .bar .t{width:6cqw;justify-content:center}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.b .menu,.sw,.s .dim,.pb.p1,.pn.p1{opacity:1}.b .sr span{width:7cqw}.pv{opacity:1}}
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      #hero {
-        justify-content: flex-start !important;
-        padding-top: 105px !important;
-        padding-bottom: 15px !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-        min-height: auto !important;
-      }
-      .hero-compat {
-        margin-bottom: 1rem !important;
-      }
-      section {
-        padding: 2.5rem clamp(1rem, 4vw, 2rem) !important;
-      }
-      nav {
-        flex-wrap: wrap !important;
-        height: auto !important;
-        padding: 12px 15px !important;
-        gap: 12px !important;
-      }
-      .nav-links {
-        display: flex !important;
-        order: 3 !important;
-        width: 100% !important;
-        justify-content: flex-start !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        white-space: nowrap !important;
-        padding-bottom: 4px !important;
-        gap: 1.25rem !important;
-        -webkit-overflow-scrolling: touch !important;
-      }
-      .nav-links::-webkit-scrollbar {
-        display: none !important;
-      }
-      .nav-links a {
-        font-size: 0.8rem !important;
-        flex-shrink: 0 !important;
-      }
-      .nav-cta {
-        order: 2 !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 6px !important;
-        white-space: nowrap !important;
-        flex-shrink: 0 !important;
-        height: 32px !important;
-        padding: 0 0.8rem !important;
-        font-size: 0.8rem !important;
-      }
-      .demo-with-presets { flex-direction: column !important; gap: 15px !important; width: 100% !important; max-width: 100% !important; }
-      #hero .badge { order: 1 !important; }
-      #hero h1 { order: 2 !important; margin-bottom: 15px !important; }
-      #hero .hero-sub { order: 3 !important; margin-top: 0.75rem !important; }
-      #hero .homebrew-cmd-box { order: 4 !important; font-size: 0.75em !important; margin: 1rem 0 !important; width: 100% !important; }
-      #hero .hero-actions { order: 5 !important; margin-top: 1rem !important; }
-      #hero .channel-links-row { order: 6 !important; }
-      #hero .hero-stats { order: 7 !important; }
-      #hero .hero-compat { order: 8 !important; }
-      #hero .demo-with-presets { order: 9 !important; }
-      
-      .taskbar-preview {
-        width: 384px !important;
-        height: 254px !important;
-        margin: 0 auto !important;
-        position: relative !important;
-        overflow: hidden !important;
-        border-radius: 10px !important;
-      }
-      .desktop-mock {
-        position: absolute !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 800px !important;
-        height: 530px !important;
-        min-width: 800px !important;
-        max-width: 800px !important;
-        min-height: 530px !important;
-        max-height: 530px !important;
-        transform: scale(0.48) !important;
-        transform-origin: top left !important;
-        aspect-ratio: auto !important;
-      }
-      @media (max-width: 440px) {
-        .taskbar-preview {
-          width: 344px !important;
-          height: 228px !important;
-          border-radius: 9px !important;
-        }
-        .desktop-mock {
-          transform: scale(0.43) !important;
-        }
-      }
-      @media (max-width: 380px) {
-        .taskbar-preview {
-          width: 304px !important;
-          height: 201px !important;
-          border-radius: 8px !important;
-        }
-        .desktop-mock {
-          transform: scale(0.38) !important;
-        }
-      }
-      
-      .color-presets-row {
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: 12px !important;
-        padding: 15px !important;
-        width: 100% !important;
-        margin: 0 !important;
-      }
-      .presets-swatches {
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        justify-content: center !important;
-        gap: 8px !important;
-        width: 100% !important;
-      }
-      .presets-label {
-        writing-mode: horizontal-tb !important;
-        transform: none !important;
-        margin-bottom: 0 !important;
-      }
-      
-      .tint-sliders-row {
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: 15px !important;
-        padding: 15px !important;
-        width: 100% !important;
-        margin: 0 !important;
-      }
-      .tint-slider-group {
-        width: 100% !important;
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        gap: 12px !important;
-      }
-      .tint-slider-label {
-        writing-mode: horizontal-tb !important;
-        transform: none !important;
-        font-size: 0.72rem !important;
-        width: 100px !important;
-        text-align: left !important;
-        flex-shrink: 0 !important;
-      }
-      .tint-slider-vertical-wrap {
-        flex-grow: 1 !important;
-        width: auto !important;
-        height: auto !important;
-        padding: 0 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-      }
-      .tint-slider-vertical {
-        transform: none !important;
-        width: 100% !important;
-        height: 6px !important;
-        margin: 0 !important;
-      }
-      .tint-slider-value {
-        width: 40px !important;
-        text-align: right !important;
-        flex-shrink: 0 !important;
-      }
-      
-      .window-preview {
-        width: 260px !important;
-        bottom: 50px !important;
-        padding: 8px !important;
-      }
-      .preview-header-bar {
-        margin-bottom: 8px !important;
-      }
-      .preview-title {
-        font-size: 0.8rem !important;
-      }
-      .preview-content {
-        height: 160px !important;
-      }
-      .screenshots-grid {
-        grid-template-columns: 1fr !important;
-      }
-      .features-grid {
-        grid-template-columns: 1fr !important;
-      }
-    }
-    .fs-overlay-label {
-      position: absolute; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: opacity 0.3s;
-    }
-    .fs-overlay-label:hover .fs-prompt { transform: scale(1.05); }
-    .fs-overlay-blur {
-      position: absolute; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .fs-prompt {
-      position: relative; z-index: 2; padding: 20px 32px; background: rgba(20,20,20,0.8);
-      border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; font-weight: 600; color: #fff;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform 0.3s; pointer-events: none;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-    }
-    
-    .fs-btn {
-      position: absolute; top: 16px; right: 16px; z-index: 1001;
-      background: rgba(20,20,20,0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff;
-      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem; cursor: pointer; transition: background 0.2s, transform 0.2s;
-    }
-    .fs-btn:hover { background: rgba(20,20,20,0.9); transform: scale(1.05); }
-
-    
-    :fullscreen .fs-overlay-label, :fullscreen .fs-btn { display: none; }
-    :-webkit-full-screen .fs-overlay-label, :-webkit-full-screen .fs-btn { display: none; }
-    :-ms-fullscreen .fs-overlay-label, :-ms-fullscreen .fs-btn { display: none; }
-    
-    .taskbar-preview:fullscreen { border-radius: 0; border: none; height: 100vh; }
-    .taskbar-preview:-webkit-full-screen { border-radius: 0; border: none; height: 100vh; }
-    
-    .taskbar-preview:fullscreen .desktop-mock { aspect-ratio: auto; height: 100%; max-height: none; border-radius: 0; }
-    .taskbar-preview:-webkit-full-screen .desktop-mock { aspect-ratio: auto; height: 100%; max-height: none; border-radius: 0; }
-    
-
-/* Base panel styling */
-.aero-ui-panel {
-  position: absolute;
-  background: rgba(30, 30, 30, 0.95);
-  backdrop-filter: blur(50px) saturate(200%);
-  -webkit-backdrop-filter: blur(50px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
-  color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  overflow: hidden;
-  display: flex;
-}
-
-/* Sidebar styling */
-.aero-ui-sidebar {
-  width: 70px;
-  background: rgba(20, 20, 20, 0.6);
-  border-right: 1px solid rgba(255,255,255,0.05);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px 0;
-  gap: 16px;
-}
-.aero-ui-sidebar-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  opacity: 0.6;
-  cursor: pointer;
-  transition: all 0.2s;
-  width: 54px;
-  padding: 8px 0;
-  border-radius: 8px;
-}
-.aero-ui-sidebar-item:hover {
-  background: rgba(255,255,255,0.05);
-  opacity: 0.9;
-}
-.aero-ui-sidebar-item.active {
-  background: rgba(40, 100, 255, 0.2);
-  border: 1px solid rgba(40, 100, 255, 0.4);
-  opacity: 1;
-}
-.aero-ui-sidebar-item.active span {
-  color: #60a5fa;
-}
-.aero-ui-sidebar-item svg {
-  width: 20px;
-  height: 20px;
-}
-.aero-ui-sidebar-item.active svg {
-  stroke: #60a5fa;
-  fill: #60a5fa;
-}
-.aero-ui-sidebar-item span {
-  font-size: 10px;
-  font-weight: 600;
-}
-
-/* Main Content */
-.aero-ui-content {
-  flex: 1;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-/* Header */
-.aero-ui-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  padding-bottom: 12px;
-}
-.aero-ui-title {
-  font-size: 14px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.aero-ui-title svg {
-  width: 16px;
-  height: 16px;
-  color: #60a5fa;
-}
-.aero-ui-badge {
-  background: #6d28d9;
-  color: #fff;
-  font-size: 9px;
-  font-weight: 800;
-  padding: 2px 6px;
-  border-radius: 4px;
-  letter-spacing: 0.05em;
-}
-
-/* Common controls */
-.aero-ui-btn {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: #fff;
-  border-radius: 6px;
-  padding: 4px 12px;
-  font-size: 11px;
-  font-weight: 500;
-  cursor: pointer;
-}
-.aero-ui-btn:hover {
-  background: rgba(255,255,255,0.15);
-}
-.aero-ui-section {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.05);
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.aero-ui-section-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: #ddd;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.aero-ui-pro-badge {
-  background: #2563eb;
-  color: #fff;
-  font-size: 9px;
-  font-weight: 800;
-  padding: 2px 4px;
-  border-radius: 4px;
-}
-.aero-ui-select {
-  background: rgba(0,0,0,0.3);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: #fff;
-  padding: 6px 12px;
-  border-radius: 6px;
-  width: 100%;
-  font-size: 12px;
-}
-.aero-ui-segment {
-  display: flex;
-  background: rgba(0,0,0,0.3);
-  border-radius: 8px;
-  padding: 2px;
-  border: 1px solid rgba(255,255,255,0.05);
-}
-.aero-ui-segment-btn {
-  flex: 1;
-  text-align: center;
-  padding: 8px 0;
-  font-size: 11px;
-  font-weight: 600;
-  border-radius: 6px;
-  color: rgba(255,255,255,0.6);
-}
-.aero-ui-segment-btn.active {
-  background: rgba(255,255,255,0.1);
-  color: #60a5fa;
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-.aero-ui-color-grid {
-  display: flex;
-  gap: 12px;
-  justify-content: space-between;
-}
-.aero-ui-color {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  font-size: 9px;
-  color: rgba(255,255,255,0.6);
-  text-align: center;
-}
-.aero-ui-color-circle {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 2px solid transparent;
-}
-.aero-ui-color.active .aero-ui-color-circle {
-  border-color: #60a5fa;
-  padding: 2px;
-  background-clip: content-box;
-}
-.aero-ui-slider-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 11px;
-  font-weight: 600;
-  color: #ccc;
-}
-.aero-ui-slider {
-  width: 100%;
-  height: 4px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 2px;
-  position: relative;
-  margin-top: 8px;
-}
-.aero-ui-slider-thumb {
-  width: 12px;
-  height: 12px;
-  background: #fff;
-  border-radius: 50%;
-  position: absolute;
-  top: -4px;
-  left: 11%;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
-
-/* Tray Popups (Pinned, Links, Clipboard) */
-.aero-tray-panel {
-  width: 240px;
-  flex-direction: column;
-}
-.aero-tray-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-.aero-tray-title {
-  font-size: 13px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.aero-tray-title svg {
-  color: #3b82f6;
-  width: 14px;
-  height: 14px;
-}
-.aero-tray-list {
-  display: flex;
-  flex-direction: column;
-  padding: 8px;
-  gap: 4px;
-}
-.aero-tray-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.aero-tray-item:hover {
-  background: rgba(255,255,255,0.05);
-}
-.aero-tray-icon {
-  width: 32px;
-  height: 32px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.aero-tray-icon img {
-  width: 24px;
-  height: 24px;
-}
-.aero-tray-text {
-  font-size: 12px;
-  font-weight: 600;
-}
-
-  
-    .fs-overlay-label {
-      position: absolute; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-      display: flex; align-items: center; justify-content: center; z-index: 1000;
-      cursor: pointer; opacity: 1; transition: opacity 0.3s;
-    }
-    .fs-overlay-blur {
-      position: absolute; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .fs-prompt {
-      position: relative; z-index: 2; padding: 20px 32px; background: rgba(20,20,20,0.8);
-      border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; font-weight: 600; color: #fff;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform 0.3s; pointer-events: none;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-    }
-    
-    .fs-btn {
-      position: absolute; top: 16px; right: 16px; z-index: 1001;
-      background: rgba(20,20,20,0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff;
-      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem; cursor: pointer; transition: background 0.2s, transform 0.2s;
-    }
-    .fs-btn:hover { background: rgba(20,20,20,0.9); transform: scale(1.05); }
-
-    
-    :fullscreen .fs-overlay-label, :fullscreen .fs-btn { display: none; }
-    :-webkit-full-screen .fs-overlay-label, :-webkit-full-screen .fs-btn { display: none; }
-    :-ms-fullscreen .fs-overlay-label, :-ms-fullscreen .fs-btn { display: none; }
-    
-    .taskbar-preview:fullscreen { border-radius: 0; border: none; height: 100vh; }
-    .taskbar-preview:-webkit-full-screen { border-radius: 0; border: none; height: 100vh; }
-    
-    .taskbar-preview:fullscreen .desktop-mock { aspect-ratio: auto; height: 100%; max-height: none; border-radius: 0; }
-    .taskbar-preview:-webkit-full-screen .desktop-mock { aspect-ratio: auto; height: 100%; max-height: none; border-radius: 0; }
-
-  </style>
+/* ===== v3 layout ===== */
+.wrap{max-width:1200px}
+.btn{border-radius:999px;height:50px;padding:0 28px}
+nav .btn{height:36px;padding:0 16px}
+header .wrap{height:64px}
+.hero{padding:104px 24px 0;text-align:center}
+.pill{display:inline-flex;align-items:center;gap:10px;height:34px;padding:0 16px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--mute);font-size:14px;margin-bottom:30px}
+.pill i{width:7px;height:7px;border-radius:50%;background:var(--blue)}
+h1{margin:0 auto;max-width:10.5em;font-size:clamp(44px,8vw,100px);line-height:.98;letter-spacing:-.05em}
+.soft{color:var(--mute)}
+.hero .lede{margin:28px auto 0;max-width:34em}
+.cta{justify-content:center;margin:38px 0 72px}
+.stage{border:1px solid var(--line);border-radius:36px;background:var(--panel);padding:clamp(16px,5vw,72px)}
+.cap{text-align:center;margin:20px 0 0}
+section{padding-top:144px}#features{padding-top:144px!important}
+.head{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:end;padding-top:32px;border-top:1px solid var(--line);margin-bottom:56px}
+.head h2{margin:0;font-size:clamp(34px,4.6vw,60px);line-height:1.02;letter-spacing:-.042em}
+.head .lede{font-size:18px;justify-self:end;max-width:28em}
+.modes{margin-top:0;gap:24px;counter-reset:m}
+.mc{background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:20px 20px 30px;transition:border-color .2s}
+.mc:hover{border-color:var(--mute)}
+.mc h3,.mc ul{padding:0 14px}.mc h3{margin:6px 0 8px;font-size:24px}
+.mc h3::before,.fc h3::before{display:block;color:var(--blue);font-size:13px;font-weight:600;letter-spacing:0;margin-bottom:8px}
+.mc h3::before{counter-increment:m;content:"0" counter(m)}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px;counter-reset:f}
+.fc{background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:20px 20px 12px;display:flex;flex-direction:column}
+.fc.wide{grid-column:1/-1;display:grid;grid-template-columns:1.55fr 1fr;align-items:center;gap:24px;padding:24px}
+.fc .txt{padding:12px 14px 20px}.fc.wide .txt{padding:16px 24px}
+.fc h3::before{counter-increment:f;content:"0" counter(f)}
+.fc .txt h3{font-size:clamp(22px,2.3vw,28px)}.fc .txt p{font-size:16px}
+.sub{font-size:clamp(26px,3vw,36px);letter-spacing:-.03em;margin:112px 0 28px;font-weight:700}
+.more{margin-top:0;background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:8px 44px;column-gap:72px}
+.more div:nth-child(-n+2){border-top:0}
+.facts{margin-top:24px;border:0;gap:24px}
+.facts div,.facts div+div{padding:30px;border:1px solid var(--line);border-radius:24px;background:var(--panel)}
+.facts b::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--blue);margin-right:10px}
+.inst{background:var(--panel);border:1px solid var(--line);border-radius:36px;padding:clamp(24px,5vw,64px);gap:64px}
+.steps{list-style:none;padding:0;counter-reset:st;margin-top:28px}
+.steps li{counter-increment:st;display:flex;gap:14px;margin-bottom:14px}
+.steps li::before{content:counter(st);flex:none;width:28px;height:28px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:13px;color:var(--ink)}
+footer{margin-top:144px}
+@media(max-width:820px){.hero{padding-top:56px}.head{grid-template-columns:1fr;gap:16px}.head .lede{justify-self:start}.fgrid,.fc.wide{grid-template-columns:1fr}.fc.wide{display:flex;padding:20px 20px 12px}.fc.wide .txt{padding:12px 14px 20px}.more{padding:8px 24px}.more div:nth-child(2){border-top:1px solid var(--line)}.facts div,.facts div+div{padding:24px}section,#features{padding-top:88px!important}.sub{margin-top:72px}}
+</style>
 </head>
 <body>
+<header><div class="wrap">
+<a class="brand" href="#top"><span class="o"></span>AeroBar</a>
+<nav><a href="#modes">Modes</a><a href="#features">Features</a><a href="#install">Install</a><a href="https://github.com/adityaonx/AeroBar">GitHub</a><a class="btn pri" href="https://github.com/adityaonx/AeroBar/releases/latest">Download</a></nav>
+</div></header>
 
-<!-- Background orbs -->
-<div class="bg-orbs" aria-hidden="true">
+<main id="top">
+<div class="wrap hero">
+<span class="pill"><i></i>Pro features included during the public beta</span>
+<h1>A taskbar for macOS.<br><span class="soft">Or a better Dock.</span></h1>
+<p class="lede">Every window one click away, with live previews, a ⌘Tab for windows, clipboard history and more. Run it as a taskbar, a floating dock, or on top of the real Dock. Pro features are included during the public beta.</p>
+<div class="cta"><a class="btn pri" href="https://github.com/adityaonx/AeroBar/releases/latest">Download for macOS</a><a class="btn" href="#install">Install with Homebrew</a></div>
+
+<div class="stage"><!-- HERO SLOT: replace the .scr div with <img src="assets/hero.gif" alt="AeroBar on a Mac desktop"> -->
+<figure class="media mac"><div class="scr h w1" role="img" aria-label="AeroBar on a desktop; the bar and menu bar take on the colour of the focused app"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div>
+<div class="w wa"></div><div class="w wb"></div><div class="w wc"></div>
+<div class="bar"><span class="o"></span><span class="ic" style="--c:#2f86ff"></span><span class="ic" style="--c:#ff7a45"></span><span class="ic" style="--c:#34c759"></span><span class="dv"></span>
+<div class="t ta"><i style="--c:#4f8cff"></i><span>Xcode</span></div><div class="t tb"><i style="--c:#ff9f43"></i><span>Pages</span></div><div class="t tc"><i style="--c:#34c759"></i><span>Terminal</span></div><span class="sp"></span>
+<span class="u" data-g="⌕"></span><span class="u" data-g="▤"></span><span class="u" data-g="◫"></span><span class="u" data-g="♪"></span><span class="u" data-g="⇩"></span><span class="u" data-g="◔"></span><span class="u" data-g="⎘"></span><span class="u" data-g="▭"></span><span class="u" data-g="⌫"></span></div>
+</div></figure></div>
+<p class="cap">The bar and the menu bar take on the colour of the app you’re in.</p>
 </div>
 
-<!-- Nav -->
-<nav id="navbar">
-  <a href="#hero" class="nav-logo" aria-label="AeroBar home">
-    <div class="orb-icon"></div>
-    AeroBar
-  </a>
-  <div class="nav-links">
-    <a href="#screenshots">Screenshots</a>
-    <a href="#features">Features</a>
-    <a href="#troubleshooting">Troubleshooting</a>
-    <a href="#install">Install</a>
-    <a href="#contact">Contact</a>
-    <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener">GitHub</a>
-  </div>
-  <a href="https://github.com/adityaonx/AeroBar/releases/latest" class="nav-cta" id="nav-download-btn">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-    Download
-  </a>
-</nav>
+<section id="modes"><div class="wrap">
+<div class="head"><h2>Choose your mode.</h2><p class="lede">Four ways to run AeroBar. You can switch any time in Customize.</p></div>
+<div class="modes">
 
-<!-- Hero -->
-<section id="hero">
-  <h1><span style="color: var(--blue-light);">AeroBar</span><br/><span style="font-size: 0.65em; font-weight: 500; color: #d1d5db;">Advanced Dock for macOS</span></h1>
-  <p class="hero-sub">
-    Aero glass look, Start Menu, live window tabs, pinned app launcher - all sitting at the bottom of your screen.
-  </p>
-  <p class="hero-sub" style="margin-top: 0.5rem; color: var(--blue-light); font-weight: 600;">
-    100% offline. No telemetry. The app never connects to the internet.
-  </p>
-  
-  <div class="homebrew-cmd-box">
-    <span id="homebrew-cmd">brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar &amp;&amp; brew trust adityaonx/aerobar &amp;&amp; HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar</span>
-    <button onclick="copyBrewCmd(this)">Copy</button>
-  </div>
+<div class="mc"><!-- SLOT mode-macdock: replace .m with <img src="assets/mode-macdock.gif" alt="macOS Dock + Extensions"> -->
+<figure class="media mac"><div class="m m1 w1" role="img" aria-label="The real macOS Dock on a glass panel with magnified icons, a window preview and extension buttons beside it"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div><div class="w wa" style="--c:#4f8cff;left:10%;top:14%;width:44%;height:48%"></div>
+<div class="thm"></div><div class="dk glass"><div class="di"><span class="icn" style="--c:#2f86ff"></span><i></i></div><div class="di"><span class="icn" style="--c:#ff7a45"></span><i></i></div><div class="di"><span class="icn" style="--c:#34c759"></span><i></i></div><div class="di"><span class="icn" style="--c:#ff9f43"></span><i></i></div><div class="di"><span class="icn" style="--c:#5e5ce6"></span><i></i></div><div class="di"><span class="icn" style="--c:#ff375f"></span><i></i></div></div><div class="exg glass"><span class="u" data-g="⎘"></span><span class="u" data-g="♪"></span><span class="u" data-g="◔"></span></div></div></figure>
+<h3>macOS Dock + Extensions</h3><ul><li>Keeps the real macOS Dock</li><li>Adds extra features around it</li></ul></div>
 
-  <div class="hero-actions">
-    <a href="https://github.com/adityaonx/AeroBar/releases/latest"
-       class="btn-primary" id="hero-download-btn">
-      Download for Mac
-    </a>
-    <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener"
-       id="hero-github-btn" class="btn-secondary">
-      View on GitHub
-    </a>
-    <a href="https://www.youtube.com/watch?v=NY2qc3SOwXk" target="_blank" rel="noopener"
-       id="hero-youtube-btn" class="btn-youtube">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="margin-right: 4px;">
-        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-      </svg>
-      Video Guide
-    </a>
-  </div>
+<div class="mc"><!-- SLOT mode-aerodock: replace .m with <img src="assets/mode-aerodock.gif" alt="AeroDock"> -->
+<figure class="media mac"><div class="m m2 w2" role="img" aria-label="A floating glass bar with the Aero Orb and pinned apps that lift as the pointer passes"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div><div class="w wa"></div>
+<div class="fb glass"><span class="o"></span><span class="dv"></span><span class="icn" style="--c:#2f86ff"></span><span class="icn" style="--c:#ff7a45"></span><span class="icn" style="--c:#34c759"></span><span class="icn" style="--c:#ff9f43"></span><span class="icn" style="--c:#5e5ce6"></span></div></div></figure>
+<h3>AeroDock</h3><ul><li>Floating bar with pinned apps</li><li>Aero Orb at the start</li></ul></div>
 
-  <div class="hero-stats">
-    <span title="Total downloads across all releases"><b id="stat-downloads">--</b> Downloads</span>
-    <span id="visit-container" style="display: none;" title="Total page visits"><b id="stat-visits">--</b> Visits</span>
-  </div>
+<div class="mc"><!-- SLOT mode-taskbar: replace .m with <img src="assets/mode-taskbar.gif" alt="AeroTaskBar"> -->
+<figure class="media mac"><div class="m m3 w3" role="img" aria-label="A full-width bar with one button per open window; the active window changes"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div><div class="w wa"></div><div class="w wb"></div><div class="w wc"></div>
+<div class="tbar glass"><span class="o"></span><div class="bb"><span class="icn" style="--c:#4f8cff"></span><s></s></div><div class="bb"><span class="icn" style="--c:#ff9f43"></span><s></s></div><div class="bb"><span class="icn" style="--c:#34c759"></span><s></s></div></div></div></figure>
+<h3>AeroTaskBar</h3><ul><li>Full-width bar</li><li>One button per open window</li></ul></div>
 
-</section>
+<div class="mc"><!-- SLOT mode-legacy: replace .m with <img src="assets/mode-legacy.gif" alt="Legacy AeroBar"> -->
+<figure class="media mac"><div class="m m4 w1" role="img" aria-label="One bar holding pinned apps and open window buttons together"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div><div class="w wa"></div>
+<div class="fb glass"><span class="o"></span><span class="icn" style="--c:#34c759"></span><span class="icn" style="--c:#ff9f43"></span><span class="icn" style="--c:#5e5ce6"></span><span class="dv"></span><div class="bb"><span class="icn" style="--c:#ff9f43"></span><s></s></div><div class="bb"><span class="icn" style="--c:#5e5ce6"></span><s></s></div></div></div></figure>
+<h3>Legacy AeroBar</h3><ul><li>Pinned apps and open windows</li><li>Together in one bar</li></ul></div>
 
-<!-- Screenshots -->
-<section id="screenshots">
-  <p class="section-label reveal">See it in action</p>
-  <h2 class="section-title reveal">Native Integration</h2>
-  <p class="section-sub reveal">Real macOS materials, real accessibility APIs - not a theme, not a wrapper.</p>
-  <div class="screenshots-grid">
-    <div class="screenshot-card reveal">
-      <img src="https://github.com/user-attachments/assets/33fced61-d520-46bf-8478-e262af05c88b"
-           alt="Quick switch between app windows in AeroBar" loading="lazy" />
-      <div class="screenshot-card-label">Quick Window Switching</div>
-    </div>
-    <div class="screenshot-card reveal">
-      <img src="https://github.com/user-attachments/assets/0c251738-e864-4302-8de3-c56c01c92adb"
-           alt="AeroBar Start Menu" loading="lazy" />
-      <div class="screenshot-card-label">Start Menu</div>
-    </div>
-    <div class="screenshot-card reveal">
-      <img src="https://github.com/user-attachments/assets/02f417a4-a3e1-42ed-a69d-fc981313a0eb"
-           alt="Pinned app launcher in AeroBar" loading="lazy" />
-      <div class="screenshot-card-label">Pinned App Launcher</div>
-    </div>
-    <div class="screenshot-card reveal">
-      <img src="https://github.com/user-attachments/assets/ace2dd16-2770-42ac-8e5e-48a6d25abb85"
-           alt="AeroBar Appearance Lab customization" loading="lazy" />
-      <div class="screenshot-card-label">Appearance Lab</div>
-    </div>
-  </div>
-</section>
+</div></div></section>
 
-<!-- Features -->
-<section id="features">
-  <div class="features-grid">
-    <div class="feature-card featured reveal">
-      <div class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 12 12 17 22 12"></polyline><polyline points="2 17 12 22 22 17"></polyline></svg>
-      </div>
-      <div class="feature-title">Liquid Glass Taskbar</div>
-      <div class="feature-desc">A persistent, borderless panel that lives at the very bottom of your screen across all Spaces and full-screen transitions. Uses Apple's native vibrancy material to sample your wallpaper - a genuine translucent glass surface, not a screenshot overlay. Five blend styles let you go from deep frosted to nearly transparent.</div>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="14.31" y1="8" x2="20.05" y2="17.94"/><line x1="9.69" y1="8" x2="21.17" y2="8"/><line x1="7.38" y1="12" x2="13.12" y2="2.06"/><line x1="9.69" y1="16" x2="3.95" y2="6.06"/><line x1="14.31" y1="16" x2="2.83" y2="16"/><line x1="16.62" y1="12" x2="10.88" y2="21.94"/></svg>
-      </div>
-      <div class="feature-title">Mac Aero Start Orb</div>
-      <div class="feature-desc">The iconic circular Start Orb in the bottom-left corner. Click it and the full Start Menu opens anchored to your display. Light and dark hover states, fully customizable in Appearance Lab.</div>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-      </div>
-      <div class="feature-title">Live Window Tab Strip</div>
-      <div class="feature-desc">Every open window appears as a tab in real time. Click to focus, click again to minimize, click a minimized tab to restore. Instant window switching - no Exposé cycling needed.</div>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-      </div>
-      <div class="feature-title">Pinned App Launcher</div>
-      <div class="feature-desc">Drag-and-drop your favourite apps into the tray. Click to launch, click to raise all windows, click again to minimize. Right-click any tab to pin that app directly.</div>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-      </div>
-      <div class="feature-title">Spotlight Quick Search</div>
-      <div class="feature-desc">An inline search field fires macOS Spotlight directly. Type an app name, file, or even a calculation and hit Return - exactly like a built-in search box.</div>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-      </div>
-      <div class="feature-title">Full Start Menu</div>
-      <div class="feature-desc">User avatar, live search across all sections, pinned app grid with drag-to-reorder, alphabetical all-apps browser, and recent file recommendations powered by Spotlight metadata.</div>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-      </div>
-      <div class="feature-title">Recycle Bin Button</div>
-      <div class="feature-desc">The Trash shortcut lives at the right end of the bar for quick access. One click opens Trash in Finder.</div>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-      </div>
-      <div class="feature-title">Multi-Display Support</div>
-      <div class="feature-desc">Show the taskbar on all monitors, main screen only, or external displays only. Each display's taskbar is fully independent. The Start Menu opens on whichever monitor you clicked.</div>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
-      </div>
-      <div class="feature-title">Appearance Lab</div>
-      <div class="feature-desc">Configurable blend styles, tint hues, densities, and display targets.</div>
-    </div>
-  </div>
-</section>
-<!-- Privacy & Security -->
-<section id="privacy" style="background: rgba(6,11,20,0.4); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding-bottom: 2rem;">
-  <p class="section-label reveal">Privacy & Stability</p>
-  <h2 class="section-title reveal">Privacy & Security First</h2>
-  <p class="section-sub reveal" style="max-width: 700px;">AeroBar requires Accessibility access to interact with your windows. AeroBar is designed with strict security parameters.</p>
-  
-  <div class="features-grid" >
-    <div class="feature-card reveal">
-      <div class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-      </div>
-      <div class="feature-title">Local Data Storage</div>
-      <div class="feature-desc">All user data is encrypted and stored locally.</div>
-    </div>
-    
-    <div class="feature-card reveal">
-      <div class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
-      </div>
-      <div class="feature-title">No Telemetry</div>
-      <div class="feature-desc">AeroBar has no analytics and no crash reporter. Diagnostics stay on your Mac, and you decide whether to share any of them.</div>
-    </div>
-    
-    <div class="feature-card reveal">
-      <div class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
-      </div>
-      <div class="feature-title">Secure Verification & Updates</div>
-      <div class="feature-desc">AeroBar itself never connects to the internet. Beta codes and updates come through your web browser and are checked on your Mac with a signature before they are used.</div>
-    </div>
-  </div>
-</section>
+<section id="features" style="padding-top:112px"><div class="wrap">
+<div class="head"><h2>What it adds.</h2><p class="lede">Window tabs and the Start Menu belong to the AeroBar modes. Previews, the switcher, clipboard history and the shelf work in all four.</p></div>
 
+<div class="fgrid"><article class="fc wide"><div class="fm">
+<!-- SLOT tabs: replace .scr with <img src="assets/tabs.gif" alt="Window tabs with live preview"> -->
+<figure class="media mac"><div class="scr a w2" role="img" aria-label="Hovering a tab shows a live preview with a close button, then a click minimizes the window"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div>
+<div class="w wa"></div><div class="w wb"></div><div class="w wc"></div>
+<div class="pv gl"><b>Pages – Q3 plan</b><u>×</u></div><div class="plus gl">+</div>
+<div class="bar"><span class="o"></span><div class="t"><i style="--c:#4f8cff"></i><span>Xcode</span></div><div class="t tb"><i style="--c:#ff9f43"></i><span>Pages</span></div><div class="t"><i style="--c:#8e6bff"></i><span>Mail</span><em class="bd">3</em></div><span class="sp"></span><span class="clk">9:41</span></div>
+<div class="cur"></div></div></figure></div><div class="txt"><h3>Every window, one click away</h3><p>In the taskbar modes, open windows become live tabs. Hover for a live preview with a close button, or press + for a new window. Badge counts carry over from the Dock, and the active tab can show as a pill, line, dot or border.</p></div></article>
 
-<!-- Troubleshooting -->
-<section id="troubleshooting">
-  <p class="section-label reveal">Support</p>
-  <h2 class="section-title reveal">Troubleshooting</h2>
-  <div class="features-grid" >
+<article class="fc"><div class="fm">
+<!-- SLOT start-menu: replace .scr with <img src="assets/start-menu.gif" alt="Aero Menu"> -->
+<figure class="media mac"><div class="scr b w3" role="img" aria-label="The Aero Menu opens, a search is typed, and a pinned app is highlighted"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div><div class="w wa"></div>
+<div class="menu gl"><div class="sr"><span>Photos</span></div><h4>Pinned</h4>
+<div class="gr"><i style="--c:#ff7a45"></i><i style="--c:#2f86ff"></i><i style="--c:#5e5ce6"></i><i style="--c:#ffd60a"></i><i style="--c:#34c759"></i><i style="--c:#ff375f"></i><i style="--c:#64d2ff"></i><i style="--c:#8e8e93"></i></div>
+<h4>Recent</h4><div class="rc">Roadmap.key<em>Minutes ago</em></div><div class="rc">Invoice-0412.pdf<em>An hour ago</em></div><div class="rc">icon-v3.png<em>Earlier today</em></div>
+<div class="pw"><span>Lock</span><span>Log Out</span><span>Restart</span><span>Shut Down</span></div></div>
+<div class="bar"><span class="o"></span><span class="ic" style="--c:#2f86ff"></span><span class="ic" style="--c:#ff7a45"></span><span class="sp"></span><span class="clk">9:41</span></div></div></figure></div><div class="txt"><h3>A Start Menu with real depth</h3><p>Click the Aero Orb to search apps and files, pin favourites to a drag-to-reorder grid, pick up recent files, and lock, log out, restart or shut down without leaving the menu.</p></div></article>
 
-    <div class="feature-card reveal" style="grid-column: 1 / -1; background: rgba(245,158,11,0.05); border-color: rgba(245,158,11,0.2);">
-      <h3 style="color: #fbbf24; margin-bottom: 1rem; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-        macOS Input Block / Freeze
-      </h3>
-      
-      <p style="color: var(--text-muted); margin-bottom: 0.75rem; font-size: 0.95rem;">
-        <strong>Symptoms:</strong>
-      </p>
-      <ul style="margin-left: 1.5rem; margin-bottom: 1.25rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
-        <li>Cmd+Tab app switcher or 3-finger swipe window cycling not responding</li>
-        <li>Taskbar button hover highlights not triggering</li>
-        <li>Button popups (Widgets, Quick Links, Window Previews) not appearing on hover</li>
-      </ul>
+<article class="fc"><div class="fm">
+<!-- SLOT switcher: replace .scr with <img src="assets/switcher.gif" alt="Smart Switcher"> -->
+<figure class="media mac"><div class="scr s w2" role="img" aria-label="The Smart Switcher shows live window previews and the selection moves across them"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div><div class="w wa"></div><div class="w wb"></div><div class="dim"></div>
+<div class="sw"><div class="cd" style="--c:#4f8cff;--d:1.2s"><div class="th"></div><p>Xcode</p></div><div class="cd" style="--c:#ff9f43;--d:3s"><div class="th"></div><p>Pages</p></div><div class="cd" style="--c:#34c759;--d:4.8s"><div class="th"></div><p>Terminal</p></div><div class="cd" style="--c:#8e6bff;--d:6.6s"><div class="th"></div><p>Mail</p></div></div>
+<div class="bar"><span class="o"></span><div class="t"><i style="--c:#4f8cff"></i><span>Xcode</span></div><div class="t"><i style="--c:#ff9f43"></i><span>Pages</span></div><span class="sp"></span><span class="clk">9:41</span></div></div></figure></div><div class="txt"><h3>⌘Tab, rebuilt</h3><p>A Smart Switcher with live window previews. ⌘Tab moves between apps and ⌘` between windows of one app. Include apps with no windows, go minimal, or pause it in the apps that need the system switcher.</p></div></article>
 
-      <p style="color: var(--text-muted); margin-bottom: 0.75rem; font-size: 0.95rem;">
-        <strong>Quick Fix Guide (Lift the Block):</strong>
-      </p>
-      <ol style="margin-left: 1.5rem; margin-bottom: 1.25rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
-        <li>Open <strong>System Settings → Privacy & Security → Input Monitoring</strong> (or <strong>Accessibility</strong>).</li>
-        <li>Temporarily <strong>toggle Input Monitoring ON</strong> for AeroBar (or add it if missing).</li>
-        <li>Toggle it back <strong>OFF</strong> (or remove it).</li>
-        <li>This forces macOS Security to reset the HID authorization token and immediately lifts the freeze block!</li>
-      </ol>
+<article class="fc"><div class="fm">
+<!-- SLOT utilities: replace .scr with <img src="assets/utilities.gif" alt="Music, system stats, clipboard and file shelf"> -->
+<figure class="media mac"><div class="scr d w1" role="img" aria-label="Music, system stats, clipboard and file shelf panels open from the bar in turn"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div><div class="w wa"></div><div class="w wb"></div>
+<div class="pn gl mu p1" style="--d:0s;right:8.7cqw;width:28cqw"><div class="art"></div><div><b>Midnight City</b><span>M83</span><div class="pr"></div><div class="ct">⏮ ⏸ ⏭</div></div></div>
+<div class="pn gl sy" style="--d:3s;right:2.1cqw;width:26cqw"><h5>System</h5><div>CPU<i></i></div><div>RAM<i></i></div><div>Network<i></i></div></div>
+<div class="pn gl cl" style="--d:6s;right:2cqw;width:27cqw"><h5>Clipboard <em>Encrypted backup</em></h5><div>npm run build</div><div>https://github.com/adityaonx/AeroBar</div><div>Meeting notes for Thursday</div></div>
+<div class="pn gl sh" style="--d:9s;right:5.9cqw;width:26cqw"><h5>File Shelf</h5><div class="dz">Drop files or folders here to park them<span class="fl" style="--d:9s">Roadmap.key</span></div></div>
+<div class="bar"><span class="o"></span><div class="t"><i style="--c:#4f8cff"></i><span>Xcode</span></div><div class="t"><i style="--c:#34c759"></i><span>Terminal</span></div><span class="sp"></span>
+<span class="u" data-g="⌕"></span><span class="u" data-g="▤"></span><span class="u" data-g="◫"></span><span class="u k" data-g="♪" style="--d:0s"></span><span class="u k" data-g="⇩" style="--d:9s"></span><span class="u k" data-g="◔" style="--d:3s"></span><span class="u k" data-g="⎘" style="--d:6s"></span><span class="u" data-g="▭"></span><span class="u" data-g="⌫"></span></div></div></figure></div><div class="txt"><h3>Clipboard, shelf, music and stats</h3><p>Music controls for Spotify, Apple Music or any web player. CPU, RAM and network at a glance. A shelf to park files and drag them out later. Clipboard history with an encrypted, password-protected backup. Each has its own hotkey.</p></div></article>
 
-      <p style="color: var(--text-muted); margin-bottom: 0; font-size: 0.9rem; line-height: 1.6;">
-        <strong>Alternative:</strong> Open <strong>AeroBar Settings</strong> → <strong>Troubleshoot</strong> tab, and click <strong>Restart Input Event Tap Service</strong>.
-      </p>
-    </div>
+<article class="fc"><div class="fm">
+<!-- SLOT placement: replace .scr with <img src="assets/placement.gif" alt="Bar on each screen edge"> -->
+<figure class="media mac"><div class="scr e w3" role="img" aria-label="The bar moves between the bottom, left, top and right edges"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div><div class="w wa"></div><div class="w wb"></div>
+<div class="bar pb p1" style="--d:0s"><span class="o"></span><div class="t"><i style="--c:#4f8cff"></i><span>Xcode</span></div><div class="t"><i style="--c:#ff9f43"></i><span>Pages</span></div><span class="sp"></span><span class="clk">9:41</span></div>
+<div class="bar v pb" style="--d:3s"><span class="o"></span><span class="ic" style="--c:#4f8cff"></span><span class="ic" style="--c:#ff9f43"></span><span class="ic" style="--c:#34c759"></span><span class="sp"></span><span class="u" data-g="⎘"></span><span class="u" data-g="♪"></span></div>
+<div class="bar t pb" style="--d:6s"><span class="o"></span><div class="t"><i style="--c:#4f8cff"></i><span>Xcode</span></div><div class="t"><i style="--c:#ff9f43"></i><span>Pages</span></div><span class="sp"></span><span class="clk">9:41</span></div>
+<div class="bar v r pb" style="--d:9s"><span class="o"></span><span class="ic" style="--c:#4f8cff"></span><span class="ic" style="--c:#ff9f43"></span><span class="ic" style="--c:#34c759"></span><span class="sp"></span><span class="u" data-g="⎘"></span><span class="u" data-g="♪"></span></div></div></figure></div><div class="txt"><h3>Put it on any edge</h3><p>Bottom, top, left or right, as a taskbar or a dock. Prefer the real thing? Keep the macOS Dock and add AeroBar’s glass, indicators and extensions around it.</p></div></article></div>
+<h3 class="sub">And everything else</h3>
 
-    <div class="feature-card reveal" style="grid-column: 1 / -1; background: rgba(220,38,38,0.1); border-color: rgba(220,38,38,0.2);">
-      <h3 style="color: #fca5a5; margin-bottom: 0.75rem; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-        Emergency Exit
-      </h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">If AeroBar ever freezes or misbehaves, press <code style="background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px; font-family: monospace; color: white;">Cmd+Opt+Ctrl+Shift+Q</code> to forcefully quit the app and safely restore your standard macOS Dock immediately.</p>
-    </div>
+<div class="more">
+<div><b>Dynamic Tint and AuraBar</b><span>The bar samples the active window’s colour, with per-app overrides. AuraBar carries the same glass to the menu bar.</span></div>
+<div><b>Multiple displays</b><span>Show the bar on every display, the main one or only external monitors, with per-display settings and a dimmer for idle screens.</span></div>
+<div><b>Trackpad gestures</b><span>Swipe with three fingers to switch AeroBar windows, with adjustable sensitivity.</span></div>
+<div><b>Global hotkeys</b><span>Assign a shortcut to the clipboard, shelf, widgets, Quick Links, Screen Search, Show Desktop, Mission Control and the bin.</span></div>
+<div><b>Screen Search and Quick Links</b><span>Search what’s on screen with Google Lens, and drag URLs onto the bar to keep them one click away.</span></div>
+<div><b>Tasks, Mission Control, Show Desktop</b><span>A dropdown of open windows grouped by app, plus buttons for Mission Control, Show Desktop and the Trash.</span></div>
+<div><b>Pinned apps and folders</b><span>Drag apps into the tray, pin folders to the shelf, and right-click any tab to pin its app.</span></div>
+<div><b>Glass, tuned</b><span>Start from Frosted Ice, Obsidian Dark, Vibrant Mint, Satin Crimson, Neon Amethyst or Industrial Amber, then adjust tint, strength, borders and bar height. The Dock gets its own glass panel in Dock mode.</span></div>
+<div><b>Focus Mode</b><span>Dim non-hovered items and the wallpaper so your attention stays where it belongs. A separate dimmer covers idle displays.</span></div>
+<div><b>Safer quitting</b><span>Require ⌘Q or ⌘W twice to quit an app or close a window, and quit an app automatically when you close its last window.</span></div>
+</div>
 
-  </div>
-</section>
+<div class="facts">
+<div><b>No telemetry</b><span>No analytics, no crash reporting, no tracking. Diagnostics stay on your Mac unless you share them.</span></div>
+<div><b>Offline</b><span>AeroBar never connects to the internet. Links open in your browser only after you say yes. The beta code page keeps a small record per install; the Privacy Policy lists it.</span></div>
+<div><b>Signed updates</b><span>The Update Basket checks each release’s signature before it installs anything.</span></div>
+</div>
+</div></section>
 
-<!-- Install -->
-<section id="install">
-  <p class="section-label reveal">Installation Guide</p>
-  <h2 class="section-title reveal">Installation</h2>
-  <p class="section-sub reveal">Follow these steps to install the application.</p>
-  
-  <div class="notarization-notice reveal">
-    <div class="notarization-notice-icon"></div>
-    <div class="notarization-notice-content">
-      <h4>Why these extra steps are needed</h4>
-      <p>Apple charges developers a $100/year subscription fee to sign and notarize Mac applications. To keep AeroBar entirely free during our experimental alpha, we self-sign the app rather than paying this fee. As a result, macOS Gatekeeper flags it by default, and window tracking requires Accessibility access to interact with your workspace. Both permissions are completely safe and take less than a minute to authorize below.</p>
-    </div>
-  </div>
+<section id="install"><div class="wrap"><div class="inst">
+<div><h2>Install in one command.</h2>
+<ol class="steps"><li>Run the command, then open AeroBar.</li><li>If macOS says the app is damaged, run the second command.</li><li>Grant Accessibility access when asked.</li></ol></div>
+<div>
+<p class="lbl">Install</p><div class="code">brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew trust adityaonx/aerobar && HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar<button class="copy" type="button">Copy</button></div>
+<p class="lbl">If macOS says the app is damaged</p><div class="code one">xattr -rd com.apple.quarantine /Applications/AeroBar.app<button class="copy" type="button">Copy</button></div>
+<div class="alt"><p>Prefer a disk image? Download the DMG from the latest release. AeroBar isn’t notarized yet, so open it once from System Settings → Privacy &amp; Security → Open Anyway. Homebrew installs AeroBar; later updates come through the Update Basket.</p>
+<a class="btn" href="https://github.com/adityaonx/AeroBar/releases/latest">Get the DMG</a></div>
+</div></div></div></section>
+</main>
 
-  <div class="install-steps">
-    <div class="step reveal">
-      <div class="step-num">1</div>
-      <div class="step-content">
-        <h3>Download &amp; Install</h3>
-        <p>Download <strong>AeroBar.dmg</strong>, open it, and drag <strong>AeroBar.app</strong> to your <code>/Applications</code> folder.</p>
-      </div>
-    </div>
-    <div class="step reveal">
-      <div class="step-num">2</div>
-      <div class="step-content">
-        <h3>Bypass Gatekeeper (first launch only)</h3>
-        <p>AeroBar is self-signed. On first launch, go to <strong>System Settings → Privacy &amp; Security</strong> and click <strong>Open Anyway</strong>. Or run: <code>xattr -rd com.apple.quarantine /Applications/AeroBar.app</code></p>
-      </div>
-    </div>
-    <div class="step reveal">
-      <div class="step-num">3</div>
-      <div class="step-content">
-        <h3>Grant Accessibility Permission</h3>
-        <p>AeroBar needs Accessibility access to track and control windows. The onboarding screen guides you directly to the right settings panel. Toggle AeroBar on, then click <strong>Start AeroBar</strong>. The taskbar appears instantly.</p>
-      </div>
-    </div>
-    <div style="text-align:center; margin-top: 1rem;" class="reveal">
-      <a href="https://github.com/adityaonx/AeroBar/releases/latest"
-         class="btn-primary" style="display:inline-flex;" id="install-download-btn">
-        Download AeroBar.dmg
-      </a>
-    </div>
-  </div>
-</section>
-
-
-<!-- Contact -->
-<section id="contact" style="text-align: center; padding: 1.5rem 1rem; max-width: 800px; margin: 0 auto;">
-  <p class="section-label reveal">Contact</p>
-  <h2 class="section-title reveal">Contact</h2>
-  <p class="section-sub reveal">Contact us for support or feedback.</p>
-  <div class="reveal" style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap;">
-    <a href="https://x.com/adityaonx" target="_blank" rel="noopener" class="btn-secondary">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
-      </svg>
-      Follow
-    </a>
-    <a href="mailto:adityaonlinux@gmail.com" class="btn-secondary">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path>
-      </svg>
-      Email
-    </a>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer>
-  <div class="footer-logo">
-    <div class="orb-icon" style="width:26px;height:26px;border-radius:50%;background:url('assets/aerobar-orb-v2.svg') center/contain no-repeat;box-shadow:0 0 12px rgba(59,130,246,0.4)"></div>
-    <span style="font-weight:700;font-size:1rem;">AeroBar</span>
-  </div>
-  <div class="footer-links">
-    <a href="https://github.com/adityaonx/AeroBar" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://github.com/adityaonx/AeroBar/releases" target="_blank" rel="noopener">Releases</a>
-    <a href="https://github.com/adityaonx/AeroBar/discussions/new/choose" target="_blank" rel="noopener">Discussions</a>
-    <a href="https://github.com/adityaonx/AeroBar/issues/new" target="_blank" rel="noopener">Report a Bug</a>
-    <a href="mailto:adityaonlinux@gmail.com">Contact Us</a>
-    <a href="https://x.com/adityaonx" target="_blank" rel="noopener">X.com</a>
-  </div>
-  <p class="footer-copy">
-    Advanced dock for macOS.<br/>
-    
-  </p>
-</footer>
+<footer><div class="wrap"><span>AeroBar for macOS</span>
+<nav><a href="https://github.com/adityaonx/AeroBar">GitHub</a><a href="https://github.com/adityaonx/AeroBar/releases">Releases</a><a href="https://www.youtube.com/watch?v=NY2qc3SOwXk">Video guide</a></nav></div></footer>
 
 <script>
-  // Copy Homebrew command
-  function copyBrewCmd(btn) {
-    const text = document.getElementById('homebrew-cmd').textContent.trim();
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(() => {
-        btn.innerText = 'Copied!';
-        setTimeout(() => { btn.innerText = 'Copy'; }, 2000);
-      }).catch(() => fallbackCopy(text, btn));
-    } else {
-      fallbackCopy(text, btn);
-    }
-  }
-
-  function fallbackCopy(text, btn) {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    try {
-      document.execCommand('copy');
-      btn.innerText = 'Copied!';
-    } catch (_) {
-      btn.innerText = 'Failed';
-    }
-    setTimeout(() => { btn.innerText = 'Copy'; }, 2000);
-    document.body.removeChild(ta);
-  }
-
-  // Nav scroll shadow
-  const nav = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    nav.style.borderBottomColor = window.scrollY > 10 ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.06)';
-  }, { passive: true });
-
-  // Secret admin visits toggle
-  const visitContainer = document.getElementById('visit-container');
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('stats') === 'show') {
-    localStorage.setItem('showStats', 'true');
-  } else if (params.get('stats') === 'hide') {
-    localStorage.removeItem('showStats');
-  }
-  if (localStorage.getItem('showStats') === 'true') {
-    visitContainer.style.display = 'inline-flex';
-  }
-
-  // Fetch page visits
-  fetch('https://api.counterapi.dev/v1/adityaonx/AeroBar/up')
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById('stat-visits').textContent = data.count.toLocaleString();
-    })
-    .catch(() => {
-      visitContainer.style.display = 'none';
-    });
-
-  // Fetch GitHub downloads
-  fetch('https://api.github.com/repos/adityaonx/AeroBar/releases')
-    .then(response => response.json())
-    .then(releases => {
-      let totalDownloads = 0;
-      releases.forEach(release => {
-        release.assets.forEach(asset => {
-          if (asset.name.endsWith('.dmg')) {
-            totalDownloads += asset.download_count;
-          }
-        });
-      });
-      document.getElementById('stat-downloads').textContent = totalDownloads.toLocaleString();
-
-    })
-    .catch(() => {
-      document.getElementById('stat-downloads').parentElement.style.display = 'none';
-    });
+document.querySelectorAll('.copy').forEach(function(b){b.addEventListener('click',function(){
+ var t=b.previousSibling.textContent;
+ try{navigator.clipboard.writeText(t).then(function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy';},1600);},function(){});}catch(e){}
+});});
 </script>
 </body>
 </html>
