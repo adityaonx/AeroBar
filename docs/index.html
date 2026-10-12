@@ -222,9 +222,9 @@
     }
 
     .homebrew-cmd-box {
-      margin: 1.5rem auto; width: 100%; max-width: 650px; box-sizing: border-box;
+      margin: 1.5rem auto; width: 100%; max-width: 780px; box-sizing: border-box;
       display: flex; align-items: center; justify-content: space-between;
-      font-family: monospace; font-size: 0.85em; color: #e2e8f0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.85em; color: #e2e8f0;
       background: rgba(0,0,0,0.4); padding: 0.5rem 0.5rem 0.5rem 1rem;
       border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
       backdrop-filter: blur(10px);
@@ -1104,6 +1104,10 @@
     100% offline. No telemetry. The app never connects to the internet.
   </p>
   
+  <div class="homebrew-cmd-box">
+    <span id="homebrew-cmd">brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar &amp;&amp; brew trust adityaonx/aerobar &amp;&amp; HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar</span>
+    <button onclick="copyBrewCmd(this)">Copy</button>
+  </div>
 
   <div class="hero-actions">
     <a href="https://github.com/adityaonx/AeroBar/releases/latest"
@@ -1396,6 +1400,36 @@
 </footer>
 
 <script>
+  // Copy Homebrew command
+  function copyBrewCmd(btn) {
+    const text = document.getElementById('homebrew-cmd').textContent.trim();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => {
+        btn.innerText = 'Copied!';
+        setTimeout(() => { btn.innerText = 'Copy'; }, 2000);
+      }).catch(() => fallbackCopy(text, btn));
+    } else {
+      fallbackCopy(text, btn);
+    }
+  }
+
+  function fallbackCopy(text, btn) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      btn.innerText = 'Copied!';
+    } catch (_) {
+      btn.innerText = 'Failed';
+    }
+    setTimeout(() => { btn.innerText = 'Copy'; }, 2000);
+    document.body.removeChild(ta);
+  }
+
   // Nav scroll shadow
   const nav = document.getElementById('navbar');
   window.addEventListener('scroll', () => {

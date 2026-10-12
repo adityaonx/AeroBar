@@ -28,11 +28,10 @@ AeroBar brings the familiar workflow of an advanced dock directly to your Mac. I
 The recommended method to install AeroBar is via Homebrew:
 
 ```bash
-brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar
-brew trust adityaonx/aerobar
-HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
-xattr -rd com.apple.quarantine /Applications/AeroBar.app
+brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew trust adityaonx/aerobar && HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
 ```
+
+*(If macOS displays a quarantine error on first launch, run: `xattr -rd com.apple.quarantine /Applications/AeroBar.app`).*
 
 Homebrew installs AeroBar; it does not update it. AeroBar updates through its own **Update Basket**: download the `.dmg` and its `.sig` from the release page and drop both in the basket, which checks the signature before it installs. A plain `brew upgrade` skips AeroBar. If you force it (`brew upgrade --greedy`), AeroBar will not start that copy and will offer the Update Basket instead.
 

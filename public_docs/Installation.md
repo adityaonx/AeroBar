@@ -7,12 +7,9 @@
 ### Option 1: Homebrew (Recommended)
 
 ```bash
-brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar
-brew trust adityaonx/aerobar
-HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
-xattr -rd com.apple.quarantine /Applications/AeroBar.app
+brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew trust adityaonx/aerobar && HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
 ```
-*(The `HOMEBREW_NO_QUARANTINE=1` environment variable prevents Gatekeeper quarantine. If omitted, proceed to Step 2 below).*
+*(The `HOMEBREW_NO_QUARANTINE=1` environment variable prevents Gatekeeper quarantine. If macOS still reports a damaged application error on first launch, run `xattr -rd com.apple.quarantine /Applications/AeroBar.app`).*
 
 ### Option 2: Manual Download
 
