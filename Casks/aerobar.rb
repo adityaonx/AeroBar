@@ -1,9 +1,9 @@
 cask "aerobar" do
   # v9.6-beta2.4f: the version is the real release version (private/scripts/bump_version.sh writes it) and the release asset is
-  # AeroBar-<version>.dmg, the name sign-release.sh uses. Previous logic: version "9.7-beta1" and url .../v#{version}/AeroBar.dmg,
+  # AeroBar-<version>.dmg, the name sign-release.sh uses. Previous logic: version "9.7-beta2" and url .../v#{version}/AeroBar.dmg,
   # which resolved to .../vlatest/AeroBar.dmg and could not download.
-  version "9.7-beta1"
-  sha256 "e39b9a32c218c0e021a710dbff720fec44d37b8866d4a7ae19052df9f9a345cf"
+  version "9.7-beta2"
+  sha256 "8ad60737b3584365ef612ecbdd89fd03135b9c071a64ad57f38338362c1e1fa5"
 
   url "https://github.com/adityaonx/AeroBar/releases/download/v#{version}/AeroBar-#{version}.dmg"
   name "AeroBar"
