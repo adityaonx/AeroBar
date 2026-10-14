@@ -26,11 +26,11 @@ AeroBar is published by an individual developer, Aditya from India. We decide wh
 Each item below starts only when you click it. AeroBar opens your default browser; AeroBar does not send the request itself.
 
 **a. Getting a beta code (beta builds)**
-* **What is sent:** Your install ID, the release channel (beta or testing) and the AeroBar version, in the address of the activation page, and the one-time request you make by pressing "Get my code"
+* **What is sent:** Your install ID, the release channel (beta or testing), the AeroBar version and the macOS version, in the address of the activation page, and the one-time request you make by pressing "Get my code"
 * **Recipient:** Our activation page, run as a Cloudflare Worker, and Cloudflare Turnstile (a bot check, see below)
 * **Bot check:** The page runs Cloudflare Turnstile to keep automated requests out. Your browser loads the Turnstile script from Cloudflare, so Cloudflare sees that request. When you press "Get my code", our page passes the check result and your IP address to Cloudflare to verify it. We do not store your IP address. Cloudflare handles Turnstile data under its own terms.
 * **What comes back:** A signed code, valid for 7 days, which you paste into AeroBar. AeroBar checks it on your Mac.
-* **Kept by us:** A one-way hash of your install ID, the release channel and AeroBar version you sent, the country Cloudflare derives from your request, the number of codes issued to that install, and the dates of the first and most recent code. We keep this only to see how many beta installs exist and in which countries. It is deleted automatically 90 days after your last code. AeroBar itself sends us nothing while you use it. Total Factory Reset gives your Mac a new install ID.
+* **Kept by us:** A one-way hash of your install ID, the release channel, AeroBar version and macOS version you sent, the country Cloudflare derives from your request, the number of codes issued to that install, and the dates of the first and most recent code. We keep this only to see how many beta installs exist and in which countries. It is deleted automatically 90 days after your last code. AeroBar itself sends us nothing while you use it. Total Factory Reset gives your Mac a new install ID.
 
 **b. Downloading an update**
 * **What is sent:** A standard web request (your IP address)
