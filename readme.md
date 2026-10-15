@@ -1,28 +1,20 @@
-<p align="center">
-  <a href="https://adityaonx.github.io/AeroBar/">
-    <img src="docs/assets/aerobar-orb-v2.svg" alt="AeroBar Logo" width="110"/>
-  </a>
-</p>
+<h3 align="center">
+  <a href="https://adityaonx.github.io/AeroBar/"><img src="docs/assets/aerobar-orb-v2.svg" alt="AeroBar Logo" width="36" align="absmiddle"/></a>&nbsp;AeroBar&nbsp;&nbsp;|&nbsp;&nbsp;A taskbar for macOS. Or a better Dock.
+</h3>
 
-<h1 align="center">AeroBar</h1>
-
-<p align="center">
-  <b>A taskbar for macOS. Or a better Dock.</b><br>
-  <i>Every window one click away, with live previews, a ⌘Tab for windows, clipboard history and deep trackpad gestures.</i>
-</p>
+<p align="center"><i>Every window one click away, with live previews, a ⌘Tab for windows, clipboard history and deep trackpad gestures.</i></p>
 
 <p align="center">
   <img src="docs/assets/badge-telemetry.svg" alt="Zero Telemetry" />
   <img src="docs/assets/badge-offline.svg" alt="100% Offline" />
   <img src="docs/assets/badge-signed.svg" alt="Signed Updates" />
   <img src="docs/assets/badge-macos.svg" alt="macOS 14.0+" />
-  <img src="docs/assets/badge-license.svg" alt="GPL-3.0 OSS" />
 </p>
 
 <p align="center">
-  <a href="https://adityaonx.github.io/AeroBar/"><img src="docs/assets/website-btn.svg" alt="Website" /></a>
-  <a href="https://github.com/adityaonx/AeroBar/releases/latest"><img src="docs/assets/download-btn.svg" alt="Downloads" /></a>
-  <a href="https://www.youtube.com/watch?v=NY2qc3SOwXk"><img src="docs/assets/youtube_guide.svg" alt="YouTube Guide" /></a>
+  <a href="https://adityaonx.github.io/AeroBar/"><img src="docs/assets/website-btn.svg" alt="Website" height="36" /></a>
+  <a href="https://github.com/adityaonx/AeroBar/releases/latest"><img src="docs/assets/download-btn.svg" alt="Downloads" height="36" /></a>
+  <a href="https://www.youtube.com/watch?v=NY2qc3SOwXk"><img src="docs/assets/youtube_guide.svg" alt="YouTube Guide" height="36" /></a>
 </p>
 
 <p align="center">

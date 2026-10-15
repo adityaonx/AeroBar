@@ -161,17 +161,17 @@ footer nav{display:flex;gap:22px}
 @media(max-width:380px){.dock a.t{padding:0 8px;font-size:13.5px}}
 /* CHANGED (hero claims row). PREVIOUS logic: badges sat in the left text column under the hero note, used
    assets/badge-*.svg (viewBox clipped exactly to the 134x32 pill, so the drop-shadow filter was cut off into a
-   lighter rectangle that "bled" past the rounded corners), and included GPL-3.0 OSS.
-   NEW logic: the row sits in the right column directly above the main preview, centred, with GPL-3.0 removed, and uses
+   lighter rectangle that "bled" past the rounded corners), and included a license badge.
+   NEW logic: the row sits in the right column directly above the main preview, centred, with the license badge removed, and uses
    assets/site-badge-*.svg (same pill, viewBox padded by 14px so the shadow is not clipped). The 14px padding is
    cancelled with a -14px margin so the pills keep their 32px visual size and spacing.
    RISKS: (1) the shadow now overflows each <li>; a future overflow:hidden on .claims or a parent would clip it again
    and bring the bleed back. (2) Negative margins make neighbouring images' padding overlap (transparent, harmless).
    (3) On desktop the row adds height above the preview in the right column, so the preview sits lower than the text
    column's vertical centre. (4) assets/site-badge-license.svg and badge-*.svg are now unused by the site (readme.md
-   still uses badge-*.svg incl. GPL) - keep them. (5) The 4 claims now live in markup only; "GPL-3.0" is still stated in #privacy prose.
+   still uses badge-*.svg) - keep them. (5) The 4 claims now live in markup only.
    TO REVERT: restore the old block, move the <ul> back under .small in the left column, swap site-badge-* for badge-*
-   and re-add the GPL-3.0 <li>. */
+   and re-add the license <li>. */
 .claims{display:flex;flex-wrap:wrap;justify-content:center;gap:0 10px;list-style:none;margin:0 0 14px;padding:0}
 .claims li{display:flex}
 .claims img{display:block;height:60px;width:auto;margin:-14px}
@@ -309,7 +309,7 @@ footer nav{display:flex;gap:22px}
 </div></section>
 
 <section id="privacy"><div class="wrap">
- <p class="priv">No telemetry. No analytics. No crash reporting. <span>AeroBar works offline, and the code is GPL-3.0 so you can check.</span> <a href="https://github.com/adityaonx/AeroBar/blob/HEAD/PRIVACY.md">Read the privacy policy</a></p>
+ <p class="priv">No telemetry. No analytics. No crash reporting. <span>AeroBar works offline.</span> <a href="https://github.com/adityaonx/AeroBar/blob/HEAD/PRIVACY.md">Read the privacy policy</a></p>
  <p class="priv-note">Updates are signed, and the Update Basket checks each signature before installing. Links open in your browser only after you say yes. The beta code page keeps a small record per install, and the privacy policy lists exactly what.</p>
 </div></section>
 
