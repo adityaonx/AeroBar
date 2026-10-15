@@ -47,7 +47,7 @@ kbd{font:600 .82em/1 inherit;padding:.28em .5em;border-radius:6px;background:var
 .cap{color:var(--mute);font-size:14.5px;margin-top:12px}
 
 /* hero */
-.hero{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(24px,3.5vw,56px);align-items:center;padding-top:clamp(32px,6vw,80px)}
+.hero{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(24px,3.5vw,56px);align-items:center;padding-top:clamp(18px,2.2vw,28px)}
 .brandline{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;margin-bottom:26px}
 .brandline .orb{width:32px;height:32px}
 
@@ -175,6 +175,15 @@ footer nav{display:flex;gap:22px}
 .claims{display:flex;flex-wrap:wrap;justify-content:center;gap:0 10px;list-style:none;margin:0 0 14px;padding:0}
 .claims li{display:flex}
 .claims img{display:block;height:60px;width:auto;margin:-14px}
+
+/* Social links (GitHub, X): sit on the same horizontal line as the AeroBar brandline, right-aligned above the claims row.
+   Desktop (>=901px): .hero switches to align-items:start so both columns begin on the same line and the 32px
+   socials row lines up exactly with the 32px brandline. Below 901px the hero stacks, so the row is centred above the claims (tablet) or placed centred directly under the brandline / header Download button (mobile, order:1 ties with .brandline and follows it in DOM order). */
+.socials{display:flex;list-style:none;margin:0 0 14px;padding:0;gap:10px;justify-content:center;align-items:center}
+.socials a{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px 0 11px;border-radius:999px;color:var(--ink);background:var(--glass2);border:1px solid var(--line);font:600 14.5px "Hanken Grotesk",sans-serif;text-decoration:none;white-space:nowrap;transition:transform .15s,background .2s}
+.socials a:hover{transform:translateY(-1px)}
+.socials svg{width:17px;height:17px;fill:currentColor;display:block}
+@media(min-width:901px){.hero{align-items:start}.socials{justify-content:flex-end;height:32px;margin:0 0 26px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 /* MacBook frame around every preview (screen hole = 207,36 to 1842,1097 of 2048x1196); media overscans the hole and sits under the bezel */
@@ -194,16 +203,18 @@ footer nav{display:flex;gap:22px}
    Both hero columns become display:contents so their children can be re-ordered as one stack.
    The header Download button is mobile-only; the full CTA block below the badges is unchanged. */
 .brandline .hdr-dl{display:none}
+.cap-m{display:none}
 @media(max-width:700px){
  .hero{row-gap:0}
  .hero>div{display:contents}
- .brandline{order:1;margin-bottom:18px}
+ .brandline{order:1;margin-bottom:12px}
  .brandline .hdr-dl{display:inline-flex;margin-left:auto;height:40px;padding:0 18px;font-size:15px;border-radius:12px}
- .hero h1{order:2}
- .hero .lede{order:3}
- .hero .screen{order:4;margin-top:28px}
- .hero .cap{order:5}
+ .hero h1{order:2;font-size:clamp(34px,6.4vw,44px)}
+ .hero .lede{display:none}
+ .hero .cap-m{display:block;order:3;margin:14px 0 0}
+ .hero .screen{order:4;margin-top:18px}
  .hero .claims{order:6;margin-top:18px}
+ .hero .socials{order:1;justify-content:center;margin:0 0 20px}
  .hero .cta{order:7;margin-top:14px}
  .hero .small{order:8}
 }
@@ -235,6 +246,10 @@ footer nav{display:flex;gap:22px}
   <p class="small">Pro features are included during the public beta. Requires macOS 14 or later. <a href="https://www.youtube.com/watch?v=NY2qc3SOwXk">Watch the video guide</a>.</p>
  </div>
  <div>
+  <ul class="socials" aria-label="AeroBar on GitHub and X">
+   <li><a href="https://github.com/adityaonx/AeroBar" title="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>GitHub</a></li>
+   <li><a href="https://x.com/adityaonx" title="Follow on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Follow on X</a></li>
+  </ul>
   <ul class="claims" aria-label="AeroBar at a glance">
    <li><img src="assets/site-badge-telemetry.svg" width="162" height="60" alt="Zero Telemetry"></li>
    <li><img src="assets/site-badge-offline.svg" width="150" height="60" alt="100% Offline"></li>
@@ -242,7 +257,7 @@ footer nav{display:flex;gap:22px}
    <li><img src="assets/site-badge-macos.svg" width="154" height="60" alt="macOS 14.0+"></li>
   </ul>
   <figure class="screen"><img src="assets/hero-poster.jpg" width="1108" height="720" alt="AeroBar on a Mac desktop with window tabs, live previews and the Aero Orb"><video muted loop playsinline preload="none" poster="assets/hero-poster.jpg" aria-label="AeroBar on a Mac desktop with live window previews and taskbar"><source src="assets/hero.mp4" type="video/mp4"></video></figure>
-  <p class="cap">The bar and the menu bar take on the colour of the app you’re in.</p>
+  <p class="cap cap-m">Live previews, window-switching ⌘ Tab, clipboard history and more.</p>
  </div>
 </div>
 
