@@ -5,559 +5,413 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AeroBar – A taskbar for macOS, or a better Dock</title>
 <meta name="description" content="Run AeroBar as a taskbar, a floating dock, or on top of the real macOS Dock. Live window previews, a window-level ⌘Tab, clipboard history, a file shelf and more.">
+<meta property="og:title" content="AeroBar – A taskbar for macOS, or a better Dock">
+<meta property="og:description" content="Live window previews, a window-level ⌘Tab, clipboard history and more. No telemetry, works offline.">
+<meta property="og:image" content="https://adityaonx.github.io/AeroBar/assets/hero-poster.jpg">
+<meta name="theme-color" content="#1a2350">
+<link rel="icon" type="image/svg+xml" href="assets/aerobar-orb-v2.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#1a1a19;--ink:#f0f0ee;--mute:#a4a4a0;--line:#31312f;--panel:#242423;--blue:#3d8bff;--code:#111110;--glow:rgba(255,255,255,.12);--mac:url("data:image/svg+xml,%3Csvg width='2048' height='1241' viewBox='0 0 2048 1241' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cg clip-path='url(%23clip0_6103_5129)'%3E %3Cpath d='M1942.19 1235.64C1944.93 1235.09 1946.77 1232.65 1947.34 1231.5H1810.86C1811.44 1232.65 1813.27 1235.09 1816.01 1235.64C1816.3 1237.25 1817.56 1240.48 1820.3 1240.48H1937.9C1940.64 1240.48 1941.9 1237.25 1942.19 1235.64Z' fill='url(%23paint0_linear_6103_5129)'/%3E %3Cpath d='M1942.06 1236.2C1941.62 1237.89 1940.35 1240.48 1937.89 1240.48H1820.3C1817.74 1240.48 1816.47 1237.67 1816.08 1235.99H1942.06V1236.2Z' fill='black' fill-opacity='0.3'/%3E %3Cpath d='M231.028 1235.64C233.775 1235.09 235.606 1232.65 236.178 1231.5H99.7031C100.275 1232.65 102.106 1235.09 104.853 1235.64C105.139 1237.25 106.398 1240.48 109.145 1240.48H226.736C229.483 1240.48 230.742 1237.25 231.028 1235.64Z' fill='url(%23paint1_linear_6103_5129)'/%3E %3Cpath d='M230.904 1236.19C230.461 1237.89 229.197 1240.48 226.736 1240.48H109.145C106.583 1240.48 105.317 1237.67 104.926 1235.99H230.904V1236.19Z' fill='black' fill-opacity='0.3'/%3E %3Cmask id='mask0_6103_5129' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='0' y='1181' width='2048' height='51'%3E %3Cpath d='M2048 1186.57V1181.19H0V1186.57C0 1202.3 0 1210.16 4.40563 1216.17C8.28094 1221.45 14.4645 1225.74 22.0703 1228.44C30.7168 1231.5 42.0358 1231.5 64.6737 1231.5H1983.33C2005.96 1231.5 2017.28 1231.5 2025.93 1228.44C2033.54 1225.74 2039.72 1221.45 2043.59 1216.17C2048 1210.16 2048 1202.3 2048 1186.57Z' fill='white'/%3E %3C/mask%3E %3Cg mask='url(%23mask0_6103_5129)'%3E %3Cpath d='M2048 1186.57V1181.19H0V1186.57C0 1202.3 0 1210.16 4.40563 1216.17C8.28094 1221.45 14.4645 1225.74 22.0703 1228.44C30.7168 1231.5 42.0358 1231.5 64.6737 1231.5H1983.33C2005.96 1231.5 2017.28 1231.5 2025.93 1228.44C2033.54 1225.74 2039.72 1221.45 2043.59 1216.17C2048 1210.16 2048 1202.3 2048 1186.57Z' fill='url(%23paint2_linear_6103_5129)'/%3E %3Cpath d='M2048 1181.19H1818.05V1231.49H2048V1181.19Z' fill='url(%23paint3_linear_6103_5129)'/%3E %3Cpath d='M-0.000900269 1181.19H231.746V1231.49H-0.000900269V1181.19Z' fill='url(%23paint4_linear_6103_5129)'/%3E %3Cg filter='url(%23filter0_f_6103_5129)'%3E %3Cpath d='M4.49219 1172.21H30.5413V1198.71C30.5413 1205.9 24.71 1211.73 17.5167 1211.73C10.3235 1211.73 4.49219 1205.9 4.49219 1198.71V1172.21Z' fill='url(%23paint5_linear_6103_5129)'/%3E %3C/g%3E %3Cg filter='url(%23filter1_f_6103_5129)'%3E %3Cpath d='M2043.51 1172.21H2017.46V1198.71C2017.46 1205.9 2023.29 1211.73 2030.48 1211.73C2037.68 1211.73 2043.51 1205.9 2043.51 1198.71V1172.21Z' fill='url(%23paint6_linear_6103_5129)'/%3E %3C/g%3E %3C/g%3E %3Cpath d='M839.859 1181.19H1208.14C1208.14 1195.08 1196.88 1206.34 1182.99 1206.34H865.01C851.12 1206.34 839.859 1195.08 839.859 1181.19Z' fill='url(%23paint7_linear_6103_5129)'/%3E %3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M1881.83 61.0807C1881.83 27.3468 1854.48 0 1820.74 0H229.053C195.319 0 167.973 27.3468 167.973 61.0808V1145.26C167.973 1156.04 169.769 1181.19 181.446 1181.19H1868.35C1880.03 1181.19 1881.83 1156.04 1881.83 1145.26V61.0807ZM207 56.7962C207 44.8901 216.652 35.2383 228.558 35.2383H1820.44C1832.35 35.2383 1842 44.8901 1842 56.7962V1097.24H207V56.7962Z' fill='black'/%3E %3Cmask id='mask1_6103_5129' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='167' y='1125' width='1715' height='57'%3E %3Cpath d='M167.973 1181.19V1145.26C167.973 1134.35 176.82 1125.5 187.734 1125.5H1862.06C1872.98 1125.5 1881.83 1134.35 1881.83 1145.26V1181.19H1868.35H181.446H167.973Z' fill='black'/%3E %3C/mask%3E %3Cg mask='url(%23mask1_6103_5129)'%3E %3Cg filter='url(%23filter2_d_6103_5129)'%3E %3Cpath d='M1860.27 1181.19C1877.02 1176.41 1875.71 1149.65 1875.52 1135.55C1875.48 1133 1873.38 1130.82 1870.89 1131.38C1847.89 1136.49 1856.07 1180.35 1841.4 1181.19H1860.27Z' fill='%23141311'/%3E %3C/g%3E %3Cg filter='url(%23filter3_d_6103_5129)'%3E %3Cpath d='M189.611 1181.19C172.857 1176.41 174.173 1149.65 174.362 1135.55C174.396 1133 176.498 1130.82 178.986 1131.38C201.985 1136.49 193.813 1180.35 208.474 1181.19H189.611Z' fill='%23141311'/%3E %3C/g%3E %3C/g%3E %3Cg filter='url(%23filter4_ii_6103_5129)'%3E %3Cpath d='M1842.3 1181.19C1858.15 1181.19 1871 1166.83 1871.04 1149.09V1130.89H178.75V1149C178.75 1166.78 191.619 1181.19 207.494 1181.19H1842.3Z' fill='%23131415'/%3E %3C/g%3E %3Cg filter='url(%23filter5_ii_6103_5129)'%3E %3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M1820.75 5.39062H229.055C198.297 5.39062 173.363 30.3244 173.363 61.0819V1147.06C173.363 1165.91 188.645 1181.19 207.497 1181.19H363.791V1179.4C363.791 1177.41 362.183 1175.8 360.198 1175.8H207.497C191.622 1175.8 178.753 1162.93 178.753 1147.06V61.0819C178.753 33.301 201.274 10.7801 229.055 10.7801H1820.75C1848.53 10.7801 1871.05 33.301 1871.05 61.0819V1147.06C1871.05 1162.93 1858.18 1175.8 1842.3 1175.8H1689.6C1687.62 1175.8 1686.01 1177.41 1686.01 1179.4V1181.19H1842.3C1861.15 1181.19 1876.44 1165.91 1876.44 1147.06V61.0819C1876.44 30.3244 1851.5 5.39062 1820.75 5.39062Z' fill='%23131415'/%3E %3C/g%3E %3Cpath d='M907.234 35.0312H920.408C923.384 35.0312 925.797 37.4442 925.797 40.4207V60.1821C925.797 66.1352 930.623 70.9611 936.576 70.9611H1114.13C1120.09 70.9611 1124.91 66.1352 1124.91 60.1821V40.4207C1124.91 37.4442 1127.32 35.0312 1130.3 35.0312H1143.47H907.234Z' fill='black'/%3E %3Cg filter='url(%23filter6_f_6103_5129)'%3E %3Cpath d='M1024.9 52.9963C1030.85 52.9963 1035.68 48.1704 1035.68 42.2174C1035.68 36.2644 1030.85 31.4385 1024.9 31.4385C1018.95 31.4385 1014.12 36.2644 1014.12 42.2174C1014.12 48.1704 1018.95 52.9963 1024.9 52.9963Z' fill='%230F1316'/%3E %3C/g%3E %3Cg filter='url(%23filter7_f_6103_5129)'%3E %3Cpath d='M1024.9 50.3012C1029.37 50.3012 1032.98 46.6818 1032.98 42.217C1032.98 37.7522 1029.37 34.1328 1024.9 34.1328C1020.44 34.1328 1016.82 37.7522 1016.82 42.217C1016.82 46.6818 1020.44 50.3012 1024.9 50.3012Z' fill='%23080905'/%3E %3C/g%3E %3Cg filter='url(%23filter8_f_6103_5129)'%3E %3Cpath d='M1024.9 45.8108C1026.89 45.8108 1028.49 45.0064 1028.49 44.0143C1028.49 43.0221 1026.89 42.2178 1024.9 42.2178C1022.92 42.2178 1021.31 43.0221 1021.31 44.0143C1021.31 45.0064 1022.92 45.8108 1024.9 45.8108Z' fill='%2305111D'/%3E %3C/g%3E %3Cg filter='url(%23filter9_f_6103_5129)'%3E %3Cpath d='M1024.9 42.217C1026.89 42.217 1028.49 41.4127 1028.49 40.4205C1028.49 39.4283 1026.89 38.624 1024.9 38.624C1022.92 38.624 1021.31 39.4283 1021.31 40.4205C1021.31 41.4127 1022.92 42.217 1024.9 42.217Z' fill='%2305111D'/%3E %3C/g%3E %3Cg filter='url(%23filter10_f_6103_5129)'%3E %3Cpath d='M1024.9 45.81C1026.39 45.81 1027.6 45.2067 1027.6 44.4626C1027.6 43.7185 1026.39 43.1152 1024.9 43.1152C1023.41 43.1152 1022.21 43.7185 1022.21 44.4626C1022.21 45.2067 1023.41 45.81 1024.9 45.81Z' fill='%230F3455'/%3E %3C/g%3E %3Cg filter='url(%23filter11_f_6103_5129)'%3E %3Cpath d='M1024.9 42.217C1026.39 42.217 1027.6 41.4127 1027.6 40.4205C1027.6 39.4283 1026.39 38.624 1024.9 38.624C1023.41 38.624 1022.21 39.4283 1022.21 40.4205C1022.21 41.4127 1023.41 42.217 1024.9 42.217Z' fill='%230F3857'/%3E %3C/g%3E %3C/g%3E %3Cdefs%3E %3Cfilter id='filter0_f_6103_5129' x='-0.897293' y='1166.82' width='36.8297' height='50.2985' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='2.69474' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter1_f_6103_5129' x='2012.07' y='1166.82' width='36.8297' height='50.2985' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='2.69474' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter2_d_6103_5129' x='1840.5' y='1129.49' width='37.8117' height='53.4914' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dx='0.898246'/%3E %3CfeGaussianBlur stdDeviation='0.898246'/%3E %3CfeComposite in2='hardAlpha' operator='out'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.0784314 0 0 0 0 0.0745098 0 0 0 0 0.0666667 0 0 0 1 0'/%3E %3CfeBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_6103_5129'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow_6103_5129' result='shape'/%3E %3C/filter%3E %3Cfilter id='filter3_d_6103_5129' x='171.567' y='1129.49' width='37.8039' height='53.4914' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dx='-0.898246'/%3E %3CfeGaussianBlur stdDeviation='0.898246'/%3E %3CfeComposite in2='hardAlpha' operator='out'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.0784314 0 0 0 0 0.0745098 0 0 0 0 0.0666667 0 0 0 1 0'/%3E %3CfeBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_6103_5129'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow_6103_5129' result='shape'/%3E %3C/filter%3E %3Cfilter id='filter4_ii_6103_5129' x='177.852' y='1129.99' width='1694.09' height='51.1981' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dx='-0.898246' dy='-0.898246'/%3E %3CfeGaussianBlur stdDeviation='0.898246'/%3E %3CfeComposite in2='hardAlpha' operator='arithmetic' k2='-1' k3='1'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/%3E %3CfeBlend mode='normal' in2='shape' result='effect1_innerShadow_6103_5129'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dx='0.898246' dy='-0.898246'/%3E %3CfeGaussianBlur stdDeviation='0.898246'/%3E %3CfeComposite in2='hardAlpha' operator='arithmetic' k2='-1' k3='1'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/%3E %3CfeBlend mode='normal' in2='effect1_innerShadow_6103_5129' result='effect2_innerShadow_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter5_ii_6103_5129' x='173.363' y='5.39062' width='1703.08' height='1176.7' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dy='0.898246'/%3E %3CfeGaussianBlur stdDeviation='1.34737'/%3E %3CfeComposite in2='hardAlpha' operator='arithmetic' k2='-1' k3='1'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.1 0'/%3E %3CfeBlend mode='normal' in2='shape' result='effect1_innerShadow_6103_5129'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dy='0.898246'/%3E %3CfeGaussianBlur stdDeviation='0.898246'/%3E %3CfeComposite in2='hardAlpha' operator='arithmetic' k2='-1' k3='1'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/%3E %3CfeBlend mode='normal' in2='effect1_innerShadow_6103_5129' result='effect2_innerShadow_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter6_f_6103_5129' x='1012.32' y='29.642' width='25.1516' height='25.1506' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter7_f_6103_5129' x='1015.02' y='32.3363' width='19.761' height='19.761' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter8_f_6103_5129' x='1019.51' y='40.4213' width='10.7805' height='7.18576' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter9_f_6103_5129' x='1019.51' y='36.8275' width='10.7805' height='7.18576' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter10_f_6103_5129' x='1020.41' y='41.3187' width='8.98361' height='6.28732' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter11_f_6103_5129' x='1020.41' y='36.8275' width='8.98361' height='7.18576' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3ClinearGradient id='paint0_linear_6103_5129' x1='1810.86' y1='1235.99' x2='1947.34' y2='1235.99' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23565F6D'/%3E %3Cstop offset='0.173014' stop-color='%232E353F'/%3E %3Cstop offset='0.31824' stop-color='%2356606D'/%3E %3Cstop offset='0.691458' stop-color='%2356606D'/%3E %3Cstop offset='0.825754' stop-color='%232E353F'/%3E %3Cstop offset='1' stop-color='%23565F6D'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint1_linear_6103_5129' x1='99.7031' y1='1235.99' x2='236.178' y2='1235.99' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23565F6D'/%3E %3Cstop offset='0.173014' stop-color='%232E353F'/%3E %3Cstop offset='0.31824' stop-color='%2356606D'/%3E %3Cstop offset='0.691458' stop-color='%2356606D'/%3E %3Cstop offset='0.825754' stop-color='%232E353F'/%3E %3Cstop offset='1' stop-color='%23565F6D'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint2_linear_6103_5129' x1='1024' y1='1181.19' x2='1024' y2='1231.5' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23586170'/%3E %3Cstop offset='0.192522' stop-color='%2356606C'/%3E %3Cstop offset='0.376094' stop-color='%234F5965'/%3E %3Cstop offset='0.598958' stop-color='%23343C45'/%3E %3Cstop offset='0.713542' stop-color='%231B222C'/%3E %3Cstop offset='0.852125' stop-color='%23161D27'/%3E %3Cstop offset='0.931356' stop-color='%23444C57'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint3_linear_6103_5129' x1='2048' y1='1207.11' x2='1818.05' y2='1207.11' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23212733' stop-opacity='0'/%3E %3Cstop offset='0.259918' stop-color='%23212733'/%3E %3Cstop offset='1' stop-color='%23212733' stop-opacity='0'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint4_linear_6103_5129' x1='-0.000900269' y1='1207.1' x2='231.746' y2='1207.1' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23212733' stop-opacity='0'/%3E %3Cstop offset='0.259918' stop-color='%23212733'/%3E %3Cstop offset='1' stop-color='%23212733' stop-opacity='0'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint5_linear_6103_5129' x1='4.49219' y1='1185.76' x2='30.5413' y2='1185.76' gradientUnits='userSpaceOnUse'%3E %3Cstop offset='0.0875682' stop-color='white' stop-opacity='0.17'/%3E %3Cstop offset='0.272185' stop-color='white' stop-opacity='0.65'/%3E %3Cstop offset='0.489769' stop-color='white' stop-opacity='0.65'/%3E %3Cstop offset='0.677083' stop-color='white' stop-opacity='0.19'/%3E %3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint6_linear_6103_5129' x1='2043.51' y1='1185.76' x2='2017.46' y2='1185.76' gradientUnits='userSpaceOnUse'%3E %3Cstop offset='0.0875682' stop-color='white' stop-opacity='0.17'/%3E %3Cstop offset='0.272185' stop-color='white' stop-opacity='0.65'/%3E %3Cstop offset='0.489769' stop-color='white' stop-opacity='0.65'/%3E %3Cstop offset='0.677083' stop-color='white' stop-opacity='0.19'/%3E %3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint7_linear_6103_5129' x1='840.73' y1='1193.39' x2='1208.14' y2='1193.39' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23131A24'/%3E %3Cstop offset='0.015659' stop-color='%23343E4A'/%3E %3Cstop offset='0.035819' stop-color='%23626E7E'/%3E %3Cstop offset='0.0504351' stop-color='%237F8A9C'/%3E %3Cstop offset='0.479167' stop-color='%237E889B'/%3E %3Cstop offset='0.941214' stop-color='%237F8A9C'/%3E %3Cstop offset='0.970403' stop-color='%23626E7E'/%3E %3Cstop offset='0.980129' stop-color='%23343E4A'/%3E %3Cstop offset='1' stop-color='%23131A24'/%3E %3C/linearGradient%3E %3CclipPath id='clip0_6103_5129'%3E %3Crect width='2048' height='1241' fill='white'/%3E %3C/clipPath%3E %3C/defs%3E %3C/svg%3E");
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f5f6f8;--ink:#12151b;--mute:#586070;--line:#dde1e8;--panel:#fff;--blue:#0a6cff;--code:#07090c;--glow:transparent}}
-:root[data-theme="light"]{--bg:#f5f6f8;--ink:#12151b;--mute:#586070;--line:#dde1e8;--panel:#fff;--blue:#0a6cff;--code:#07090c;--glow:transparent}
+:root{--w1:#e6ecf8;--w2:#b4c6ea;--w3:#f1dbe9;--ink:#0f1522;--mute:#47506a;--glass:rgba(255,255,255,.62);--glass2:rgba(255,255,255,.88);--edge:rgba(255,255,255,.8);--line:rgba(15,21,34,.12);--blue:#0a64e8;--onblue:#fff;--sh:0 30px 60px -28px rgba(20,35,80,.5);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--w1:#12172e;--w2:#202f6e;--w3:#38204a;--ink:#eef1fa;--mute:#a7b0cc;--glass:rgba(28,34,58,.62);--glass2:rgba(34,41,70,.92);--edge:rgba(255,255,255,.16);--line:rgba(255,255,255,.14);--blue:#5b9bff;--onblue:#06142e;--sh:0 30px 60px -28px rgba(0,0,0,.75);color-scheme:dark}}
+:root[data-theme="dark"]{--w1:#12172e;--w2:#202f6e;--w3:#38204a;--ink:#eef1fa;--mute:#a7b0cc;--glass:rgba(28,34,58,.62);--glass2:rgba(34,41,70,.92);--edge:rgba(255,255,255,.16);--line:rgba(255,255,255,.14);--blue:#5b9bff;--onblue:#06142e;--sh:0 30px 60px -28px rgba(0,0,0,.75);color-scheme:dark}
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px);scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 "Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;scroll-padding-top:24px;-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--ink);font:400 17px/1.6 "Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;background:radial-gradient(70% 60% at 85% 0,var(--w3),transparent 60%),radial-gradient(90% 80% at 0 100%,var(--w2),transparent 65%),var(--w1);background-attachment:fixed;overflow-x:hidden}
 a{color:inherit}p{margin:0}
-:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
-.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:100;background:var(--bg);border-bottom:1px solid var(--line)}
-header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;text-decoration:none}
-.brand .o{width:26px;height:26px}
-nav{display:flex;align-items:center;gap:26px;font-size:15px}
-nav a{text-decoration:none;color:var(--mute)}nav a:hover{color:var(--ink)}
-.btn{display:inline-flex;align-items:center;height:46px;padding:0 22px;border-radius:12px;font:600 15px "Hanken Grotesk",sans-serif;text-decoration:none;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
-.btn.pri{background:var(--blue);border-color:var(--blue);color:#fff}
-.btn.pri:hover{filter:brightness(1.1)}.btn:not(.pri):hover{border-color:var(--mute)}
-nav .btn{height:36px;padding:0 14px;font-size:14px;color:#fff}
-h1{font-size:clamp(42px,7.4vw,88px);line-height:1;letter-spacing:-.04em;font-weight:700;margin:0;max-width:13em}
-h2{font-size:clamp(28px,3.6vw,44px);line-height:1.08;letter-spacing:-.03em;margin:0 0 14px;font-weight:700}
-.lede{color:var(--mute);font-size:19px;max-width:33em}
-.hero{padding:80px 0 0}.hero .lede{margin-top:24px}
-.cta{display:flex;flex-wrap:wrap;gap:12px;margin:32px 0 56px}
-.cap{color:var(--mute);font-size:14px;margin-top:14px}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1360px;margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+section{padding:clamp(64px,10vw,120px) 0 0}
+h1,h2,h3{margin:0;letter-spacing:-.035em;line-height:1.04}
+h1{font-size:clamp(38px,5vw,68px);text-wrap:balance;font-weight:800}
+h2{font-size:clamp(30px,4.2vw,52px);font-weight:800;max-width:15em}
+h3{font-size:21px;font-weight:600;letter-spacing:-.02em;line-height:1.2}
+.lede{color:var(--mute);font-size:clamp(17px,1.6vw,20px);max-width:33em;margin-top:20px}
+kbd{font:600 .82em/1 inherit;padding:.28em .5em;border-radius:6px;background:var(--glass2);border:1px solid var(--line);border-bottom-width:2px}
+.orb{display:block;border-radius:50%;flex:none;background:url(assets/aerobar-orb-v2.svg) center/contain no-repeat}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:50px;padding:0 24px;border-radius:14px;font:600 16px "Hanken Grotesk",sans-serif;text-decoration:none;border:1px solid var(--line);background:var(--glass2);color:var(--ink);cursor:pointer;transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-1px)}.btn:active{transform:none}
+.btn.pri{background:var(--blue);border-color:transparent;color:var(--onblue)}
+.btn.ok{background:#1f8a4c;color:#fff;border-color:transparent}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.small{color:var(--mute);font-size:14.5px;margin-top:16px;max-width:34em}
+.small a{text-underline-offset:3px}
 
-/* ===== Mock screens: animated stand-ins for GIFs ===== */
-.media{margin:0;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#000;box-shadow:0 40px 80px -40px rgba(0,0,0,.7)}
-.media>img{display:block;width:100%;height:auto}
-.scr{position:relative;aspect-ratio:16/10;container-type:inline-size;overflow:hidden;background:var(--wp);isolation:isolate}
-.w1{--wp:radial-gradient(90% 70% at 15% 10%,#8fc0ff,transparent 60%),radial-gradient(80% 80% at 90% 100%,#3a2a8f,transparent 60%),#1d3a8a}
-.w2{--wp:radial-gradient(80% 70% at 80% 0,#ffb48a,transparent 60%),radial-gradient(90% 80% at 10% 100%,#7a2f8f,transparent 60%),#3b2a6a}
-.w3{--wp:radial-gradient(90% 70% at 20% 0,#7ee0c0,transparent 60%),radial-gradient(80% 80% at 90% 100%,#13486b,transparent 60%),#0f3a55}
-.mb{position:absolute;inset:0 0 auto 0;background:rgba(255,255,255,.14);z-index:11}
-.bar{position:absolute;left:1.2cqw;right:1.2cqw;bottom:1.2cqw;height:5.4cqw;border-radius:1.7cqw;display:flex;align-items:center;gap:.6cqw;padding:0 .9cqw;background:rgba(255,255,255,.2);backdrop-filter:blur(2cqw) saturate(1.7);-webkit-backdrop-filter:blur(2cqw) saturate(1.7);border:1px solid rgba(255,255,255,.34);z-index:9;overflow:hidden}
-.o{display:block;border-radius:50%;background:radial-gradient(circle at 50% 95%,#1f7bff 0,#1a1a1a 70%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3),0 1px 3px rgba(0,0,0,.4);flex:none}
-.bar .o{width:3.8cqw;height:3.8cqw}
-.ic{width:3.4cqw;height:3.4cqw;border-radius:.9cqw;background:var(--c,#888);flex:none}
-.u{width:3.2cqw;height:3.2cqw;border-radius:.9cqw;background:rgba(255,255,255,.14);color:#fff;font-size:1.8cqw;display:grid;place-items:center;flex:none}
-.u::before{content:attr(data-g)}
-.dv{width:1px;height:3cqw;background:rgba(255,255,255,.35);margin:0 .4cqw;flex:none}
-.t{position:relative;flex:none;width:12cqw;height:3.8cqw;padding:0 1.2cqw;border-radius:1cqw;background:rgba(255,255,255,.1);color:#fff;font-size:1.55cqw;display:flex;align-items:center;gap:.8cqw;white-space:nowrap}
-.t i{width:1.5cqw;height:1.5cqw;border-radius:.4cqw;flex:none;background:var(--c)}
-.sp{flex:1}.clk{color:#fff;font-size:1.5cqw;padding:0 .6cqw;flex:none}
-.bd{position:absolute;top:.2cqw;right:.3cqw;min-width:1.9cqw;height:1.9cqw;border-radius:1cqw;background:#ff453a;color:#fff;font-size:1.2cqw;display:grid;place-items:center}
-.w{position:absolute;background:#1f232c;border-radius:1cqw;box-shadow:0 2cqw 4cqw rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.09);overflow:hidden}
-.w::before{content:"";display:block;height:2.6cqw;background:color-mix(in srgb,var(--c,#6b7384) 38%,#1a1d25)}
-.w::after{content:"";position:absolute;left:1.6cqw;top:4.6cqw;width:55%;height:.9cqw;border-radius:1cqw;background:#3a404c;box-shadow:0 2.2cqw #3a404c,0 4.4cqw #3a404c,0 6.6cqw #3a404c}
-.cur{position:absolute;width:2.6cqw;height:3.2cqw;z-index:20;background:#fff;clip-path:polygon(0 0,0 100%,30% 78%,50% 100%,66% 92%,46% 70%,80% 70%);filter:drop-shadow(0 1px 1px #000)}
-.gl{background:rgba(245,247,251,.8);backdrop-filter:blur(3cqw);-webkit-backdrop-filter:blur(3cqw);border:1px solid rgba(255,255,255,.6);color:#232a38}
+/* screens: real recordings in a plain rounded frame */
+.screen{position:relative;margin:0;aspect-ratio:1108/720;border-radius:clamp(12px,1.6vw,20px);overflow:hidden;background:#111;box-shadow:var(--sh),0 0 0 1px var(--edge)}
+.screen video,.screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.screen video{opacity:0;transition:opacity .4s}.screen video.live{opacity:1}
+.cap{color:var(--mute);font-size:14.5px;margin-top:12px}
 
-/* Hero: bar and menu bar take the focused app's colour (Dynamic Tint + AuraBar) */
-.h .bar,.h .mb{animation:tint 9s infinite}
-.h .t{width:10.5cqw}.h .wa{--c:#4f8cff;left:5%;top:11%;width:46%;height:48%}.h .wb{--c:#ff9f43;left:36%;top:19%;width:44%;height:48%}.h .wc{--c:#34c759;left:14%;top:34%;width:34%;height:38%}
-.h .w{animation:hW 9s infinite}.h .wb,.h .tb{animation-delay:-6s}.h .wc,.h .tc{animation-delay:-3s}
-.h .t{animation:hT 9s infinite}.h .ta{animation-delay:0s}
-@keyframes tint{0%,30%{background:rgba(79,140,255,.55)}33%,63%{background:rgba(255,159,67,.55)}66%,96%{background:rgba(52,199,89,.5)}100%{background:rgba(79,140,255,.55)}}
-@keyframes hT{0%,30%{background:rgba(255,255,255,.38);box-shadow:inset 0 0 0 1px rgba(255,255,255,.6)}34%,100%{background:rgba(255,255,255,.1);box-shadow:none}}
-@keyframes hW{0%,30%{z-index:5}34%,100%{z-index:1}}
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(24px,3.5vw,56px);align-items:center;padding-top:clamp(32px,6vw,80px)}
+.brandline{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;margin-bottom:26px}
+.brandline .orb{width:32px;height:32px}
 
-/* 1: tabs, live preview, badges (9s) */
-.a .wa{--c:#4f8cff;left:6%;top:12%;width:46%;height:46%;z-index:1}.a .wb{--c:#ff9f43;left:34%;top:22%;width:44%;height:46%;z-index:2;animation:aMin 9s infinite}.a .wc{--c:#8e6bff;left:12%;top:36%;width:34%;height:36%;z-index:3}
-.a .tb{animation:aTab 9s infinite;background:rgba(255,255,255,.3)}
-.a .tb::after{content:"";position:absolute;left:30%;right:30%;bottom:.3cqw;height:.4cqw;border-radius:1cqw;background:#fff}
-.a .cur{animation:aCur 9s infinite}.a .pv{animation:aPv 9s infinite}
-.pv{background:rgba(31,35,44,.96);color:#e8ecf3;border-color:rgba(255,255,255,.12);position:absolute;left:19.1cqw;bottom:7.8cqw;width:15cqw;height:10cqw;border-radius:1.2cqw;z-index:12;opacity:0}
-.pv b{display:block;padding:.9cqw 1.3cqw;font-size:1.4cqw}
-.pv u{position:absolute;top:.6cqw;right:.8cqw;text-decoration:none;font-size:1.6cqw;width:2cqw;height:2cqw;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center}
-.pv::after{content:"";position:absolute;left:1.3cqw;top:4.2cqw;width:9cqw;height:.8cqw;border-radius:1cqw;background:#3a404c;box-shadow:0 1.7cqw #3a404c,0 3.4cqw #3a404c}
-.plus{position:absolute;left:35cqw;bottom:7.8cqw;width:4cqw;height:4cqw;border-radius:50%;font-size:2.4cqw;display:grid;place-items:center;z-index:12;opacity:0;animation:aPv 9s infinite}
-@keyframes aCur{0%{left:70cqw;top:28cqw}22%,52%{left:25cqw;top:59.5cqw}60%{left:25cqw;top:60.1cqw}68%{left:25cqw;top:59.5cqw}88%,100%{left:70cqw;top:32cqw}}
-@keyframes aPv{0%,24%{opacity:0;transform:translateY(1cqw)}30%,50%{opacity:1;transform:none}54%,100%{opacity:0}}
-@keyframes aMin{0%,58%{opacity:1;transform:none}66%,88%{opacity:0;transform:translateY(14cqw) scale(.7)}96%,100%{opacity:1;transform:none}}
-@keyframes aTab{0%,58%{opacity:1}66%,88%{opacity:.45}96%,100%{opacity:1}}
+/* taskbar nav: the site's own navigation */
+.dock{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:6px;padding:7px;border-radius:22px;background:var(--glass);backdrop-filter:blur(22px) saturate(1.7);-webkit-backdrop-filter:blur(22px) saturate(1.7);border:1px solid var(--edge);box-shadow:0 18px 40px -16px rgba(10,20,50,.5);max-width:calc(100vw - 16px)}
+.orbbtn{width:46px;height:46px;border:0;background:none;padding:0;cursor:pointer;border-radius:50%;display:grid;place-items:center;transition:transform .2s;flex:none}
+.orbbtn:hover{transform:scale(1.08)}.orbbtn .orb{width:38px;height:38px}
+.orbbtn[aria-expanded="true"] .orb{box-shadow:0 0 0 4px rgba(120,170,255,.5)}
+.sep{width:1px;height:26px;background:var(--line);margin:0 2px}
+.dock a.t{position:relative;display:flex;align-items:center;height:42px;padding:0 15px;border-radius:14px;text-decoration:none;font-size:15px;font-weight:500;color:var(--mute);white-space:nowrap;transition:background .2s,color .2s}
+.dock a.t:hover{color:var(--ink);background:var(--glass2)}
+.dock a.t.on{color:var(--ink);background:var(--glass2);box-shadow:inset 0 0 0 1px var(--line)}
+.dock a.t.on::after{content:"";position:absolute;left:34%;right:34%;bottom:3px;height:2.5px;border-radius:3px;background:var(--blue)}
+.dock .get{height:42px;padding:0 18px;font-size:15px;border-radius:14px;margin-left:2px}
+.tip{position:absolute;bottom:calc(100% + 14px);left:50%;transform:translate(-50%,6px);width:200px;padding:11px 14px;border-radius:14px;background:var(--glass2);border:1px solid var(--line);box-shadow:0 16px 30px -14px rgba(10,20,50,.5);font-size:13.5px;line-height:1.4;color:var(--mute);white-space:normal;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+.tip b{display:block;color:var(--ink);font-size:14.5px;margin-bottom:2px}
+@media(hover:hover){.dock a.t:hover .tip{opacity:1;transform:translate(-50%,0)}}
 
-/* 2: Aero Menu (10s) */
-.b .wa{--c:#4f8cff;left:30%;top:14%;width:50%;height:44%}
-.b .menu{position:absolute;left:1.2cqw;bottom:7.6cqw;width:34cqw;height:46cqw;border-radius:2cqw;padding:2cqw;transform-origin:0 100%;z-index:10;animation:bMenu 10s infinite;font-size:1.3cqw}
-.b .sr{height:3.6cqw;border-radius:1cqw;background:rgba(0,0,0,.08);padding:.8cqw 1.2cqw;font-size:1.7cqw;white-space:nowrap;overflow:hidden}
-.b .sr span{display:block;overflow:hidden;width:0;border-right:1px solid #232a38;animation:bType 10s steps(6) infinite}
-.b h4{margin:1.8cqw 0 1cqw;font-size:1.3cqw;font-weight:600;color:#6a7384}
-.b .gr{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2cqw}.b .gr i{aspect-ratio:1.25;border-radius:1.4cqw;background:var(--c)}
-.b .gr i:nth-child(2){animation:bHi 10s infinite}
-.b .rc{display:flex;justify-content:space-between;height:3cqw;align-items:center;border-bottom:1px solid rgba(0,0,0,.07);font-size:1.4cqw}.rc em{font-style:normal;color:#8a93a3;font-size:1.2cqw}
-.b .pw{display:flex;gap:.6cqw;margin-top:1.6cqw}.b .pw span{flex:1;text-align:center;height:3.2cqw;line-height:3.2cqw;border-radius:1cqw;background:rgba(0,0,0,.07);font-size:1.2cqw}
-.b .bar .o{animation:bOrb 10s infinite}
-@keyframes bMenu{0%,10%{opacity:0;transform:scale(.9)}16%,88%{opacity:1;transform:none}95%,100%{opacity:0;transform:scale(.9)}}
-@keyframes bType{0%,26%{width:0}44%,100%{width:7cqw}}
-@keyframes bHi{0%,56%{box-shadow:none;transform:none}62%,88%{box-shadow:0 0 0 .4cqw #0a6cff;transform:scale(1.06)}100%{box-shadow:none}}
-@keyframes bOrb{0%,8%{box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}12%,88%{box-shadow:inset 0 0 0 1px rgba(255,255,255,.3),0 0 0 .6cqw rgba(255,255,255,.5)}100%{box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}}
+/* orb menu */
+.menu{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom,0px));transform:translate(-50%,12px) scale(.97);transform-origin:50% 100%;z-index:49;width:min(400px,calc(100vw - 20px));padding:16px;border-radius:24px;background:var(--glass2);backdrop-filter:blur(28px) saturate(1.7);-webkit-backdrop-filter:blur(28px) saturate(1.7);border:1px solid var(--edge);box-shadow:0 30px 60px -20px rgba(10,20,50,.55);opacity:0;visibility:hidden;transition:opacity .22s,transform .22s,visibility .22s}
+.menu.open{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.menu input{width:100%;height:46px;border-radius:12px;border:1px solid var(--line);background:var(--glass);color:var(--ink);padding:0 14px;font:500 16px "Hanken Grotesk",sans-serif}
+.menu ul{list-style:none;margin:10px 0 0;padding:0}
+.menu li a{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:46px;padding:0 12px;border-radius:12px;text-decoration:none;font-weight:500}
+.menu li a:hover,.menu li a:focus-visible{background:var(--glass)}
+.menu li a span{color:var(--mute);font-size:14px;font-weight:400;text-align:right}
+.menu .none{padding:12px;color:var(--mute);font-size:15px;display:none}
 
-/* 3: Smart Switcher (10s) */
-.s .wa{--c:#4f8cff;left:6%;top:12%;width:46%;height:46%}.s .wb{--c:#ff9f43;left:34%;top:22%;width:44%;height:46%}
-.s .dim{position:absolute;inset:0;background:rgba(0,0,0,.3);z-index:8;animation:sOn 10s infinite}
-.sw{position:absolute;left:50%;top:44%;display:flex;gap:2cqw;padding:2.4cqw;border-radius:2.4cqw;background:rgba(30,34,44,.66);backdrop-filter:blur(3cqw);-webkit-backdrop-filter:blur(3cqw);border:1px solid rgba(255,255,255,.18);z-index:10;animation:sSw 10s infinite}
-.sw::after{content:"Apps ⌘Tab  |  Windows ⌘`";position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:1.6cqw;padding:.6cqw 1.6cqw;border-radius:2cqw;background:rgba(0,0,0,.45);color:#fff;font-size:1.4cqw;white-space:nowrap}
-.cd{width:13cqw}.cd .th{height:9cqw;border-radius:1cqw;background:#1f232c;overflow:hidden;position:relative;animation:swHi 10s infinite var(--d)}
-.cd .th::before{content:"";display:block;height:2cqw;background:color-mix(in srgb,var(--c) 38%,#1a1d25)}
-.cd .th::after{content:"";position:absolute;left:1.2cqw;top:3.4cqw;width:55%;height:.7cqw;border-radius:1cqw;background:#3a404c;box-shadow:0 1.6cqw #3a404c,0 3.2cqw #3a404c}
-.cd p{margin:1cqw 0 0;color:#fff;font-size:1.4cqw;text-align:center}
-@keyframes sOn{0%,8%{opacity:0}13%,88%{opacity:1}94%,100%{opacity:0}}
-@keyframes sSw{0%,8%{opacity:0;transform:translateX(-50%) scale(.95)}13%,88%{opacity:1;transform:translateX(-50%)}94%,100%{opacity:0;transform:translateX(-50%) scale(.95)}}
-@keyframes swHi{0%,18%{box-shadow:0 0 0 .5cqw #fff;transform:scale(1.04)}19%,100%{box-shadow:none;transform:none}}
+/* modes */
+.head{display:flex;flex-wrap:wrap;gap:12px 48px;justify-content:space-between;align-items:end;margin-bottom:36px}
+.head .lede{margin:0}
+.modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 22px}
+.mode h3{margin-top:16px}.mode p{color:var(--mute);font-size:16px;line-height:1.5;margin-top:6px}
+.setup{margin-top:clamp(40px,6vw,72px);display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,5vw,64px);align-items:center}
+.setup p.lede{margin-top:14px}
 
-/* 4: utilities (12s) */
-.d .wa{--c:#4f8cff;left:8%;top:12%;width:46%;height:46%}.d .wb{--c:#34c759;left:30%;top:22%;width:44%;height:42%}
-.d .bar .t{width:10cqw}
-.u.k{animation:uHi 12s infinite var(--d)}
-@keyframes uHi{0%{background:rgba(255,255,255,.14)}3%,22%{background:rgba(255,255,255,.45)}26%,100%{background:rgba(255,255,255,.14)}}
-.pn{position:absolute;bottom:7.8cqw;padding:1.6cqw;border-radius:2cqw;font-size:1.4cqw;z-index:10;opacity:0;animation:pn 12s infinite var(--d)}
-@keyframes pn{0%{opacity:0;transform:translateY(1cqw)}3%,22%{opacity:1;transform:none}26%,100%{opacity:0}}
-.pn h5{margin:0 0 1.2cqw;font-size:1.5cqw;display:flex;justify-content:space-between;align-items:center}
-.pn h5 em{font-style:normal;font-weight:500;font-size:1.1cqw;padding:.3cqw .9cqw;border-radius:2cqw;background:rgba(10,108,255,.14);color:#0a5bd6}
-.cl div{height:3.2cqw;line-height:3.2cqw;padding:0 1cqw;border-radius:.9cqw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cl div:first-of-type{background:rgba(10,108,255,.14)}
-.mu{display:flex;gap:1.6cqw;align-items:center}.mu .art{width:9cqw;height:9cqw;border-radius:1.4cqw;background:linear-gradient(135deg,#7b4dff,#ff5a8a)}
-.mu b{display:block;font-size:1.6cqw}.mu span{color:#6a7384}
-.mu .pr{height:.6cqw;border-radius:1cqw;background:rgba(0,0,0,.12);margin:1.2cqw 0;position:relative;overflow:hidden}.mu .pr::after{content:"";position:absolute;inset:0;width:100%;background:#7b4dff;transform-origin:0 0;animation:prog 6s linear infinite}
-.mu .ct{font-size:1.9cqw;letter-spacing:1.2cqw}
-@keyframes prog{from{transform:scaleX(.1)}to{transform:scaleX(1)}}
-.sy div{display:grid;grid-template-columns:7cqw 1fr;gap:1cqw;align-items:center;margin-bottom:1.2cqw}.sy i{display:block;height:1cqw;border-radius:1cqw;background:rgba(0,0,0,.1);position:relative;overflow:hidden}
-.sy i::after{content:"";position:absolute;left:0;top:0;bottom:0;border-radius:1cqw;background:#2f86ff;animation:fl 1.7s ease-in-out infinite alternate}.sy div:nth-child(3) i::after{animation-duration:1.1s;background:#34c759}.sy div:nth-child(4) i::after{animation-duration:2.3s;background:#ff9f43}
-@keyframes fl{from{width:25%}to{width:85%}}
-.sh .dz{border:.25cqw dashed rgba(0,0,0,.3);border-radius:1.4cqw;height:12cqw;display:grid;place-items:center;text-align:center;color:#6a7384;padding:0 2cqw;position:relative}
-.sh .fl{position:absolute;left:50%;top:50%;margin:-2cqw 0 0 -6cqw;width:12cqw;height:4cqw;line-height:4cqw;border-radius:1cqw;background:#fff;box-shadow:0 .6cqw 1.6cqw rgba(0,0,0,.25);text-align:center;color:#232a38;animation:fIn 12s infinite var(--d)}
-@keyframes fIn{0%{opacity:0;transform:translate(-14cqw,-12cqw)}8%{opacity:1;transform:translate(-14cqw,-12cqw)}14%,22%{opacity:1;transform:none}26%,100%{opacity:0}}
+/* features */
+.row{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:clamp(24px,5vw,64px);align-items:center}
+.row+.row{margin-top:clamp(44px,7vw,96px)}
+.row.flip{grid-template-columns:minmax(0,4fr) minmax(0,8fr)}.row.flip .screen,.row.flip .figure{order:2}
+.row p.lede{margin-top:14px}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(22px,4vw,48px);margin-top:clamp(44px,7vw,96px)}
+.pair p{color:var(--mute);font-size:16px;line-height:1.5;margin-top:6px}.pair h3{margin-top:16px}
+.list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(28px,6vw,80px);margin-top:clamp(44px,6vw,72px);border-top:1px solid var(--line)}
+.list div{padding:22px 0;border-bottom:1px solid var(--line)}
+.list b{display:block;font-weight:600;font-size:18px;letter-spacing:-.01em}
+.list span{color:var(--mute);font-size:15.5px;line-height:1.5}
 
-/* 5: any edge (12s) */
-.e .wa{--c:#4f8cff;left:14%;top:14%;width:50%;height:52%}.e .wb{--c:#ff9f43;left:34%;top:24%;width:50%;height:48%}
-.pb{opacity:0;animation:eb 12s infinite var(--d)}
-@keyframes eb{0%{opacity:0}3%,22%{opacity:1}26%,100%{opacity:0}}
-.bar.v{flex-direction:column;top:4.2cqw;bottom:1.2cqw;left:1.2cqw;right:auto;width:5.4cqw;height:auto;padding:.9cqw 0}.bar.v.r{left:auto;right:1.2cqw}.bar.t{bottom:auto;top:3.8cqw}
-.bar.v .sp{flex:1}
+/* click-to-play gallery */
+.gal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px 20px}
+.tile{display:block;width:100%;padding:0;border:0;background:none;text-align:left;color:inherit;font:inherit;cursor:pointer}
+.tile .screen{display:block;transition:transform .25s}.tile:hover .screen{transform:translateY(-3px)}
+.tile .play{position:absolute;right:12px;bottom:12px;width:40px;height:40px;border-radius:50%;background:var(--glass2);color:var(--ink);display:grid;place-items:center;z-index:2;font-size:14px;box-shadow:0 6px 16px rgba(0,0,0,.35);padding-left:2px}
+.tile.playing .play{display:none}
+.tile b{display:block;margin-top:12px;font-weight:600;font-size:18px;letter-spacing:-.015em}
+.tile span.d{display:block;color:var(--mute);font-size:15px;line-height:1.45;margin-top:3px}
+.sub{font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:-.03em;margin:clamp(56px,8vw,96px) 0 24px}
 
+/* privacy */
+.priv{font-size:clamp(26px,3.6vw,44px);line-height:1.18;letter-spacing:-.03em;font-weight:600;max-width:23em}
+.priv span{color:var(--mute)}
+.priv a{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px;text-decoration-color:var(--blue)}
+.priv-note{color:var(--mute);font-size:15px;margin-top:20px;max-width:40em}
 
-/* ===== Modes (mirrors onboarding "Choose Your Mode") ===== */
-.m{position:relative;aspect-ratio:2/1;container-type:inline-size;overflow:hidden;background:var(--wp);isolation:isolate}
-.m .w{border-radius:1.4cqw}.m .w::before{height:3.4cqw}.m .w::after{left:2cqw;top:6cqw;height:1.1cqw;box-shadow:0 2.8cqw #3a404c,0 5.6cqw #3a404c}
-.glass{background:rgba(255,255,255,.2);backdrop-filter:blur(2.4cqw) saturate(1.7);-webkit-backdrop-filter:blur(2.4cqw) saturate(1.7);border:1px solid rgba(255,255,255,.36)}
-.m .icn{width:6cqw;height:6cqw;border-radius:1.5cqw;background:var(--c);flex:none}
-.m .o{width:6cqw;height:6cqw;flex:none}
-.m .dv{height:5cqw}
-.dk{position:absolute;left:26.5cqw;bottom:2.4cqw;display:flex;align-items:flex-end;gap:1.4cqw;padding:1.2cqw 2cqw;border-radius:3cqw}
-.di{display:flex;flex-direction:column;align-items:center;gap:.6cqw}
-.di i{width:.8cqw;height:.8cqw;border-radius:50%;background:rgba(255,255,255,.8)}
-.di .icn{transform-origin:50% 100%;animation:mag 6s infinite}
-.di:nth-child(2) .icn{animation-delay:.35s}.di:nth-child(3) .icn{animation-delay:.7s}.di:nth-child(4) .icn{animation-delay:1.05s}.di:nth-child(5) .icn{animation-delay:1.4s}.di:nth-child(6) .icn{animation-delay:1.75s}
-@keyframes mag{0%,16%,100%{transform:scale(1)}7%{transform:scale(1.5)}}
-.thm{position:absolute;left:45.7cqw;bottom:14cqw;width:16cqw;height:10cqw;border-radius:1.4cqw;background:#1f232c;box-shadow:0 1.4cqw 3cqw rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.09);opacity:0;animation:thm 6s infinite;overflow:hidden}
-.thm::before{content:"";display:block;height:2.4cqw;background:color-mix(in srgb,#ff9f43 38%,#1a1d25)}
-.thm::after{content:"";position:absolute;left:1.6cqw;top:4.2cqw;width:9cqw;height:.9cqw;border-radius:1cqw;background:#3a404c;box-shadow:0 2cqw #3a404c,0 4cqw #3a404c}
-@keyframes thm{0%,20%{opacity:0;transform:translateY(1cqw)}25%,40%{opacity:1;transform:none}45%,100%{opacity:0}}
-.exg{position:absolute;left:76cqw;bottom:2.4cqw;display:flex;gap:1cqw;padding:1.2cqw 1.4cqw;border-radius:3cqw}
-.exg .u{width:5.4cqw;height:5.4cqw;font-size:3cqw;border-radius:1.4cqw}
-.fb{position:absolute;left:50%;transform:translateX(-50%);bottom:3cqw;display:flex;align-items:center;gap:1.6cqw;padding:1.2cqw 2.4cqw;border-radius:3.4cqw}
-.fb .icn{animation:lift 6s infinite}
-@keyframes lift{0%,16%,100%{transform:none;filter:none}6%,10%{transform:translateY(-1.4cqw);filter:brightness(1.15)}}
-.m2 .wa,.m4 .wa{--c:#4f8cff;left:46%;top:12%;width:40%;height:50%}
-.m3 .wa{--c:#4f8cff;left:12%;top:14%;width:40%;height:52%}.m3 .wb{--c:#ff9f43;left:30%;top:22%;width:40%;height:50%}.m3 .wc{--c:#34c759;left:48%;top:12%;width:38%;height:50%}
-.m3 .w{animation:hW 5.4s infinite}.m3 .wb,.m3 .bb:nth-of-type(2){animation-delay:-3.6s}.m3 .wc,.m3 .bb:nth-of-type(3){animation-delay:-1.8s}
-.tbar{position:absolute;left:0;right:0;bottom:0;height:8cqw;display:flex;align-items:center;gap:1.4cqw;padding:0 1.6cqw;border-width:1px 0 0}
-.bb{display:flex;align-items:center;gap:1.2cqw;width:18cqw;height:5cqw;padding:0 1.4cqw;border-radius:1.4cqw;background:rgba(255,255,255,.1);flex:none}
-.bb .icn{width:3.2cqw;height:3.2cqw;border-radius:.9cqw}.bb s{display:block;height:.9cqw;width:7cqw;border-radius:1cqw;background:rgba(255,255,255,.6)}
-.m3 .bb{animation:hT 5.4s infinite}.m3 .bb:nth-of-type(1){animation-delay:0s}
-.m4 .bb{width:15cqw}.m4 .bb:nth-of-type(1){animation:lT 3.6s infinite}.m4 .bb:nth-of-type(2){animation:lT 3.6s infinite -1.8s}
-.m4 .wa{animation:lW 3.6s infinite}
-@keyframes lT{0%,48%{background:rgba(255,255,255,.34);box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)}52%,100%{background:rgba(255,255,255,.1);box-shadow:none}}
-@keyframes lW{0%,48%{--c:#ff9f43}52%,100%{--c:#8e6bff}}
-.modes{display:grid;grid-template-columns:repeat(2,1fr);gap:48px 32px;margin-top:40px}
-.mc h3{font-size:22px;letter-spacing:-.015em;margin:18px 0 6px;font-weight:700}
-.mc ul{margin:0;padding:0;list-style:none;color:var(--mute);font-size:16px}
-.mc li::before{content:"";display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--mute);margin-right:10px;vertical-align:middle}
+/* install */
+.inst{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,64px);padding:clamp(22px,4.5vw,56px);border-radius:32px;background:var(--glass);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid var(--edge)}
+.inst ol{margin:22px 0 0;padding-left:22px;color:var(--mute)}.inst li{margin-bottom:10px}.inst li::marker{color:var(--ink);font-weight:600}
+.lbl{font-size:14.5px;font-weight:600;margin:0 0 8px}.lbl:not(:first-child){margin-top:22px}
+.code{position:relative;border-radius:14px;background:#0d111b;color:#dfe6f7;font:500 13.5px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;padding:16px 16px 62px;overflow-wrap:anywhere}
+.code button{position:absolute;right:10px;bottom:10px;height:38px;padding:0 16px;border-radius:10px;border:0;background:#26304a;color:#fff;font:600 14px "Hanken Grotesk",sans-serif;cursor:pointer}
+.code button.ok{background:#1f8a4c}
+.alt{margin-top:22px;color:var(--mute);font-size:15px}.alt .btn{margin-top:14px}
+footer{padding:72px 0 150px;color:var(--mute);font-size:14.5px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}
+footer nav{display:flex;gap:22px}
 
-
-/* ===== MacBook Air frame around every preview (screen hole = 207,35 to 1842,1097 of 2048x1241) ===== */
-.media.mac{position:relative;isolation:isolate;aspect-ratio:2048/1241;border:0;background:radial-gradient(55% 60% at 50% 46%,var(--glow),transparent 72%);box-shadow:none;border-radius:0;overflow:visible}
-.mac::before{content:"";position:absolute;left:6%;right:6%;bottom:-1.5%;height:5%;background:radial-gradient(ellipse at center,rgba(0,0,0,.55),transparent 70%);filter:blur(14px)}
-.mac::after{content:"";position:absolute;inset:0;background:var(--mac) center/100% 100% no-repeat;pointer-events:none;z-index:30}
-.mac>.scr,.mac>.m,.mac>video,.mac>img{position:absolute;left:10.107%;top:2.84%;width:79.834%;height:85.576%;aspect-ratio:auto;object-fit:cover;border-radius:4px;background:#000}
-.mb{height:2.2cqw;display:flex;align-items:center;justify-content:space-between;padding:0 1.4cqw;font-size:1.2cqw;color:rgba(255,255,255,.92);white-space:nowrap}
-.mb span{display:flex;gap:1.6cqw;align-items:center}.mb i{width:1.1cqw;height:1.1cqw;border-radius:50%;background:#fff;opacity:.9}
-.m .mb{height:2.2cqw}.m .mb span{display:none}
-
-/* ===== Page sections ===== */
-section{padding:112px 0 0}
-.row{display:grid;grid-template-columns:1fr 1.35fr;gap:72px;align-items:center;margin-top:96px}
-.row:nth-of-type(even){grid-template-columns:1.35fr 1fr}.row:nth-of-type(even) .txt{order:2}.row:first-of-type{margin-top:56px}
-.txt h3{font-size:clamp(24px,2.6vw,32px);line-height:1.15;letter-spacing:-.02em;margin:0 0 12px;font-weight:700}
-.txt p{color:var(--mute);font-size:17px;max-width:27em}
-.more{display:grid;grid-template-columns:repeat(2,1fr);gap:0 64px;margin-top:40px}
-.more div{padding:20px 0;border-top:1px solid var(--line)}.more b{display:block;font-size:17px;margin-bottom:2px}.more span{color:var(--mute);font-size:15.5px;display:block;max-width:30em}
-.facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:120px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.facts div{padding:32px 32px 32px 0}.facts div+div{padding-left:32px;border-left:1px solid var(--line)}
-.facts b{display:block;font-size:20px;letter-spacing:-.01em;margin-bottom:6px}.facts span{color:var(--mute);font-size:15.5px;display:block;max-width:22em}
-.inst{display:grid;grid-template-columns:1fr 1.15fr;gap:72px;align-items:start}
-.code{position:relative;background:var(--code);color:#e8ecf3;border-radius:14px;padding:18px 74px 18px 18px;font:13.5px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;word-break:normal;overflow-wrap:anywhere;border:1px solid var(--line)}
-.code button{position:absolute;top:10px;right:10px;height:30px;padding:0 10px;border-radius:8px;border:1px solid #2c323c;background:#1b2028;color:#cfd6e2;font:600 12px "Hanken Grotesk",sans-serif;cursor:pointer}
-.steps{margin:20px 0 0;padding-left:20px;color:var(--mute);font-size:16px}.steps li{margin-bottom:8px}
-.steps code{font:13px ui-monospace,Menlo,monospace;color:var(--ink);background:var(--panel);border:1px solid var(--line);padding:1px 6px;border-radius:6px;word-break:break-all}
-.lbl{color:var(--mute);font-size:14px;margin:0 0 8px}.lbl:not(:first-child){margin-top:22px}.code.one{white-space:nowrap;overflow-wrap:normal;overflow-x:auto}
-.alt p{color:var(--mute);font-size:16px;margin:24px 0 14px}
-footer{margin-top:120px;border-top:1px solid var(--line);padding:32px 0;color:var(--mute);font-size:14px}
-footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}footer nav{gap:20px;font-size:14px}
-@media(max-width:820px){nav a:not(.btn){display:none}.row,.row:nth-of-type(even),.inst,.more,.modes{grid-template-columns:1fr;gap:28px}.more{gap:0}.row:nth-of-type(even) .txt{order:0}.row{margin-top:64px}.facts{grid-template-columns:1fr}.facts div,.facts div+div{padding:24px 0;border-left:0}.facts div+div{border-top:1px solid var(--line)}.hero{padding-top:48px}section{padding-top:80px}.t span{display:none}.t,.h .t,.d .bar .t{width:6cqw;justify-content:center}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.b .menu,.sw,.s .dim,.pb.p1,.pn.p1{opacity:1}.b .sr span{width:7cqw}.pv{opacity:1}}
-
-/* ===== v3 layout ===== */
-.wrap{max-width:1200px}
-.btn{border-radius:999px;height:50px;padding:0 28px}
-nav .btn{height:36px;padding:0 16px}
-header .wrap{height:64px}
-.hero{padding:104px 24px 0;text-align:center}
-.pill{display:inline-flex;align-items:center;gap:10px;height:34px;padding:0 16px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--mute);font-size:14px;margin-bottom:30px}
-.pill i{width:7px;height:7px;border-radius:50%;background:var(--blue)}
-h1{margin:0 auto;max-width:10.5em;font-size:clamp(44px,8vw,100px);line-height:.98;letter-spacing:-.05em}
-.soft{color:var(--mute)}
-.hero .lede{margin:28px auto 0;max-width:34em}
-.cta{justify-content:center;margin:38px 0 72px}
-.stage{border:1px solid var(--line);border-radius:36px;background:var(--panel);padding:clamp(16px,5vw,72px)}
-.cap{text-align:center;margin:20px 0 0}
-section{padding-top:144px}#features{padding-top:144px!important}
-.head{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:end;padding-top:32px;border-top:1px solid var(--line);margin-bottom:56px}
-.head h2{margin:0;font-size:clamp(34px,4.6vw,60px);line-height:1.02;letter-spacing:-.042em}
-.head .lede{font-size:18px;justify-self:end;max-width:28em}
-.modes{margin-top:0;gap:24px;counter-reset:m}
-.mc{background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:20px 20px 30px;transition:border-color .2s}
-.mc:hover{border-color:var(--mute)}
-.mc h3,.mc ul{padding:0 14px}.mc h3{margin:6px 0 8px;font-size:24px}
-.mc h3::before,.fc h3::before{display:block;color:var(--blue);font-size:13px;font-weight:600;letter-spacing:0;margin-bottom:8px}
-.mc h3::before{counter-increment:m;content:"0" counter(m)}
-.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px;counter-reset:f}
-.fc{background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:20px 20px 12px;display:flex;flex-direction:column}
-.fc.wide{grid-column:1/-1;display:grid;grid-template-columns:1.55fr 1fr;align-items:center;gap:24px;padding:24px}
-.fc .txt{padding:12px 14px 20px}.fc.wide .txt{padding:16px 24px}
-.fc h3::before{counter-increment:f;content:"0" counter(f)}
-.fc .txt h3{font-size:clamp(22px,2.3vw,28px)}.fc .txt p{font-size:16px}
-.sub{font-size:clamp(26px,3vw,36px);letter-spacing:-.03em;margin:112px 0 28px;font-weight:700}
-.more{margin-top:0;background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:8px 44px;column-gap:72px}
-.more div:nth-child(-n+2){border-top:0}
-.facts{margin-top:24px;border:0;gap:24px}
-.facts div,.facts div+div{padding:30px;border:1px solid var(--line);border-radius:24px;background:var(--panel)}
-.facts b::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--blue);margin-right:10px}
-.inst{background:var(--panel);border:1px solid var(--line);border-radius:36px;padding:clamp(24px,5vw,64px);gap:64px}
-.steps{list-style:none;padding:0;counter-reset:st;margin-top:28px}
-.steps li{counter-increment:st;display:flex;gap:14px;margin-bottom:14px}
-.steps li::before{content:counter(st);flex:none;width:28px;height:28px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:13px;color:var(--ink)}
-footer{margin-top:144px}
-@media(max-width:820px){.hero{padding-top:56px}.head{grid-template-columns:1fr;gap:16px}.head .lede{justify-self:start}.fgrid,.fc.wide{grid-template-columns:1fr}.fc.wide{display:flex;padding:20px 20px 12px}.fc.wide .txt{padding:12px 14px 20px}.more{padding:8px 24px}.more div:nth-child(2){border-top:1px solid var(--line)}.facts div,.facts div+div{padding:24px}section,#features{padding-top:88px!important}.sub{margin-top:72px}}
-
-/* ===== Mobile / responsive fixes ===== */
-html,body{overflow-x:hidden;max-width:100%}
-.inst>*,.head>*,.fgrid>*,.modes>*,.more>*,.facts>*,.row>*{min-width:0}
-.code{max-width:100%}
-.code.one{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-right:74px}
-@media(max-width:820px){
- .inst,.head,.fgrid,.fc.wide,.more,.facts{grid-template-columns:minmax(0,1fr)!important}
- .wrap{padding:0 18px}
- header .wrap{height:56px}
- .brand{font-size:17px}
- .hero{padding:40px 18px 0}
- .pill{height:auto;min-height:32px;padding:6px 14px;font-size:13px;line-height:1.3;margin-bottom:22px;text-align:left}
- h1{font-size:clamp(38px,11.5vw,64px);line-height:1.02;letter-spacing:-.04em}
- .hero .lede{font-size:17px;margin-top:20px}
- .lede{font-size:17px}
- .cta{flex-direction:column;align-items:stretch;gap:10px;margin:28px 0 40px}
- .cta .btn{justify-content:center;width:100%}
- .stage{border-radius:22px;padding:12px}
- .cap{font-size:13.5px;padding:0 8px}
- section,#features{padding-top:72px!important}
- .head{margin-bottom:32px;padding-top:24px}
- .head h2{font-size:clamp(30px,9vw,42px)}
- .modes,.fgrid{gap:16px}
- .mc,.fc,.fc.wide{border-radius:22px;padding:12px 12px 8px}
- .mc{padding-bottom:22px}
- .mc h3,.mc ul{padding:0 10px}
- .mc h3{font-size:21px}.mc ul{font-size:15px}
- .fc.wide{display:flex;flex-direction:column;align-items:stretch}
- .fc .fm{width:100%}
- .fc .txt,.fc.wide .txt{padding:10px 10px 16px}
- .fc .txt h3{font-size:22px}
- .sub{margin:56px 0 20px;font-size:26px}
- .more{border-radius:22px;padding:4px 20px}
- .more div{padding:16px 0}
- .more div:nth-child(2){border-top:1px solid var(--line)}
- .facts{gap:12px;margin-top:16px}
- .facts div,.facts div+div{padding:20px;border-radius:20px;border:1px solid var(--line)}
- .inst{border-radius:24px;padding:22px 18px;gap:28px}
- .inst h2{font-size:clamp(30px,9vw,40px)}
- .steps{margin-top:18px}
- .code{padding:14px 14px 56px 14px;font-size:12.5px;border-radius:12px}
- .code button{top:auto;bottom:10px;right:10px}
- .code.one{padding:14px 14px 56px 14px;white-space:pre-wrap;overflow-wrap:anywhere;overflow-x:visible}
- .alt .btn{width:100%;justify-content:center}
- footer{margin-top:80px}
- footer .wrap{flex-direction:column;gap:14px}
+@media(max-width:900px){
+ .hero,.row,.row.flip,.setup,.inst{grid-template-columns:minmax(0,1fr)}
+ .row.flip .screen{order:0}
+ .gal{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-@media(min-width:560px) and (max-width:820px){
- .modes{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+@media(max-width:700px){
+ .modes,.pair,.list{grid-template-columns:minmax(0,1fr)}
+ .gal{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin:0 calc(-1*clamp(18px,4vw,40px));padding:0 clamp(18px,4vw,40px) 8px;scrollbar-width:none}
+ .gal::-webkit-scrollbar{display:none}
+ .tile{flex:0 0 88%;scroll-snap-align:start}
+ .modes{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin:0 calc(-1*clamp(18px,4vw,40px));padding:0 clamp(18px,4vw,40px) 8px;scrollbar-width:none}
+ .modes::-webkit-scrollbar{display:none}
+ .mode{flex:0 0 92%;scroll-snap-align:start}
 }
-@media(max-width:380px){
- nav .btn{padding:0 12px;font-size:13px}
- .stage{padding:8px}
-}
-
-/* ===== Mobile header: links shown directly in a second row ===== */
-.mnav{display:none}
-@media(max-width:820px){
- header nav{gap:10px}
- header nav a:not(.btn){display:none}
- footer nav a{display:inline}
- header nav .btn{height:38px;padding:0 18px;font-size:14px}
- header .wrap{height:54px}
- .mnav{display:flex;justify-content:space-between;align-items:center;padding:0 18px;border-top:1px solid var(--line);max-width:1200px;margin:0 auto}
- .mnav a{flex:1;text-align:center;padding:11px 4px;font-size:14.5px;font-weight:500;color:var(--mute);text-decoration:none;white-space:nowrap}
- .mnav a:hover,.mnav a:active{color:var(--ink)}
- html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 104px)}
-}
-
-/* ===== Real AeroBar orb (from assets/aerobar-orb-v2.svg, inlined) ===== */
-.o{background:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%22120%22%20height=%22120%22%20viewBox=%220%200%20100%20100%22%3E%20%3Cdefs%3E%20%3Cfilter%20id=%22shadow%22%20x=%22-20%25%22%20y=%22-20%25%22%20width=%22140%25%22%20height=%22140%25%22%3E%20%3CfeDropShadow%20dx=%220%22%20dy=%222.5%22%20stdDeviation=%222.5%22%20flood-opacity=%220.55%22%20/%3E%20%3C/filter%3E%20%3ClinearGradient%20id=%22baseGrey%22%20x1=%220%25%22%20y1=%220%25%22%20x2=%220%25%22%20y2=%22100%25%22%3E%20%3Cstop%20offset=%220%25%22%20stop-color=%22%23292929%22%20/%3E%20%3Cstop%20offset=%22100%25%22%20stop-color=%22%23171717%22%20/%3E%20%3C/linearGradient%3E%20%3CradialGradient%20id=%22tintGlow%22%20cx=%2250%25%22%20cy=%2285%25%22%20r=%2260%25%22%3E%20%3Cstop%20offset=%220%25%22%20stop-color=%22%230a6cff%22%20stop-opacity=%220.95%22%20/%3E%20%3Cstop%20offset=%2250%25%22%20stop-color=%22%230a6cff%22%20stop-opacity=%220.4%22%20/%3E%20%3Cstop%20offset=%22100%25%22%20stop-color=%22%230a6cff%22%20stop-opacity=%220%22%20/%3E%20%3C/radialGradient%3E%20%3CradialGradient%20id=%22ambient%22%20cx=%2250%25%22%20cy=%2250%25%22%20r=%2250%25%22%3E%20%3Cstop%20offset=%220%25%22%20stop-color=%22%230a6cff%22%20stop-opacity=%220.35%22%20/%3E%20%3Cstop%20offset=%22100%25%22%20stop-color=%22%230a6cff%22%20stop-opacity=%220%22%20/%3E%20%3C/radialGradient%3E%20%3ClinearGradient%20id=%22rim%22%20x1=%220%25%22%20y1=%220%25%22%20x2=%220%25%22%20y2=%22100%25%22%3E%20%3Cstop%20offset=%220%25%22%20stop-color=%22%23ffffff%22%20stop-opacity=%220.32%22%20/%3E%20%3Cstop%20offset=%22100%25%22%20stop-color=%22%23ffffff%22%20stop-opacity=%220.08%22%20/%3E%20%3C/linearGradient%3E%20%3ClinearGradient%20id=%22specular%22%20x1=%220%25%22%20y1=%220%25%22%20x2=%220%25%22%20y2=%22100%25%22%3E%20%3Cstop%20offset=%220%25%22%20stop-color=%22%23ffffff%22%20stop-opacity=%220.55%22%20/%3E%20%3Cstop%20offset=%22100%25%22%20stop-color=%22%23ffffff%22%20stop-opacity=%220.05%22%20/%3E%20%3C/linearGradient%3E%20%3Cfilter%20id=%22logoShadow%22%20x=%22-10%25%22%20y=%22-10%25%22%20width=%22120%25%22%20height=%22120%25%22%3E%20%3CfeDropShadow%20dx=%220%22%20dy=%221%22%20stdDeviation=%221%22%20flood-opacity=%220.2%22%20/%3E%20%3C/filter%3E%20%3Cmask%20id=%22m%22%3E%20%3Crect%20x=%220%22%20y=%220%22%20width=%22100%22%20height=%22100%22%20fill=%22white%22/%3E%20%3Cpath%20d=%22M%2050%2038%20L%2033%2088%20C%2036%2076%2042%2071%2050%2071%20C%2058%2071%2064%2076%2067%2088%20Z%22%20fill=%22black%22/%3E%20%3Cpath%20d=%22M%2038%2089%20C%2038%2077%2043%2071%2050%2071%20C%2057%2071%2062%2077%2062%2089%20Z%22%20fill=%22black%22/%3E%20%3Cpath%20d=%22M%2044%2038%20L%2010%2055%20L%2015%2046%20L%2047%2031%20Z%22%20fill=%22black%22/%3E%20%3Cpath%20d=%22M%2056%2038%20L%2090%2055%20L%2085%2046%20L%2053%2031%20Z%22%20fill=%22black%22/%3E%20%3C/mask%3E%20%3CclipPath%20id=%22orbClip%22%3E%20%3Ccircle%20cx=%2250%22%20cy=%2250%22%20r=%2246%22%20/%3E%20%3C/clipPath%3E%20%3C/defs%3E%20%3Ccircle%20cx=%2250%22%20cy=%2250%22%20r=%2246%22%20fill=%22url%28%23baseGrey%29%22%20filter=%22url%28%23shadow%29%22%20/%3E%20%3Ccircle%20cx=%2250%22%20cy=%2250%22%20r=%2246%22%20fill=%22url%28%23tintGlow%29%22%20style=%22mix-blend-mode:%20screen;%22%20/%3E%20%3Ccircle%20cx=%2250%22%20cy=%2250%22%20r=%2246%22%20fill=%22url%28%23ambient%29%22%20/%3E%20%3Ccircle%20cx=%2250%22%20cy=%2250%22%20r=%2245.5%22%20fill=%22none%22%20stroke=%22url%28%23rim%29%22%20stroke-width=%221%22%20/%3E%20%3Cg%20transform=%22translate%2827,%2027%29%20scale%280.46%29%22%20filter=%22url%28%23logoShadow%29%22%3E%20%3Cpath%20fill=%22white%22%20mask=%22url%28%23m%29%22%20d=%22M%2050%208%20L%2095%2092%20L%2072%2092%20L%2067%2080%20C%2062%2068%2057%2064%2050%2064%20C%2043%2064%2038%2068%2033%2080%20L%2028%2092%20L%205%2092%20Z%22%20/%3E%20%3Cpath%20fill=%22white%22%20d=%22M%2050%2066%20L%202%2080%20L%204%2069%20L%2050%2056%20Z%22%20/%3E%20%3Cpath%20fill=%22white%22%20d=%22M%2050%2066%20L%2098%2080%20L%2096%2069%20L%2050%2056%20Z%22%20/%3E%20%3C/g%3E%20%3Cellipse%20cx=%2250%22%20cy=%2224.5%22%20rx=%2234%22%20ry=%2216%22%20fill=%22url%28%23specular%29%22%20clip-path=%22url%28%23orbClip%29%22%20/%3E%20%3C/svg%3E") center/contain no-repeat!important;box-shadow:none;border-radius:50%}
-.brand .o{width:30px;height:30px}
-.hero-badges{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;margin:32px auto 26px}
-.hero-badges img{height:32px;width:auto;display:block}
-.cta{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:14px;margin:0 auto 64px}
-.cta a{display:inline-flex;transition:transform .15s ease,filter .15s ease}
-.cta a:hover{transform:translateY(-1.5px);filter:brightness(1.08)}
-.cta a:active{transform:translateY(0);filter:brightness(0.95)}
-.cta img{height:46px;width:auto;display:block}
 @media(max-width:640px){
-.hero-badges{gap:8px;margin:24px auto 20px}
-.hero-badges img{height:28px}
-.cta{gap:10px;margin:0 auto 44px}
-.cta img{height:42px}
+ .cta .btn{width:100%}
+ /* CHANGED (mobile dock). PREVIOUS logic: .dock kept left:50% + translateX(-50%) with a shrink-to-fit width,
+    and .get/.sep/a.hide-sm (Download, divider, Privacy) were display:none, so the bar was shorter than desktop
+    but its items (~375px) still overflowed the pill on phones <=360px ("Install" poked out of the glass).
+    NEW logic: pin the bar between 8px side gutters (no transform centering) and let it scroll sideways, showing
+    the SAME items as desktop (orb, Modes, Features, Customize, Privacy, Install, Download).
+    RISKS: (1) the .tip hover tooltips are clipped by overflow-x:auto - harmless here since tips only show under
+    (hover:hover), i.e. not on touch. (2) overflow-x:auto makes the pill a scroll container, so a horizontal swipe
+    that starts on it scrolls the pill rather than the page. (3) Items past the right edge (Install/Download)
+    are reachable only by swiping on narrow phones - there is no scroll hint.
+    TO REVERT: restore .dock{gap:2px;padding:6px}, add back `.dock .get,.dock .sep,.dock a.hide-sm{display:none}`,
+    and delete the left/right/transform/width/overflow/justify-content lines below. */
+ .dock{gap:2px;padding:6px;left:8px;right:8px;transform:none;width:auto;max-width:none;overflow-x:auto;overflow-y:hidden;justify-content:flex-start;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+ .dock::-webkit-scrollbar{display:none}
+ .dock>*{flex:none} /* keep every item at natural width so the row scrolls instead of squashing/overflowing */
+ .dock a.t{padding:0 11px;font-size:14px}
+ .dock .get{padding:0 14px;font-size:14px} /* Download no longer hidden; slightly tighter than desktop (18px/15px) */
+ .tip{display:none} /* tooltips are hover-only and would be clipped by the scroll container anyway */
 }
-.hero{padding-top:36px}
-@media(max-width:820px){.hero{padding-top:28px}}
-@media(max-width:560px){.hero{padding-top:20px}}
-.hero-orb{width:140px;height:140px;margin:0 auto 28px}
-@media(max-width:560px){.hero-orb{width:84px;height:84px;margin-bottom:16px}}
+@media(max-width:380px){.dock a.t{padding:0 8px;font-size:13.5px}}
+/* CHANGED (hero claims row). PREVIOUS logic: badges sat in the left text column under the hero note, used
+   assets/badge-*.svg (viewBox clipped exactly to the 134x32 pill, so the drop-shadow filter was cut off into a
+   lighter rectangle that "bled" past the rounded corners), and included GPL-3.0 OSS.
+   NEW logic: the row sits in the right column directly above the main preview, centred, with GPL-3.0 removed, and uses
+   assets/site-badge-*.svg (same pill, viewBox padded by 14px so the shadow is not clipped). The 14px padding is
+   cancelled with a -14px margin so the pills keep their 32px visual size and spacing.
+   RISKS: (1) the shadow now overflows each <li>; a future overflow:hidden on .claims or a parent would clip it again
+   and bring the bleed back. (2) Negative margins make neighbouring images' padding overlap (transparent, harmless).
+   (3) On desktop the row adds height above the preview in the right column, so the preview sits lower than the text
+   column's vertical centre. (4) assets/site-badge-license.svg and badge-*.svg are now unused by the site (readme.md
+   still uses badge-*.svg incl. GPL) - keep them. (5) The 4 claims now live in markup only; "GPL-3.0" is still stated in #privacy prose.
+   TO REVERT: restore the old block, move the <ul> back under .small in the left column, swap site-badge-* for badge-*
+   and re-add the GPL-3.0 <li>. */
+.claims{display:flex;flex-wrap:wrap;justify-content:center;gap:0 10px;list-style:none;margin:0 0 14px;padding:0}
+.claims li{display:flex}
+.claims img{display:block;height:60px;width:auto;margin:-14px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* MacBook frame around every preview (screen hole = 207,36 to 1842,1097 of 2048x1196); media overscans the hole and sits under the bezel */
+:root{--mac:url("data:image/svg+xml,%3Csvg width='2048' height='1196' viewBox='0 0 2048 1196' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cg clip-path='url(%23clip0_6103_5129)'%3E%3Cg transform='translate(0 -45)'%3E %3Cpath d='M1942.19 1235.64C1944.93 1235.09 1946.77 1232.65 1947.34 1231.5H1810.86C1811.44 1232.65 1813.27 1235.09 1816.01 1235.64C1816.3 1237.25 1817.56 1240.48 1820.3 1240.48H1937.9C1940.64 1240.48 1941.9 1237.25 1942.19 1235.64Z' fill='url(%23paint0_linear_6103_5129)'/%3E %3Cpath d='M1942.06 1236.2C1941.62 1237.89 1940.35 1240.48 1937.89 1240.48H1820.3C1817.74 1240.48 1816.47 1237.67 1816.08 1235.99H1942.06V1236.2Z' fill='black' fill-opacity='0.3'/%3E %3Cpath d='M231.028 1235.64C233.775 1235.09 235.606 1232.65 236.178 1231.5H99.7031C100.275 1232.65 102.106 1235.09 104.853 1235.64C105.139 1237.25 106.398 1240.48 109.145 1240.48H226.736C229.483 1240.48 230.742 1237.25 231.028 1235.64Z' fill='url(%23paint1_linear_6103_5129)'/%3E %3Cpath d='M230.904 1236.19C230.461 1237.89 229.197 1240.48 226.736 1240.48H109.145C106.583 1240.48 105.317 1237.67 104.926 1235.99H230.904V1236.19Z' fill='black' fill-opacity='0.3'/%3E %3Cmask id='mask0_6103_5129' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='0' y='1181' width='2048' height='51'%3E %3Cpath d='M2048 1186.57V1181.19H0V1186.57C0 1202.3 0 1210.16 4.40563 1216.17C8.28094 1221.45 14.4645 1225.74 22.0703 1228.44C30.7168 1231.5 42.0358 1231.5 64.6737 1231.5H1983.33C2005.96 1231.5 2017.28 1231.5 2025.93 1228.44C2033.54 1225.74 2039.72 1221.45 2043.59 1216.17C2048 1210.16 2048 1202.3 2048 1186.57Z' fill='white'/%3E %3C/mask%3E %3Cg mask='url(%23mask0_6103_5129)'%3E %3Cpath d='M2048 1186.57V1181.19H0V1186.57C0 1202.3 0 1210.16 4.40563 1216.17C8.28094 1221.45 14.4645 1225.74 22.0703 1228.44C30.7168 1231.5 42.0358 1231.5 64.6737 1231.5H1983.33C2005.96 1231.5 2017.28 1231.5 2025.93 1228.44C2033.54 1225.74 2039.72 1221.45 2043.59 1216.17C2048 1210.16 2048 1202.3 2048 1186.57Z' fill='url(%23paint2_linear_6103_5129)'/%3E %3Cpath d='M2048 1181.19H1818.05V1231.49H2048V1181.19Z' fill='url(%23paint3_linear_6103_5129)'/%3E %3Cpath d='M-0.000900269 1181.19H231.746V1231.49H-0.000900269V1181.19Z' fill='url(%23paint4_linear_6103_5129)'/%3E %3Cg filter='url(%23filter0_f_6103_5129)'%3E %3Cpath d='M4.49219 1172.21H30.5413V1198.71C30.5413 1205.9 24.71 1211.73 17.5167 1211.73C10.3235 1211.73 4.49219 1205.9 4.49219 1198.71V1172.21Z' fill='url(%23paint5_linear_6103_5129)'/%3E %3C/g%3E %3Cg filter='url(%23filter1_f_6103_5129)'%3E %3Cpath d='M2043.51 1172.21H2017.46V1198.71C2017.46 1205.9 2023.29 1211.73 2030.48 1211.73C2037.68 1211.73 2043.51 1205.9 2043.51 1198.71V1172.21Z' fill='url(%23paint6_linear_6103_5129)'/%3E %3C/g%3E %3C/g%3E %3Cpath d='M839.859 1181.19H1208.14C1208.14 1195.08 1196.88 1206.34 1182.99 1206.34H865.01C851.12 1206.34 839.859 1195.08 839.859 1181.19Z' fill='url(%23paint7_linear_6103_5129)'/%3E %3C/g%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M1881.83 61.0807C1881.83 27.3468 1854.48 0 1820.74 0H229.053C195.319 0 167.973 27.3468 167.973 61.0808V1100.26C167.973 1111.04 169.769 1136.19 181.446 1136.19H1868.35C1880.03 1136.19 1881.83 1111.04 1881.83 1100.26V61.0807ZM207 56.7962C207 44.8901 216.652 35.2383 228.558 35.2383H1820.44C1832.35 35.2383 1842 44.8901 1842 56.7962V1097.24H207V56.7962Z' fill='black'/%3E %3Cg transform='translate(0 -45)'%3E%3Cmask id='mask1_6103_5129' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='167' y='1125' width='1715' height='57'%3E %3Cpath d='M167.973 1181.19V1145.26C167.973 1134.35 176.82 1125.5 187.734 1125.5H1862.06C1872.98 1125.5 1881.83 1134.35 1881.83 1145.26V1181.19H1868.35H181.446H167.973Z' fill='black'/%3E %3C/mask%3E %3Cg mask='url(%23mask1_6103_5129)'%3E %3Cg filter='url(%23filter2_d_6103_5129)'%3E %3Cpath d='M1860.27 1181.19C1877.02 1176.41 1875.71 1149.65 1875.52 1135.55C1875.48 1133 1873.38 1130.82 1870.89 1131.38C1847.89 1136.49 1856.07 1180.35 1841.4 1181.19H1860.27Z' fill='%23141311'/%3E %3C/g%3E %3Cg filter='url(%23filter3_d_6103_5129)'%3E %3Cpath d='M189.611 1181.19C172.857 1176.41 174.173 1149.65 174.362 1135.55C174.396 1133 176.498 1130.82 178.986 1131.38C201.985 1136.49 193.813 1180.35 208.474 1181.19H189.611Z' fill='%23141311'/%3E %3C/g%3E %3C/g%3E%3C/g%3E  %3Cg filter='url(%23filter5_ii_6103_5129)'%3E %3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M1820.75 5.3906H229.055C198.297 5.3906 173.363 30.3244 173.363 61.0819V1102.06C173.363 1120.91 188.645 1136.19 207.497 1136.19H363.791V1134.4C363.791 1132.41 362.183 1130.8 360.198 1130.8H207.497C191.622 1130.8 178.753 1117.93 178.753 1102.06V61.0819C178.753 33.301 201.274 10.7801 229.055 10.7801H1820.75C1848.53 10.7801 1871.05 33.301 1871.05 61.0819V1102.06C1871.05 1117.93 1858.18 1130.8 1842.3 1130.8H1689.6C1687.62 1130.8 1686.01 1132.41 1686.01 1134.4V1136.19H1842.3C1861.15 1136.19 1876.44 1120.91 1876.44 1102.06V61.0819C1876.44 30.3244 1851.5 5.3906 1820.75 5.3906Z' fill='%23131415'/%3E %3C/g%3E %3Cpath d='M907.234 35.0312H920.408C923.384 35.0312 925.797 37.4442 925.797 40.4207V60.1821C925.797 66.1352 930.623 70.9611 936.576 70.9611H1114.13C1120.09 70.9611 1124.91 66.1352 1124.91 60.1821V40.4207C1124.91 37.4442 1127.32 35.0312 1130.3 35.0312H1143.47H907.234Z' fill='black'/%3E %3Cg filter='url(%23filter6_f_6103_5129)'%3E %3Cpath d='M1024.9 52.9963C1030.85 52.9963 1035.68 48.1704 1035.68 42.2174C1035.68 36.2644 1030.85 31.4385 1024.9 31.4385C1018.95 31.4385 1014.12 36.2644 1014.12 42.2174C1014.12 48.1704 1018.95 52.9963 1024.9 52.9963Z' fill='%230F1316'/%3E %3C/g%3E %3Cg filter='url(%23filter7_f_6103_5129)'%3E %3Cpath d='M1024.9 50.3012C1029.37 50.3012 1032.98 46.6818 1032.98 42.217C1032.98 37.7522 1029.37 34.1328 1024.9 34.1328C1020.44 34.1328 1016.82 37.7522 1016.82 42.217C1016.82 46.6818 1020.44 50.3012 1024.9 50.3012Z' fill='%23080905'/%3E %3C/g%3E %3Cg filter='url(%23filter8_f_6103_5129)'%3E %3Cpath d='M1024.9 45.8108C1026.89 45.8108 1028.49 45.0064 1028.49 44.0143C1028.49 43.0221 1026.89 42.2178 1024.9 42.2178C1022.92 42.2178 1021.31 43.0221 1021.31 44.0143C1021.31 45.0064 1022.92 45.8108 1024.9 45.8108Z' fill='%2305111D'/%3E %3C/g%3E %3Cg filter='url(%23filter9_f_6103_5129)'%3E %3Cpath d='M1024.9 42.217C1026.89 42.217 1028.49 41.4127 1028.49 40.4205C1028.49 39.4283 1026.89 38.624 1024.9 38.624C1022.92 38.624 1021.31 39.4283 1021.31 40.4205C1021.31 41.4127 1022.92 42.217 1024.9 42.217Z' fill='%2305111D'/%3E %3C/g%3E %3Cg filter='url(%23filter10_f_6103_5129)'%3E %3Cpath d='M1024.9 45.81C1026.39 45.81 1027.6 45.2067 1027.6 44.4626C1027.6 43.7185 1026.39 43.1152 1024.9 43.1152C1023.41 43.1152 1022.21 43.7185 1022.21 44.4626C1022.21 45.2067 1023.41 45.81 1024.9 45.81Z' fill='%230F3455'/%3E %3C/g%3E %3Cg filter='url(%23filter11_f_6103_5129)'%3E %3Cpath d='M1024.9 42.217C1026.39 42.217 1027.6 41.4127 1027.6 40.4205C1027.6 39.4283 1026.39 38.624 1024.9 38.624C1023.41 38.624 1022.21 39.4283 1022.21 40.4205C1022.21 41.4127 1023.41 42.217 1024.9 42.217Z' fill='%230F3857'/%3E %3C/g%3E %3C/g%3E %3Cdefs%3E %3Cfilter id='filter0_f_6103_5129' x='-0.897293' y='1166.82' width='36.8297' height='50.2985' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='2.69474' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter1_f_6103_5129' x='2012.07' y='1166.82' width='36.8297' height='50.2985' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='2.69474' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter2_d_6103_5129' x='1840.5' y='1129.49' width='37.8117' height='53.4914' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dx='0.898246'/%3E %3CfeGaussianBlur stdDeviation='0.898246'/%3E %3CfeComposite in2='hardAlpha' operator='out'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.0784314 0 0 0 0 0.0745098 0 0 0 0 0.0666667 0 0 0 1 0'/%3E %3CfeBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_6103_5129'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow_6103_5129' result='shape'/%3E %3C/filter%3E %3Cfilter id='filter3_d_6103_5129' x='171.567' y='1129.49' width='37.8039' height='53.4914' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dx='-0.898246'/%3E %3CfeGaussianBlur stdDeviation='0.898246'/%3E %3CfeComposite in2='hardAlpha' operator='out'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.0784314 0 0 0 0 0.0745098 0 0 0 0 0.0666667 0 0 0 1 0'/%3E %3CfeBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_6103_5129'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow_6103_5129' result='shape'/%3E %3C/filter%3E %3Cfilter id='filter4_ii_6103_5129' x='177.852' y='1129.99' width='1694.09' height='51.1981' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dx='-0.898246' dy='-0.898246'/%3E %3CfeGaussianBlur stdDeviation='0.898246'/%3E %3CfeComposite in2='hardAlpha' operator='arithmetic' k2='-1' k3='1'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/%3E %3CfeBlend mode='normal' in2='shape' result='effect1_innerShadow_6103_5129'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dx='0.898246' dy='-0.898246'/%3E %3CfeGaussianBlur stdDeviation='0.898246'/%3E %3CfeComposite in2='hardAlpha' operator='arithmetic' k2='-1' k3='1'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/%3E %3CfeBlend mode='normal' in2='effect1_innerShadow_6103_5129' result='effect2_innerShadow_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter5_ii_6103_5129' x='173.363' y='5.39062' width='1703.08' height='1176.7' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dy='0.898246'/%3E %3CfeGaussianBlur stdDeviation='1.34737'/%3E %3CfeComposite in2='hardAlpha' operator='arithmetic' k2='-1' k3='1'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.1 0'/%3E %3CfeBlend mode='normal' in2='shape' result='effect1_innerShadow_6103_5129'/%3E %3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E %3CfeOffset dy='0.898246'/%3E %3CfeGaussianBlur stdDeviation='0.898246'/%3E %3CfeComposite in2='hardAlpha' operator='arithmetic' k2='-1' k3='1'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/%3E %3CfeBlend mode='normal' in2='effect1_innerShadow_6103_5129' result='effect2_innerShadow_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter6_f_6103_5129' x='1012.32' y='29.642' width='25.1516' height='25.1506' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter7_f_6103_5129' x='1015.02' y='32.3363' width='19.761' height='19.761' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter8_f_6103_5129' x='1019.51' y='40.4213' width='10.7805' height='7.18576' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter9_f_6103_5129' x='1019.51' y='36.8275' width='10.7805' height='7.18576' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter10_f_6103_5129' x='1020.41' y='41.3187' width='8.98361' height='6.28732' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3Cfilter id='filter11_f_6103_5129' x='1020.41' y='36.8275' width='8.98361' height='7.18576' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E %3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E %3CfeBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E %3CfeGaussianBlur stdDeviation='0.898246' result='effect1_foregroundBlur_6103_5129'/%3E %3C/filter%3E %3ClinearGradient id='paint0_linear_6103_5129' x1='1810.86' y1='1235.99' x2='1947.34' y2='1235.99' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23565F6D'/%3E %3Cstop offset='0.173014' stop-color='%232E353F'/%3E %3Cstop offset='0.31824' stop-color='%2356606D'/%3E %3Cstop offset='0.691458' stop-color='%2356606D'/%3E %3Cstop offset='0.825754' stop-color='%232E353F'/%3E %3Cstop offset='1' stop-color='%23565F6D'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint1_linear_6103_5129' x1='99.7031' y1='1235.99' x2='236.178' y2='1235.99' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23565F6D'/%3E %3Cstop offset='0.173014' stop-color='%232E353F'/%3E %3Cstop offset='0.31824' stop-color='%2356606D'/%3E %3Cstop offset='0.691458' stop-color='%2356606D'/%3E %3Cstop offset='0.825754' stop-color='%232E353F'/%3E %3Cstop offset='1' stop-color='%23565F6D'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint2_linear_6103_5129' x1='1024' y1='1181.19' x2='1024' y2='1231.5' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23586170'/%3E %3Cstop offset='0.192522' stop-color='%2356606C'/%3E %3Cstop offset='0.376094' stop-color='%234F5965'/%3E %3Cstop offset='0.598958' stop-color='%23343C45'/%3E %3Cstop offset='0.713542' stop-color='%231B222C'/%3E %3Cstop offset='0.852125' stop-color='%23161D27'/%3E %3Cstop offset='0.931356' stop-color='%23444C57'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint3_linear_6103_5129' x1='2048' y1='1207.11' x2='1818.05' y2='1207.11' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23212733' stop-opacity='0'/%3E %3Cstop offset='0.259918' stop-color='%23212733'/%3E %3Cstop offset='1' stop-color='%23212733' stop-opacity='0'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint4_linear_6103_5129' x1='-0.000900269' y1='1207.1' x2='231.746' y2='1207.1' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23212733' stop-opacity='0'/%3E %3Cstop offset='0.259918' stop-color='%23212733'/%3E %3Cstop offset='1' stop-color='%23212733' stop-opacity='0'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint5_linear_6103_5129' x1='4.49219' y1='1185.76' x2='30.5413' y2='1185.76' gradientUnits='userSpaceOnUse'%3E %3Cstop offset='0.0875682' stop-color='white' stop-opacity='0.17'/%3E %3Cstop offset='0.272185' stop-color='white' stop-opacity='0.65'/%3E %3Cstop offset='0.489769' stop-color='white' stop-opacity='0.65'/%3E %3Cstop offset='0.677083' stop-color='white' stop-opacity='0.19'/%3E %3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint6_linear_6103_5129' x1='2043.51' y1='1185.76' x2='2017.46' y2='1185.76' gradientUnits='userSpaceOnUse'%3E %3Cstop offset='0.0875682' stop-color='white' stop-opacity='0.17'/%3E %3Cstop offset='0.272185' stop-color='white' stop-opacity='0.65'/%3E %3Cstop offset='0.489769' stop-color='white' stop-opacity='0.65'/%3E %3Cstop offset='0.677083' stop-color='white' stop-opacity='0.19'/%3E %3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E %3C/linearGradient%3E %3ClinearGradient id='paint7_linear_6103_5129' x1='840.73' y1='1193.39' x2='1208.14' y2='1193.39' gradientUnits='userSpaceOnUse'%3E %3Cstop stop-color='%23131A24'/%3E %3Cstop offset='0.015659' stop-color='%23343E4A'/%3E %3Cstop offset='0.035819' stop-color='%23626E7E'/%3E %3Cstop offset='0.0504351' stop-color='%237F8A9C'/%3E %3Cstop offset='0.479167' stop-color='%237E889B'/%3E %3Cstop offset='0.941214' stop-color='%237F8A9C'/%3E %3Cstop offset='0.970403' stop-color='%23626E7E'/%3E %3Cstop offset='0.980129' stop-color='%23343E4A'/%3E %3Cstop offset='1' stop-color='%23131A24'/%3E %3C/linearGradient%3E %3CclipPath id='clip0_6103_5129'%3E %3Crect width='2048' height='1196' fill='white'/%3E %3C/clipPath%3E %3C/defs%3E %3C/svg%3E")}
+.screen{aspect-ratio:2048/1196;border-radius:0;overflow:visible;background:none;box-shadow:none;isolation:isolate}
+.screen::before{content:"";position:absolute;left:6%;right:6%;bottom:-1.5%;height:5%;background:radial-gradient(ellipse at center,rgba(0,0,0,.45),transparent 70%);filter:blur(14px)}
+.screen::after{content:"";position:absolute;inset:0;background:var(--mac) center/100% 100% no-repeat;pointer-events:none;z-index:30}
+.screen video,.screen img{inset:auto;left:9.814%;top:2.508%;width:80.420%;height:89.716%;border-radius:0;background:#000}
+.tile .play{right:11%;bottom:12%;z-index:40}
+.tile:hover .screen{transform:translateY(-3px)}
+@media(min-width:901px){.hero .screen{margin-right:-4%;width:104%}}
+@media(max-width:700px){.screen{width:108%;margin-left:-4%}.tile .screen,.mode .screen{width:100%;margin-left:0}}
+.tile{display:flex;flex-direction:column;justify-content:flex-start;align-items:stretch}
+@media(min-width:701px){.gal{grid-template-columns:repeat(2,minmax(0,1fr));gap:56px clamp(28px,4vw,64px);align-items:start}.gal .tile:last-child:nth-child(odd){grid-column:1/-1;width:calc(50% - clamp(14px,2vw,32px));justify-self:center}}
+
+/* Mobile hero order (<=700px): brand + Download, headline, description, MacBook preview, caption, badges, CTA buttons + note.
+   Both hero columns become display:contents so their children can be re-ordered as one stack.
+   The header Download button is mobile-only; the full CTA block below the badges is unchanged. */
+.brandline .hdr-dl{display:none}
+@media(max-width:700px){
+ .hero{row-gap:0}
+ .hero>div{display:contents}
+ .brandline{order:1;margin-bottom:18px}
+ .brandline .hdr-dl{display:inline-flex;margin-left:auto;height:40px;padding:0 18px;font-size:15px;border-radius:12px}
+ .hero h1{order:2}
+ .hero .lede{order:3}
+ .hero .screen{order:4;margin-top:28px}
+ .hero .cap{order:5}
+ .hero .claims{order:6;margin-top:18px}
+ .hero .cta{order:7;margin-top:14px}
+ .hero .small{order:8}
+}
+
+/* Mobile nav fit (<=640px): the pill no longer scrolls sideways or clips "Install".
+   Hidden here: the divider, the Download button (the hero header has one on mobile) and Privacy (still reachable by scrolling / footer).
+   Remaining items (orb, Modes, Features, Customize, Install) share the width evenly. */
+@media(max-width:640px){
+ .dock .sep,.dock .get,.dock a.hide-sm{display:none}
+ .dock{justify-content:space-between;overflow:hidden}
+ .dock>*{flex:0 1 auto}
+ .dock a.t{padding:0 10px;font-size:14px}
+}
+@media(max-width:380px){.dock a.t{padding:0 6px;font-size:13.5px}}
 </style>
 </head>
 <body>
-<header><div class="wrap">
-<a class="brand" href="#top"><span class="o"></span>AeroBar</a>
-<nav><a href="#modes">Modes</a><a href="#features">Features</a><a href="#customize">Customize</a><a href="#install">Install</a><a href="https://github.com/adityaonx/AeroBar">GitHub</a><a class="btn pri" href="https://github.com/adityaonx/AeroBar/releases/latest">Download</a></nav>
-</div>
-<div class="mnav" id="mnav"><a href="#modes">Modes</a><a href="#features">Features</a><a href="#customize">Customize</a><a href="#install">Install</a><a href="https://github.com/adityaonx/AeroBar">GitHub</a></div></header>
+<main>
 
-<main id="top">
-<div class="wrap hero">
-<span class="o hero-orb" role="img" aria-label="AeroBar Aero Orb"></span>
-
-<h1>A taskbar for macOS.<br><span class="soft">Or a better Dock.</span></h1>
-<p class="lede">Every window one click away, with live previews, a ⌘Tab for windows, clipboard history and more. Run it as a taskbar, a floating dock, or on top of the real Dock. Pro features are included during the public beta.</p>
-
-<div class="hero-badges" aria-label="Privacy, security, and platform compatibility">
-  <img src="assets/badge-telemetry.svg" alt="Zero Telemetry" />
-  <img src="assets/badge-offline.svg" alt="100% Offline" />
-  <img src="assets/badge-signed.svg" alt="Signed Updates" />
-  <img src="assets/badge-macos.svg" alt="macOS 14.0+" />
-  <img src="assets/badge-license.svg" alt="GPL-3.0 OSS" />
-</div>
-
-<div class="cta">
-  <a href="#install" aria-label="Install with Homebrew"><img src="assets/homebrew-btn.svg" alt="Install with Homebrew" /></a>
-  <a href="https://github.com/adityaonx/AeroBar/releases/latest" aria-label="Download for Mac"><img src="assets/download-btn.svg" alt="Download for Mac" /></a>
-  <a href="https://www.youtube.com/watch?v=NY2qc3SOwXk" aria-label="Video Guide"><img src="assets/youtube_guide.svg" alt="Video Guide" /></a>
-</div>
-
-<div class="stage"><!-- HERO SLOT: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/hero-poster.jpg" aria-label="AeroBar on a Mac desktop with live window previews and taskbar">
-<source src="assets/hero.mp4" type="video/mp4">
-</video></figure></div>
-<p class="cap">The bar and the menu bar take on the colour of the app you’re in.</p>
+<div class="wrap hero" id="top">
+ <div>
+  <div class="brandline"><span class="orb"></span>AeroBar<a class="btn pri hdr-dl" href="https://github.com/adityaonx/AeroBar/releases/latest">Download</a></div>
+  <h1>A taskbar for macOS. Or a better Dock.</h1>
+  <p class="lede">Every window one click away, with live previews, a <kbd>⌘</kbd> <kbd>Tab</kbd> that switches windows, clipboard history and more. Run it as a taskbar, a floating dock, or on top of the real Dock.</p>
+  <div class="cta">
+   <a class="btn pri" href="https://github.com/adityaonx/AeroBar/releases/latest">Download for Mac</a>
+   <button class="btn" type="button" data-copy>Copy Homebrew command</button>
+  </div>
+  <p class="small">Pro features are included during the public beta. Requires macOS 14 or later. <a href="https://www.youtube.com/watch?v=NY2qc3SOwXk">Watch the video guide</a>.</p>
+ </div>
+ <div>
+  <ul class="claims" aria-label="AeroBar at a glance">
+   <li><img src="assets/site-badge-telemetry.svg" width="162" height="60" alt="Zero Telemetry"></li>
+   <li><img src="assets/site-badge-offline.svg" width="150" height="60" alt="100% Offline"></li>
+   <li><img src="assets/site-badge-signed.svg" width="162" height="60" alt="Signed Updates"></li>
+   <li><img src="assets/site-badge-macos.svg" width="154" height="60" alt="macOS 14.0+"></li>
+  </ul>
+  <figure class="screen"><img src="assets/hero-poster.jpg" width="1108" height="720" alt="AeroBar on a Mac desktop with window tabs, live previews and the Aero Orb"><video muted loop playsinline preload="none" poster="assets/hero-poster.jpg" aria-label="AeroBar on a Mac desktop with live window previews and taskbar"><source src="assets/hero.mp4" type="video/mp4"></video></figure>
+  <p class="cap">The bar and the menu bar take on the colour of the app you’re in.</p>
+ </div>
 </div>
 
 <section id="modes"><div class="wrap">
-<div class="head"><h2>Choose your mode.</h2><p class="lede">Four ways to run AeroBar. Edge placement, custom sizing, and options you can switch any time in Customize.</p></div>
-
-<div class="stage"><!-- ONBOARDING / MODES & PLACEMENT SHOWCASE -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/placement-poster.jpg" aria-label="Set up AeroBar mode, edge placement and custom sizing">
-<source src="assets/placement.mp4" type="video/mp4">
-</video></figure></div>
-<p class="cap" style="margin-bottom:48px">Pick your mode, position it on any screen edge, and adjust sizing to your taste.</p>
-
-<div class="modes">
-
-<div class="mc"><!-- SLOT mode-macdock: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/mode-macdock-poster.jpg" aria-label="The real macOS Dock on a glass panel with magnified icons, a window preview and extension buttons beside it">
-<source src="assets/mode-macdock.mp4" type="video/mp4">
-</video></figure>
-<h3>macOS Dock + Extensions</h3><ul><li>Keeps the real macOS Dock</li><li>Adds extra features around it</li></ul></div>
-
-<div class="mc"><!-- SLOT mode-aerodock: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/mode-aerodock-poster.jpg" aria-label="A floating glass bar with the Aero Orb, pinned apps, window tabs, and extensions">
-<source src="assets/mode-aerodock.mp4" type="video/mp4">
-</video></figure>
-<h3>AeroDock</h3><ul><li>Floating bar with pinned apps</li><li>Aero Orb at the start</li></ul></div>
-
-<div class="mc"><!-- SLOT mode-taskbar: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/mode-taskbar-poster.jpg" aria-label="A full-width bar with one button per open window and live previews">
-<source src="assets/mode-taskbar.mp4" type="video/mp4">
-</video></figure>
-<h3>AeroTaskBar</h3><ul><li>Full-width bar</li><li>One button per open window</li></ul></div>
-
-<div class="mc"><!-- SLOT mode-legacy: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/placement-poster.jpg" aria-label="One bar holding pinned apps and open window buttons together">
-<source src="assets/placement.mp4" type="video/mp4">
-</video></figure>
-<h3>Legacy AeroBar</h3><ul><li>Pinned apps and open windows</li><li>Together in one bar</li></ul></div>
-
-</div></div></section>
-
-<section id="features" style="padding-top:112px"><div class="wrap">
-<div class="head"><h2>What it adds.</h2><p class="lede">Window tabs and the Start Menu belong to the AeroBar modes. Previews, the switcher, clipboard history and the shelf work in all four.</p></div>
-
-<div class="fgrid"><article class="fc wide"><div class="fm">
-<!-- SLOT tabs: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/tabs-poster.jpg" aria-label="Every window one click away with live tab switching and window previews">
-<source src="assets/tabs.mp4" type="video/mp4">
-</video></figure></div><div class="txt"><h3>Every window, one click away</h3><p>In the taskbar modes, open windows become live tabs. Hover for a live preview with a close button, or press + for a new window. Badge counts carry over from the Dock, and the active tab can show as a pill, line, dot or border.</p></div></article>
-
-<article class="fc"><div class="fm">
-<!-- SLOT start-menu: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/start-menu-poster.jpg" aria-label="Aero Menu start menu search, pinned apps and quick actions">
-<source src="assets/start-menu.mp4" type="video/mp4">
-</video></figure></div><div class="txt"><h3>A Start Menu with real depth</h3><p>Click the Aero Orb to search apps and files, pin favourites to a drag-to-reorder grid, pick up recent files, and lock, log out, restart or shut down without leaving the menu.</p></div></article>
-
-<article class="fc"><div class="fm">
-<!-- SLOT switcher: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/switcher-poster.jpg" aria-label="Smart Switcher with live window previews">
-<source src="assets/switcher.mp4" type="video/mp4">
-</video></figure></div><div class="txt"><h3>⌘Tab, rebuilt</h3><p>A Smart Switcher with live window previews. ⌘Tab moves between apps and ⌘` between windows of one app. Include apps with no windows, go minimal, or pause it in the apps that need the system switcher.</p></div></article>
-
-<article class="fc"><div class="fm">
-<!-- SLOT utilities: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/utilities-poster.jpg" aria-label="Music player widget with playback controls and album art">
-<source src="assets/utilities.mp4" type="video/mp4">
-</video></figure></div><div class="txt"><h3>Clipboard, shelf, music and stats</h3><p>Music controls for Spotify, Apple Music or any web player. CPU, RAM and network at a glance. A shelf to park files and drag them out later. Clipboard history with an encrypted, password-protected backup. Each has its own hotkey.</p></div></article>
-
-
-<article class="fc"><div class="fm">
-<!-- SLOT clipboard: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/clipboard-poster.jpg" aria-label="Searchable clipboard history with encrypted backup">
-<source src="assets/clipboard.mp4" type="video/mp4">
-</video></figure></div><div class="txt"><h3>Searchable clipboard history</h3><p>Every snippet, link and code block you copy is instantly searchable with keyboard navigation, rich previews, and an encrypted, password-protected backup.</p></div></article>
-
-<article class="fc"><div class="fm">
-<!-- SLOT gestures: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/gestures-poster.jpg" aria-label="Three-finger trackpad gestures to switch windows">
-<source src="assets/gestures.mp4" type="video/mp4">
-</video></figure></div><div class="txt"><h3>Trackpad gestures</h3><p>Swipe horizontally with three fingers across your trackpad to glide between open AeroBar windows with responsive, fluid animations and adjustable sensitivity.</p></div></article>
-
-<article class="fc"><div class="fm">
-<!-- SLOT multidisplay: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/multidisplay-poster.jpg" aria-label="Multi-display support with idle screen dimmer">
-<source src="assets/multidisplay.mp4" type="video/mp4">
-</video></figure></div><div class="txt"><h3>Multiple displays & dimmer</h3><p>Run AeroBar across every connected display, external monitors only, or your main screen. Idle screens dim automatically to keep your attention on active tasks.</p></div></article>
-
-<article class="fc"><div class="fm">
-<!-- SLOT hotkeys: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/hotkeys-poster.jpg" aria-label="Global single-tap hotkeys">
-<source src="assets/hotkeys.mp4" type="video/mp4">
-</video></figure></div><div class="txt"><h3>Single-tap hotkeys</h3><p>Instant shortcuts for the clipboard, file shelf, music widget, Quick Links, Screen Search, Show Desktop, Mission Control and the Trash.</p></div></article>
-
-<article class="fc"><div class="fm">
-<!-- SLOT safe-quit: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/safe-quit-poster.jpg" aria-label="Safer quitting to prevent accidental closures">
-<source src="assets/safe-quit.mp4" type="video/mp4">
-</video></figure></div><div class="txt"><h3>Safer quitting</h3><p>Require pressing ⌘Q or ⌘W twice before an app quits or a window closes, protecting you from accidentally losing work during fast workflows.</p></div></article></div>
-<h3 class="sub">And everything else</h3>
-
-<div class="more">
-<div><b>Dynamic Tint & AuraBar</b><span>The bar samples the active window’s colour, with per-app overrides. AuraBar carries the same glass to the menu bar.</span></div>
-<div><b>Screen Search & Quick Links</b><span>Search what’s on screen with Google Lens, and drag URLs onto the bar to keep them one click away.</span></div>
-<div><b>Tasks, Mission Control, Show Desktop</b><span>A dropdown of open windows grouped by app, plus buttons for Mission Control, Show Desktop and the Trash.</span></div>
-<div><b>Pinned apps and folders</b><span>Drag apps into the tray, pin folders to the shelf, and right-click any tab to pin its app.</span></div>
-<div><b>Focus Mode</b><span>Dim non-hovered items and the wallpaper so your attention stays where it belongs. A separate dimmer covers idle displays.</span></div>
-<div><b>Encrypted Backups</b><span>Password-protected local backup for clipboard history, app shortcuts, and custom preferences.</span></div>
-</div>
-
-<div class="facts">
-<div><b>No telemetry</b><span>No analytics, no crash reporting, no tracking. Diagnostics stay on your Mac unless you share them.</span></div>
-<div><b>Offline</b><span>AeroBar never connects to the internet. Links open in your browser only after you say yes. The beta code page keeps a small record per install; the Privacy Policy lists it.</span></div>
-<div><b>Signed updates</b><span>The Update Basket checks each release’s signature before it installs anything.</span></div>
-</div>
+ <div class="head"><h2>Four ways to run it.</h2><p class="lede">Switch any time in Customize. Put the bar on any edge of the screen and size it to taste.</p></div>
+ <div class="modes">
+  <div class="mode"><figure class="screen"><img src="assets/mode-macdock-poster.jpg" width="1108" height="720" loading="lazy" alt="The real macOS Dock on a glass panel with a window preview and extension buttons"><video muted loop playsinline preload="none" poster="assets/mode-macdock-poster.jpg" aria-label="macOS Dock with extensions"><source src="assets/mode-macdock.mp4" type="video/mp4"></video></figure><h3>macOS Dock + Extensions</h3><p>Keeps the real Dock and wraps it in glass, with previews and quick actions around it.</p></div>
+  <div class="mode"><figure class="screen"><img src="assets/mode-aerodock-poster.jpg" width="1108" height="720" loading="lazy" alt="A floating glass bar with the Aero Orb, pinned apps and window tabs"><video muted loop playsinline preload="none" poster="assets/mode-aerodock-poster.jpg" aria-label="AeroDock floating bar"><source src="assets/mode-aerodock.mp4" type="video/mp4"></video></figure><h3>AeroDock</h3><p>A floating bar with pinned apps, window tabs and the Aero Orb at the start.</p></div>
+  <div class="mode"><figure class="screen"><img src="assets/mode-taskbar-poster.jpg" width="1108" height="720" loading="lazy" alt="A full-width bar with one button per open window"><video muted loop playsinline preload="none" poster="assets/mode-taskbar-poster.jpg" aria-label="AeroTaskBar full-width bar"><source src="assets/mode-taskbar.mp4" type="video/mp4"></video></figure><h3>AeroTaskBar</h3><p>A full-width bar with one button for every open window.</p></div>
+  <div class="mode"><figure class="screen"><img src="assets/placement-poster.jpg" width="1280" height="832" loading="lazy" alt="Pinned apps and open window buttons together in one bar"></figure><h3>Legacy AeroBar</h3><p>Pinned apps and open windows together in a single bar.</p></div>
+ </div>
+ <div class="setup">
+  <div><h2 style="font-size:clamp(26px,3.2vw,40px)">Set it up in under a minute.</h2><p class="lede">Pick a mode, choose an edge, set the size. Everything stays editable later in Customize.</p></div>
+  <figure class="screen"><img src="assets/placement-poster.jpg" width="1280" height="832" loading="lazy" alt="The AeroBar setup screen with mode, placement and sizing options"><video muted loop playsinline preload="none" poster="assets/placement-poster.jpg" aria-label="Choosing a mode, edge placement and sizing during setup"><source src="assets/placement.mp4" type="video/mp4"></video></figure>
+ </div>
 </div></section>
 
-<section id="customize" style="padding-top:112px"><div class="wrap">
-<div class="head"><h2>Tailor every detail.</h2><p class="lede">From liquid glass tints to popup preview sizes, selection glows, and borders. Personalize AeroBar to match your desktop aesthetic.</p></div>
+<section id="features"><div class="wrap">
+ <div class="head"><h2>What it adds.</h2><p class="lede">Window tabs and the Start Menu belong to the AeroBar modes. Previews, the switcher, clipboard history and the shelf work in all four.</p></div>
 
-<div class="fgrid">
-<article class="fc"><div class="fm">
-<!-- SLOT custom-glass: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/custom-glass-poster.jpg" aria-label="Liquid Glass styling with dynamic tinting">
-<source src="assets/custom-glass.mp4" type="video/mp4">
-</video></figure></div><div class="txt"><h3>Liquid Glass & tinting</h3><p>Choose from Frosted Ice, Obsidian Dark, Vibrant Mint, Satin Crimson, or sample your active window's palette automatically with adjustable glass opacity and blur.</p></div></article>
+ <div class="row">
+  <figure class="screen"><img src="assets/switcher-poster.jpg" width="1108" height="720" loading="lazy" alt="The Smart Switcher showing live window previews"><video muted loop playsinline preload="none" poster="assets/switcher-poster.jpg" aria-label="Smart Switcher with live window previews"><source src="assets/switcher.mp4" type="video/mp4"></video></figure>
+  <div><h2 style="font-size:clamp(28px,3.4vw,42px)">⌘Tab, rebuilt.</h2><p class="lede">A switcher with live window previews. ⌘Tab moves between apps and ⌘` between windows of one app. Include apps with no windows, go minimal, or pause it in apps that need the system switcher.</p></div>
+ </div>
 
-<article class="fc"><div class="fm">
-<!-- SLOT custom-popups: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/custom-popups-poster.jpg" aria-label="Hover previews and popup customization">
-<source src="assets/custom-popups.mp4" type="video/mp4">
-</video></figure></div><div class="txt"><h3>Hover previews & popups</h3><p>Fine-tune live window preview scale, blur radius, animation curves, and hover response delay for an instantaneous peek at your windows.</p></div></article>
+ <div class="pair">
+  <div><figure class="screen"><img src="assets/start-menu-poster.jpg" width="1108" height="720" loading="lazy" alt="The Aero Menu with search and pinned apps"><video muted loop playsinline preload="none" poster="assets/start-menu-poster.jpg" aria-label="Aero Menu start menu search, pinned apps and quick actions"><source src="assets/start-menu.mp4" type="video/mp4"></video></figure><h3>A Start Menu with real depth</h3><p>Click the Aero Orb to search apps and files, pin favourites to a drag-to-reorder grid, open recent files, and lock, log out, restart or shut down.</p></div>
+  <div><figure class="screen"><img src="assets/clipboard-poster.jpg" width="1108" height="720" loading="lazy" alt="Clipboard history settings"><video muted loop playsinline preload="none" poster="assets/clipboard-poster.jpg" aria-label="Searchable clipboard history with encrypted backup"><source src="assets/clipboard.mp4" type="video/mp4"></video></figure><h3>Searchable clipboard history</h3><p>Every snippet, link and code block you copy, with keyboard navigation, rich previews and an encrypted, password-protected backup.</p></div>
+ </div>
 
-<article class="fc"><div class="fm">
-<!-- SLOT custom-music: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/custom-music-poster.jpg" aria-label="Music widget styling and appearance">
-<source src="assets/custom-music.mp4" type="video/mp4">
-</video></figure></div><div class="txt"><h3>Music widget styles</h3><p>Customize album artwork display, player controls, progress bars, and lyrics popups for Spotify, Apple Music, and web players.</p></div></article>
+ <div class="row flip" style="margin-top:clamp(44px,7vw,96px)">
+  <figure class="screen"><img src="assets/utilities-poster.jpg" width="1108" height="720" loading="lazy" alt="Music controls and system stats on the bar"><video muted loop playsinline preload="none" poster="assets/utilities-poster.jpg" aria-label="Music player widget with playback controls"><source src="assets/utilities.mp4" type="video/mp4"></video></figure>
+  <div><h2 style="font-size:clamp(28px,3.4vw,42px)">Music, stats and a shelf.</h2><p class="lede">Controls for Spotify, Apple Music or any web player. CPU, RAM and network at a glance. A shelf to park files and drag them out later. Each has its own hotkey.</p></div>
+ </div>
 
-<article class="fc"><div class="fm">
-<!-- SLOT custom-highlight: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/custom-highlight-poster.jpg" aria-label="Active selection highlight styles">
-<source src="assets/custom-highlight.mp4" type="video/mp4">
-</video></figure></div><div class="txt"><h3>Selection highlights</h3><p>Highlight active applications and windows with glowing pills, subtle underlines, minimal dots, or crisp borders.</p></div></article>
+ <h3 class="sub">Small things, in motion</h3>
+ <div class="gal">
+  <button class="tile" type="button" data-v="gestures" aria-label="Play: Trackpad gestures"><span class="screen"><img src="assets/gestures-poster.jpg" width="1108" height="720" loading="lazy" alt=""><span class="play" aria-hidden="true">▶</span></span><b>Trackpad gestures</b><span class="d">Swipe with three fingers to glide between open windows, with adjustable sensitivity.</span></button>
+  <button class="tile" type="button" data-v="hotkeys" aria-label="Play: Single-tap hotkeys"><span class="screen"><img src="assets/hotkeys-poster.jpg" width="1108" height="720" loading="lazy" alt=""><span class="play" aria-hidden="true">▶</span></span><b>Single-tap hotkeys</b><span class="d">Shortcuts for the clipboard, shelf, music, Quick Links, Screen Search, Show Desktop, Mission Control and the Trash.</span></button>
+  <button class="tile" type="button" data-v="safe-quit" aria-label="Play: Safer quitting"><span class="screen"><img src="assets/safe-quit-poster.jpg" width="1108" height="720" loading="lazy" alt=""><span class="play" aria-hidden="true">▶</span></span><b>Safer quitting</b><span class="d">Press ⌘Q or ⌘W twice before an app quits or a window closes.</span></button>
+  <button class="tile" type="button" data-v="multidisplay" aria-label="Play: Multiple displays and dimmer"><span class="screen"><img src="assets/multidisplay-poster.jpg" width="1108" height="720" loading="lazy" alt=""><span class="play" aria-hidden="true">▶</span></span><b>Multiple displays</b><span class="d">Run on every display, externals only, or your main screen. Idle screens dim automatically.</span></button>
+ </div>
 
-<article class="fc"><div class="fm">
-<!-- SLOT custom-borders: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/custom-borders-poster.jpg" aria-label="Borders and edge chamfer customization">
-<source src="assets/custom-borders.mp4" type="video/mp4">
-</video></figure></div><div class="txt"><h3>Borders & edge chamfers</h3><p>Tune glass border thickness, outer edge chamfers, top reflections, and subtle light refraction to match macOS Sequoia.</p></div></article>
+ <div class="list">
+  <div><b>Dynamic Tint &amp; AuraBar</b><span>The bar samples the active window’s colour, with per-app overrides. AuraBar carries the same glass to the menu bar.</span></div>
+  <div><b>Screen Search &amp; Quick Links</b><span>Search what’s on screen with Google Lens, and drag URLs onto the bar to keep them one click away.</span></div>
+  <div><b>Tasks, Mission Control, Show Desktop</b><span>A dropdown of open windows grouped by app, plus buttons for Mission Control, Show Desktop and the Trash.</span></div>
+  <div><b>Pinned apps and folders</b><span>Drag apps into the tray, pin folders to the shelf, and right-click any tab to pin its app.</span></div>
+  <div><b>Focus Mode</b><span>Dim non-hovered items and the wallpaper so your attention stays where it belongs.</span></div>
+  <div><b>Encrypted backups</b><span>Password-protected local backup for clipboard history, app shortcuts and preferences.</span></div>
+ </div>
+</div></section>
 
-<article class="fc"><div class="fm">
-<!-- SLOT custom-badges: web-optimized screen recording -->
-<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/custom-badges-poster.jpg" aria-label="Notification badges and dock indicator styling">
-<source src="assets/custom-badges.mp4" type="video/mp4">
-</video></figure></div><div class="txt"><h3>Notification badges</h3><p>Style badge counters, unread notification dots, and dock indicators with custom colors and contrast options.</p></div></article>
-</div></div></section>
+<section id="customize"><div class="wrap">
+ <div class="head"><h2>Tailor every detail.</h2><p class="lede">From glass tints to popup sizes, selection glows and borders. Make AeroBar match your desktop.</p></div>
+ <div class="gal">
+  <button class="tile" type="button" data-v="custom-glass" aria-label="Play: Liquid Glass and tinting"><span class="screen"><img src="assets/custom-glass-poster.jpg" width="1108" height="720" loading="lazy" alt=""><span class="play" aria-hidden="true">▶</span></span><b>Liquid Glass &amp; tinting</b><span class="d">Frosted Ice, Obsidian Dark, Vibrant Mint, Satin Crimson, or sample the active window’s palette, with adjustable opacity and blur.</span></button>
+  <button class="tile" type="button" data-v="custom-popups" aria-label="Play: Hover previews and popups"><span class="screen"><img src="assets/custom-popups-poster.jpg" width="1108" height="720" loading="lazy" alt=""><span class="play" aria-hidden="true">▶</span></span><b>Hover previews &amp; popups</b><span class="d">Tune preview scale, blur radius, animation curves and hover delay.</span></button>
+  <button class="tile" type="button" data-v="custom-music" aria-label="Play: Music widget styles"><span class="screen"><img src="assets/custom-music-poster.jpg" width="1108" height="720" loading="lazy" alt=""><span class="play" aria-hidden="true">▶</span></span><b>Music widget styles</b><span class="d">Artwork, controls, progress bars and lyrics popups for Spotify, Apple Music and web players.</span></button>
+  <button class="tile" type="button" data-v="custom-highlight" aria-label="Play: Selection highlights"><span class="screen"><img src="assets/custom-highlight-poster.jpg" width="1108" height="720" loading="lazy" alt=""><span class="play" aria-hidden="true">▶</span></span><b>Selection highlights</b><span class="d">Show the active window as a glowing pill, underline, dot or border.</span></button>
+  <button class="tile" type="button" data-v="custom-borders" aria-label="Play: Borders and edge chamfers"><span class="screen"><img src="assets/custom-borders-poster.jpg" width="1108" height="720" loading="lazy" alt=""><span class="play" aria-hidden="true">▶</span></span><b>Borders &amp; edge chamfers</b><span class="d">Tune border thickness, edge chamfers, top reflections and light refraction.</span></button>
+  <button class="tile" type="button" data-v="custom-badges" aria-label="Play: Notification badges"><span class="screen"><img src="assets/custom-badges-poster.jpg" width="1108" height="720" loading="lazy" alt=""><span class="play" aria-hidden="true">▶</span></span><b>Notification badges</b><span class="d">Style badge counters and unread dots with your own colours and contrast.</span></button>
+ </div>
+</div></section>
+
+<section id="privacy"><div class="wrap">
+ <p class="priv">No telemetry. No analytics. No crash reporting. <span>AeroBar works offline, and the code is GPL-3.0 so you can check.</span> <a href="https://github.com/adityaonx/AeroBar/blob/HEAD/PRIVACY.md">Read the privacy policy</a></p>
+ <p class="priv-note">Updates are signed, and the Update Basket checks each signature before installing. Links open in your browser only after you say yes. The beta code page keeps a small record per install, and the privacy policy lists exactly what.</p>
+</div></section>
 
 <section id="install"><div class="wrap"><div class="inst">
-<div><h2>Install in one command.</h2>
-<ol class="steps"><li>Run the command, then open AeroBar.</li><li>If macOS says the app is damaged, run the second command.</li><li>Grant Accessibility access when asked.</li></ol></div>
-<div>
-<p class="lbl">Install</p><div class="code">brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew trust adityaonx/aerobar && HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar<button class="copy" type="button">Copy</button></div>
-<p class="lbl">If macOS says the app is damaged</p><div class="code one">xattr -rd com.apple.quarantine /Applications/AeroBar.app<button class="copy" type="button">Copy</button></div>
-<div class="alt"><p>Prefer a disk image? Download the DMG from the latest release. AeroBar isn’t notarized yet, so open it once from System Settings → Privacy &amp; Security → Open Anyway. Homebrew installs AeroBar; later updates come through the Update Basket.</p>
-<a class="btn" href="https://github.com/adityaonx/AeroBar/releases/latest">Get the DMG</a></div>
-</div></div></div></section>
+ <div><h2>Install in one command.</h2>
+  <ol><li>Run the command, then open AeroBar.</li><li>If macOS says the app is damaged, run the second command.</li><li>Grant Accessibility access when asked, then click Start AeroBar.</li></ol>
+  <div class="alt">Prefer a disk image? Download the DMG from the latest release. AeroBar isn’t notarized yet, so open it once from System Settings, Privacy &amp; Security, Open Anyway.<br><a class="btn" href="https://github.com/adityaonx/AeroBar/releases/latest">Get the DMG</a></div>
+ </div>
+ <div>
+  <p class="lbl">Install with Homebrew</p>
+  <div class="code" data-cmd="brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew trust adityaonx/aerobar && HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar">brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar &amp;&amp; brew trust adityaonx/aerobar &amp;&amp; HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar<button type="button" data-copy-self>Copy</button></div>
+  <p class="lbl">If macOS says the app is damaged</p>
+  <div class="code" data-cmd="xattr -rd com.apple.quarantine /Applications/AeroBar.app">xattr -rd com.apple.quarantine /Applications/AeroBar.app<button type="button" data-copy-self>Copy</button></div>
+ </div>
+</div></div></section>
 </main>
 
 <footer><div class="wrap"><span>AeroBar for macOS</span>
-<nav><a href="https://github.com/adityaonx/AeroBar">GitHub</a><a href="https://github.com/adityaonx/AeroBar/releases">Releases</a><a href="https://www.youtube.com/watch?v=NY2qc3SOwXk">Video guide</a></nav></div></footer>
+ <nav><a href="https://github.com/adityaonx/AeroBar">GitHub</a><a href="https://github.com/adityaonx/AeroBar/releases">Releases</a><a href="https://www.youtube.com/watch?v=NY2qc3SOwXk">Video guide</a></nav></div></footer>
+
+<div class="menu" id="menu" role="dialog" aria-label="Aero menu">
+ <input id="q" type="search" placeholder="Search AeroBar" aria-label="Search AeroBar" autocomplete="off">
+ <ul id="items">
+  <li><a href="#modes">Modes<span>Four layouts</span></a></li>
+  <li><a href="#features">Features<span>What it adds</span></a></li>
+  <li><a href="#customize">Customize<span>Glass, borders, glow</span></a></li>
+  <li><a href="#privacy">Privacy<span>No telemetry</span></a></li>
+  <li><a href="#install">Install<span>Homebrew or DMG</span></a></li>
+  <li><a href="https://github.com/adityaonx/AeroBar">GitHub<span>Source code</span></a></li>
+  <li><a href="https://github.com/adityaonx/AeroBar/releases/latest">Download for Mac<span>Latest release</span></a></li>
+ </ul>
+ <p class="none" id="none">Nothing matches that. Try “install” or “privacy”.</p>
+</div>
+
+<nav class="dock" aria-label="Site">
+ <button class="orbbtn" id="orb" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open Aero menu"><span class="orb"></span></button>
+ <span class="sep"></span>
+ <a class="t" href="#modes">Modes<span class="tip"><b>Modes</b>Taskbar, dock or both.</span></a>
+ <a class="t" href="#features">Features<span class="tip"><b>Features</b>Previews, switcher, clipboard.</span></a>
+ <a class="t" href="#customize">Customize<span class="tip"><b>Customize</b>Glass, borders, glow.</span></a>
+ <a class="t hide-sm" href="#privacy">Privacy<span class="tip"><b>Privacy</b>No telemetry. Offline.</span></a>
+ <a class="t" href="#install">Install<span class="tip"><b>Install</b>One command.</span></a>
+ <a class="btn pri get" href="https://github.com/adityaonx/AeroBar/releases/latest">Download</a>
+</nav>
 
 <script>
-document.querySelectorAll('.copy').forEach(function(b){b.addEventListener('click',function(){
- var t=b.previousSibling.textContent;
- try{navigator.clipboard.writeText(t).then(function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy';},1600);},function(){});}catch(e){}
-});});
+(function(){
+var BREW="brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew trust adityaonx/aerobar && HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar";
+function copy(text,btn){
+ var label=btn.textContent;
+ function done(){btn.textContent="Copied";btn.classList.add("ok");setTimeout(function(){btn.textContent=label;btn.classList.remove("ok")},1600)}
+ try{navigator.clipboard.writeText(text).then(done,done)}catch(e){done()}
+}
+document.querySelectorAll("[data-copy]").forEach(function(b){b.addEventListener("click",function(){copy(BREW,b)})});
+document.querySelectorAll("[data-copy-self]").forEach(function(b){b.addEventListener("click",function(){copy(b.parentNode.getAttribute("data-cmd"),b)})});
 
+/* videos: poster first, play only when on screen. Skipped for reduced motion or Data Saver. */
+var still=window.matchMedia("(prefers-reduced-motion: reduce)").matches||(navigator.connection&&navigator.connection.saveData);
+var vids=document.querySelectorAll(".screen video");
+if(!still&&"IntersectionObserver" in window){
+ var vo=new IntersectionObserver(function(es){es.forEach(function(e){
+  var v=e.target;
+  if(e.isIntersecting){
+   if(v.preload==="none"){v.preload="auto"}
+   var p=v.play();if(p&&p.then){p.then(function(){v.classList.add("live")},function(){})}
+  }else{v.pause()}
+ })},{threshold:.35});
+ vids.forEach(function(v){vo.observe(v)});
+}
+
+/* gallery tiles: tap to load and play that clip */
+document.querySelectorAll(".tile").forEach(function(t){
+ t.addEventListener("click",function(){
+  var screen=t.querySelector(".screen"),v=screen.querySelector("video");
+  if(!v){
+   v=document.createElement("video");v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute("playsinline","");
+   v.poster="assets/"+t.dataset.v+"-poster.jpg";v.src="assets/"+t.dataset.v+".mp4";
+   v.setAttribute("aria-label",t.getAttribute("aria-label").replace("Play: ",""));
+   screen.insertBefore(v,screen.querySelector(".play"));
+  }
+  if(v.paused){var p=v.play();if(p&&p.then){p.then(function(){v.classList.add("live");t.classList.add("playing")},function(){})}}
+  else{v.pause();t.classList.remove("playing")}
+ });
+});
+
+/* orb menu */
+var orb=document.getElementById("orb"),menu=document.getElementById("menu"),q=document.getElementById("q"),items=document.querySelectorAll("#items li"),none=document.getElementById("none");
+function filter(){var v=q.value.trim().toLowerCase(),n=0;items.forEach(function(li){var m=li.textContent.toLowerCase().indexOf(v)>-1;li.style.display=m?"":"none";if(m)n++});none.style.display=n?"none":"block"}
+function setMenu(o){menu.classList.toggle("open",o);orb.setAttribute("aria-expanded",o);if(o){q.value="";filter();setTimeout(function(){q.focus({preventScroll:true})},60)}}
+orb.addEventListener("click",function(e){e.stopPropagation();setMenu(!menu.classList.contains("open"))});
+q.addEventListener("input",filter);
+document.addEventListener("click",function(e){if(!menu.contains(e.target))setMenu(false)});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){setMenu(false);orb.focus()}});
+menu.addEventListener("click",function(e){if(e.target.closest("a"))setMenu(false)});
+
+/* active dock tab follows scroll */
+var links=document.querySelectorAll(".dock a.t");
+if("IntersectionObserver" in window){
+ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(l){l.classList.toggle("on",l.getAttribute("href")==="#"+e.target.id)})}})},{rootMargin:"-45% 0px -50% 0px"});
+ ["modes","features","customize","privacy","install"].forEach(function(id){io.observe(document.getElementById(id))});
+}
+})();
 </script>
 </body>
 </html>

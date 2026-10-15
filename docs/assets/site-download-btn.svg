@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="94" viewBox="-24 -24 240 94" fill="none">
+  <defs>
+    <linearGradient id="dl_bg" x1="0" y1="0" x2="0" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#007aff"/>
+      <stop offset="50%" stop-color="#0066d6"/>
+      <stop offset="100%" stop-color="#0051b3"/>
+    </linearGradient>
+    <linearGradient id="dl_rim" x1="0" y1="0" x2="0" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6"/>
+      <stop offset="30%" stop-color="#ffffff" stop-opacity="0.25"/>
+      <stop offset="80%" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="dl_specular" x1="0" y1="0" x2="0" y2="18" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
+    </linearGradient>
+    <linearGradient id="tile_bg_dl" x1="0" y1="0" x2="0" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="tile_rim_dl" x1="0" y1="0" x2="0" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.2"/>
+    </linearGradient>
+    <filter id="dl_glow" filterUnits="userSpaceOnUse" x="-24" y="-24" width="240" height="94" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#007aff" flood-opacity="0.45"/>
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#003580" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <rect x="2" y="2" width="188" height="42" rx="21" fill="url(#dl_bg)" filter="url(#dl_glow)"/>
+  <rect x="2.5" y="2.5" width="187" height="41" rx="20.5" stroke="url(#dl_rim)" stroke-width="1"/>
+  <path d="M 23 3 L 169 3 Q 188 3 188 22 Q 155 8 96 8 Q 36 8 4 22 Q 4 3 23 3 Z" fill="url(#dl_specular)"/>
+
+  <!-- Liquid Glass Squircle Icon Badge -->
+  <g transform="translate(10, 9)">
+    <rect x="0" y="0" width="28" height="28" rx="8" fill="url(#tile_bg_dl)"/>
+    <rect x="0.5" y="0.5" width="27" height="27" rx="7.5" stroke="url(#tile_rim_dl)" stroke-width="1"/>
+    <path d="M 8 1 L 20 1 Q 27 1 27 8 Q 18 5 14 5 Q 10 5 1 8 Q 1 1 8 1 Z" fill="#ffffff" fill-opacity="0.35"/>
+    <path d="M 14 6.5 L 14 16.5 M 9.5 12.5 L 14 17 L 18.5 12.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 8.5 20.5 L 19.5 20.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <text x="47" y="28" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif" font-size="14.5" font-weight="600" fill="#ffffff" letter-spacing="-0.2px">Download for Mac</text>
+</svg>

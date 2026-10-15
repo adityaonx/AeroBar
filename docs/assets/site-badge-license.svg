@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="148" height="60" viewBox="-14 -14 148 60" fill="none">
+  <defs>
+    <linearGradient id="bg_GPL_3_0_OSS" x1="0" y1="0" x2="0" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1f232d" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#111319" stop-opacity="0.95"/>
+    </linearGradient>
+    <linearGradient id="rim_GPL_3_0_OSS" x1="0" y1="0" x2="0" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.24"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="gl_GPL_3_0_OSS" x1="0" y1="0" x2="0" y2="14" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
+    </linearGradient>
+    <filter id="sh_GPL_3_0_OSS" filterUnits="userSpaceOnUse" x="-14" y="-14" width="148" height="60" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  
+  <rect x="1" y="1" width="118" height="30" rx="15" fill="url(#bg_GPL_3_0_OSS)" filter="url(#sh_GPL_3_0_OSS)"/>
+  <rect x="1.5" y="1.5" width="117" height="29" rx="14.5" stroke="url(#rim_GPL_3_0_OSS)" stroke-width="1"/>
+  <path d="M 15 2 L 105 2 Q 118 2 118 15 Q 90 6 60 6 Q 30 6 2 15 Q 2 2 15 2 Z" fill="url(#gl_GPL_3_0_OSS)"/>
+  
+  <!-- Glowing Icon Badge -->
+  <circle cx="15.5" cy="16" r="9.5" fill="#9333ea" fill-opacity="0.15" stroke="#9333ea" stroke-opacity="0.32" stroke-width="0.8"/>
+  <g transform="translate(15.5, 16)">
+    <path d="M -3.5 -3.5 L 3.5 -3.5 M 0 -3.5 L 0 4.5 M -4.5 4.5 L 4.5 4.5" stroke="#c084fc" stroke-width="1.2" stroke-linecap="round"/>
+<path d="M -3.5 -3.5 L -4.5 1 M -3.5 -3.5 L -2.5 1 M -5 1 Q -3.5 2.5 -2 1 Z" stroke="#c084fc" stroke-width="1" fill="#c084fc" fill-opacity="0.3"/>
+<path d="M 3.5 -3.5 L 2.5 1 M 3.5 -3.5 L 4.5 1 M 2 1 Q 3.5 2.5 5 1 Z" stroke="#c084fc" stroke-width="1" fill="#c084fc" fill-opacity="0.3"/>
+  </g>
+  
+  <text x="31" y="20.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif" font-size="12" font-weight="600" fill="#f0f6fc" letter-spacing="-0.1px">GPL-3.0 OSS</text>
+</svg>

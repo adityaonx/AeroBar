@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="198" height="94" viewBox="-24 -24 198 94" fill="none">
+  <defs>
+    <linearGradient id="yt_bg" x1="0" y1="0" x2="0" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#e11d48"/>
+      <stop offset="50%" stop-color="#be123c"/>
+      <stop offset="100%" stop-color="#881337"/>
+    </linearGradient>
+    <linearGradient id="yt_rim" x1="0" y1="0" x2="0" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="35%" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="85%" stop-color="#ffffff" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="yt_specular" x1="0" y1="0" x2="0" y2="18" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
+    </linearGradient>
+    <linearGradient id="tile_bg_yt" x1="0" y1="0" x2="0" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.14"/>
+    </linearGradient>
+    <linearGradient id="tile_rim_yt" x1="0" y1="0" x2="0" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.25"/>
+    </linearGradient>
+    <filter id="yt_glow" filterUnits="userSpaceOnUse" x="-24" y="-24" width="198" height="94" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#e11d48" flood-opacity="0.4"/>
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#4c0519" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <rect x="2" y="2" width="146" height="42" rx="21" fill="url(#yt_bg)" filter="url(#yt_glow)"/>
+  <rect x="2.5" y="2.5" width="145" height="41" rx="20.5" stroke="url(#yt_rim)" stroke-width="1"/>
+  <path d="M 23 3 L 127 3 Q 146 3 146 22 Q 120 8 75 8 Q 30 8 4 22 Q 4 3 23 3 Z" fill="url(#yt_specular)"/>
+
+  <!-- Liquid Glass Squircle Icon Badge -->
+  <g transform="translate(10, 9)">
+    <rect x="0" y="0" width="28" height="28" rx="8" fill="url(#tile_bg_yt)"/>
+    <rect x="0.5" y="0.5" width="27" height="27" rx="7.5" stroke="url(#tile_rim_yt)" stroke-width="1"/>
+    <path d="M 8 1 L 20 1 Q 27 1 27 8 Q 18 5 14 5 Q 10 5 1 8 Q 1 1 8 1 Z" fill="#ffffff" fill-opacity="0.35"/>
+    <polygon points="11.5,9.5 18.5,14 11.5,18.5" fill="#ffffff"/>
+  </g>
+
+  <text x="47" y="28" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif" font-size="14.5" font-weight="600" fill="#ffffff" letter-spacing="-0.2px">Video Guide</text>
+</svg>

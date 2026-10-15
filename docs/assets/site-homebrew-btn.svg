@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="270" height="94" viewBox="-24 -24 270 94" fill="none">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="hb_bg" x1="0" y1="0" x2="0" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2c303c"/>
+      <stop offset="50%" stop-color="#1b1e27"/>
+      <stop offset="100%" stop-color="#12141a"/>
+    </linearGradient>
+
+    <!-- Specular Rim Border -->
+    <linearGradient id="hb_rim" x1="0" y1="0" x2="0" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.45"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.04"/>
+    </linearGradient>
+
+    <!-- Top Specular Refraction Arc -->
+    <linearGradient id="hb_specular" x1="0" y1="0" x2="0" y2="18" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <!-- Frosted Glass Squircle Icon Badge Gradients (Homebrew Amber Gold) -->
+    <linearGradient id="tile_bg_hb" x1="0" y1="0" x2="0" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="tile_rim_hb" x1="0" y1="0" x2="0" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fde68a" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#fbbf24" stop-opacity="0.25"/>
+    </linearGradient>
+
+    <!-- Ambient Shadow -->
+    <filter id="hb_glow" filterUnits="userSpaceOnUse" x="-24" y="-24" width="270" height="94" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.45"/>
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Button Shell -->
+  <rect x="2" y="2" width="218" height="42" rx="21" fill="url(#hb_bg)" filter="url(#hb_glow)"/>
+  <rect x="2.5" y="2.5" width="217" height="41" rx="20.5" stroke="url(#hb_rim)" stroke-width="1"/>
+  
+  <!-- Top Glass Highlight -->
+  <path d="M 23 3 L 199 3 Q 218 3 218 22 Q 175 8 111 8 Q 47 8 4 22 Q 4 3 23 3 Z" fill="url(#hb_specular)"/>
+
+  <!-- Liquid Glass Squircle Icon Badge -->
+  <g transform="translate(10, 9)">
+    <rect x="0" y="0" width="28" height="28" rx="8" fill="url(#tile_bg_hb)"/>
+    <rect x="0.5" y="0.5" width="27" height="27" rx="7.5" stroke="url(#tile_rim_hb)" stroke-width="1"/>
+    <!-- Top inner specular shine -->
+    <path d="M 8 1 L 20 1 Q 27 1 27 8 Q 18 5 14 5 Q 10 5 1 8 Q 1 1 8 1 Z" fill="#ffffff" fill-opacity="0.3"/>
+    <!-- Terminal Prompt / Brew Icon (> _) -->
+    <path d="M 8.5 9.5 L 14 14 L 8.5 18.5" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M 15.5 18.5 L 20.5 18.5" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+
+  <!-- Text -->
+  <text x="47" y="28" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif" font-size="14.5" font-weight="600" fill="#ffffff" letter-spacing="-0.2px">Install with Homebrew</text>
+</svg>
