@@ -3,7 +3,7 @@ cask "aerobar" do
   # AeroBar-<version>.dmg, the name sign-release.sh uses. Previous logic: version "9.7-beta5" and url .../v#{version}/AeroBar.dmg,
   # which resolved to .../vlatest/AeroBar.dmg and could not download.
   version "9.7-beta5"
-  sha256 "884d3a05ddaadd58f1bd9b6dc3d4111c663427de8b6c743256c7abd0eef12d33"
+  sha256 "28202a195272fbd743dfd1abc00840232c02bead364aabcdefe5a767b10e029c"
 
   url "https://github.com/adityaonx/AeroBar/releases/download/v#{version}/AeroBar-#{version}.dmg"
   name "AeroBar"
