@@ -4,6 +4,36 @@
 
 The beta code page now keeps a small record per install: a one-way hash of your install ID, release channel, AeroBar version, country, number of codes issued, and the dates of your first and latest code. It is deleted automatically 90 days after your last code. No IP address, city or coordinates are stored. The policy now also describes the Cloudflare Turnstile bot check on the activation page and that the AeroBar version is sent with the request. It also now says where the install ID and the Pro trial start are stored on your Mac and what a reset does. See the Privacy Policy, section 4a.
 
+## v9.7-beta5 - October 2026
+**The Liquid Glass & Previews Update**
+
+This beta brings authentic macOS Liquid Glass styling to onboarding, fixes horizontal multi-window preview stacking, replaces bundled videos with lightweight procedural animations to save over 20 MB in app size, and aligns MacBook display mock showcases with native 16:10 geometry.
+
+✨ **What's New & Improved**
+
+**Window Previews & Multi-Window Stacking**
+- **Horizontal stacking fix:** Toggling Multi-Window Stacking to Horizontal in Customizer or Onboarding now displays preview popovers reliably. An asynchronous sizing race and an AppKit hover tracking dead zone that previously caused horizontal previews to collapse to 240 pt or dismiss immediately upon mouse entry have been eliminated.
+- **Instant deterministic sizing:** Replaced the legacy shrink-wrapping scrollview with a deterministic horizontal stack. Previews size synchronously on the first layout pass, providing immediate, rock-solid hover stability and click targets across all window chips and action buttons.
+- **Smooth scrolling on overflow:** When an app has many open windows, horizontal preview stacks scroll cleanly without obstructive scrollbars eating mouse hover events.
+- **Dock stacking axis recreation:** Switching between vertical and horizontal stacking in the macOS Dock engine cleanly recreates the scroll hierarchy without leaving stale AppKit scroller state.
+
+**Onboarding & Setup Wizard**
+- **Liquid Glass Welcome cards:** Completely redesigned setup cards with authentic macOS Liquid Glass aesthetics—dual-stop specular rim lighting, subtle ice-blue refractive border tint, 3D squircle icon tiles, and fluid spring hover elevation.
+- **MacBook Air mock frame alignment:** Previews are now wrapped in an authentic 16:10 MacBook display mock with an integrated camera notch and top-aligned menu bar, eliminating letterboxing and black bars.
+- **Studio Square Music Widget:** Faithfully illustrates the liquid-glass Music Widget with album artwork, audio scrubber, playback controls, and source switcher tabs anchored directly above the taskbar.
+- **Refined Smart Switcher preview:** Cleanly showcases the ⌘+Tab overlay with 3 focused window tiles, eliminating edge overflow, notch collisions, and duplicate window title prefixes.
+- **Notch & menu bar clearance:** Proportioned all preview panels to fit cleanly within the MacBook screen cutout with generous top clearance below the camera notch and display hinge.
+
+**App Size & Efficiency Overhaul**
+- **Over 20 MB smaller download:** Completely removed heavy bundled screen recording video files from the app bundle, slashing app resources from ~25 MB down to ~4.4 MB.
+- **Instant native procedural animations:** Replaced video playback with lightweight native SwiftUI procedural previews that load instantaneously with zero memory overhead or background video decoding.
+
+**Documentation & Media**
+- **True-color 24-bit Animated WebP:** Replaced 256-color dithered GIFs across documentation with crisp 24-bit Animated WebP previews, cutting asset weight by 62% while eliminating color banding on Retina displays.
+- **Liquid Glass buttons & trust badges:** Added bespoke macOS Liquid Glass action buttons (Download for Mac, Install with Homebrew, Video Guide) and glowing status badges across documentation and the website.
+
+---
+
 ## v9.6-beta4 - October 2026
 
 ✨ **What's New & Improved**

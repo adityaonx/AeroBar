@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="126" height="32" viewBox="0 0 126 32" fill="none">
+  <defs>
+    <linearGradient id="bg_macOS_14_0_" x1="0" y1="0" x2="0" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1f232d" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#111319" stop-opacity="0.95"/>
+    </linearGradient>
+    <linearGradient id="rim_macOS_14_0_" x1="0" y1="0" x2="0" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.24"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="gl_macOS_14_0_" x1="0" y1="0" x2="0" y2="14" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
+    </linearGradient>
+    <filter id="sh_macOS_14_0_" x="-10%" y="-15%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  
+  <rect x="1" y="1" width="124" height="30" rx="15" fill="url(#bg_macOS_14_0_)" filter="url(#sh_macOS_14_0_)"/>
+  <rect x="1.5" y="1.5" width="123" height="29" rx="14.5" stroke="url(#rim_macOS_14_0_)" stroke-width="1"/>
+  <path d="M 15 2 L 111 2 Q 124 2 124 15 Q 96 6 63 6 Q 30 6 2 15 Q 2 2 15 2 Z" fill="url(#gl_macOS_14_0_)"/>
+  
+  <!-- Glowing Icon Badge -->
+  <circle cx="15.5" cy="16" r="9.5" fill="#0284c7" fill-opacity="0.15" stroke="#0284c7" stroke-opacity="0.32" stroke-width="0.8"/>
+  <g transform="translate(15.5, 16)">
+    <path d="M 0 -4.5 Q 0.5 -5.8 1.8 -5.8 Q 1.4 -4.5 0 -4.5 Z M -3.2 -1.5 Q -4 0.5 -2.8 3.5 Q -2 5 -1.2 5 Q -0.5 5 0 4.2 Q 0.5 5 1.2 5 Q 2 5 2.8 3.5 Q 4 0.5 3.2 -1.5 Q 2.5 -3 1.2 -3 Q 0.2 -3 -0.2 -2.2 Q -0.6 -3 -1.6 -3 Q -2.8 -3 -3.2 -1.5 Z" fill="#93c5fd"/>
+  </g>
+  
+  <text x="31" y="20.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif" font-size="12" font-weight="600" fill="#f0f6fc" letter-spacing="-0.1px">macOS 14.0+</text>
+</svg>

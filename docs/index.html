@@ -187,7 +187,7 @@ h2{font-size:clamp(28px,3.6vw,44px);line-height:1.08;letter-spacing:-.03em;margi
 .media.mac{position:relative;isolation:isolate;aspect-ratio:2048/1241;border:0;background:radial-gradient(55% 60% at 50% 46%,var(--glow),transparent 72%);box-shadow:none;border-radius:0;overflow:visible}
 .mac::before{content:"";position:absolute;left:6%;right:6%;bottom:-1.5%;height:5%;background:radial-gradient(ellipse at center,rgba(0,0,0,.55),transparent 70%);filter:blur(14px)}
 .mac::after{content:"";position:absolute;inset:0;background:var(--mac) center/100% 100% no-repeat;pointer-events:none;z-index:30}
-.mac>.scr,.mac>.m{position:absolute;left:10.107%;top:2.84%;width:79.834%;height:85.576%;aspect-ratio:auto}
+.mac>.scr,.mac>.m,.mac>video,.mac>img{position:absolute;left:10.107%;top:2.84%;width:79.834%;height:85.576%;aspect-ratio:auto;object-fit:cover;border-radius:4px;background:#000}
 .mb{height:2.2cqw;display:flex;align-items:center;justify-content:space-between;padding:0 1.4cqw;font-size:1.2cqw;color:rgba(255,255,255,.92);white-space:nowrap}
 .mb span{display:flex;gap:1.6cqw;align-items:center}.mb i{width:1.1cqw;height:1.1cqw;border-radius:50%;background:#fff;opacity:.9}
 .m .mb{height:2.2cqw}.m .mb span{display:none}
@@ -330,24 +330,18 @@ html,body{overflow-x:hidden;max-width:100%}
 /* ===== Real AeroBar orb (from assets/aerobar-orb-v2.svg, inlined) ===== */
 .o{background:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%22120%22%20height=%22120%22%20viewBox=%220%200%20100%20100%22%3E%20%3Cdefs%3E%20%3Cfilter%20id=%22shadow%22%20x=%22-20%25%22%20y=%22-20%25%22%20width=%22140%25%22%20height=%22140%25%22%3E%20%3CfeDropShadow%20dx=%220%22%20dy=%222.5%22%20stdDeviation=%222.5%22%20flood-opacity=%220.55%22%20/%3E%20%3C/filter%3E%20%3ClinearGradient%20id=%22baseGrey%22%20x1=%220%25%22%20y1=%220%25%22%20x2=%220%25%22%20y2=%22100%25%22%3E%20%3Cstop%20offset=%220%25%22%20stop-color=%22%23292929%22%20/%3E%20%3Cstop%20offset=%22100%25%22%20stop-color=%22%23171717%22%20/%3E%20%3C/linearGradient%3E%20%3CradialGradient%20id=%22tintGlow%22%20cx=%2250%25%22%20cy=%2285%25%22%20r=%2260%25%22%3E%20%3Cstop%20offset=%220%25%22%20stop-color=%22%230a6cff%22%20stop-opacity=%220.95%22%20/%3E%20%3Cstop%20offset=%2250%25%22%20stop-color=%22%230a6cff%22%20stop-opacity=%220.4%22%20/%3E%20%3Cstop%20offset=%22100%25%22%20stop-color=%22%230a6cff%22%20stop-opacity=%220%22%20/%3E%20%3C/radialGradient%3E%20%3CradialGradient%20id=%22ambient%22%20cx=%2250%25%22%20cy=%2250%25%22%20r=%2250%25%22%3E%20%3Cstop%20offset=%220%25%22%20stop-color=%22%230a6cff%22%20stop-opacity=%220.35%22%20/%3E%20%3Cstop%20offset=%22100%25%22%20stop-color=%22%230a6cff%22%20stop-opacity=%220%22%20/%3E%20%3C/radialGradient%3E%20%3ClinearGradient%20id=%22rim%22%20x1=%220%25%22%20y1=%220%25%22%20x2=%220%25%22%20y2=%22100%25%22%3E%20%3Cstop%20offset=%220%25%22%20stop-color=%22%23ffffff%22%20stop-opacity=%220.32%22%20/%3E%20%3Cstop%20offset=%22100%25%22%20stop-color=%22%23ffffff%22%20stop-opacity=%220.08%22%20/%3E%20%3C/linearGradient%3E%20%3ClinearGradient%20id=%22specular%22%20x1=%220%25%22%20y1=%220%25%22%20x2=%220%25%22%20y2=%22100%25%22%3E%20%3Cstop%20offset=%220%25%22%20stop-color=%22%23ffffff%22%20stop-opacity=%220.55%22%20/%3E%20%3Cstop%20offset=%22100%25%22%20stop-color=%22%23ffffff%22%20stop-opacity=%220.05%22%20/%3E%20%3C/linearGradient%3E%20%3Cfilter%20id=%22logoShadow%22%20x=%22-10%25%22%20y=%22-10%25%22%20width=%22120%25%22%20height=%22120%25%22%3E%20%3CfeDropShadow%20dx=%220%22%20dy=%221%22%20stdDeviation=%221%22%20flood-opacity=%220.2%22%20/%3E%20%3C/filter%3E%20%3Cmask%20id=%22m%22%3E%20%3Crect%20x=%220%22%20y=%220%22%20width=%22100%22%20height=%22100%22%20fill=%22white%22/%3E%20%3Cpath%20d=%22M%2050%2038%20L%2033%2088%20C%2036%2076%2042%2071%2050%2071%20C%2058%2071%2064%2076%2067%2088%20Z%22%20fill=%22black%22/%3E%20%3Cpath%20d=%22M%2038%2089%20C%2038%2077%2043%2071%2050%2071%20C%2057%2071%2062%2077%2062%2089%20Z%22%20fill=%22black%22/%3E%20%3Cpath%20d=%22M%2044%2038%20L%2010%2055%20L%2015%2046%20L%2047%2031%20Z%22%20fill=%22black%22/%3E%20%3Cpath%20d=%22M%2056%2038%20L%2090%2055%20L%2085%2046%20L%2053%2031%20Z%22%20fill=%22black%22/%3E%20%3C/mask%3E%20%3CclipPath%20id=%22orbClip%22%3E%20%3Ccircle%20cx=%2250%22%20cy=%2250%22%20r=%2246%22%20/%3E%20%3C/clipPath%3E%20%3C/defs%3E%20%3Ccircle%20cx=%2250%22%20cy=%2250%22%20r=%2246%22%20fill=%22url%28%23baseGrey%29%22%20filter=%22url%28%23shadow%29%22%20/%3E%20%3Ccircle%20cx=%2250%22%20cy=%2250%22%20r=%2246%22%20fill=%22url%28%23tintGlow%29%22%20style=%22mix-blend-mode:%20screen;%22%20/%3E%20%3Ccircle%20cx=%2250%22%20cy=%2250%22%20r=%2246%22%20fill=%22url%28%23ambient%29%22%20/%3E%20%3Ccircle%20cx=%2250%22%20cy=%2250%22%20r=%2245.5%22%20fill=%22none%22%20stroke=%22url%28%23rim%29%22%20stroke-width=%221%22%20/%3E%20%3Cg%20transform=%22translate%2827,%2027%29%20scale%280.46%29%22%20filter=%22url%28%23logoShadow%29%22%3E%20%3Cpath%20fill=%22white%22%20mask=%22url%28%23m%29%22%20d=%22M%2050%208%20L%2095%2092%20L%2072%2092%20L%2067%2080%20C%2062%2068%2057%2064%2050%2064%20C%2043%2064%2038%2068%2033%2080%20L%2028%2092%20L%205%2092%20Z%22%20/%3E%20%3Cpath%20fill=%22white%22%20d=%22M%2050%2066%20L%202%2080%20L%204%2069%20L%2050%2056%20Z%22%20/%3E%20%3Cpath%20fill=%22white%22%20d=%22M%2050%2066%20L%2098%2080%20L%2096%2069%20L%2050%2056%20Z%22%20/%3E%20%3C/g%3E%20%3Cellipse%20cx=%2250%22%20cy=%2224.5%22%20rx=%2234%22%20ry=%2216%22%20fill=%22url%28%23specular%29%22%20clip-path=%22url%28%23orbClip%29%22%20/%3E%20%3C/svg%3E") center/contain no-repeat!important;box-shadow:none;border-radius:50%}
 .brand .o{width:30px;height:30px}
-.trust{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:820px;margin:0 auto 34px;padding:0;border:1px solid var(--line);border-radius:20px;background:color-mix(in srgb,var(--panel) 88%,transparent);overflow:hidden;box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 10px 30px -18px rgba(0,0,0,.5)}
-.trust li{position:relative;display:flex;align-items:center;gap:13px;padding:16px 20px;text-align:left;transition:background .2s}
-.trust li+li::before{content:"";position:absolute;left:0;top:18%;bottom:18%;width:1px;background:var(--line)}
-.trust li:hover{background:color-mix(in srgb,var(--blue) 6%,transparent)}
-.trust i{flex:none;display:grid;place-items:center;width:38px;height:38px;border-radius:11px;color:var(--blue);background:color-mix(in srgb,var(--blue) 13%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--blue) 22%,transparent) inset}
-.trust i svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.trust em{display:flex;flex-direction:column;gap:2px;min-width:0;font-style:normal}
-.trust b{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
-.trust span{display:block;color:var(--mute);font-size:13px;line-height:1.35}
+.hero-badges{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;margin:32px auto 26px}
+.hero-badges img{height:32px;width:auto;display:block}
+.cta{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:14px;margin:0 auto 64px}
+.cta a{display:inline-flex;transition:transform .15s ease,filter .15s ease}
+.cta a:hover{transform:translateY(-1.5px);filter:brightness(1.08)}
+.cta a:active{transform:translateY(0);filter:brightness(0.95)}
+.cta img{height:46px;width:auto;display:block}
 @media(max-width:640px){
-.trust{grid-template-columns:repeat(3,1fr);max-width:100%;margin:0 auto 22px;border-radius:16px}
-.trust li{flex-direction:column;justify-content:flex-start;text-align:center;gap:8px;padding:12px 6px 13px}
-.trust li+li::before{left:0;right:auto;top:16%;bottom:16%;width:1px;height:auto}
-.trust i{width:32px;height:32px;border-radius:10px}
-.trust i svg{width:17px;height:17px}
-.trust em{align-items:center}
-.trust b{font-size:12.5px;line-height:1.2;white-space:nowrap}
-.trust span{display:none}
+.hero-badges{gap:8px;margin:24px auto 20px}
+.hero-badges img{height:28px}
+.cta{gap:10px;margin:0 auto 44px}
+.cta img{height:42px}
 }
 .hero{padding-top:36px}
 @media(max-width:820px){.hero{padding-top:28px}}
@@ -359,54 +353,71 @@ html,body{overflow-x:hidden;max-width:100%}
 <body>
 <header><div class="wrap">
 <a class="brand" href="#top"><span class="o"></span>AeroBar</a>
-<nav><a href="#modes">Modes</a><a href="#features">Features</a><a href="#install">Install</a><a href="https://github.com/adityaonx/AeroBar">GitHub</a><a class="btn pri" href="https://github.com/adityaonx/AeroBar/releases/latest">Download</a></nav>
+<nav><a href="#modes">Modes</a><a href="#features">Features</a><a href="#customize">Customize</a><a href="#install">Install</a><a href="https://github.com/adityaonx/AeroBar">GitHub</a><a class="btn pri" href="https://github.com/adityaonx/AeroBar/releases/latest">Download</a></nav>
 </div>
-<div class="mnav" id="mnav"><a href="#modes">Modes</a><a href="#features">Features</a><a href="#install">Install</a><a href="https://github.com/adityaonx/AeroBar">GitHub</a></div></header>
+<div class="mnav" id="mnav"><a href="#modes">Modes</a><a href="#features">Features</a><a href="#customize">Customize</a><a href="#install">Install</a><a href="https://github.com/adityaonx/AeroBar">GitHub</a></div></header>
 
 <main id="top">
 <div class="wrap hero">
 <span class="o hero-orb" role="img" aria-label="AeroBar Aero Orb"></span>
-<ul class="trust" aria-label="Privacy and security">
-<li><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z"/><circle cx="12" cy="12" r="2.6"/><path d="M4 4l16 16"/></svg></i><em><b>No telemetry</b><span>No analytics or tracking</span></em></li>
-<li><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5a10 10 0 0 1 4-2.3M19 12.5a10 10 0 0 0-3.2-2"/><path d="M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.2" r=".8"/><path d="M4 4l16 16"/></svg></i><em><b>100% Offline</b><span>Never connects to the internet</span></em></li>
-<li><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5.5c0 4.3-3 7.8-7 9.5-4-1.7-7-5.2-7-9.5V6l7-3z"/><path d="M8.8 12l2.4 2.4 4-4.4"/></svg></i><em><b>Signed updates</b><span>Verified before install</span></em></li>
-</ul>
+
 <h1>A taskbar for macOS.<br><span class="soft">Or a better Dock.</span></h1>
 <p class="lede">Every window one click away, with live previews, a ⌘Tab for windows, clipboard history and more. Run it as a taskbar, a floating dock, or on top of the real Dock. Pro features are included during the public beta.</p>
-<div class="cta"><a class="btn pri" href="https://github.com/adityaonx/AeroBar/releases/latest">Download for macOS</a><a class="btn" href="#install">Install with Homebrew</a></div>
 
-<div class="stage"><!-- HERO SLOT: replace the .scr div with <img src="assets/hero.gif" alt="AeroBar on a Mac desktop"> -->
-<figure class="media mac"><div class="scr h w1" role="img" aria-label="AeroBar on a desktop; the bar and menu bar take on the colour of the focused app"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div>
-<div class="w wa"></div><div class="w wb"></div><div class="w wc"></div>
-<div class="bar"><span class="o"></span><span class="ic" style="--c:#2f86ff"></span><span class="ic" style="--c:#ff7a45"></span><span class="ic" style="--c:#34c759"></span><span class="dv"></span>
-<div class="t ta"><i style="--c:#4f8cff"></i><span>Xcode</span></div><div class="t tb"><i style="--c:#ff9f43"></i><span>Pages</span></div><div class="t tc"><i style="--c:#34c759"></i><span>Terminal</span></div><span class="sp"></span>
-<span class="u" data-g="⌕"></span><span class="u" data-g="▤"></span><span class="u" data-g="◫"></span><span class="u" data-g="♪"></span><span class="u" data-g="⇩"></span><span class="u" data-g="◔"></span><span class="u" data-g="⎘"></span><span class="u" data-g="▭"></span><span class="u" data-g="⌫"></span></div>
-</div></figure></div>
+<div class="hero-badges" aria-label="Privacy, security, and platform compatibility">
+  <img src="assets/badge-telemetry.svg" alt="Zero Telemetry" />
+  <img src="assets/badge-offline.svg" alt="100% Offline" />
+  <img src="assets/badge-signed.svg" alt="Signed Updates" />
+  <img src="assets/badge-macos.svg" alt="macOS 14.0+" />
+  <img src="assets/badge-license.svg" alt="GPL-3.0 OSS" />
+</div>
+
+<div class="cta">
+  <a href="#install" aria-label="Install with Homebrew"><img src="assets/homebrew-btn.svg" alt="Install with Homebrew" /></a>
+  <a href="https://github.com/adityaonx/AeroBar/releases/latest" aria-label="Download for Mac"><img src="assets/download-btn.svg" alt="Download for Mac" /></a>
+  <a href="https://www.youtube.com/watch?v=NY2qc3SOwXk" aria-label="Video Guide"><img src="assets/youtube_guide.svg" alt="Video Guide" /></a>
+</div>
+
+<div class="stage"><!-- HERO SLOT: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/hero-poster.jpg" aria-label="AeroBar on a Mac desktop with live window previews and taskbar">
+<source src="assets/hero.mp4" type="video/mp4">
+</video></figure></div>
 <p class="cap">The bar and the menu bar take on the colour of the app you’re in.</p>
 </div>
 
 <section id="modes"><div class="wrap">
-<div class="head"><h2>Choose your mode.</h2><p class="lede">Four ways to run AeroBar. You can switch any time in Customize.</p></div>
+<div class="head"><h2>Choose your mode.</h2><p class="lede">Four ways to run AeroBar. Edge placement, custom sizing, and options you can switch any time in Customize.</p></div>
+
+<div class="stage"><!-- ONBOARDING / MODES & PLACEMENT SHOWCASE -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/placement-poster.jpg" aria-label="Set up AeroBar mode, edge placement and custom sizing">
+<source src="assets/placement.mp4" type="video/mp4">
+</video></figure></div>
+<p class="cap" style="margin-bottom:48px">Pick your mode, position it on any screen edge, and adjust sizing to your taste.</p>
+
 <div class="modes">
 
-<div class="mc"><!-- SLOT mode-macdock: replace .m with <img src="assets/mode-macdock.gif" alt="macOS Dock + Extensions"> -->
-<figure class="media mac"><div class="m m1 w1" role="img" aria-label="The real macOS Dock on a glass panel with magnified icons, a window preview and extension buttons beside it"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div><div class="w wa" style="--c:#4f8cff;left:10%;top:14%;width:44%;height:48%"></div>
-<div class="thm"></div><div class="dk glass"><div class="di"><span class="icn" style="--c:#2f86ff"></span><i></i></div><div class="di"><span class="icn" style="--c:#ff7a45"></span><i></i></div><div class="di"><span class="icn" style="--c:#34c759"></span><i></i></div><div class="di"><span class="icn" style="--c:#ff9f43"></span><i></i></div><div class="di"><span class="icn" style="--c:#5e5ce6"></span><i></i></div><div class="di"><span class="icn" style="--c:#ff375f"></span><i></i></div></div><div class="exg glass"><span class="u" data-g="⎘"></span><span class="u" data-g="♪"></span><span class="u" data-g="◔"></span></div></div></figure>
+<div class="mc"><!-- SLOT mode-macdock: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/mode-macdock-poster.jpg" aria-label="The real macOS Dock on a glass panel with magnified icons, a window preview and extension buttons beside it">
+<source src="assets/mode-macdock.mp4" type="video/mp4">
+</video></figure>
 <h3>macOS Dock + Extensions</h3><ul><li>Keeps the real macOS Dock</li><li>Adds extra features around it</li></ul></div>
 
-<div class="mc"><!-- SLOT mode-aerodock: replace .m with <img src="assets/mode-aerodock.gif" alt="AeroDock"> -->
-<figure class="media mac"><div class="m m2 w2" role="img" aria-label="A floating glass bar with the Aero Orb and pinned apps that lift as the pointer passes"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div><div class="w wa"></div>
-<div class="fb glass"><span class="o"></span><span class="dv"></span><span class="icn" style="--c:#2f86ff"></span><span class="icn" style="--c:#ff7a45"></span><span class="icn" style="--c:#34c759"></span><span class="icn" style="--c:#ff9f43"></span><span class="icn" style="--c:#5e5ce6"></span></div></div></figure>
+<div class="mc"><!-- SLOT mode-aerodock: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/mode-aerodock-poster.jpg" aria-label="A floating glass bar with the Aero Orb, pinned apps, window tabs, and extensions">
+<source src="assets/mode-aerodock.mp4" type="video/mp4">
+</video></figure>
 <h3>AeroDock</h3><ul><li>Floating bar with pinned apps</li><li>Aero Orb at the start</li></ul></div>
 
-<div class="mc"><!-- SLOT mode-taskbar: replace .m with <img src="assets/mode-taskbar.gif" alt="AeroTaskBar"> -->
-<figure class="media mac"><div class="m m3 w3" role="img" aria-label="A full-width bar with one button per open window; the active window changes"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div><div class="w wa"></div><div class="w wb"></div><div class="w wc"></div>
-<div class="tbar glass"><span class="o"></span><div class="bb"><span class="icn" style="--c:#4f8cff"></span><s></s></div><div class="bb"><span class="icn" style="--c:#ff9f43"></span><s></s></div><div class="bb"><span class="icn" style="--c:#34c759"></span><s></s></div></div></div></figure>
+<div class="mc"><!-- SLOT mode-taskbar: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/mode-taskbar-poster.jpg" aria-label="A full-width bar with one button per open window and live previews">
+<source src="assets/mode-taskbar.mp4" type="video/mp4">
+</video></figure>
 <h3>AeroTaskBar</h3><ul><li>Full-width bar</li><li>One button per open window</li></ul></div>
 
-<div class="mc"><!-- SLOT mode-legacy: replace .m with <img src="assets/mode-legacy.gif" alt="Legacy AeroBar"> -->
-<figure class="media mac"><div class="m m4 w1" role="img" aria-label="One bar holding pinned apps and open window buttons together"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div><div class="w wa"></div>
-<div class="fb glass"><span class="o"></span><span class="icn" style="--c:#34c759"></span><span class="icn" style="--c:#ff9f43"></span><span class="icn" style="--c:#5e5ce6"></span><span class="dv"></span><div class="bb"><span class="icn" style="--c:#ff9f43"></span><s></s></div><div class="bb"><span class="icn" style="--c:#5e5ce6"></span><s></s></div></div></div></figure>
+<div class="mc"><!-- SLOT mode-legacy: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/placement-poster.jpg" aria-label="One bar holding pinned apps and open window buttons together">
+<source src="assets/placement.mp4" type="video/mp4">
+</video></figure>
 <h3>Legacy AeroBar</h3><ul><li>Pinned apps and open windows</li><li>Together in one bar</li></ul></div>
 
 </div></div></section>
@@ -415,58 +426,68 @@ html,body{overflow-x:hidden;max-width:100%}
 <div class="head"><h2>What it adds.</h2><p class="lede">Window tabs and the Start Menu belong to the AeroBar modes. Previews, the switcher, clipboard history and the shelf work in all four.</p></div>
 
 <div class="fgrid"><article class="fc wide"><div class="fm">
-<!-- SLOT tabs: replace .scr with <img src="assets/tabs.gif" alt="Window tabs with live preview"> -->
-<figure class="media mac"><div class="scr a w2" role="img" aria-label="Hovering a tab shows a live preview with a close button, then a click minimizes the window"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div>
-<div class="w wa"></div><div class="w wb"></div><div class="w wc"></div>
-<div class="pv gl"><b>Pages – Q3 plan</b><u>×</u></div><div class="plus gl">+</div>
-<div class="bar"><span class="o"></span><div class="t"><i style="--c:#4f8cff"></i><span>Xcode</span></div><div class="t tb"><i style="--c:#ff9f43"></i><span>Pages</span></div><div class="t"><i style="--c:#8e6bff"></i><span>Mail</span><em class="bd">3</em></div><span class="sp"></span><span class="clk">9:41</span></div>
-<div class="cur"></div></div></figure></div><div class="txt"><h3>Every window, one click away</h3><p>In the taskbar modes, open windows become live tabs. Hover for a live preview with a close button, or press + for a new window. Badge counts carry over from the Dock, and the active tab can show as a pill, line, dot or border.</p></div></article>
+<!-- SLOT tabs: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/tabs-poster.jpg" aria-label="Every window one click away with live tab switching and window previews">
+<source src="assets/tabs.mp4" type="video/mp4">
+</video></figure></div><div class="txt"><h3>Every window, one click away</h3><p>In the taskbar modes, open windows become live tabs. Hover for a live preview with a close button, or press + for a new window. Badge counts carry over from the Dock, and the active tab can show as a pill, line, dot or border.</p></div></article>
 
 <article class="fc"><div class="fm">
-<!-- SLOT start-menu: replace .scr with <img src="assets/start-menu.gif" alt="Aero Menu"> -->
-<figure class="media mac"><div class="scr b w3" role="img" aria-label="The Aero Menu opens, a search is typed, and a pinned app is highlighted"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div><div class="w wa"></div>
-<div class="menu gl"><div class="sr"><span>Photos</span></div><h4>Pinned</h4>
-<div class="gr"><i style="--c:#ff7a45"></i><i style="--c:#2f86ff"></i><i style="--c:#5e5ce6"></i><i style="--c:#ffd60a"></i><i style="--c:#34c759"></i><i style="--c:#ff375f"></i><i style="--c:#64d2ff"></i><i style="--c:#8e8e93"></i></div>
-<h4>Recent</h4><div class="rc">Roadmap.key<em>Minutes ago</em></div><div class="rc">Invoice-0412.pdf<em>An hour ago</em></div><div class="rc">icon-v3.png<em>Earlier today</em></div>
-<div class="pw"><span>Lock</span><span>Log Out</span><span>Restart</span><span>Shut Down</span></div></div>
-<div class="bar"><span class="o"></span><span class="ic" style="--c:#2f86ff"></span><span class="ic" style="--c:#ff7a45"></span><span class="sp"></span><span class="clk">9:41</span></div></div></figure></div><div class="txt"><h3>A Start Menu with real depth</h3><p>Click the Aero Orb to search apps and files, pin favourites to a drag-to-reorder grid, pick up recent files, and lock, log out, restart or shut down without leaving the menu.</p></div></article>
+<!-- SLOT start-menu: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/start-menu-poster.jpg" aria-label="Aero Menu start menu search, pinned apps and quick actions">
+<source src="assets/start-menu.mp4" type="video/mp4">
+</video></figure></div><div class="txt"><h3>A Start Menu with real depth</h3><p>Click the Aero Orb to search apps and files, pin favourites to a drag-to-reorder grid, pick up recent files, and lock, log out, restart or shut down without leaving the menu.</p></div></article>
 
 <article class="fc"><div class="fm">
-<!-- SLOT switcher: replace .scr with <img src="assets/switcher.gif" alt="Smart Switcher"> -->
-<figure class="media mac"><div class="scr s w2" role="img" aria-label="The Smart Switcher shows live window previews and the selection moves across them"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div><div class="w wa"></div><div class="w wb"></div><div class="dim"></div>
-<div class="sw"><div class="cd" style="--c:#4f8cff;--d:1.2s"><div class="th"></div><p>Xcode</p></div><div class="cd" style="--c:#ff9f43;--d:3s"><div class="th"></div><p>Pages</p></div><div class="cd" style="--c:#34c759;--d:4.8s"><div class="th"></div><p>Terminal</p></div><div class="cd" style="--c:#8e6bff;--d:6.6s"><div class="th"></div><p>Mail</p></div></div>
-<div class="bar"><span class="o"></span><div class="t"><i style="--c:#4f8cff"></i><span>Xcode</span></div><div class="t"><i style="--c:#ff9f43"></i><span>Pages</span></div><span class="sp"></span><span class="clk">9:41</span></div></div></figure></div><div class="txt"><h3>⌘Tab, rebuilt</h3><p>A Smart Switcher with live window previews. ⌘Tab moves between apps and ⌘` between windows of one app. Include apps with no windows, go minimal, or pause it in the apps that need the system switcher.</p></div></article>
+<!-- SLOT switcher: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/switcher-poster.jpg" aria-label="Smart Switcher with live window previews">
+<source src="assets/switcher.mp4" type="video/mp4">
+</video></figure></div><div class="txt"><h3>⌘Tab, rebuilt</h3><p>A Smart Switcher with live window previews. ⌘Tab moves between apps and ⌘` between windows of one app. Include apps with no windows, go minimal, or pause it in the apps that need the system switcher.</p></div></article>
 
 <article class="fc"><div class="fm">
-<!-- SLOT utilities: replace .scr with <img src="assets/utilities.gif" alt="Music, system stats, clipboard and file shelf"> -->
-<figure class="media mac"><div class="scr d w1" role="img" aria-label="Music, system stats, clipboard and file shelf panels open from the bar in turn"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div><div class="w wa"></div><div class="w wb"></div>
-<div class="pn gl mu p1" style="--d:0s;right:8.7cqw;width:28cqw"><div class="art"></div><div><b>Midnight City</b><span>M83</span><div class="pr"></div><div class="ct">⏮ ⏸ ⏭</div></div></div>
-<div class="pn gl sy" style="--d:3s;right:2.1cqw;width:26cqw"><h5>System</h5><div>CPU<i></i></div><div>RAM<i></i></div><div>Network<i></i></div></div>
-<div class="pn gl cl" style="--d:6s;right:2cqw;width:27cqw"><h5>Clipboard <em>Encrypted backup</em></h5><div>npm run build</div><div>https://github.com/adityaonx/AeroBar</div><div>Meeting notes for Thursday</div></div>
-<div class="pn gl sh" style="--d:9s;right:5.9cqw;width:26cqw"><h5>File Shelf</h5><div class="dz">Drop files or folders here to park them<span class="fl" style="--d:9s">Roadmap.key</span></div></div>
-<div class="bar"><span class="o"></span><div class="t"><i style="--c:#4f8cff"></i><span>Xcode</span></div><div class="t"><i style="--c:#34c759"></i><span>Terminal</span></div><span class="sp"></span>
-<span class="u" data-g="⌕"></span><span class="u" data-g="▤"></span><span class="u" data-g="◫"></span><span class="u k" data-g="♪" style="--d:0s"></span><span class="u k" data-g="⇩" style="--d:9s"></span><span class="u k" data-g="◔" style="--d:3s"></span><span class="u k" data-g="⎘" style="--d:6s"></span><span class="u" data-g="▭"></span><span class="u" data-g="⌫"></span></div></div></figure></div><div class="txt"><h3>Clipboard, shelf, music and stats</h3><p>Music controls for Spotify, Apple Music or any web player. CPU, RAM and network at a glance. A shelf to park files and drag them out later. Clipboard history with an encrypted, password-protected backup. Each has its own hotkey.</p></div></article>
+<!-- SLOT utilities: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/utilities-poster.jpg" aria-label="Music player widget with playback controls and album art">
+<source src="assets/utilities.mp4" type="video/mp4">
+</video></figure></div><div class="txt"><h3>Clipboard, shelf, music and stats</h3><p>Music controls for Spotify, Apple Music or any web player. CPU, RAM and network at a glance. A shelf to park files and drag them out later. Clipboard history with an encrypted, password-protected backup. Each has its own hotkey.</p></div></article>
+
 
 <article class="fc"><div class="fm">
-<!-- SLOT placement: replace .scr with <img src="assets/placement.gif" alt="Bar on each screen edge"> -->
-<figure class="media mac"><div class="scr e w3" role="img" aria-label="The bar moves between the bottom, left, top and right edges"><div class="mb"><span><i></i>Finder<b style="font-weight:500">File</b><b style="font-weight:500">Edit</b><b style="font-weight:500">View</b></span><span>Mon 9:41</span></div><div class="w wa"></div><div class="w wb"></div>
-<div class="bar pb p1" style="--d:0s"><span class="o"></span><div class="t"><i style="--c:#4f8cff"></i><span>Xcode</span></div><div class="t"><i style="--c:#ff9f43"></i><span>Pages</span></div><span class="sp"></span><span class="clk">9:41</span></div>
-<div class="bar v pb" style="--d:3s"><span class="o"></span><span class="ic" style="--c:#4f8cff"></span><span class="ic" style="--c:#ff9f43"></span><span class="ic" style="--c:#34c759"></span><span class="sp"></span><span class="u" data-g="⎘"></span><span class="u" data-g="♪"></span></div>
-<div class="bar t pb" style="--d:6s"><span class="o"></span><div class="t"><i style="--c:#4f8cff"></i><span>Xcode</span></div><div class="t"><i style="--c:#ff9f43"></i><span>Pages</span></div><span class="sp"></span><span class="clk">9:41</span></div>
-<div class="bar v r pb" style="--d:9s"><span class="o"></span><span class="ic" style="--c:#4f8cff"></span><span class="ic" style="--c:#ff9f43"></span><span class="ic" style="--c:#34c759"></span><span class="sp"></span><span class="u" data-g="⎘"></span><span class="u" data-g="♪"></span></div></div></figure></div><div class="txt"><h3>Put it on any edge</h3><p>Bottom, top, left or right, as a taskbar or a dock. Prefer the real thing? Keep the macOS Dock and add AeroBar’s glass, indicators and extensions around it.</p></div></article></div>
+<!-- SLOT clipboard: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/clipboard-poster.jpg" aria-label="Searchable clipboard history with encrypted backup">
+<source src="assets/clipboard.mp4" type="video/mp4">
+</video></figure></div><div class="txt"><h3>Searchable clipboard history</h3><p>Every snippet, link and code block you copy is instantly searchable with keyboard navigation, rich previews, and an encrypted, password-protected backup.</p></div></article>
+
+<article class="fc"><div class="fm">
+<!-- SLOT gestures: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/gestures-poster.jpg" aria-label="Three-finger trackpad gestures to switch windows">
+<source src="assets/gestures.mp4" type="video/mp4">
+</video></figure></div><div class="txt"><h3>Trackpad gestures</h3><p>Swipe horizontally with three fingers across your trackpad to glide between open AeroBar windows with responsive, fluid animations and adjustable sensitivity.</p></div></article>
+
+<article class="fc"><div class="fm">
+<!-- SLOT multidisplay: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/multidisplay-poster.jpg" aria-label="Multi-display support with idle screen dimmer">
+<source src="assets/multidisplay.mp4" type="video/mp4">
+</video></figure></div><div class="txt"><h3>Multiple displays & dimmer</h3><p>Run AeroBar across every connected display, external monitors only, or your main screen. Idle screens dim automatically to keep your attention on active tasks.</p></div></article>
+
+<article class="fc"><div class="fm">
+<!-- SLOT hotkeys: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/hotkeys-poster.jpg" aria-label="Global single-tap hotkeys">
+<source src="assets/hotkeys.mp4" type="video/mp4">
+</video></figure></div><div class="txt"><h3>Single-tap hotkeys</h3><p>Instant shortcuts for the clipboard, file shelf, music widget, Quick Links, Screen Search, Show Desktop, Mission Control and the Trash.</p></div></article>
+
+<article class="fc"><div class="fm">
+<!-- SLOT safe-quit: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/safe-quit-poster.jpg" aria-label="Safer quitting to prevent accidental closures">
+<source src="assets/safe-quit.mp4" type="video/mp4">
+</video></figure></div><div class="txt"><h3>Safer quitting</h3><p>Require pressing ⌘Q or ⌘W twice before an app quits or a window closes, protecting you from accidentally losing work during fast workflows.</p></div></article></div>
 <h3 class="sub">And everything else</h3>
 
 <div class="more">
-<div><b>Dynamic Tint and AuraBar</b><span>The bar samples the active window’s colour, with per-app overrides. AuraBar carries the same glass to the menu bar.</span></div>
-<div><b>Multiple displays</b><span>Show the bar on every display, the main one or only external monitors, with per-display settings and a dimmer for idle screens.</span></div>
-<div><b>Trackpad gestures</b><span>Swipe with three fingers to switch AeroBar windows, with adjustable sensitivity.</span></div>
-<div><b>Global hotkeys</b><span>Assign a shortcut to the clipboard, shelf, widgets, Quick Links, Screen Search, Show Desktop, Mission Control and the bin.</span></div>
-<div><b>Screen Search and Quick Links</b><span>Search what’s on screen with Google Lens, and drag URLs onto the bar to keep them one click away.</span></div>
+<div><b>Dynamic Tint & AuraBar</b><span>The bar samples the active window’s colour, with per-app overrides. AuraBar carries the same glass to the menu bar.</span></div>
+<div><b>Screen Search & Quick Links</b><span>Search what’s on screen with Google Lens, and drag URLs onto the bar to keep them one click away.</span></div>
 <div><b>Tasks, Mission Control, Show Desktop</b><span>A dropdown of open windows grouped by app, plus buttons for Mission Control, Show Desktop and the Trash.</span></div>
 <div><b>Pinned apps and folders</b><span>Drag apps into the tray, pin folders to the shelf, and right-click any tab to pin its app.</span></div>
-<div><b>Glass, tuned</b><span>Start from Frosted Ice, Obsidian Dark, Vibrant Mint, Satin Crimson, Neon Amethyst or Industrial Amber, then adjust tint, strength, borders and bar height. The Dock gets its own glass panel in Dock mode.</span></div>
 <div><b>Focus Mode</b><span>Dim non-hovered items and the wallpaper so your attention stays where it belongs. A separate dimmer covers idle displays.</span></div>
-<div><b>Safer quitting</b><span>Require ⌘Q or ⌘W twice to quit an app or close a window, and quit an app automatically when you close its last window.</span></div>
+<div><b>Encrypted Backups</b><span>Password-protected local backup for clipboard history, app shortcuts, and custom preferences.</span></div>
 </div>
 
 <div class="facts">
@@ -475,6 +496,47 @@ html,body{overflow-x:hidden;max-width:100%}
 <div><b>Signed updates</b><span>The Update Basket checks each release’s signature before it installs anything.</span></div>
 </div>
 </div></section>
+
+<section id="customize" style="padding-top:112px"><div class="wrap">
+<div class="head"><h2>Tailor every detail.</h2><p class="lede">From liquid glass tints to popup preview sizes, selection glows, and borders. Personalize AeroBar to match your desktop aesthetic.</p></div>
+
+<div class="fgrid">
+<article class="fc"><div class="fm">
+<!-- SLOT custom-glass: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/custom-glass-poster.jpg" aria-label="Liquid Glass styling with dynamic tinting">
+<source src="assets/custom-glass.mp4" type="video/mp4">
+</video></figure></div><div class="txt"><h3>Liquid Glass & tinting</h3><p>Choose from Frosted Ice, Obsidian Dark, Vibrant Mint, Satin Crimson, or sample your active window's palette automatically with adjustable glass opacity and blur.</p></div></article>
+
+<article class="fc"><div class="fm">
+<!-- SLOT custom-popups: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/custom-popups-poster.jpg" aria-label="Hover previews and popup customization">
+<source src="assets/custom-popups.mp4" type="video/mp4">
+</video></figure></div><div class="txt"><h3>Hover previews & popups</h3><p>Fine-tune live window preview scale, blur radius, animation curves, and hover response delay for an instantaneous peek at your windows.</p></div></article>
+
+<article class="fc"><div class="fm">
+<!-- SLOT custom-music: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/custom-music-poster.jpg" aria-label="Music widget styling and appearance">
+<source src="assets/custom-music.mp4" type="video/mp4">
+</video></figure></div><div class="txt"><h3>Music widget styles</h3><p>Customize album artwork display, player controls, progress bars, and lyrics popups for Spotify, Apple Music, and web players.</p></div></article>
+
+<article class="fc"><div class="fm">
+<!-- SLOT custom-highlight: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/custom-highlight-poster.jpg" aria-label="Active selection highlight styles">
+<source src="assets/custom-highlight.mp4" type="video/mp4">
+</video></figure></div><div class="txt"><h3>Selection highlights</h3><p>Highlight active applications and windows with glowing pills, subtle underlines, minimal dots, or crisp borders.</p></div></article>
+
+<article class="fc"><div class="fm">
+<!-- SLOT custom-borders: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/custom-borders-poster.jpg" aria-label="Borders and edge chamfer customization">
+<source src="assets/custom-borders.mp4" type="video/mp4">
+</video></figure></div><div class="txt"><h3>Borders & edge chamfers</h3><p>Tune glass border thickness, outer edge chamfers, top reflections, and subtle light refraction to match macOS Sequoia.</p></div></article>
+
+<article class="fc"><div class="fm">
+<!-- SLOT custom-badges: web-optimized screen recording -->
+<figure class="media mac"><video autoplay loop muted playsinline preload="metadata" poster="assets/custom-badges-poster.jpg" aria-label="Notification badges and dock indicator styling">
+<source src="assets/custom-badges.mp4" type="video/mp4">
+</video></figure></div><div class="txt"><h3>Notification badges</h3><p>Style badge counters, unread notification dots, and dock indicators with custom colors and contrast options.</p></div></article>
+</div></div></section>
 
 <section id="install"><div class="wrap"><div class="inst">
 <div><h2>Install in one command.</h2>

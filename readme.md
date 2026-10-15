@@ -1,9 +1,22 @@
 <p align="center">
-  <img src="docs/assets/aerobar-orb-v2.svg" alt="AeroBar Logo" width="100"/>
+  <a href="https://adityaonx.github.io/AeroBar/">
+    <img src="docs/assets/aerobar-orb-v2.svg" alt="AeroBar Logo" width="110"/>
+  </a>
 </p>
-<h3 align="center">AeroBar</h3>
+
+<h1 align="center">AeroBar</h1>
+
 <p align="center">
-  <b>The Advanced Dock for macOS</b>
+  <b>A taskbar for macOS. Or a better Dock.</b><br>
+  <i>Every window one click away, with live previews, a ⌘Tab for windows, clipboard history and deep trackpad gestures.</i>
+</p>
+
+<p align="center">
+  <img src="docs/assets/badge-telemetry.svg" alt="Zero Telemetry" />
+  <img src="docs/assets/badge-offline.svg" alt="100% Offline" />
+  <img src="docs/assets/badge-signed.svg" alt="Signed Updates" />
+  <img src="docs/assets/badge-macos.svg" alt="macOS 14.0+" />
+  <img src="docs/assets/badge-license.svg" alt="GPL-3.0 OSS" />
 </p>
 
 <p align="center">
@@ -12,7 +25,28 @@
   <a href="https://www.youtube.com/watch?v=NY2qc3SOwXk"><img src="docs/assets/youtube_guide.svg" alt="YouTube Guide" /></a>
 </p>
 
-AeroBar brings the familiar workflow of an advanced dock directly to your Mac. It features a Liquid Glass Taskbar, Cmd+Tab integration, and a comprehensive Start Menu, all built with native macOS APIs for optimal performance.
+<p align="center">
+  <a href="https://adityaonx.github.io/AeroBar/">
+    <img src="docs/assets/mock-hero.webp" width="1000" alt="AeroBar on macOS with live window previews and taskbar" />
+  </a>
+  <br>
+  <em>The bar and menu bar take on the vibrant colour palette of your active application.</em>
+</p>
+
+---
+
+## Highlights
+
+- **Zero Telemetry & 100% Offline:** No analytics, no tracking, no network calls. Everything runs natively on your machine.
+- **Four Distinct Modes:** Run AeroBar as a full-width taskbar, a floating dock, alongside your macOS Dock, or in legacy hybrid mode.
+- **Live Window Tabs & Previews:** Hover any taskbar tab for real-time window thumbnail previews with instant focus and close actions.
+- **Smart Switcher (⌘Tab):** Fluid window switcher displaying live previews of all open windows with keyboard and trackpad navigation.
+- **Start Menu & Search:** Aero Menu gives you searchable apps, recent files, pinned launcher items, and power actions in one click.
+- **Searchable Clipboard History:** Encrypted, password-protected history with instant snippet search and rich previews.
+- **Trackpad Gestures:** Three-finger horizontal trackpad swipes glide smoothly between open windows.
+- **Liquid Glass Aesthetic:** Dynamic frosted glass, Obsidian Dark, custom tints, borders, edge chamfers, and glow highlights.
+
+---
 
 ## Documentation
 
@@ -21,65 +55,125 @@ AeroBar brings the familiar workflow of an advanced dock directly to your Mac. I
 - [Features & Usage](public_docs/Features.md)
 - [Troubleshooting & Limitations](public_docs/Troubleshooting.md)
 - [Release Notes](public_docs/Releases.md)
+- [Privacy Policy](PRIVACY.md)
 
+---
+
+## Choose Your Mode
+
+AeroBar adapts to how you work. Position it on any screen edge (Bottom, Top, Left, Right), tune sizing and margins, and switch modes anytime from the Customize menu.
+
+<p align="center">
+  <img src="docs/assets/mock-placement.webp" width="900" alt="Set up AeroBar mode, edge placement and custom sizing" />
+</p>
+
+| Mode | Preview | Description |
+| :--- | :---: | :--- |
+| **01. macOS Dock + Extensions** | <img src="docs/assets/mock-macdock.webp" width="440" alt="macOS Dock + Extensions" /> | Keeps the native macOS Dock and wraps it in a glass panel with live window previews, status extensions, and quick actions. |
+| **02. AeroDock** | <img src="docs/assets/mock-aerodock.webp" width="440" alt="AeroDock" /> | Floating glass bar with pinned apps, active window tabs, and the Aero Orb launcher at the start. |
+| **03. AeroTaskBar** | <img src="docs/assets/mock-taskbar.webp" width="440" alt="AeroTaskBar" /> | Full-width taskbar with dedicated buttons for every open window, live thumbnail hover previews, and badge counts. |
+| **04. Legacy AeroBar** | <img src="docs/assets/mock-placement.webp" width="440" alt="Legacy AeroBar" /> | Unified dock combining pinned launcher applications and open window buttons in a single bar. |
+
+---
+
+## Features & Capabilities
+
+### 1. Every Window, One Click Away
+Open windows become live tabs in taskbar modes. Hover over any tab to view a real-time thumbnail preview with an instant close button, or press `+` to open a new window. Badge counters carry over seamlessly from macOS.
+
+<p align="center">
+  <img src="docs/assets/mock-tabs.webp" width="900" alt="Live Window Previews and Tabs" />
+</p>
+
+### 2. Aero Menu: A Start Menu with Real Depth
+Click the Aero Orb to search applications and files, drag-to-reorder pinned favourites, access recent documents, and lock, log out, restart, or shut down directly from the menu.
+
+<p align="center">
+  <img src="docs/assets/mock-start-menu.webp" width="900" alt="Aero Start Menu" />
+</p>
+
+### 3. Smart Switcher (⌘Tab Rebuilt)
+A completely reimagined window switcher with live window previews. Press <kbd>⌘</kbd> <kbd>Tab</kbd> to cycle between applications and <kbd>⌘</kbd> <kbd>`</kbd> to switch between windows of the active application.
+
+<p align="center">
+  <img src="docs/assets/mock-switcher.webp" width="900" alt="Smart Switcher with live window previews" />
+</p>
+
+### 4. Searchable Clipboard History
+Every snippet, link, and code block you copy is instantly indexed and searchable via hotkey. Includes rich previews, keyboard shortcuts, and encrypted, password-protected local backup.
+
+<p align="center">
+  <img src="docs/assets/mock-clipboard.webp" width="900" alt="Searchable clipboard history" />
+</p>
+
+### 5. Fluid Trackpad Gestures
+Swipe horizontally with three fingers across your trackpad to glide effortlessly between open AeroBar windows with responsive, physics-based animations and customizable sensitivity.
+
+<p align="center">
+  <img src="docs/assets/mock-gestures.webp" width="900" alt="Three-finger trackpad gestures" />
+</p>
+
+### 6. Multi-Display Support & Idle Dimmer
+Run AeroBar across all connected monitors, external displays only, or your primary display. Idle screens can dim automatically to keep your focus squarely on your active work.
+
+<p align="center">
+  <img src="docs/assets/mock-multidisplay.webp" width="900" alt="Multi-display support and idle dimmer" />
+</p>
+
+---
+
+## Tailor Every Detail
+
+Personalize AeroBar to match your desktop aesthetic with granular appearance controls:
+
+| Liquid Glass & Tinting | Hover Previews & Popups |
+| :---: | :---: |
+| <img src="docs/assets/mock-custom-glass.webp" width="440" alt="Liquid Glass Styling" /><br><em>Frosted Ice, Obsidian Dark, Vibrant Mint, Satin Crimson, or dynamic auto-tinting from your active app.</em> | <img src="docs/assets/mock-custom-popups.webp" width="440" alt="Hover Previews & Popups" /><br><em>Fine-tune thumbnail preview scale, blur radius, animation curves, and response delays.</em> |
+| **Music Widget Styles** | **Notification Badges & Highlights** |
+| <img src="docs/assets/mock-custom-music.webp" width="440" alt="Music Widget Styles" /><br><em>Spotify, Apple Music, and web players with album art, playback controls, and progress bars.</em> | <img src="docs/assets/mock-custom-badges.webp" width="440" alt="Notification Badges & Indicators" /><br><em>Style badge counters, unread notification dots, and dock indicators with custom colors.</em> |
+
+---
 
 ## Installation
 
-The recommended method to install AeroBar is via Homebrew:
+### Option 1: Homebrew (Recommended)
+
+Install AeroBar using the official Homebrew tap:
 
 ```bash
 brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew trust adityaonx/aerobar && HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar
 ```
 
-*(If macOS displays a quarantine error on first launch, run: `xattr -rd com.apple.quarantine /Applications/AeroBar.app`).*
+*(If macOS displays a quarantine warning on initial launch, execute: `xattr -rd com.apple.quarantine /Applications/AeroBar.app`).*
 
-Homebrew installs AeroBar; it does not update it. AeroBar updates through its own **Update Basket**: download the `.dmg` and its `.sig` from the release page and drop both in the basket, which checks the signature before it installs. A plain `brew upgrade` skips AeroBar. If you force it (`brew upgrade --greedy`), AeroBar will not start that copy and will offer the Update Basket instead.
+> **Update Basket Security:** Homebrew installs AeroBar; subsequent updates are delivered securely through AeroBar's built-in **Update Basket**. Download the `.dmg` and cryptographic `.sig` signature from the release page and drop both into the basket, which verifies the signature before installation. A plain `brew upgrade` skips AeroBar to prevent unsigned tampering.
 
-For manual `.dmg` download instructions, please refer to the [Installation Guide](public_docs/Installation.md).
-
+---
 
 ### Option 2: Manual Download
 
-#### 1. Download AeroBar.dmg
-
-Open the `.dmg` file and copy **AeroBar.app** into the `/Applications` directory.
-
-#### 2. Gatekeeper Bypass (First Launch Only)
-
-Because the application is self-signed, macOS will block the initial execution.
-
-**Method A: System Settings**
-
-1. Attempt to launch AeroBar. A security warning will appear.
-2. Navigate to **System Settings -> Privacy & Security**.
-3. Under the Security section, click **Open Anyway**.
-
-**Method B: Terminal (For "damaged application" errors)**
-
-```bash
-xattr -rd com.apple.quarantine /Applications/AeroBar.app
-```
-## Previews
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/33fced61-d520-46bf-8478-e262af05c88b" width="800" alt="Quick switch between app windows" />
-</p>
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/0c251738-e864-4302-8de3-c56c01c92adb" width="400" alt="Start Menu" />
-  <img src="https://github.com/user-attachments/assets/02f417a4-a3e1-42ed-a69d-fc981313a0eb" width="400" alt="Pinned Apps" />
-</p>
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/4f390c64-a2ed-4103-8956-cc26318a09ad" width="400" alt="Context Menu" />
-  <img src="https://github.com/user-attachments/assets/ace2dd16-2770-42ac-8e5e-48a6d25abb85" width="400" alt="Appearance Lab" />
-</p>
-
-## Community
-
-AeroBar's development is community-driven. 
-
-- [Discussions](https://github.com/adityaonx/AeroBar/discussions/new/choose): Share ideas, ask questions, or request features.
-- [Issues](https://github.com/adityaonx/AeroBar/issues/new): Report a bug or issue.
+1. Download **AeroBar.dmg** from the [Latest Releases](https://github.com/adityaonx/AeroBar/releases/latest).
+2. Open the `.dmg` and drag **AeroBar.app** into your `/Applications` directory.
+3. **First Launch (Gatekeeper):** Because AeroBar is self-signed:
+   - **System Settings:** Launch AeroBar &rarr; Open **System Settings &rarr; Privacy & Security** &rarr; Click **Open Anyway**.
+   - **Terminal Alternative:** If macOS reports the application as damaged:
+     ```bash
+     xattr -rd com.apple.quarantine /Applications/AeroBar.app
+     ```
+4. Grant **Accessibility** permissions when prompted to enable window management and thumbnail previews.
 
 ---
+
+## Community & Contributing
+
+AeroBar's development is driven by user feedback and community collaboration.
+
+- [Discussions](https://github.com/adityaonx/AeroBar/discussions): Share workflow ideas, ask questions, or propose new features.
+- [Issues](https://github.com/adityaonx/AeroBar/issues): Report unexpected behavior or submit bug reports.
+- [Video Guide](https://www.youtube.com/watch?v=NY2qc3SOwXk): Watch the visual walkthrough on YouTube.
+
+---
+
+<p align="center">
+  <sub>Built natively with Swift and AppKit for macOS Sonoma (14.0+) & Sequoia (15.0+). Released under the GNU General Public License v3.0.</sub>
+</p>
