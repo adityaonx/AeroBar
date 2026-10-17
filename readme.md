@@ -167,5 +167,5 @@ AeroBar's development is driven by user feedback and community collaboration.
 ---
 
 <p align="center">
-  <sub>Built natively with Swift and AppKit for macOS Sonoma (14.0+) & Sequoia (15.0+). Released under the GNU General Public License v3.0.</sub>
+  <sub>Built natively with Swift and AppKit for macOS 14.0+ </sub>
 </p>
