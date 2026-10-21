@@ -59,12 +59,33 @@ AeroBar adapts to how you work. Position it on any screen edge (Bottom, Top, Lef
   <img src="docs/assets/mock-placement.webp" width="900" alt="Set up AeroBar mode, edge placement and custom sizing" />
 </p>
 
-| Mode | Preview | Description |
-| :--- | :---: | :--- |
-| **01. macOS Dock + Extensions** | <img src="docs/assets/mock-macdock.webp" width="440" alt="macOS Dock + Extensions" /> | Keeps the native macOS Dock and wraps it in a glass panel with live window previews, status extensions, and quick actions. |
-| **02. AeroDock** | <img src="docs/assets/mock-aerodock.webp" width="440" alt="AeroDock" /> | Floating glass bar with pinned apps, active window tabs, and the Aero Orb launcher at the start. |
-| **03. AeroTaskBar** | <img src="docs/assets/mock-taskbar.webp" width="440" alt="AeroTaskBar" /> | Full-width taskbar with dedicated buttons for every open window, live thumbnail hover previews, and badge counts. |
-| **04. Legacy AeroBar** | <img src="docs/assets/mock-placement.webp" width="440" alt="Legacy AeroBar" /> | Unified dock combining pinned launcher applications and open window buttons in a single bar. |
+### 01. macOS Dock + Extensions
+Keeps the native macOS Dock and wraps it in a glass panel with live window previews, status extensions, and quick actions.
+
+<p align="center">
+  <img src="docs/assets/mock-macdock.webp" width="800" alt="macOS Dock + Extensions" />
+</p>
+
+### 02. AeroDock
+Floating glass bar with pinned apps, active window tabs, and the Aero Orb launcher at the start.
+
+<p align="center">
+  <img src="docs/assets/mock-aerodock.webp" width="800" alt="AeroDock" />
+</p>
+
+### 03. AeroTaskBar
+Full-width taskbar with dedicated buttons for every open window, live thumbnail hover previews, and badge counts.
+
+<p align="center">
+  <img src="docs/assets/mock-taskbar.webp" width="800" alt="AeroTaskBar" />
+</p>
+
+### 04. Legacy AeroBar
+Unified dock combining pinned launcher applications and open window buttons in a single bar.
+
+<p align="center">
+  <img src="docs/assets/mock-placement.webp" width="800" alt="Legacy AeroBar" />
+</p>
 
 ---
 
