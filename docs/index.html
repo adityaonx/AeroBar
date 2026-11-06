@@ -47,6 +47,20 @@ kbd{font:600 .82em/1 inherit;padding:.28em .5em;border-radius:6px;background:var
 .screen video{opacity:0;transition:opacity .4s}.screen video.live{opacity:1}
 .cap{color:var(--mute);font-size:14.5px;margin-top:12px}
 
+
+/* first-launch fix: sits directly above the Download button. Soft amber on glass so it reads as helpful, not as an error. */
+.getblock{margin-top:32px}
+.getblock .cta{margin-top:0}
+.fix{margin:0 0 14px;padding:14px 14px 14px 16px;max-width:34em;border-radius:16px;background:linear-gradient(135deg,rgba(255,176,64,.16),rgba(255,176,64,.06)),var(--glass);border:1px solid rgba(240,160,40,.38);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.fix-t{display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:600;line-height:1.35}
+.fix-t svg{flex:none;width:18px;height:18px;fill:none;stroke:#d98a0b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.fix-t span{color:var(--mute);font-weight:400}
+.fix-c{display:flex;align-items:center;gap:10px;margin-top:10px;padding:6px 6px 6px 14px;border-radius:12px;background:#0d111b;color:#dfe6f7;font:500 13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}
+.fix-c code{flex:1;min-width:0;overflow-wrap:anywhere;font:inherit}
+.fix-c .k{color:#7ee0a4}.fix-c .f{color:#8d9ac0}
+.fix-c button{flex:none;height:36px;padding:0 14px;border-radius:9px;border:0;background:#2c3858;color:#fff;font:600 13.5px "Hanken Grotesk",sans-serif;cursor:pointer;transition:background .2s}
+.fix-c button:hover{background:#3a4a74}.fix-c button.ok{background:#1f8a4c}
+
 /* hero */
 .hero{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(24px,3.5vw,56px);align-items:center;padding-top:clamp(18px,2.2vw,28px)}
 .brandline{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;margin-bottom:26px}
@@ -216,7 +230,7 @@ footer nav{display:flex;gap:22px}
  .hero .screen{order:4;margin-top:18px}
  .hero .claims{order:6;margin-top:18px}
  .hero .socials{order:1;justify-content:center;margin:0 0 20px}
- .hero .cta{order:7;margin-top:14px}
+ .hero .getblock{order:7;margin-top:18px}
  .hero .small{order:8}
 }
 
@@ -240,9 +254,15 @@ footer nav{display:flex;gap:22px}
   <div class="brandline"><span class="orb"></span>AeroBar<a class="btn pri hdr-dl" href="https://github.com/adityaonx/AeroBar/releases/latest">Download</a></div>
   <h1>A taskbar for macOS. Or a better Dock.</h1>
   <p class="lede">Every window one click away, with live previews, a <kbd>⌘</kbd> <kbd>Tab</kbd> that switches windows, clipboard history and more. Run it as a taskbar, a floating dock, or on top of the real Dock.</p>
-  <div class="cta">
-   <a class="btn pri" href="https://github.com/adityaonx/AeroBar/releases/latest">Download for Mac</a>
-   <button class="btn" type="button" data-copy>Copy Homebrew command</button>
+  <div class="getblock">
+   <div class="fix">
+    <div class="fix-t"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><div>macOS says “damaged”? <span>Not notarized yet. Run once after install:</span></div></div>
+    <div class="fix-c" data-cmd="xattr -rd com.apple.quarantine /Applications/AeroBar.app"><code><span class="k">xattr</span> <span class="f">-rd</span> com.apple.quarantine /Applications/AeroBar.app</code><button type="button" data-copy-self>Copy</button></div>
+   </div>
+   <div class="cta">
+    <a class="btn pri" href="https://github.com/adityaonx/AeroBar/releases/latest">Download for Mac</a>
+    <button class="btn" type="button" data-copy>Copy Homebrew command</button>
+   </div>
   </div>
   <p class="small">Pro features are included during the public beta. Requires macOS 14 or later. <a href="https://www.youtube.com/watch?v=NY2qc3SOwXk">Watch the video guide</a>.</p>
  </div>

@@ -14,6 +14,14 @@
 <p align="center">
   If you liked this project, please consider giving it a <img width="20" height="20" alt="star-img" src="https://github.com/user-attachments/assets/14fa5920-374f-4985-acd6-d04bff1d4580" />. Thanks.
 </p>
+
+> [!TIP]
+> **macOS says "AeroBar is damaged" or blocks it on first launch?** AeroBar isn't Apple-notarized yet, so this is expected. After installing, run this once (use the copy button on the right):
+>
+> ```bash
+> xattr -rd com.apple.quarantine /Applications/AeroBar.app
+> ```
+
 <p align="center">
   <a href="https://adityaonx.github.io/AeroBar/"><img src="docs/assets/website-btn.svg" alt="Website" height="36" /></a>
   <a href="https://github.com/adityaonx/AeroBar/releases/latest"><img src="docs/assets/download-btn.svg" alt="Downloads" height="36" /></a>
