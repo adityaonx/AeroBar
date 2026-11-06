@@ -16,7 +16,7 @@
 </p>
 
 > [!TIP]
-> **macOS says "AeroBar is damaged" or blocks it on first launch?** AeroBar isn't Apple-notarized yet, so this is expected. After installing, run this once (use the copy button on the right):
+> **macOS says "AeroBar is damaged" or blocks it on first launch?** AeroBar isn't Apple-notarized yet, so this is expected. After installing, run this in Terminal once (use the copy button on the right):
 >
 > ```bash
 > xattr -rd com.apple.quarantine /Applications/AeroBar.app
