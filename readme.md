@@ -16,6 +16,8 @@
 </p>
 
 > [!TIP]
+> As App is not Apple-notarised, Apple is treating unnotarised app as Malware! I request users to wait for some time until I get a fix for this!
+> I can assure app is malware free and Apple is invoking a false positive.
 > **macOS says "AeroBar is damaged" or blocks it on first launch?** AeroBar isn't Apple-notarized yet, so this is expected. After installing, run this in Terminal once (use the copy button on the right):
 >
 > ```bash
