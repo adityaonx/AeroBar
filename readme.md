@@ -20,12 +20,11 @@
 > I can assure app is malware free and Apple is invoking a false positive.
 > **macOS says "AeroBar is damaged" or blocks it on first launch?** AeroBar isn't Apple-notarized yet, so this is expected. After installing, run this in Terminal once (use the copy button on the right):
 >
-> ```bash
-> codesign --force --deep --sign - /Applications/AeroBar.app
-> codesign --verify --deep --strict /Applications/AeroBar.app
-> xattr -rd com.apple.quarantine /Applications/AeroBar.app
-> ```
-
+```bash
+codesign --force --deep --sign - /Applications/AeroBar.app && \
+codesign --verify --deep --strict /Applications/AeroBar.app && \
+xattr -rd com.apple.quarantine /Applications/AeroBar.app 2>/dev/null || true
+```
 <p align="center">
   <a href="https://adityaonx.github.io/AeroBar/"><img src="docs/assets/website-btn.svg" alt="Website" height="36" /></a>
   <a href="https://github.com/adityaonx/AeroBar/releases/latest"><img src="docs/assets/download-btn.svg" alt="Downloads" height="36" /></a>
