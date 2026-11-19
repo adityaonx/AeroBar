@@ -21,9 +21,9 @@
 > **macOS says "AeroBar is damaged" or blocks it on first launch?** AeroBar isn't Apple-notarized yet, so this is expected. After installing, run this in Terminal once (use the copy button on the right):
 >
 ```bash
-codesign --force --deep --sign - /Applications/AeroBar.app && \
-codesign --verify --deep --strict /Applications/AeroBar.app && \
-xattr -rd com.apple.quarantine /Applications/AeroBar.app 2>/dev/null || true
+sudo codesign --force --deep --sign - /Applications/AeroBar.app && \
+sudo codesign --verify --deep --strict /Applications/AeroBar.app && \
+sudo xattr -rd com.apple.quarantine /Applications/AeroBar.app 2>/dev/null || true
 ```
 <p align="center">
   <a href="https://adityaonx.github.io/AeroBar/"><img src="docs/assets/website-btn.svg" alt="Website" height="36" /></a>
