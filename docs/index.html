@@ -1,3 +1,6 @@
+Here is the complete, updated `index.html` with the shortened 2-line terminal command, populated `data-cmd`, and the desktop hero MacBook scaling and spacing adjustments applied:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -155,45 +158,19 @@ footer nav{display:flex;gap:22px}
 }
 @media(max-width:640px){
  .cta .btn{width:100%}
- /* CHANGED (mobile dock). PREVIOUS logic: .dock kept left:50% + translateX(-50%) with a shrink-to-fit width,
-    and .get/.sep/a.hide-sm (Download, divider, Privacy) were display:none, so the bar was shorter than desktop
-    but its items (~375px) still overflowed the pill on phones <=360px ("Install" poked out of the glass).
-    NEW logic: pin the bar between 8px side gutters (no transform centering) and let it scroll sideways, showing
-    the SAME items as desktop (orb, Modes, Features, Customize, Privacy, Install, Download).
-    RISKS: (1) the .tip hover tooltips are clipped by overflow-x:auto - harmless here since tips only show under
-    (hover:hover), i.e. not on touch. (2) overflow-x:auto makes the pill a scroll container, so a horizontal swipe
-    that starts on it scrolls the pill rather than the page. (3) Items past the right edge (Install/Download)
-    are reachable only by swiping on narrow phones - there is no scroll hint.
-    TO REVERT: restore .dock{gap:2px;padding:6px}, add back `.dock .get,.dock .sep,.dock a.hide-sm{display:none}`,
-    and delete the left/right/transform/width/overflow/justify-content lines below. */
  .dock{gap:2px;padding:6px;left:8px;right:8px;transform:none;width:auto;max-width:none;overflow-x:auto;overflow-y:hidden;justify-content:flex-start;scrollbar-width:none;-webkit-overflow-scrolling:touch}
  .dock::-webkit-scrollbar{display:none}
- .dock>*{flex:none} /* keep every item at natural width so the row scrolls instead of squashing/overflowing */
+ .dock>*{flex:none}
  .dock a.t{padding:0 11px;font-size:14px}
- .dock .get{padding:0 14px;font-size:14px} /* Download no longer hidden; slightly tighter than desktop (18px/15px) */
- .tip{display:none} /* tooltips are hover-only and would be clipped by the scroll container anyway */
+ .dock .get{padding:0 14px;font-size:14px}
+ .tip{display:none}
 }
 @media(max-width:380px){.dock a.t{padding:0 8px;font-size:13.5px}}
-/* CHANGED (hero claims row). PREVIOUS logic: badges sat in the left text column under the hero note, used
-   assets/badge-*.svg (viewBox clipped exactly to the 134x32 pill, so the drop-shadow filter was cut off into a
-   lighter rectangle that "bled" past the rounded corners), and included a license badge.
-   NEW logic: the row sits in the right column directly above the main preview, centred, with the license badge removed, and uses
-   assets/site-badge-*.svg (same pill, viewBox padded by 14px so the shadow is not clipped). The 14px padding is
-   cancelled with a -14px margin so the pills keep their 32px visual size and spacing.
-   RISKS: (1) the shadow now overflows each <li>; a future overflow:hidden on .claims or a parent would clip it again
-   and bring the bleed back. (2) Negative margins make neighbouring images' padding overlap (transparent, harmless).
-   (3) On desktop the row adds height above the preview in the right column, so the preview sits lower than the text
-   column's vertical centre. (4) assets/site-badge-license.svg and badge-*.svg are now unused by the site (readme.md
-   still uses badge-*.svg) - keep them. (5) The 4 claims now live in markup only.
-   TO REVERT: restore the old block, move the <ul> back under .small in the left column, swap site-badge-* for badge-*
-   and re-add the license <li>. */
+
 .claims{display:flex;flex-wrap:wrap;justify-content:center;gap:0 10px;list-style:none;margin:0 0 14px;padding:0}
 .claims li{display:flex}
 .claims img{display:block;height:60px;width:auto;margin:-14px}
 
-/* Social links (GitHub, X): sit on the same horizontal line as the AeroBar brandline, right-aligned above the claims row.
-   Desktop (>=901px): .hero switches to align-items:start so both columns begin on the same line and the 32px
-   socials row lines up exactly with the 32px brandline. Below 901px the hero stacks, so the row is centred above the claims (tablet) or placed centred directly under the brandline / header Download button (mobile, order:1 ties with .brandline and follows it in DOM order). */
 .socials{display:flex;list-style:none;margin:0 0 14px;padding:0;gap:10px;justify-content:center;align-items:center}
 .socials a{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px 0 11px;border-radius:999px;color:var(--ink);background:var(--glass2);border:1px solid var(--line);font:600 14.5px "Hanken Grotesk",sans-serif;text-decoration:none;white-space:nowrap;transition:transform .15s,background .2s}
 .socials a:hover{transform:translateY(-1px)}
@@ -209,14 +186,16 @@ footer nav{display:flex;gap:22px}
 .screen video,.screen img{inset:auto;left:9.814%;top:2.508%;width:80.420%;height:89.716%;border-radius:0;background:#000}
 .tile .play{right:11%;bottom:12%;z-index:40}
 .tile:hover .screen{transform:translateY(-3px)}
-@media(min-width:901px){.hero .screen{margin-right:-4%;width:104%}}
+@media(min-width:901px){
+ .hero{grid-template-columns:minmax(0,3.6fr) minmax(0,7.4fr)}
+ .hero .screen{width:108%;margin-right:-8%;margin-bottom:-4%}
+ #modes{padding-top:clamp(36px,4.5vw,56px)}
+}
 @media(max-width:700px){.screen{width:108%;margin-left:-4%}.tile .screen,.mode .screen{width:100%;margin-left:0}}
 .tile{display:flex;flex-direction:column;justify-content:flex-start;align-items:stretch}
 @media(min-width:701px){.gal{grid-template-columns:repeat(2,minmax(0,1fr));gap:56px clamp(28px,4vw,64px);align-items:start}.gal .tile:last-child:nth-child(odd){grid-column:1/-1;width:calc(50% - clamp(14px,2vw,32px));justify-self:center}}
 
-/* Mobile hero order (<=700px): brand + Download, headline, description, MacBook preview, caption, badges, CTA buttons + note.
-   Both hero columns become display:contents so their children can be re-ordered as one stack.
-   The header Download button is mobile-only; the full CTA block below the badges is unchanged. */
+/* Mobile hero order (<=700px) */
 .brandline .hdr-dl{display:none}
 .cap-m{display:none}
 @media(max-width:700px){
@@ -234,9 +213,7 @@ footer nav{display:flex;gap:22px}
  .hero .small{order:8}
 }
 
-/* Mobile nav fit (<=640px): the pill no longer scrolls sideways or clips "Install".
-   Hidden here: the divider, the Download button (the hero header has one on mobile) and Privacy (still reachable by scrolling / footer).
-   Remaining items (orb, Modes, Features, Customize, Install) share the width evenly. */
+/* Mobile nav fit (<=640px) */
 @media(max-width:640px){
  .dock .sep,.dock .get,.dock a.hide-sm{display:none}
  .dock{justify-content:space-between;overflow:hidden}
@@ -257,7 +234,7 @@ footer nav{display:flex;gap:22px}
   <div class="getblock">
    <div class="fix">
     <div class="fix-t"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><div>macOS says “damaged”? <span>Not notarized yet. Run this command in Terminal once after install:</span></div></div>
-    <div class="fix-c" data-cmd="xattr -cr /Applications/AeroBar.app &amp;&amp; codesign -fs - --deep /Applications/AeroBar.app"><code><span class="k">xattr</span> <span class="f">-cr</span> /Applications/AeroBar.app &amp;&amp; <span class="k">codesign</span> <span class="f">-fs - --deep</span> /Applications/AeroBar.app</code><button type="button" data-copy-self>Copy</button></div>
+    <div class="fix-c" data-cmd="xattr -cr /Applications/AeroBar.app &amp;&amp; codesign -fs - --deep /Applications/AeroBar.app"><code><span class="k">xattr</span> <span class="f">-cr</span> /Applications/AeroBar.app &amp;&amp;<br><span style="white-space: nowrap;"><span class="k">codesign</span> <span class="f">-fs - --deep</span> /Applications/AeroBar.app</span></code><button type="button" data-copy-self>Copy</button></div>
    </div>
    <div class="cta">
     <a class="btn pri" href="https://github.com/adityaonx/AeroBar/releases/latest">Download for Mac</a>
@@ -356,9 +333,9 @@ footer nav{display:flex;gap:22px}
  </div>
  <div>
   <p class="lbl">Install with Homebrew</p>
-  <div class="code" data-cmd="brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew trust adityaonx/aerobar && HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar">brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar &amp;&amp; brew trust adityaonx/aerobar &amp;&amp; HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar<button type="button" data-copy-self>Copy</button></div>
+  <div class="code" data-cmd="brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar &amp;&amp; brew trust adityaonx/aerobar &amp;&amp; HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar">brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar &amp;&amp; brew trust adityaonx/aerobar &amp;&amp; HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar<button type="button" data-copy-self>Copy</button></div>
   <p class="lbl">If macOS says the app is damaged</p>
-  <div class="code" data-cmd="xattr -cr /Applications/AeroBar.app && codesign -fs - --deep /Applications/AeroBar.app">xattr -cr /Applications/AeroBar.app && codesign -fs - --deep /Applications/AeroBar.app<button type="button" data-copy-self>Copy</button></div>
+  <div class="code" data-cmd="xattr -cr /Applications/AeroBar.app &amp;&amp; codesign -fs - --deep /Applications/AeroBar.app">xattr -cr /Applications/AeroBar.app &amp;&amp; codesign -fs - --deep /Applications/AeroBar.app<button type="button" data-copy-self>Copy</button></div>
  </div>
 </div></div></section>
 </main>
@@ -453,3 +430,5 @@ if("IntersectionObserver" in window){
 </script>
 </body>
 </html>
+
+```
