@@ -55,11 +55,11 @@ kbd{font:600 .82em/1 inherit;padding:.28em .5em;border-radius:6px;background:var
 .fix-t{display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:600;line-height:1.35}
 .fix-t svg{flex:none;width:18px;height:18px;fill:none;stroke:#d98a0b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .fix-t span{color:var(--mute);font-weight:400}
-/* Fix the command box so line 1 and line 2 never wrap or hit the Copy button */
-.fix-c {
-  padding: 8px 8px 8px 12px;
-  font-size: 12.2px;
-}
+.fix-c{display:flex;align-items:center;gap:10px;margin-top:10px;padding:8px 8px 8px 14px;border-radius:12px;background:#0d111b;color:#dfe6f7;font:500 12.2px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace}
+.fix-c code{flex:1;min-width:0;font:inherit}
+.fix-c .k{color:#7ee0a4}.fix-c .f{color:#8d9ac0}
+.fix-c button{flex:none;height:34px;padding:0 12px;border-radius:9px;border:0;background:#2c3858;color:#fff;font:600 13px "Hanken Grotesk",sans-serif;cursor:pointer;transition:background .2s}
+.fix-c button:hover{background:#3a4a74}.fix-c button.ok{background:#1f8a4c}
 
 @media (min-width: 901px) {
   /* Restore 4fr/7fr so left column buttons stay side-by-side and command box fits */
@@ -203,9 +203,8 @@ footer nav{display:flex;gap:22px}
 .tile .play{right:11%;bottom:12%;z-index:40}
 .tile:hover .screen{transform:translateY(-3px)}
 @media(min-width:901px){
- .hero{grid-template-columns:minmax(0,3.6fr) minmax(0,7.4fr)}
- .hero .screen{width:108%;margin-right:-8%;margin-bottom:-4%}
- #modes{padding-top:clamp(36px,4.5vw,56px)}
+ .hero .screen{width:108%;margin-right:-8%;margin-bottom:-5%}
+ #modes{padding-top:clamp(40px,5vw,64px)}
 }
 @media(max-width:700px){.screen{width:108%;margin-left:-4%}.tile .screen,.mode .screen{width:100%;margin-left:0}}
 .tile{display:flex;flex-direction:column;justify-content:flex-start;align-items:stretch}
