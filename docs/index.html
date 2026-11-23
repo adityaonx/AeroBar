@@ -55,11 +55,30 @@ kbd{font:600 .82em/1 inherit;padding:.28em .5em;border-radius:6px;background:var
 .fix-t{display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:600;line-height:1.35}
 .fix-t svg{flex:none;width:18px;height:18px;fill:none;stroke:#d98a0b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .fix-t span{color:var(--mute);font-weight:400}
-.fix-c{display:flex;align-items:center;gap:10px;margin-top:10px;padding:6px 6px 6px 14px;border-radius:12px;background:#0d111b;color:#dfe6f7;font:500 13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}
-.fix-c code{flex:1;min-width:0;overflow-wrap:anywhere;font:inherit}
-.fix-c .k{color:#7ee0a4}.fix-c .f{color:#8d9ac0}
-.fix-c button{flex:none;height:36px;padding:0 14px;border-radius:9px;border:0;background:#2c3858;color:#fff;font:600 13.5px "Hanken Grotesk",sans-serif;cursor:pointer;transition:background .2s}
-.fix-c button:hover{background:#3a4a74}.fix-c button.ok{background:#1f8a4c}
+/* Fix the command box so line 1 and line 2 never wrap or hit the Copy button */
+.fix-c {
+  padding: 8px 8px 8px 12px;
+  font-size: 12.2px;
+}
+
+@media (min-width: 901px) {
+  /* Restore 4fr/7fr so left column buttons stay side-by-side and command box fits */
+  .hero {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  }
+  /* Scale MacBook up visually so its base aligns with "Watch the video guide." */
+  .hero .screen {
+    width: 100%;
+    margin-right: 0;
+    transform: scale(1.13);
+    transform-origin: top center;
+    margin-bottom: 4%;
+  }
+  /* Tighten gap before "Four ways to run it." */
+  #modes {
+    padding-top: clamp(32px, 4vw, 48px);
+  }
+}
 
 /* hero */
 .hero{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(24px,3.5vw,56px);align-items:center;padding-top:clamp(18px,2.2vw,28px)}
