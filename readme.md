@@ -2,7 +2,7 @@
   <a href="https://adityaonx.github.io/AeroBar/"><img src="docs/assets/aerobar-orb-v2.svg" alt="AeroBar Logo" width="36" align="absmiddle"/></a>&nbsp;AeroBar&nbsp;&nbsp;|&nbsp;&nbsp;A taskbar for macOS. Or a better Dock.
 </h3>
 
-<p align="center"><i>Every window one click away, with live previews, a ⌘Tab for windows, clipboard history and deep trackpad gestures.</i></p>
+<p align="center"><i>Every window one click away, with live previews, a ⌘Tab for windows, clipboard history and trackpad gestures.</i></p>
 
 <p align="center">
   <img src="docs/assets/badge-telemetry.svg" alt="Zero Telemetry" />
@@ -16,9 +16,8 @@
 </p>
 
 > [!TIP]
-> As App is not Apple-notarised, Apple is treating unnotarised app as Malware! I request users to use this alternative until its Apple-Notarised.
-> I can assure app is malware free and Apple is invoking a false positive.
-> **macOS says "AeroBar is damaged" or blocks it on first launch?** AeroBar isn't Apple-notarized yet, so this is expected. After installing, run this in Terminal once (use the copy button on the right):
+>This app is safe, though macOS falsely flags it as malware because it isn't Apple-notarized yet. \
+> After installing, run this in Terminal once: 
 >
 ```bash
 sudo codesign --force --deep --sign - /Applications/AeroBar.app && \
