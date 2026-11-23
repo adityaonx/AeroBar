@@ -358,7 +358,7 @@ footer nav{display:flex;gap:22px}
   <p class="lbl">Install with Homebrew</p>
   <div class="code" data-cmd="brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar && brew trust adityaonx/aerobar && HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar">brew tap adityaonx/aerobar https://github.com/adityaonx/AeroBar &amp;&amp; brew trust adityaonx/aerobar &amp;&amp; HOMEBREW_NO_QUARANTINE=1 brew install --cask aerobar<button type="button" data-copy-self>Copy</button></div>
   <p class="lbl">If macOS says the app is damaged</p>
-  <div class="code" data-cmd="codesign --force --deep --sign - /Applications/AeroBar.app && codesign --verify --deep --strict /Applications/AeroBar.app && xattr -rd com.apple.quarantine /Applications/AeroBar.app 2>/dev/null || true">codesign --force --deep --sign - /Applications/AeroBar.app && codesign --verify --deep --strict /Applications/AeroBar.app && xattr -rd com.apple.quarantine /Applications/AeroBar.app 2>/dev/null || true<button type="button" data-copy-self>Copy</button></div>
+  <div class="code" data-cmd="xattr -cr /Applications/AeroBar.app && codesign -fs - --deep /Applications/AeroBar.app">xattr -cr /Applications/AeroBar.app && codesign -fs - --deep /Applications/AeroBar.app<button type="button" data-copy-self>Copy</button></div>
  </div>
 </div></div></section>
 </main>
