@@ -21,7 +21,6 @@
 >
 ```bash
 sudo codesign --force --deep --sign - /Applications/AeroBar.app && \
-sudo codesign --verify --deep --strict /Applications/AeroBar.app && \
 sudo xattr -rd com.apple.quarantine /Applications/AeroBar.app 2>/dev/null || true
 ```
 <p align="center">
